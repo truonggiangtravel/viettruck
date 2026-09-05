@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý hợp đồng - VietTruck</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial,Helvetica,sans-serif;
+    }
+
+    body{
+      background:#f4f7f8;
+      color:#1f2937;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .app{
+      display:flex;
+      min-height:100vh;
+    }
+
+    .sidebar{
+      width:250px;
+      background:#0f5132;
+      color:white;
+      position:fixed;
+      left:0;
+      top:0;
+      bottom:0;
+      padding:24px 16px;
+      overflow-y:auto;
+    }
+
+    .logo{
+      font-size:28px;
+      font-weight:800;
+      text-align:center;
+      margin-bottom:28px;
+    }
+
+    .logo span{
+      color:#ffc107;
+    }
+
+    .menu-title{
+      font-size:12px;
+      text-transform:uppercase;
+      opacity:.7;
+      margin:20px 12px 8px;
+    }
+
+    .menu-item{
+      display:block;
+      padding:12px 14px;
+      border-radius:10px;
+      margin-bottom:6px;
+    }
+
+    .menu-item:hover,
+    .menu-item.active{
+      background:rgba(255,255,255,.15);
+    }
+
+    .main{
+      margin-left:250px;
+      width:calc(100% - 250px);
+    }
+
+    .topbar{
+      background:white;
+      min-height:72px;
+      padding:16px 28px;
+      border-bottom:1px solid #e5e7eb;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .topbar h1{
+      color:#0f5132;
+      font-size:22px;
+    }
+
+    .btn{
+      border:none;
+      border-radius:10px;
+      padding:11px 16px;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .btn-primary{
+      background:#198754;
+      color:white;
+    }
+
+    .btn-light{
+      background:#eef3f0;
+      color:#0f5132;
+    }
+
+    .content{
+      padding:28px;
+      max-width:1400px;
+      margin:auto;
+    }
+
+    .intro{
+      background:linear-gradient(135deg,#0f5132,#198754);
+      color:white;
+      border-radius:18px;
+      padding:24px;
+      margin-bottom:22px;
+    }
+
+    .intro h2{
+      margin-bottom:8px;
+    }
+
+    .intro p{
+      opacity:.9;
+      line-height:1.6;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .stat{
+      background:white;
+      border-radius:14px;
+      padding:20px;
+      border:1px solid #e8ece9;
+      box-shadow:0 4px 16px rgba(0,0,0,.05);
+    }
+
+    .stat .icon{
+      font-size:25px;
+      margin-bottom:10px;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:26px;
+      color:#0f5132;
+      margin-bottom:4px;
+    }
+
+    .stat span{
+      color:#6b7280;
+      font-size:13px;
+    }
+
+    .card{
+      background:white;
+      border-radius:16px;
+      border:1px solid #e8ece9;
+      box-shadow:0 4px 18px rgba(0,0,0,.05);
+      overflow:hidden;
+    }
+
+    .card-head{
+      padding:18px 20px;
+      border-bottom:1px solid #edf0f2;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .card-head h3{
+      color:#0f5132;
+    }
+
+    .filters{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .control{
+      padding:10px 12px;
+      border:1px solid #d1d5db;
+      border-radius:9px;
+      background:white;
+      outline:none;
+    }
+
+    .search{
+      min-width:260px;
+    }
+
+    .control:focus{
+      border-color:#198754;
+      box-shadow:0 0 0 3px rgba(25,135,84,.08);
+    }
+
+    .table-wrap{
+      overflow-x:auto;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:1180px;
+    }
+
+    th,
+    td{
+      padding:14px 16px;
+      text-align:left;
+      border-bottom:1px solid #edf0f2;
+      font-size:14px;
+      vertical-align:middle;
+    }
+
+    th{
+      background:#f8faf9;
+      font-size:13px;
+      color:#374151;
+    }
+
+    tr:hover td{
+      background:#fbfdfc;
+    }
+
+    .contract-name strong{
+      display:block;
+      margin-bottom:4px;
+    }
+
+    .contract-name small{
+      color:#6b7280;
+    }
+
+    .badge{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .active-status{
+      background:#d1fae5;
+      color:#065f46;
+    }
+
+    .expiring-status{
+      background:#fef3c7;
+      color:#92400e;
+    }
+
+    .expired-status{
+      background:#fee2e2;
+      color:#991b1b;
+    }
+
+    .draft-status{
+      background:#e5e7eb;
+      color:#374151;
+    }
+
+    .customer{
+      background:#dbeafe;
+      color:#1d4ed8;
+    }
+
+    .carrier{
+      background:#dcfce7;
+      color:#166534;
+    }
+
+    .partner{
+      background:#ede9fe;
+      color:#5b21b6;
+    }
+
+    .actions{
+      display:flex;
+      gap:7px;
+    }
+
+    .action-btn{
+      border:1px solid #d1d5db;
+      background:white;
+      padding:7px 10px;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:13px;
+    }
+
+    .action-btn:hover{
+      background:#f3f4f6;
+    }
+
+    .empty{
+      display:none;
+      padding:35px;
+      text-align:center;
+      color:#6b7280;
+    }
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.45);
+      z-index:999;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .modal.show{
+      display:flex;
+    }
+
+    .modal-box{
+      background:white;
+      width:100%;
+      max-width:800px;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 20px 50px rgba(0,0,0,.2);
+    }
+
+    .modal-head{
+      padding:18px 20px;
+      border-bottom:1px solid #e5e7eb;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .modal-head h3{
+      color:#0f5132;
+    }
+
+    .close{
+      border:none;
+      background:none;
+      font-size:24px;
+      cursor:pointer;
+    }
+
+    .modal-body{
+      padding:20px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+    }
+
+    .form-group.full{
+      grid-column:1 / -1;
+    }
+
+    .form-group label{
+      display:block;
+      margin-bottom:6px;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .form-control{
+      width:100%;
+      padding:11px 12px;
+      border:1px solid #d1d5db;
+      border-radius:9px;
+      outline:none;
+    }
+
+    textarea.form-control{
+      min-height:90px;
+      resize:vertical;
+    }
+
+    .modal-foot{
+      padding:16px 20px;
+      border-top:1px solid #e5e7eb;
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+    }
+
+    @media(max-width:1000px){
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media(max-width:700px){
+      .sidebar{
+        position:static;
+        width:100%;
+      }
+
+      .app{
+        display:block;
+      }
+
+      .main{
+        margin-left:0;
+        width:100%;
+      }
+
+      .content{
+        padding:16px;
+      }
+
+      .stats{
+        grid-template-columns:1fr;
+      }
+
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <aside class="sidebar">
+
+    <div class="logo">Viet<span>Truck</span></div>
+
+    <div class="menu-title">Hệ thống</div>
+    <a class="menu-item" href="dashboard.html">🏠 Dashboard</a>
+    <a class="menu-item" href="quan-ly-don-hang.html">📦 Quản lý đơn hàng</a>
+    <a class="menu-item" href="trung-tam-bao-gia.html">💰 Trung tâm báo giá</a>
+    <a class="menu-item" href="hang-chieu-ve.html">🔄 Hàng chiều về</a>
+    <a class="menu-item" href="quan-ly-doi-xe.html">🚛 Quản lý đội xe</a>
+
+    <div class="menu-title">Doanh nghiệp</div>
+    <a class="menu-item" href="thong-tin-doanh-nghiep.html">🏢 Thông tin doanh nghiệp</a>
+    <a class="menu-item" href="quan-ly-nhan-vien.html">👥 Quản lý nhân viên</a>
+    <a class="menu-item" href="phan-quyen-tai-khoan.html">🛡️ Phân quyền tài khoản</a>
+    <a class="menu-item" href="nhat-ky-hoat-dong.html">📋 Nhật ký hoạt động</a>
+    <a class="menu-item" href="quan-ly-chi-nhanh.html">📍 Quản lý chi nhánh</a>
+    <a class="menu-item active" href="quan-ly-hop-dong.html">📄 Quản lý hợp đồng</a>
+
+    <div class="menu-title">Tài khoản</div>
+    <a class="menu-item" href="tai-khoan.html">👤 Tài khoản</a>
+    <a class="menu-item" href="vi-viettruck.html">💳 Ví VietTruck</a>
+    <a class="menu-item" href="cai-dat.html">⚙️ Cài đặt</a>
+
+  </aside>
+
+  <main class="main">
+
+    <div class="topbar">
+
+      <h1>Quản lý hợp đồng</h1>
+
+      <button class="btn btn-primary" onclick="openModal()">
+        + Thêm hợp đồng
+      </button>
+
+    </div>
+
+    <div class="content">
+
+      <div class="intro">
+        <h2>📄 Trung tâm hợp đồng VietTruck</h2>
+        <p>
+          Quản lý hợp đồng vận tải, hợp đồng chủ hàng,
+          hợp đồng nhà xe và các thỏa thuận hợp tác của doanh nghiệp.
+        </p>
+      </div>
+
+      <div class="stats">
+
+        <div class="stat">
+          <div class="icon">📄</div>
+          <strong id="totalContracts">36</strong>
+          <span>Tổng hợp đồng</span>
+        </div>
+
+        <div class="stat">
+          <div class="icon">✅</div>
+          <strong>27</strong>
+          <span>Đang hiệu lực</span>
+        </div>
+
+        <div class="stat">
+          <div class="icon">⏳</div>
+          <strong>5</strong>
+          <span>Sắp hết hạn</span>
+        </div>
+
+        <div class="stat">
+          <div class="icon">💰</div>
+          <strong>12,8 tỷ</strong>
+          <span>Tổng giá trị hợp đồng</span>
+        </div>
+
+      </div>
+
+      <section class="card">
+
+        <div class="card-head">
+
+          <h3>Danh sách hợp đồng</h3>
+
+          <div class="filters">
+
+            <input
+              id="searchInput"
+              class="control search"
+              type="text"
+              placeholder="Tìm số hợp đồng, đối tác..."
+              onkeyup="filterContracts()"
+            >
+
+            <select
+              id="typeFilter"
+              class="control"
+              onchange="filterContracts()"
+            >
+              <option value="">Tất cả loại hợp đồng</option>
+              <option value="chủ hàng">Chủ hàng</option>
+              <option value="nhà xe">Nhà xe</option>
+              <option value="đối tác">Đối tác</option>
+            </select>
+
+            <select
+              id="statusFilter"
+              class="control"
+              onchange="filterContracts()"
+            >
+              <option value="">Tất cả trạng thái</option>
+              <option value="đang hiệu lực">Đang hiệu lực</option>
+              <option value="sắp hết hạn">Sắp hết hạn</option>
+              <option value="hết hạn">Hết hạn</option>
+              <option value="bản nháp">Bản nháp</option>
+            </select>
+
+          </div>
+
+        </div>
+
+        <div class="table-wrap">
+
+          <table id="contractTable">
+
+            <thead>
+              <tr>
+                <th>Hợp đồng</th>
+                <th>Loại</th>
+                <th>Đối tác</th>
+                <th>Ngày ký</th>
+                <th>Hết hạn</th>
+                <th>Giá trị</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr>
+
+                <td class="contract-name">
+                  <strong>VT-HĐ-2026-036</strong>
+                  <small>Hợp đồng vận chuyển hàng hóa</small>
+                </td>
+
+                <td>
+                  <span class="badge customer">Chủ hàng</span>
+                </td>
+
+                <td>Công ty ABC Việt Nam</td>
+                <td>01/09/2026</td>
+                <td>31/08/2027</td>
+                <td>1.200.000.000 đ</td>
+
+                <td>
+                  <span class="badge active-status">
+                    Đang hiệu lực
+                  </span>
+                </td>
+
+                <td>
+                  <div class="actions">
+                    <button class="action-btn" onclick="viewContract('VT-HĐ-2026-036')">Xem</button>
+                    <button class="action-btn" onclick="editContract('VT-HĐ-2026-036')">Sửa</button>
+                  </div>
+                </td>
+
+              </tr>
+
+              <tr>
+
+                <td class="contract-name">
+                  <strong>VT-HĐ-2026-035</strong>
+                  <small>Hợp đồng cung cấp phương tiện</small>
+                </td>
+
+                <td>
+                  <span class="badge carrier">Nhà xe</span>
+                </td>
+
+                <td>Nhà xe Thành Công</td>
+                <td>15/08/2026</td>
+                <td>14/08/2027</td>
+                <td>850.000.000 đ</td>
+
+                <td>
+                  <span class="badge active-status">
+                    Đang hiệu lực
+                  </span>
+                </td>
+
+                <td>
+                  <div class="actions">
+                    <button class="action-btn" onclick="viewContract('VT-HĐ-2026-035')">Xem</button>
+                    <button class="action-btn" onclick="editContract('VT-HĐ-2026-035')">Sửa</button>
+                  </div>
+                </td>
+
+              </tr>
+
+              <tr>
+
+                <td class="contract-name">
+                  <strong>VT-HĐ-2026-034</strong>
+                  <small>Thỏa thuận hợp tác logistics</small>
+                </td>
+
+                <td>
+                  <span class="badge partner">Đối tác</span>
+                </td>
+
+                <td>Công ty Logistics Đông Á</td>
+                <td>01/01/2026</td>
+                <td>30/09/2026</td>
+                <td>500.000.000 đ</td>
+
+                <td>
+                  <span class="badge expiring-status">
+                    Sắp hết hạn
+                  </span>
+                </td>
+
+                <td>
+                  <div class="actions">
+                    <button class="action-btn" onclick="viewContract('VT-HĐ-2026-034')">Xem</button>
+                    <button class="action-btn" onclick="editContract('VT-HĐ-2026-034')">Sửa</button>
+                  </div>
+                </td>
+
+              </tr>
+
+              <tr>
+
+                <td class="contract-name">
+                  <strong>VT-HĐ-2026-033</strong>
+                  <small>Hợp đồng vận chuyển theo chuyến</small>
+                </td>
+
+                <td>
+                  <span class="badge customer">Chủ hàng</span>
+                </td>
+
+                <td>Công ty Minh Phát</td>
+                <td>10/01/2026</td>
+                <td>10/07/2026</td>
+                <td>320.000.000 đ</td>
+
+                <td>
+                  <span class="badge expired-status">
+                    Hết hạn
+                  </span>
+                </td>
+
+                <td>
+                  <div class="actions">
+                    <button class="action-btn" onclick="viewContract('VT-HĐ-2026-033')">Xem</button>
+                    <button class="action-btn" onclick="editContract('VT-HĐ-2026-033')">Sửa</button>
+                  </div>
+                </td>
+
+              </tr>
+
+              <tr>
+
+                <td class="contract-name">
+                  <strong>VT-HĐ-2026-037</strong>
+                  <small>Hợp đồng hợp tác vận tải</small>
+                </td>
+
+                <td>
+                  <span class="badge carrier">Nhà xe</span>
+                </td>
+
+                <td>Nhà xe Hoàng Gia</td>
+                <td>Chưa ký</td>
+                <td>Chưa xác định</td>
+                <td>450.000.000 đ</td>
+
+                <td>
+                  <span class="badge draft-status">
+                    Bản nháp
+                  </span>
+                </td>
+
+                <td>
+                  <div class="actions">
+                    <button class="action-btn" onclick="viewContract('VT-HĐ-2026-037')">Xem</button>
+                    <button class="action-btn" onclick="editContract('VT-HĐ-2026-037')">Sửa</button>
+                  </div>
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+          <div id="emptyMessage" class="empty">
+            Không tìm thấy hợp đồng phù hợp.
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+</div>
+
+<!-- MODAL THÊM HỢP ĐỒNG -->
+
+<div id="contractModal" class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h3>Thêm hợp đồng mới</h3>
+
+      <button
+        class="close"
+        onclick="closeModal()">
+        ×
+      </button>
+
+    </div>
+
+    <div class="modal-body">
+
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label>Số hợp đồng</label>
+          <input
+            id="contractCode"
+            class="form-control"
+            type="text"
+            placeholder="Ví dụ: VT-HĐ-2026-038"
+          >
+        </div>
+
+        <div class="form-group">
+          <label>Loại hợp đồng</label>
+
+          <select id="contractType" class="form-control">
+            <option>Chủ hàng</option>
+            <option>Nhà xe</option>
+            <option>Đối tác</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Tên đối tác</label>
+
+          <input
+            id="partnerName"
+            class="form-control"
+            type="text"
+            placeholder="Nhập tên công ty / nhà xe"
+          >
+        </div>
+
+        <div class="form-group">
+          <label>Giá trị hợp đồng</label>
+
+          <input
+            id="contractValue"
+            class="form-control"
+            type="text"
+            placeholder="Ví dụ: 500.000.000 đ"
+          >
+        </div>
+
+        <div class="form-group">
+          <label>Ngày ký</label>
+
+          <input
+            id="signDate"
+            class="form-control"
+            type="date"
+          >
+        </div>
+
+        <div class="form-group">
+          <label>Ngày hết hạn</label>
+
+          <input
+            id="expiryDate"
+            class="form-control"
+            type="date"
+          >
+        </div>
+
+        <div class="form-group">
+          <label>Trạng thái</label>
+
+          <select id="contractStatus" class="form-control">
+            <option>Đang hiệu lực</option>
+            <option>Sắp hết hạn</option>
+            <option>Bản nháp</option>
+            <option>Hết hạn</option>
+          </select>
+        </div>
+
+        <div class="form-group full">
+
+          <label>Nội dung / ghi chú</label>
+
+          <textarea
+            id="contractNote"
+            class="form-control"
+            placeholder="Nhập nội dung chính hoặc ghi chú hợp đồng">
+          </textarea>
+
+        </div>
+
+        <div class="form-group full">
+
+          <label>File hợp đồng</label>
+
+          <input
+            class="form-control"
+            type="file"
+            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+          >
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="modal-foot">
+
+      <button
+        class="btn btn-light"
+        onclick="closeModal()">
+        Hủy
+      </button>
+
+      <button
+        class="btn btn-primary"
+        onclick="addContract()">
+        Lưu hợp đồng
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const modal =
+  document.getElementById("contractModal");
+
+function openModal(){
+  modal.classList.add("show");
+}
+
+function closeModal(){
+  modal.classList.remove("show");
+}
+
+function addContract(){
+
+  const code =
+    document.getElementById("contractCode")
+    .value.trim();
+
+  const type =
+    document.getElementById("contractType")
+    .value;
+
+  const partner =
+    document.getElementById("partnerName")
+    .value.trim();
+
+  const value =
+    document.getElementById("contractValue")
+    .value.trim();
+
+  const signDate =
+    document.getElementById("signDate")
+    .value;
+
+  const expiryDate =
+    document.getElementById("expiryDate")
+    .value;
+
+  const status =
+    document.getElementById("contractStatus")
+    .value;
+
+  if(!code || !partner || !value){
+
+    alert(
+      "Vui lòng nhập số hợp đồng, đối tác và giá trị hợp đồng."
+    );
+
+    return;
+  }
+
+  let typeClass = "customer";
+
+  if(type === "Nhà xe"){
+    typeClass = "carrier";
+  }
+
+  if(type === "Đối tác"){
+    typeClass = "partner";
+  }
+
+  let statusClass = "active-status";
+
+  if(status === "Sắp hết hạn"){
+    statusClass = "expiring-status";
+  }
+
+  if(status === "Hết hạn"){
+    statusClass = "expired-status";
+  }
+
+  if(status === "Bản nháp"){
+    statusClass = "draft-status";
+  }
+
+  const tbody =
+    document.querySelector(
+      "#contractTable tbody"
+    );
+
+  const row =
+    document.createElement("tr");
+
+  row.innerHTML = `
+
+    <td class="contract-name">
+      <strong>${code}</strong>
+      <small>Hợp đồng VietTruck</small>
+    </td>
+
+    <td>
+      <span class="badge ${typeClass}">
+        ${type}
+      </span>
+    </td>
+
+    <td>${partner}</td>
+
+    <td>
+      ${signDate || "Chưa ký"}
+    </td>
+
+    <td>
+      ${expiryDate || "Chưa xác định"}
+    </td>
+
+    <td>${value}</td>
+
+    <td>
+      <span class="badge ${statusClass}">
+        ${status}
+      </span>
+    </td>
+
+    <td>
+      <div class="actions">
+
+        <button
+          class="action-btn"
+          onclick="viewContract('${code}')">
+          Xem
+        </button>
+
+        <button
+          class="action-btn"
+          onclick="editContract('${code}')">
+          Sửa
+        </button>
+
+      </div>
+    </td>
+
+  `;
+
+  tbody.prepend(row);
+
+  const current =
+    parseInt(
+      document.getElementById(
+        "totalContracts"
+      ).textContent
+    );
+
+  document.getElementById(
+    "totalContracts"
+  ).textContent = current + 1;
+
+  document.getElementById(
+    "contractCode"
+  ).value = "";
+
+  document.getElementById(
+    "partnerName"
+  ).value = "";
+
+  document.getElementById(
+    "contractValue"
+  ).value = "";
+
+  document.getElementById(
+    "signDate"
+  ).value = "";
+
+  document.getElementById(
+    "expiryDate"
+  ).value = "";
+
+  closeModal();
+
+  alert("Đã thêm hợp đồng thành công.");
+
+}
+
+function filterContracts(){
+
+  const search =
+    document.getElementById(
+      "searchInput"
+    ).value.toLowerCase();
+
+  const type =
+    document.getElementById(
+      "typeFilter"
+    ).value.toLowerCase();
+
+  const status =
+    document.getElementById(
+      "statusFilter"
+    ).value.toLowerCase();
+
+  const rows =
+    document.querySelectorAll(
+      "#contractTable tbody tr"
+    );
+
+  let visible = 0;
+
+  rows.forEach(function(row){
+
+    const text =
+      row.textContent.toLowerCase();
+
+    const matchSearch =
+      text.includes(search);
+
+    const matchType =
+      type === "" ||
+      text.includes(type);
+
+    const matchStatus =
+      status === "" ||
+      text.includes(status);
+
+    if(
+      matchSearch &&
+      matchType &&
+      matchStatus
+    ){
+
+      row.style.display = "";
+      visible++;
+
+    }else{
+
+      row.style.display = "none";
+
+    }
+
+  });
+
+  document.getElementById(
+    "emptyMessage"
+  ).style.display =
+    visible === 0
+    ? "block"
+    : "none";
+
+}
+
+function viewContract(code){
+
+  alert(
+    "Xem chi tiết hợp đồng: " + code
+  );
+
+}
+
+function editContract(code){
+
+  alert(
+    "Chỉnh sửa hợp đồng: " + code
+  );
+
+}
+
+window.onclick = function(event){
+
+  if(event.target === modal){
+    closeModal();
+  }
+
+}
+
+</script>
+
+</body>
+</html>
