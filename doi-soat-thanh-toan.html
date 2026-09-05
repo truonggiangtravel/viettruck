@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đối soát thanh toán | VietTruck</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial,Helvetica,sans-serif;
+    }
+
+    body{
+      background:#f5f7fa;
+      color:#1f2937;
+    }
+
+    .header{
+      background:#fff;
+      border-bottom:1px solid #e5e7eb;
+      padding:16px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:700;
+      color:#16a34a;
+      text-decoration:none;
+    }
+
+    .header-links{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .header-links a{
+      color:#4b5563;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .container{
+      max-width:1220px;
+      margin:30px auto;
+      padding:0 20px;
+    }
+
+    .title-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .title h1{
+      font-size:28px;
+      margin-bottom:8px;
+    }
+
+    .title p{
+      color:#6b7280;
+    }
+
+    .add-btn{
+      background:#16a34a;
+      color:#fff;
+      border:none;
+      padding:11px 16px;
+      border-radius:8px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .stat{
+      background:#fff;
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .stat small{
+      color:#6b7280;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:27px;
+      margin-top:8px;
+    }
+
+    .green{color:#16a34a;}
+    .orange{color:#d97706;}
+    .red{color:#dc2626;}
+
+    .filters{
+      background:#fff;
+      padding:18px;
+      border-radius:12px;
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr 1fr auto;
+      gap:12px;
+      margin-bottom:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    input,select{
+      width:100%;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      padding:11px 12px;
+      outline:none;
+    }
+
+    .search-btn{
+      border:none;
+      background:#16a34a;
+      color:#fff;
+      border-radius:8px;
+      padding:0 18px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .table-wrap{
+      background:#fff;
+      border-radius:12px;
+      overflow:auto;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+      margin-bottom:22px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:1150px;
+    }
+
+    th{
+      background:#f8fafc;
+      padding:14px 16px;
+      text-align:left;
+      font-size:13px;
+      color:#4b5563;
+      border-bottom:1px solid #e5e7eb;
+    }
+
+    td{
+      padding:15px 16px;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+      vertical-align:top;
+    }
+
+    tr:hover{
+      background:#fafafa;
+    }
+
+    .status{
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:20px;
+      font-size:11px;
+      font-weight:bold;
+      white-space:nowrap;
+    }
+
+    .waiting{
+      background:#fef3c7;
+      color:#b45309;
+    }
+
+    .approved{
+      background:#dbeafe;
+      color:#1d4ed8;
+    }
+
+    .paid{
+      background:#dcfce7;
+      color:#15803d;
+    }
+
+    .problem{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .action{
+      color:#16a34a;
+      text-decoration:none;
+      font-weight:bold;
+      font-size:13px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    .panel{
+      background:#fff;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .panel h2{
+      font-size:18px;
+      margin-bottom:16px;
+    }
+
+    .summary-row{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:11px 0;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+    }
+
+    .summary-row:last-child{
+      border-bottom:none;
+    }
+
+    .summary-row span{
+      color:#6b7280;
+    }
+
+    .flow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    .flow-item{
+      background:#f8fafc;
+      border:1px solid #e5e7eb;
+      padding:12px;
+      border-radius:10px;
+      text-align:center;
+      flex:1;
+      min-width:110px;
+      font-size:13px;
+    }
+
+    .arrow{
+      color:#9ca3af;
+      font-weight:bold;
+    }
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.45);
+      z-index:100;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .modal-box{
+      background:#fff;
+      width:100%;
+      max-width:650px;
+      border-radius:14px;
+      padding:24px;
+    }
+
+    .modal-box h2{
+      margin-bottom:18px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .form-group{
+      margin-bottom:12px;
+    }
+
+    .form-group label{
+      display:block;
+      font-size:13px;
+      font-weight:bold;
+      margin-bottom:6px;
+    }
+
+    textarea{
+      width:100%;
+      min-height:90px;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      padding:11px;
+      resize:vertical;
+    }
+
+    .modal-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .cancel{
+      border:1px solid #d1d5db;
+      background:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+    }
+
+    .save{
+      border:none;
+      background:#16a34a;
+      color:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    @media(max-width:900px){
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .filters{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:560px){
+      .stats,
+      .filters,
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .title-row{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <a href="index.html" class="logo">🚚 VietTruck</a>
+
+  <div class="header-links">
+    <a href="cong-no-van-tai.html">Công nợ</a>
+    <a href="vi-viettruck.html">Ví VietTruck</a>
+    <a href="chi-phi-van-tai.html">Chi phí</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+
+</header>
+
+<div class="container">
+
+  <div class="title-row">
+
+    <div class="title">
+      <h1>Đối soát & thanh toán</h1>
+      <p>Đối chiếu chuyến hàng, cước phí, phụ phí, công nợ và thanh toán giữa các bên.</p>
+    </div>
+
+    <button class="add-btn" onclick="openModal()">
+      + Tạo phiên đối soát
+    </button>
+
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Chờ đối soát</small>
+      <strong class="orange">36 triệu</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đã xác nhận</small>
+      <strong>142 triệu</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đã thanh toán</small>
+      <strong class="green">318 triệu</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đang có tranh chấp</small>
+      <strong class="red">12,5 triệu</strong>
+    </div>
+
+  </div>
+
+  <div class="filters">
+
+    <input type="text" placeholder="Tìm mã đối soát, chuyến, khách hàng hoặc nhà xe">
+
+    <select>
+      <option>Tất cả đối tượng</option>
+      <option>Chủ hàng</option>
+      <option>Nhà xe</option>
+      <option>Tài xế</option>
+    </select>
+
+    <select>
+      <option>Tất cả trạng thái</option>
+      <option>Chờ đối soát</option>
+      <option>Đã xác nhận</option>
+      <option>Đã thanh toán</option>
+      <option>Có tranh chấp</option>
+    </select>
+
+    <select>
+      <option>Tháng 09/2026</option>
+      <option>Tháng 08/2026</option>
+      <option>Quý III/2026</option>
+    </select>
+
+    <button class="search-btn">Tìm kiếm</button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Mã đối soát</th>
+          <th>Đối tác</th>
+          <th>Mã chuyến</th>
+          <th>Cước vận chuyển</th>
+          <th>Phụ phí</th>
+          <th>Khấu trừ</th>
+          <th>Thực thanh toán</th>
+          <th>Hạn thanh toán</th>
+          <th>Trạng thái</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td><strong>DS-090526-001</strong></td>
+          <td>
+            Công ty ABC Logistics<br>
+            <small>Chủ hàng</small>
+          </td>
+          <td>DH-090526-007</td>
+          <td>18.500.000đ</td>
+          <td>850.000đ</td>
+          <td>0đ</td>
+          <td><strong>19.350.000đ</strong></td>
+          <td>10/09/2026</td>
+          <td><span class="status waiting">Chờ đối soát</span></td>
+          <td><a href="#" class="action">Đối soát</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>DS-090526-002</strong></td>
+          <td>
+            Nhà xe Thành Công<br>
+            <small>Nhà xe</small>
+          </td>
+          <td>DH-090526-004</td>
+          <td>12.800.000đ</td>
+          <td>500.000đ</td>
+          <td>300.000đ</td>
+          <td><strong>13.000.000đ</strong></td>
+          <td>08/09/2026</td>
+          <td><span class="status approved">Đã xác nhận</span></td>
+          <td><a href="#" class="action">Thanh toán</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>DS-040926-011</strong></td>
+          <td>
+            Công ty Minh Phát<br>
+            <small>Chủ hàng</small>
+          </td>
+          <td>DH-040926-015</td>
+          <td>26.000.000đ</td>
+          <td>1.200.000đ</td>
+          <td>2.500.000đ</td>
+          <td><strong>24.700.000đ</strong></td>
+          <td>07/09/2026</td>
+          <td><span class="status problem">Có tranh chấp</span></td>
+          <td><a href="#" class="action">Xử lý</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>DS-030926-008</strong></td>
+          <td>
+            Nhà xe An Phú<br>
+            <small>Nhà xe</small>
+          </td>
+          <td>DH-030926-021</td>
+          <td>9.600.000đ</td>
+          <td>400.000đ</td>
+          <td>0đ</td>
+          <td><strong>10.000.000đ</strong></td>
+          <td>05/09/2026</td>
+          <td><span class="status paid">Đã thanh toán</span></td>
+          <td><a href="#" class="action">Xem</a></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="panel">
+
+      <h2>Quy trình đối soát</h2>
+
+      <div class="flow">
+
+        <div class="flow-item">
+          🚚<br><strong>Hoàn thành chuyến</strong>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="flow-item">
+          📄<br><strong>Kiểm tra POD</strong>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="flow-item">
+          🧾<br><strong>Đối soát cước</strong>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="flow-item">
+          💳<br><strong>Thanh toán</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <h2>Tổng hợp thanh toán</h2>
+
+      <div class="summary-row">
+        <span>Đối soát trong tháng</span>
+        <strong>496,5 triệu</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Đã xác nhận</span>
+        <strong>448 triệu</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Đã thanh toán</span>
+        <strong class="green">318 triệu</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Chờ thanh toán</span>
+        <strong class="orange">130 triệu</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Tranh chấp</span>
+        <strong class="red">12,5 triệu</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal" id="reconcileModal">
+
+  <div class="modal-box">
+
+    <h2>Tạo phiên đối soát</h2>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Đối tượng</label>
+        <select>
+          <option>Chủ hàng</option>
+          <option>Nhà xe</option>
+          <option>Tài xế</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Tên đối tác</label>
+        <input type="text" placeholder="Nhập tên khách hàng / nhà xe">
+      </div>
+
+      <div class="form-group">
+        <label>Mã chuyến</label>
+        <input type="text" placeholder="VD: DH-090526-007">
+      </div>
+
+      <div class="form-group">
+        <label>Cước vận chuyển</label>
+        <input type="number" placeholder="Nhập số tiền">
+      </div>
+
+      <div class="form-group">
+        <label>Phụ phí</label>
+        <input type="number" placeholder="0">
+      </div>
+
+      <div class="form-group">
+        <label>Khấu trừ</label>
+        <input type="number" placeholder="0">
+      </div>
+
+      <div class="form-group">
+        <label>Hạn thanh toán</label>
+        <input type="date">
+      </div>
+
+      <div class="form-group">
+        <label>Trạng thái</label>
+        <select>
+          <option>Chờ đối soát</option>
+          <option>Đã xác nhận</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label>Ghi chú đối soát</label>
+      <textarea placeholder="Phụ phí, chứng từ, POD, lý do khấu trừ..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+
+      <button class="cancel" onclick="closeModal()">
+        Hủy
+      </button>
+
+      <button class="save" onclick="saveReconcile()">
+        Tạo đối soát
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  function openModal(){
+    document.getElementById("reconcileModal").style.display="flex";
+  }
+
+  function closeModal(){
+    document.getElementById("reconcileModal").style.display="none";
+  }
+
+  function saveReconcile(){
+    alert("Đã tạo phiên đối soát.");
+    closeModal();
+  }
+</script>
+
+</body>
+</html>
