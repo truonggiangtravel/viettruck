@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chứng từ vận tải | VietTruck</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial,Helvetica,sans-serif;
+    }
+
+    body{
+      background:#f5f7fa;
+      color:#1f2937;
+    }
+
+    .header{
+      background:#fff;
+      border-bottom:1px solid #e5e7eb;
+      padding:16px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:700;
+      color:#16a34a;
+      text-decoration:none;
+    }
+
+    .header-links{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .header-links a{
+      color:#4b5563;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .container{
+      max-width:1220px;
+      margin:30px auto;
+      padding:0 20px;
+    }
+
+    .title-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .title h1{
+      font-size:28px;
+      margin-bottom:8px;
+    }
+
+    .title p{
+      color:#6b7280;
+    }
+
+    .add-btn{
+      background:#16a34a;
+      color:#fff;
+      border:0;
+      padding:11px 16px;
+      border-radius:8px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .stat{
+      background:#fff;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .stat small{
+      color:#6b7280;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:27px;
+      margin-top:8px;
+    }
+
+    .green{color:#16a34a;}
+    .orange{color:#d97706;}
+    .red{color:#dc2626;}
+    .blue{color:#2563eb;}
+
+    .filters{
+      background:#fff;
+      border-radius:12px;
+      padding:18px;
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr 1fr auto;
+      gap:12px;
+      margin-bottom:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    input,select{
+      width:100%;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      padding:11px;
+    }
+
+    .search-btn{
+      border:0;
+      background:#16a34a;
+      color:#fff;
+      border-radius:8px;
+      padding:0 18px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .table-wrap{
+      background:#fff;
+      border-radius:12px;
+      overflow:auto;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+      margin-bottom:22px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:1200px;
+    }
+
+    th{
+      background:#f8fafc;
+      padding:14px 16px;
+      text-align:left;
+      font-size:13px;
+      color:#4b5563;
+      border-bottom:1px solid #e5e7eb;
+    }
+
+    td{
+      padding:15px 16px;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+      vertical-align:top;
+    }
+
+    .status{
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:20px;
+      font-size:11px;
+      font-weight:bold;
+      white-space:nowrap;
+    }
+
+    .complete{
+      background:#dcfce7;
+      color:#15803d;
+    }
+
+    .missing{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .checking{
+      background:#fef3c7;
+      color:#b45309;
+    }
+
+    .received{
+      background:#dbeafe;
+      color:#1d4ed8;
+    }
+
+    .action{
+      color:#16a34a;
+      text-decoration:none;
+      font-weight:bold;
+      font-size:13px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    .panel{
+      background:#fff;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .panel h2{
+      font-size:18px;
+      margin-bottom:16px;
+    }
+
+    .summary-row{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:11px 0;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+    }
+
+    .summary-row span{
+      color:#6b7280;
+    }
+
+    .doc-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .doc-item{
+      border:1px solid #e5e7eb;
+      border-radius:10px;
+      padding:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+    }
+
+    .doc-item strong{
+      display:block;
+      margin-bottom:4px;
+    }
+
+    .doc-item small{
+      color:#6b7280;
+    }
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.45);
+      z-index:100;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .modal-box{
+      background:#fff;
+      width:100%;
+      max-width:680px;
+      border-radius:14px;
+      padding:24px;
+    }
+
+    .modal-box h2{
+      margin-bottom:18px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .form-group{
+      margin-bottom:12px;
+    }
+
+    .form-group label{
+      display:block;
+      font-size:13px;
+      font-weight:bold;
+      margin-bottom:6px;
+    }
+
+    textarea{
+      width:100%;
+      min-height:90px;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      padding:11px;
+      resize:vertical;
+    }
+
+    .modal-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .cancel{
+      border:1px solid #d1d5db;
+      background:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+    }
+
+    .save{
+      border:0;
+      background:#16a34a;
+      color:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    @media(max-width:900px){
+      .stats{grid-template-columns:repeat(2,1fr);}
+      .filters{grid-template-columns:1fr 1fr;}
+      .grid{grid-template-columns:1fr;}
+    }
+
+    @media(max-width:560px){
+      .stats,.filters,.form-grid{grid-template-columns:1fr;}
+      .title-row{flex-direction:column;align-items:flex-start;}
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <a href="index.html" class="logo">🚚 VietTruck</a>
+
+  <div class="header-links">
+    <a href="doi-soat-thanh-toan.html">Đối soát</a>
+    <a href="hoa-don-van-tai.html">Hóa đơn</a>
+    <a href="cong-no-van-tai.html">Công nợ</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+
+</header>
+
+<div class="container">
+
+  <div class="title-row">
+
+    <div class="title">
+      <h1>Quản lý chứng từ vận tải</h1>
+      <p>Theo dõi POD, biên bản giao nhận, phiếu xuất kho, hóa đơn và chứng từ thanh toán theo từng chuyến.</p>
+    </div>
+
+    <button class="add-btn" onclick="openModal()">
+      + Thêm chứng từ
+    </button>
+
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Tổng bộ chứng từ</small>
+      <strong>286</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đã đầy đủ</small>
+      <strong class="green">238</strong>
+    </div>
+
+    <div class="stat">
+      <small>Chờ bổ sung</small>
+      <strong class="orange">34</strong>
+    </div>
+
+    <div class="stat">
+      <small>Thiếu / sai chứng từ</small>
+      <strong class="red">14</strong>
+    </div>
+
+  </div>
+
+  <div class="filters">
+
+    <input type="text" placeholder="Tìm mã chuyến, khách hàng, nhà xe hoặc chứng từ">
+
+    <select>
+      <option>Tất cả chứng từ</option>
+      <option>POD / Biên bản giao nhận</option>
+      <option>Phiếu xuất kho</option>
+      <option>Hóa đơn</option>
+      <option>Ảnh giao hàng</option>
+      <option>Chứng từ thanh toán</option>
+    </select>
+
+    <select>
+      <option>Tất cả trạng thái</option>
+      <option>Đầy đủ</option>
+      <option>Đã nhận</option>
+      <option>Đang kiểm tra</option>
+      <option>Thiếu chứng từ</option>
+    </select>
+
+    <select>
+      <option>Tháng 09/2026</option>
+      <option>Tháng 08/2026</option>
+      <option>Quý III/2026</option>
+    </select>
+
+    <button class="search-btn">Tìm kiếm</button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Mã chuyến</th>
+          <th>Khách hàng</th>
+          <th>Nhà xe</th>
+          <th>POD</th>
+          <th>Phiếu xuất kho</th>
+          <th>Hóa đơn</th>
+          <th>Ảnh giao hàng</th>
+          <th>Thanh toán</th>
+          <th>Trạng thái</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td><strong>DH-090526-007</strong></td>
+          <td>Công ty ABC Logistics</td>
+          <td>Nhà xe Thành Công</td>
+          <td><span class="status complete">Đã có</span></td>
+          <td><span class="status complete">Đã có</span></td>
+          <td><span class="status received">Đã nhận</span></td>
+          <td><span class="status complete">6 ảnh</span></td>
+          <td><span class="status checking">Chờ</span></td>
+          <td><span class="status checking">Đang kiểm tra</span></td>
+          <td><a href="#" class="action">Xem bộ hồ sơ</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>DH-090526-004</strong></td>
+          <td>Công ty Hưng Phát</td>
+          <td>Nhà xe An Phú</td>
+          <td><span class="status complete">Đã có</span></td>
+          <td><span class="status complete">Đã có</span></td>
+          <td><span class="status complete">Đã có</span></td>
+          <td><span class="status complete">4 ảnh</span></td>
+          <td><span class="status complete">Đã có</span></td>
+          <td><span class="status complete">Đầy đủ</span></td>
+          <td><a href="doi-soat-thanh-toan.html" class="action">Đối soát</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>DH-040926-015</strong></td>
+          <td>Công ty Minh Phát</td>
+          <td>Nhà xe Hoàng Long</td>
+          <td><span class="status missing">Thiếu</span></td>
+          <td><span class="status complete">Đã có</span></td>
+          <td><span class="status received">Đã nhận</span></td>
+          <td><span class="status complete">3 ảnh</span></td>
+          <td><span class="status checking">Chờ</span></td>
+          <td><span class="status missing">Thiếu chứng từ</span></td>
+          <td><a href="#" class="action">Bổ sung</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>DH-030926-021</strong></td>
+          <td>Công ty Đại Việt</td>
+          <td>Nhà xe Thành Công</td>
+          <td><span class="status complete">Đã có</span></td>
+          <td><span class="status complete">Đã có</span></td>
+          <td><span class="status complete">Đã có</span></td>
+          <td><span class="status complete">8 ảnh</span></td>
+          <td><span class="status complete">Đã có</span></td>
+          <td><span class="status complete">Đầy đủ</span></td>
+          <td><a href="hoa-don-van-tai.html" class="action">Hóa đơn</a></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="panel">
+
+      <h2>Hồ sơ bắt buộc theo chuyến</h2>
+
+      <div class="doc-list">
+
+        <div class="doc-item">
+          <div>
+            <strong>📄 POD / Biên bản giao nhận</strong>
+            <small>Xác nhận hàng đã được giao cho người nhận.</small>
+          </div>
+          <span class="status complete">Bắt buộc</span>
+        </div>
+
+        <div class="doc-item">
+          <div>
+            <strong>📦 Phiếu xuất kho</strong>
+            <small>Chứng từ hàng hóa tại điểm xuất phát.</small>
+          </div>
+          <span class="status complete">Bắt buộc</span>
+        </div>
+
+        <div class="doc-item">
+          <div>
+            <strong>📷 Ảnh giao nhận</strong>
+            <small>Ảnh hàng, xe và tình trạng giao hàng.</small>
+          </div>
+          <span class="status received">Khuyến nghị</span>
+        </div>
+
+        <div class="doc-item">
+          <div>
+            <strong>🧾 Hóa đơn vận tải</strong>
+            <small>Liên kết với nghiệp vụ hóa đơn và công nợ.</small>
+          </div>
+          <span class="status received">Tài chính</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <h2>Tình trạng chứng từ</h2>
+
+      <div class="summary-row">
+        <span>Đủ hồ sơ để đối soát</span>
+        <strong class="green">238 chuyến</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Chờ tài xế gửi POD</span>
+        <strong class="orange">21 chuyến</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Chờ hóa đơn</span>
+        <strong>13 chuyến</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Có chứng từ sai / thiếu</span>
+        <strong class="red">14 chuyến</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Tỷ lệ hoàn thiện chứng từ</span>
+        <strong class="blue">83,2%</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal" id="documentModal">
+
+  <div class="modal-box">
+
+    <h2>Thêm chứng từ vận tải</h2>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Mã chuyến</label>
+        <input type="text" placeholder="VD: DH-090526-007">
+      </div>
+
+      <div class="form-group">
+        <label>Loại chứng từ</label>
+        <select>
+          <option>POD / Biên bản giao nhận</option>
+          <option>Phiếu xuất kho</option>
+          <option>Hóa đơn</option>
+          <option>Ảnh giao hàng</option>
+          <option>Chứng từ thanh toán</option>
+          <option>Chứng từ khác</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Số chứng từ</label>
+        <input type="text" placeholder="Nhập số / mã chứng từ">
+      </div>
+
+      <div class="form-group">
+        <label>Ngày chứng từ</label>
+        <input type="date">
+      </div>
+
+      <div class="form-group">
+        <label>Người gửi</label>
+        <input type="text" placeholder="Tài xế, nhà xe hoặc khách hàng">
+      </div>
+
+      <div class="form-group">
+        <label>Trạng thái</label>
+        <select>
+          <option>Đã nhận</option>
+          <option>Đang kiểm tra</option>
+          <option>Đầy đủ</option>
+          <option>Cần bổ sung</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label>Ghi chú</label>
+      <textarea placeholder="Ghi chú tình trạng chứng từ..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+
+      <button class="cancel" onclick="closeModal()">
+        Hủy
+      </button>
+
+      <button class="save" onclick="saveDocument()">
+        Lưu chứng từ
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  function openModal(){
+    document.getElementById("documentModal").style.display="flex";
+  }
+
+  function closeModal(){
+    document.getElementById("documentModal").style.display="none";
+  }
+
+  function saveDocument(){
+    alert("Đã ghi nhận chứng từ vận tải.");
+    closeModal();
+  }
+</script>
+
+</body>
+</html>
