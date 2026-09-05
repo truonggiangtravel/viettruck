@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Xác minh đối tác - VietTruck</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  background:#f4f7f8;
+  color:#1f2937;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+.app{
+  display:flex;
+  min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:250px;
+  background:#0f5132;
+  color:white;
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  padding:24px 16px;
+  overflow-y:auto;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:800;
+  text-align:center;
+  margin-bottom:28px;
+}
+
+.logo span{
+  color:#ffc107;
+}
+
+.menu-title{
+  font-size:12px;
+  text-transform:uppercase;
+  opacity:.7;
+  margin:20px 12px 8px;
+}
+
+.menu-item{
+  display:block;
+  padding:12px 14px;
+  border-radius:10px;
+  margin-bottom:6px;
+}
+
+.menu-item:hover,
+.menu-item.active{
+  background:rgba(255,255,255,.15);
+}
+
+/* MAIN */
+
+.main{
+  margin-left:250px;
+  width:calc(100% - 250px);
+}
+
+.topbar{
+  min-height:72px;
+  padding:16px 28px;
+  background:white;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.topbar h1{
+  color:#0f5132;
+  font-size:22px;
+}
+
+.content{
+  max-width:1350px;
+  margin:auto;
+  padding:28px;
+}
+
+/* BUTTON */
+
+.btn{
+  border:none;
+  border-radius:10px;
+  padding:11px 16px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.btn-primary{
+  background:#198754;
+  color:white;
+}
+
+.btn-success{
+  background:#198754;
+  color:white;
+}
+
+.btn-danger{
+  background:#dc3545;
+  color:white;
+}
+
+.btn-light{
+  background:#eef3f0;
+  color:#0f5132;
+}
+
+/* HEADER */
+
+.hero{
+  background:linear-gradient(135deg,#0f5132,#198754);
+  color:white;
+  padding:25px;
+  border-radius:18px;
+  margin-bottom:22px;
+}
+
+.hero h2{
+  margin-bottom:8px;
+}
+
+.hero p{
+  opacity:.9;
+  line-height:1.6;
+}
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:22px;
+}
+
+.stat{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:19px;
+  box-shadow:0 4px 15px rgba(0,0,0,.04);
+}
+
+.stat-icon{
+  font-size:25px;
+  margin-bottom:9px;
+}
+
+.stat strong{
+  display:block;
+  font-size:25px;
+  color:#0f5132;
+  margin-bottom:4px;
+}
+
+.stat span{
+  font-size:13px;
+  color:#6b7280;
+}
+
+/* CARD */
+
+.card{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 4px 18px rgba(0,0,0,.05);
+  margin-bottom:20px;
+}
+
+.card-head{
+  padding:18px 20px;
+  border-bottom:1px solid #edf0f2;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.card-head h3{
+  color:#0f5132;
+}
+
+.card-body{
+  padding:20px;
+}
+
+/* PARTNER */
+
+.partner{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.avatar{
+  width:55px;
+  height:55px;
+  border-radius:14px;
+  background:#dff3e7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+}
+
+.partner strong{
+  display:block;
+  font-size:17px;
+  margin-bottom:5px;
+}
+
+.partner small{
+  color:#6b7280;
+}
+
+/* PROGRESS */
+
+.progress-wrap{
+  margin-top:20px;
+}
+
+.progress-info{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:7px;
+  font-size:13px;
+}
+
+.progress{
+  width:100%;
+  height:10px;
+  background:#e5e7eb;
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.progress-bar{
+  height:100%;
+  width:80%;
+  background:#198754;
+}
+
+/* GRID */
+
+.grid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:20px;
+}
+
+/* CHECK ITEM */
+
+.check-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  padding:17px 0;
+  border-bottom:1px solid #edf0f2;
+}
+
+.check-item:last-child{
+  border-bottom:none;
+}
+
+.check-left{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+.check-icon{
+  width:42px;
+  height:42px;
+  background:#f1f5f3;
+  border-radius:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:19px;
+}
+
+.check-info strong{
+  display:block;
+  margin-bottom:5px;
+}
+
+.check-info small{
+  color:#6b7280;
+}
+
+.badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.ok{
+  background:#d1fae5;
+  color:#065f46;
+}
+
+.wait{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.fail{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+/* INFO */
+
+.info-row{
+  padding:13px 0;
+  border-bottom:1px solid #edf0f2;
+}
+
+.info-row:last-child{
+  border-bottom:none;
+}
+
+.info-row span{
+  display:block;
+  color:#6b7280;
+  font-size:12px;
+  margin-bottom:5px;
+}
+
+.info-row strong{
+  font-size:14px;
+}
+
+/* NOTE */
+
+.note{
+  background:#fff8db;
+  border:1px solid #f4dc87;
+  border-radius:12px;
+  padding:14px;
+  line-height:1.5;
+  color:#6b5500;
+  font-size:13px;
+}
+
+/* ACTION */
+
+.verify-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:700px){
+  .sidebar{
+    width:100%;
+    position:static;
+  }
+
+  .app{
+    display:block;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+  }
+
+  .content{
+    padding:16px;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .topbar{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<div class="logo">
+Viet<span>Truck</span>
+</div>
+
+<div class="menu-title">Hệ thống</div>
+
+<a class="menu-item" href="dashboard.html">🏠 Dashboard</a>
+<a class="menu-item" href="quan-ly-don-hang.html">📦 Quản lý đơn hàng</a>
+<a class="menu-item" href="trung-tam-bao-gia.html">💰 Trung tâm báo giá</a>
+<a class="menu-item" href="hang-chieu-ve.html">🔄 Hàng chiều về</a>
+<a class="menu-item" href="quan-ly-doi-xe.html">🚛 Quản lý đội xe</a>
+
+<div class="menu-title">Doanh nghiệp</div>
+
+<a class="menu-item" href="thong-tin-doanh-nghiep.html">🏢 Thông tin doanh nghiệp</a>
+<a class="menu-item" href="quan-ly-nhan-vien.html">👥 Quản lý nhân viên</a>
+<a class="menu-item" href="phan-quyen-tai-khoan.html">🛡️ Phân quyền tài khoản</a>
+<a class="menu-item" href="nhat-ky-hoat-dong.html">📋 Nhật ký hoạt động</a>
+<a class="menu-item" href="quan-ly-chi-nhanh.html">📍 Quản lý chi nhánh</a>
+<a class="menu-item" href="quan-ly-hop-dong.html">📄 Quản lý hợp đồng</a>
+<a class="menu-item active" href="quan-ly-doi-tac.html">🤝 Quản lý đối tác</a>
+
+<div class="menu-title">Tài khoản</div>
+
+<a class="menu-item" href="tai-khoan.html">👤 Tài khoản</a>
+<a class="menu-item" href="vi-viettruck.html">💳 Ví VietTruck</a>
+<a class="menu-item" href="cai-dat.html">⚙️ Cài đặt</a>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="main">
+
+<div class="topbar">
+
+<h1>Xác minh đối tác / KYC</h1>
+
+<button
+class="btn btn-light"
+onclick="goProfile()">
+← Hồ sơ đối tác
+</button>
+
+</div>
+
+<div class="content">
+
+<div class="hero">
+
+<h2>🛡️ Trung tâm xác minh VietTruck</h2>
+
+<p>
+Kiểm tra thông tin pháp lý, giấy phép vận tải, người đại diện
+và tài khoản thanh toán trước khi đối tác tham gia giao dịch
+trên hệ thống VietTruck.
+</p>
+
+</div>
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat">
+<div class="stat-icon">📄</div>
+<strong>5</strong>
+<span>Hạng mục xác minh</span>
+</div>
+
+<div class="stat">
+<div class="stat-icon">✅</div>
+<strong id="approvedCount">4</strong>
+<span>Đã đạt</span>
+</div>
+
+<div class="stat">
+<div class="stat-icon">⏳</div>
+<strong id="pendingCount">1</strong>
+<span>Đang kiểm tra</span>
+</div>
+
+<div class="stat">
+<div class="stat-icon">🛡️</div>
+<strong id="kycStatus">80%</strong>
+<span>Mức hoàn thành KYC</span>
+</div>
+
+</div>
+
+<!-- PARTNER -->
+
+<section class="card">
+
+<div class="card-body">
+
+<div class="partner">
+
+<div class="avatar" id="partnerIcon">
+🚛
+</div>
+
+<div>
+<strong id="partnerName">
+Nhà xe Thành Công
+</strong>
+
+<small id="partnerCode">
+VT-DT-000124 • Nhà xe
+</small>
+</div>
+
+</div>
+
+<div class="progress-wrap">
+
+<div class="progress-info">
+<span>Tiến độ xác minh</span>
+<strong id="progressText">80%</strong>
+</div>
+
+<div class="progress">
+<div
+id="progressBar"
+class="progress-bar">
+</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<div class="grid">
+
+<!-- LEFT -->
+
+<div>
+
+<section class="card">
+
+<div class="card-head">
+
+<h3>📑 Hồ sơ cần xác minh</h3>
+
+</div>
+
+<div class="card-body">
+
+<div class="check-item">
+
+<div class="check-left">
+
+<div class="check-icon">
+🏢
+</div>
+
+<div class="check-info">
+<strong>Đăng ký doanh nghiệp</strong>
+<small>Thông tin pháp nhân và mã số thuế</small>
+</div>
+
+</div>
+
+<span class="badge ok">
+✓ Đã xác minh
+</span>
+
+</div>
+
+<div class="check-item">
+
+<div class="check-left">
+
+<div class="check-icon">
+👤
+</div>
+
+<div class="check-info">
+<strong>Người đại diện pháp luật</strong>
+<small>CCCD/Hộ chiếu và thông tin đại diện</small>
+</div>
+
+</div>
+
+<span class="badge ok">
+✓ Đã xác minh
+</span>
+
+</div>
+
+<div class="check-item">
+
+<div class="check-left">
+
+<div class="check-icon">
+🚛
+</div>
+
+<div class="check-info">
+<strong>Giấy phép kinh doanh vận tải</strong>
+<small>Áp dụng với nhà xe/doanh nghiệp vận tải</small>
+</div>
+
+</div>
+
+<span class="badge ok">
+✓ Đã xác minh
+</span>
+
+</div>
+
+<div class="check-item">
+
+<div class="check-left">
+
+<div class="check-icon">
+🏦
+</div>
+
+<div class="check-info">
+<strong>Tài khoản ngân hàng</strong>
+<small>Đối chiếu tên chủ tài khoản nhận thanh toán</small>
+</div>
+
+</div>
+
+<span class="badge ok">
+✓ Đã xác minh
+</span>
+
+</div>
+
+<div class="check-item" id="pendingItem">
+
+<div class="check-left">
+
+<div class="check-icon">
+📋
+</div>
+
+<div class="check-info">
+<strong>Hồ sơ phương tiện</strong>
+<small>Đăng ký xe, đăng kiểm và bảo hiểm</small>
+</div>
+
+</div>
+
+<span
+id="pendingBadge"
+class="badge wait">
+⏳ Đang kiểm tra
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- GHI CHÚ -->
+
+<section class="card">
+
+<div class="card-head">
+<h3>📝 Ghi chú kiểm duyệt</h3>
+</div>
+
+<div class="card-body">
+
+<textarea
+id="verifyNote"
+style="
+width:100%;
+min-height:110px;
+padding:12px;
+border:1px solid #d1d5db;
+border-radius:10px;
+resize:vertical;
+"
+placeholder="Nhập ghi chú của bộ phận kiểm duyệt VietTruck...">
+</textarea>
+
+</div>
+
+</section>
+
+</div>
+
+<!-- RIGHT -->
+
+<div>
+
+<section class="card">
+
+<div class="card-head">
+<h3>🏢 Thông tin đối tác</h3>
+</div>
+
+<div class="card-body">
+
+<div class="info-row">
+<span>Mã số thuế</span>
+<strong id="taxCode">0109XXXXXX</strong>
+</div>
+
+<div class="info-row">
+<span>Người đại diện</span>
+<strong id="representative">Nguyễn Văn Thành</strong>
+</div>
+
+<div class="info-row">
+<span>Điện thoại</span>
+<strong id="phone">0988 111 222</strong>
+</div>
+
+<div class="info-row">
+<span>Email</span>
+<strong id="email">thanhcong@transport.vn</strong>
+</div>
+
+<div class="info-row">
+<span>Khu vực</span>
+<strong id="area">Miền Bắc & Bắc Trung Bộ</strong>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<div class="card-head">
+<h3>⚡ Quyết định xác minh</h3>
+</div>
+
+<div class="card-body">
+
+<div class="note">
+Chỉ phê duyệt khi thông tin doanh nghiệp và hồ sơ pháp lý đã được kiểm tra đầy đủ.
+</div>
+
+<br>
+
+<div class="verify-actions">
+
+<button
+class="btn btn-success"
+onclick="approveKYC()">
+✓ Phê duyệt
+</button>
+
+<button
+class="btn btn-danger"
+onclick="rejectKYC()">
+✕ Từ chối
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+/* DỮ LIỆU MẪU */
+
+const partnerData = {
+
+"Nhà xe Thành Công":{
+code:"VT-DT-000124",
+type:"Nhà xe",
+icon:"🚛",
+tax:"0109XXXXXX",
+representative:"Nguyễn Văn Thành",
+phone:"0988 111 222",
+email:"thanhcong@transport.vn",
+area:"Miền Bắc & Bắc Trung Bộ"
+},
+
+"Công ty ABC Việt Nam":{
+code:"VT-DT-000086",
+type:"Chủ hàng",
+icon:"📦",
+tax:"2300XXXXXX",
+representative:"Trần Văn Minh",
+phone:"0901 234 567",
+email:"contact@abc.vn",
+area:"Bắc Ninh - Hà Nội - Hải Phòng"
+},
+
+"Logistics Đông Á":{
+code:"VT-DT-000173",
+type:"Doanh nghiệp logistics",
+icon:"🌐",
+tax:"0202XXXXXX",
+representative:"Lê Quốc Đông",
+phone:"0977 888 999",
+email:"info@donga-logistics.vn",
+area:"Toàn quốc"
+},
+
+"Công ty Minh Phát":{
+code:"VT-DT-000241",
+type:"Khách hàng doanh nghiệp",
+icon:"🏢",
+tax:"0318XXXXXX",
+representative:"Phạm Minh Đức",
+phone:"0912 555 666",
+email:"minhphat@gmail.com",
+area:"Miền Nam"
+},
+
+"Nhà xe Hoàng Gia":{
+code:"VT-DT-000058",
+type:"Nhà xe",
+icon:"🚛",
+tax:"0108XXXXXX",
+representative:"Đỗ Văn Hoàng",
+phone:"0966 333 444",
+email:"hoanggia@truck.vn",
+area:"Hưng Yên - Hà Nội - Bắc Ninh"
+}
+
+};
+
+
+/* LẤY ĐỐI TÁC */
+
+const params =
+new URLSearchParams(window.location.search);
+
+const name =
+params.get("name") || "Nhà xe Thành Công";
+
+
+/* DỮ LIỆU ĐÃ CHỈNH SỬA */
+
+const saved =
+localStorage.getItem(
+"viettruck_partner_" + name
+);
+
+const data = saved
+? {
+    ...partnerData[name],
+    ...JSON.parse(saved)
+  }
+: partnerData[name];
+
+
+/* HIỂN THỊ */
+
+if(data){
+
+document.getElementById(
+"partnerName"
+).textContent = name;
+
+document.getElementById(
+"partnerCode"
+).textContent =
+data.code + " • " + data.type;
+
+document.getElementById(
+"partnerIcon"
+).textContent = data.icon;
+
+document.getElementById(
+"taxCode"
+).textContent = data.tax;
+
+document.getElementById(
+"representative"
+).textContent =
+data.representative;
+
+document.getElementById(
+"phone"
+).textContent = data.phone;
+
+document.getElementById(
+"email"
+).textContent = data.email;
+
+document.getElementById(
+"area"
+).textContent = data.area;
+
+}
+
+
+/* PHÊ DUYỆT */
+
+function approveKYC(){
+
+const confirmApprove =
+confirm(
+"Bạn có chắc muốn phê duyệt xác minh đối tác này?"
+);
+
+if(!confirmApprove){
+return;
+}
+
+localStorage.setItem(
+"viettruck_kyc_" + name,
+"approved"
+);
+
+document.getElementById(
+"pendingBadge"
+).className = "badge ok";
+
+document.getElementById(
+"pendingBadge"
+).textContent =
+"✓ Đã xác minh";
+
+document.getElementById(
+"approvedCount"
+).textContent = "5";
+
+document.getElementById(
+"pendingCount"
+).textContent = "0";
+
+document.getElementById(
+"kycStatus"
+).textContent = "100%";
+
+document.getElementById(
+"progressText"
+).textContent = "100%";
+
+document.getElementById(
+"progressBar"
+).style.width = "100%";
+
+alert(
+"Đã phê duyệt xác minh đối tác."
+);
+
+}
+
+
+/* TỪ CHỐI */
+
+function rejectKYC(){
+
+const reason =
+document.getElementById(
+"verifyNote"
+).value.trim();
+
+if(!reason){
+
+alert(
+"Vui lòng nhập lý do từ chối trong phần ghi chú kiểm duyệt."
+);
+
+return;
+
+}
+
+const confirmReject =
+confirm(
+"Bạn có chắc muốn từ chối xác minh đối tác này?"
+);
+
+if(!confirmReject){
+return;
+}
+
+localStorage.setItem(
+"viettruck_kyc_" + name,
+"rejected"
+);
+
+localStorage.setItem(
+"viettruck_kyc_note_" + name,
+reason
+);
+
+document.getElementById(
+"pendingBadge"
+).className =
+"badge fail";
+
+document.getElementById(
+"pendingBadge"
+).textContent =
+"✕ Không đạt";
+
+alert(
+"Đã từ chối xác minh đối tác."
+);
+
+}
+
+
+/* ĐỌC TRẠNG THÁI ĐÃ LƯU */
+
+const savedKYC =
+localStorage.getItem(
+"viettruck_kyc_" + name
+);
+
+if(savedKYC === "approved"){
+
+document.getElementById(
+"pendingBadge"
+).className = "badge ok";
+
+document.getElementById(
+"pendingBadge"
+).textContent =
+"✓ Đã xác minh";
+
+document.getElementById(
+"approvedCount"
+).textContent = "5";
+
+document.getElementById(
+"pendingCount"
+).textContent = "0";
+
+document.getElementById(
+"kycStatus"
+).textContent = "100%";
+
+document.getElementById(
+"progressText"
+).textContent = "100%";
+
+document.getElementById(
+"progressBar"
+).style.width = "100%";
+
+}
+
+if(savedKYC === "rejected"){
+
+document.getElementById(
+"pendingBadge"
+).className =
+"badge fail";
+
+document.getElementById(
+"pendingBadge"
+).textContent =
+"✕ Không đạt";
+
+const savedNote =
+localStorage.getItem(
+"viettruck_kyc_note_" + name
+);
+
+if(savedNote){
+
+document.getElementById(
+"verifyNote"
+).value = savedNote;
+
+}
+
+}
+
+
+/* QUAY LẠI HỒ SƠ */
+
+function goProfile(){
+
+window.location.href =
+"ho-so-doi-tac.html?name=" +
+encodeURIComponent(name);
+
+}
+
+</script>
+
+</body>
+</html>
