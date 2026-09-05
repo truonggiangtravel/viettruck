@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Trung tâm duyệt đối tác - VietTruck</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  background:#f4f7f8;
+  color:#1f2937;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+.app{
+  display:flex;
+  min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:250px;
+  background:#0f5132;
+  color:#fff;
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  padding:24px 16px;
+  overflow-y:auto;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:800;
+  text-align:center;
+  margin-bottom:28px;
+}
+
+.logo span{
+  color:#ffc107;
+}
+
+.menu-title{
+  font-size:12px;
+  text-transform:uppercase;
+  opacity:.7;
+  margin:20px 12px 8px;
+}
+
+.menu-item{
+  display:block;
+  padding:12px 14px;
+  border-radius:10px;
+  margin-bottom:6px;
+}
+
+.menu-item:hover,
+.menu-item.active{
+  background:rgba(255,255,255,.15);
+}
+
+/* MAIN */
+
+.main{
+  margin-left:250px;
+  width:calc(100% - 250px);
+}
+
+.topbar{
+  background:#fff;
+  min-height:72px;
+  padding:16px 28px;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.topbar h1{
+  color:#0f5132;
+  font-size:22px;
+}
+
+.content{
+  padding:28px;
+  max-width:1400px;
+  margin:auto;
+}
+
+/* HERO */
+
+.hero{
+  background:linear-gradient(135deg,#0f5132,#198754);
+  color:#fff;
+  border-radius:18px;
+  padding:24px;
+  margin-bottom:22px;
+}
+
+.hero h2{
+  margin-bottom:8px;
+}
+
+.hero p{
+  opacity:.9;
+  line-height:1.6;
+}
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:22px;
+}
+
+.stat{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,.05);
+}
+
+.stat-icon{
+  font-size:25px;
+  margin-bottom:9px;
+}
+
+.stat strong{
+  display:block;
+  font-size:26px;
+  color:#0f5132;
+  margin-bottom:4px;
+}
+
+.stat span{
+  color:#6b7280;
+  font-size:13px;
+}
+
+/* CARD */
+
+.card{
+  background:#fff;
+  border-radius:16px;
+  border:1px solid #e5e7eb;
+  box-shadow:0 4px 18px rgba(0,0,0,.05);
+  overflow:hidden;
+}
+
+.card-head{
+  padding:18px 20px;
+  border-bottom:1px solid #edf0f2;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.card-head h3{
+  color:#0f5132;
+}
+
+.filters{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.control{
+  padding:10px 12px;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  background:#fff;
+  outline:none;
+}
+
+.search{
+  min-width:280px;
+}
+
+/* TABLE */
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1050px;
+}
+
+th,
+td{
+  padding:14px 16px;
+  border-bottom:1px solid #edf0f2;
+  text-align:left;
+  font-size:14px;
+  vertical-align:middle;
+}
+
+th{
+  background:#f8faf9;
+  color:#374151;
+  font-size:13px;
+}
+
+tr:hover td{
+  background:#fbfdfc;
+}
+
+.partner{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.partner-icon{
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  background:#dff3e7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
+
+.partner strong{
+  display:block;
+  margin-bottom:4px;
+}
+
+.partner small{
+  color:#6b7280;
+}
+
+.badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.verified{
+  background:#d1fae5;
+  color:#065f46;
+}
+
+.pending{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.rejected{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.type-owner{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
+
+.type-carrier{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.type-logistics{
+  background:#ede9fe;
+  color:#5b21b6;
+}
+
+.type-business{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.action-btn{
+  border:1px solid #d1d5db;
+  background:#fff;
+  padding:7px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.action-btn:hover{
+  background:#f3f4f6;
+}
+
+.action-primary{
+  background:#198754;
+  color:white;
+  border-color:#198754;
+}
+
+.action-primary:hover{
+  background:#146c43;
+}
+
+/* EMPTY */
+
+.empty{
+  display:none;
+  padding:35px;
+  text-align:center;
+  color:#6b7280;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:700px){
+  .sidebar{
+    position:static;
+    width:100%;
+  }
+
+  .app{
+    display:block;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+  }
+
+  .content{
+    padding:16px;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar">
+
+<div class="logo">
+Viet<span>Truck</span>
+</div>
+
+<div class="menu-title">Hệ thống</div>
+
+<a class="menu-item" href="dashboard.html">🏠 Dashboard</a>
+<a class="menu-item" href="quan-ly-don-hang.html">📦 Quản lý đơn hàng</a>
+<a class="menu-item" href="trung-tam-bao-gia.html">💰 Trung tâm báo giá</a>
+<a class="menu-item" href="hang-chieu-ve.html">🔄 Hàng chiều về</a>
+<a class="menu-item" href="quan-ly-doi-xe.html">🚛 Quản lý đội xe</a>
+
+<div class="menu-title">Doanh nghiệp</div>
+
+<a class="menu-item" href="thong-tin-doanh-nghiep.html">🏢 Thông tin doanh nghiệp</a>
+<a class="menu-item" href="quan-ly-nhan-vien.html">👥 Quản lý nhân viên</a>
+<a class="menu-item" href="phan-quyen-tai-khoan.html">🛡️ Phân quyền tài khoản</a>
+<a class="menu-item" href="nhat-ky-hoat-dong.html">📋 Nhật ký hoạt động</a>
+<a class="menu-item" href="quan-ly-chi-nhanh.html">📍 Quản lý chi nhánh</a>
+<a class="menu-item" href="quan-ly-hop-dong.html">📄 Quản lý hợp đồng</a>
+<a class="menu-item" href="quan-ly-doi-tac.html">🤝 Quản lý đối tác</a>
+<a class="menu-item active" href="trung-tam-duyet-doi-tac.html">✅ Trung tâm duyệt đối tác</a>
+
+<div class="menu-title">Tài khoản</div>
+
+<a class="menu-item" href="tai-khoan.html">👤 Tài khoản</a>
+<a class="menu-item" href="vi-viettruck.html">💳 Ví VietTruck</a>
+<a class="menu-item" href="cai-dat.html">⚙️ Cài đặt</a>
+
+</aside>
+
+<main class="main">
+
+<div class="topbar">
+
+<h1>Trung tâm duyệt đối tác</h1>
+
+<button
+class="action-btn"
+onclick="location.href='quan-ly-doi-tac.html'">
+← Quản lý đối tác
+</button>
+
+</div>
+
+<div class="content">
+
+<div class="hero">
+
+<h2>✅ Kiểm duyệt đối tác VietTruck</h2>
+
+<p>
+Theo dõi và xử lý trạng thái KYC của chủ hàng, nhà xe,
+doanh nghiệp logistics và khách hàng doanh nghiệp trước
+khi cho phép giao dịch trên hệ thống.
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="stat-icon">🤝</div>
+<strong id="totalCount">5</strong>
+<span>Tổng hồ sơ</span>
+</div>
+
+<div class="stat">
+<div class="stat-icon">⏳</div>
+<strong id="pendingCount">0</strong>
+<span>Chờ xác minh</span>
+</div>
+
+<div class="stat">
+<div class="stat-icon">✅</div>
+<strong id="approvedCount">0</strong>
+<span>Đã xác minh</span>
+</div>
+
+<div class="stat">
+<div class="stat-icon">❌</div>
+<strong id="rejectedCount">0</strong>
+<span>Không đạt</span>
+</div>
+
+</div>
+
+<section class="card">
+
+<div class="card-head">
+
+<h3>Danh sách hồ sơ KYC</h3>
+
+<div class="filters">
+
+<input
+id="searchInput"
+class="control search"
+type="text"
+placeholder="Tìm tên đối tác, mã đối tác..."
+onkeyup="filterTable()">
+
+<select
+id="statusFilter"
+class="control"
+onchange="filterTable()">
+
+<option value="">Tất cả trạng thái</option>
+<option value="chờ xác minh">Chờ xác minh</option>
+<option value="đã xác minh">Đã xác minh</option>
+<option value="không đạt">Không đạt</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="kycTable">
+
+<thead>
+
+<tr>
+<th>Đối tác</th>
+<th>Loại</th>
+<th>Mã đối tác</th>
+<th>Khu vực</th>
+<th>Trạng thái KYC</th>
+<th>Thao tác</th>
+</tr>
+
+</thead>
+
+<tbody id="partnerRows">
+</tbody>
+
+</table>
+
+<div
+id="emptyMessage"
+class="empty">
+Không tìm thấy hồ sơ phù hợp.
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+const partners = [
+
+{
+name:"Nhà xe Thành Công",
+code:"VT-DT-000124",
+type:"Nhà xe",
+icon:"🚛",
+area:"Miền Bắc & Bắc Trung Bộ"
+},
+
+{
+name:"Công ty ABC Việt Nam",
+code:"VT-DT-000086",
+type:"Chủ hàng",
+icon:"📦",
+area:"Bắc Ninh - Hà Nội - Hải Phòng"
+},
+
+{
+name:"Logistics Đông Á",
+code:"VT-DT-000173",
+type:"Doanh nghiệp logistics",
+icon:"🌐",
+area:"Toàn quốc"
+},
+
+{
+name:"Công ty Minh Phát",
+code:"VT-DT-000241",
+type:"Khách hàng doanh nghiệp",
+icon:"🏢",
+area:"Miền Nam"
+},
+
+{
+name:"Nhà xe Hoàng Gia",
+code:"VT-DT-000058",
+type:"Nhà xe",
+icon:"🚛",
+area:"Hưng Yên - Hà Nội - Bắc Ninh"
+}
+
+];
+
+function getKYCStatus(name){
+
+const status =
+localStorage.getItem(
+"viettruck_kyc_" + name
+);
+
+if(status === "approved"){
+return {
+text:"Đã xác minh",
+className:"verified"
+};
+}
+
+if(status === "rejected"){
+return {
+text:"Không đạt",
+className:"rejected"
+};
+}
+
+return {
+text:"Chờ xác minh",
+className:"pending"
+};
+
+}
+
+function getTypeClass(type){
+
+if(type === "Nhà xe"){
+return "type-carrier";
+}
+
+if(type === "Chủ hàng"){
+return "type-owner";
+}
+
+if(type === "Doanh nghiệp logistics"){
+return "type-logistics";
+}
+
+return "type-business";
+
+}
+
+function renderPartners(){
+
+const tbody =
+document.getElementById(
+"partnerRows"
+);
+
+tbody.innerHTML = "";
+
+let pending = 0;
+let approved = 0;
+let rejected = 0;
+
+partners.forEach(function(partner){
+
+const status =
+getKYCStatus(partner.name);
+
+if(status.text === "Chờ xác minh"){
+pending++;
+}
+
+if(status.text === "Đã xác minh"){
+approved++;
+}
+
+if(status.text === "Không đạt"){
+rejected++;
+}
+
+const row =
+document.createElement("tr");
+
+row.innerHTML = `
+
+<td>
+
+<div class="partner">
+
+<div class="partner-icon">
+${partner.icon}
+</div>
+
+<div>
+<strong>${partner.name}</strong>
+<small>${partner.area}</small>
+</div>
+
+</div>
+
+</td>
+
+<td>
+
+<span class="badge ${getTypeClass(partner.type)}">
+${partner.type}
+</span>
+
+</td>
+
+<td>
+${partner.code}
+</td>
+
+<td>
+${partner.area}
+</td>
+
+<td>
+
+<span class="badge ${status.className}">
+${status.text}
+</span>
+
+</td>
+
+<td>
+
+<div class="actions">
+
+<button
+class="action-btn"
+onclick="openProfile('${partner.name}')">
+Hồ sơ
+</button>
+
+<button
+class="action-btn action-primary"
+onclick="openKYC('${partner.name}')">
+🛡️ Kiểm duyệt
+</button>
+
+</div>
+
+</td>
+
+`;
+
+tbody.appendChild(row);
+
+});
+
+document.getElementById(
+"totalCount"
+).textContent =
+partners.length;
+
+document.getElementById(
+"pendingCount"
+).textContent =
+pending;
+
+document.getElementById(
+"approvedCount"
+).textContent =
+approved;
+
+document.getElementById(
+"rejectedCount"
+).textContent =
+rejected;
+
+filterTable();
+
+}
+
+function filterTable(){
+
+const search =
+document.getElementById(
+"searchInput"
+).value.toLowerCase();
+
+const statusFilter =
+document.getElementById(
+"statusFilter"
+).value.toLowerCase();
+
+const rows =
+document.querySelectorAll(
+"#partnerRows tr"
+);
+
+let visible = 0;
+
+rows.forEach(function(row){
+
+const text =
+row.textContent.toLowerCase();
+
+const matchSearch =
+text.includes(search);
+
+const matchStatus =
+statusFilter === "" ||
+text.includes(statusFilter);
+
+if(matchSearch && matchStatus){
+
+row.style.display = "";
+visible++;
+
+}else{
+
+row.style.display = "none";
+
+}
+
+});
+
+document.getElementById(
+"emptyMessage"
+).style.display =
+visible === 0 ? "block" : "none";
+
+}
+
+function openProfile(name){
+
+window.location.href =
+"ho-so-doi-tac.html?name=" +
+encodeURIComponent(name);
+
+}
+
+function openKYC(name){
+
+window.location.href =
+"xac-minh-doi-tac.html?name=" +
+encodeURIComponent(name);
+
+}
+
+renderPartners();
+
+</script>
+
+</body>
+</html>
