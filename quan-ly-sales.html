@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quản lý Sales | VietTruck</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+body{background:#f5f7fa;color:#1f2937}
+
+.header{
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  padding:16px 28px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  font-size:24px;
+  font-weight:700;
+  color:#16a34a;
+  text-decoration:none;
+}
+.header-links{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.header-links a{
+  color:#4b5563;
+  text-decoration:none;
+  font-size:14px;
+}
+
+.container{
+  max-width:1220px;
+  margin:30px auto;
+  padding:0 20px;
+}
+
+.title-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin-bottom:22px;
+}
+.title h1{font-size:28px;margin-bottom:8px}
+.title p{color:#6b7280}
+
+.add-btn{
+  background:#16a34a;
+  color:#fff;
+  border:0;
+  padding:11px 16px;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:22px;
+}
+.stat{
+  background:#fff;
+  border-radius:12px;
+  padding:20px;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+.stat small{color:#6b7280}
+.stat strong{
+  display:block;
+  font-size:27px;
+  margin-top:8px;
+}
+.green{color:#16a34a}
+.orange{color:#d97706}
+.blue{color:#2563eb}
+.red{color:#dc2626}
+
+.filters{
+  background:#fff;
+  border-radius:12px;
+  padding:18px;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr auto;
+  gap:12px;
+  margin-bottom:20px;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+input,select,textarea{
+  width:100%;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  padding:11px;
+}
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+.search-btn{
+  border:0;
+  background:#16a34a;
+  color:#fff;
+  border-radius:8px;
+  padding:0 18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.table-wrap{
+  background:#fff;
+  border-radius:12px;
+  overflow:auto;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+  margin-bottom:22px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1200px;
+}
+th{
+  background:#f8fafc;
+  padding:14px 16px;
+  text-align:left;
+  font-size:13px;
+  color:#4b5563;
+  border-bottom:1px solid #e5e7eb;
+}
+td{
+  padding:15px 16px;
+  border-bottom:1px solid #eef2f7;
+  font-size:14px;
+  vertical-align:top;
+}
+
+.avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:#dcfce7;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-right:8px;
+  font-weight:bold;
+  color:#15803d;
+}
+
+.status{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
+}
+.active{background:#dcfce7;color:#15803d}
+.warning{background:#fef3c7;color:#b45309}
+.inactive{background:#fee2e2;color:#b91c1c}
+
+.action{
+  color:#16a34a;
+  text-decoration:none;
+  font-weight:bold;
+  font-size:13px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.panel{
+  background:#fff;
+  border-radius:12px;
+  padding:20px;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+.panel h2{
+  font-size:18px;
+  margin-bottom:16px;
+}
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:11px 0;
+  border-bottom:1px solid #eef2f7;
+  font-size:14px;
+}
+.summary-row span{color:#6b7280}
+
+.progress{
+  height:8px;
+  background:#e5e7eb;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:7px;
+}
+.progress-bar{
+  height:100%;
+  background:#16a34a;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:100;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.modal-box{
+  background:#fff;
+  width:100%;
+  max-width:720px;
+  border-radius:14px;
+  padding:24px;
+}
+.modal-box h2{margin-bottom:18px}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.form-group{margin-bottom:12px}
+.form-group label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+.modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:18px;
+}
+.cancel{
+  border:1px solid #d1d5db;
+  background:#fff;
+  padding:10px 16px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.save{
+  border:0;
+  background:#16a34a;
+  color:#fff;
+  padding:10px 16px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+@media(max-width:900px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .filters{grid-template-columns:1fr 1fr}
+  .grid{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .stats,.filters,.form-grid{grid-template-columns:1fr}
+  .title-row{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+<a href="index.html" class="logo">🚚 VietTruck</a>
+
+<div class="header-links">
+  <a href="crm-khach-hang.html">CRM</a>
+  <a href="quan-ly-khach-hang.html">Khách hàng</a>
+  <a href="trung-tam-bao-gia.html">Báo giá</a>
+  <a href="hop-dong-van-tai.html">Hợp đồng</a>
+  <a href="dashboard.html">Dashboard</a>
+</div>
+
+</header>
+
+<div class="container">
+
+<div class="title-row">
+
+<div class="title">
+<h1>Quản lý đội ngũ Sales</h1>
+<p>Theo dõi nhân viên kinh doanh, khách hàng phụ trách, cơ hội bán hàng, doanh số và KPI.</p>
+</div>
+
+<button class="add-btn" onclick="openModal()">
++ Thêm nhân viên Sales
+</button>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<small>Nhân viên Sales</small>
+<strong>12</strong>
+</div>
+
+<div class="stat">
+<small>Khách hàng đang phụ trách</small>
+<strong class="blue">168</strong>
+</div>
+
+<div class="stat">
+<small>Doanh số tháng</small>
+<strong class="green">1,86 tỷ</strong>
+</div>
+
+<div class="stat">
+<small>Cơ hội cần xử lý</small>
+<strong class="orange">46</strong>
+</div>
+
+</div>
+
+<div class="filters">
+
+<input type="text" placeholder="Tìm nhân viên, số điện thoại hoặc email">
+
+<select>
+<option>Tất cả khu vực</option>
+<option>Miền Bắc</option>
+<option>Miền Trung</option>
+<option>Miền Nam</option>
+</select>
+
+<select>
+<option>Tất cả phòng ban</option>
+<option>Sales doanh nghiệp</option>
+<option>Sales chủ hàng</option>
+<option>Sales dự án</option>
+</select>
+
+<select>
+<option>Tất cả trạng thái</option>
+<option>Đang làm việc</option>
+<option>Cần cải thiện KPI</option>
+<option>Ngừng hoạt động</option>
+</select>
+
+<button class="search-btn">Tìm kiếm</button>
+
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Nhân viên</th>
+<th>Khu vực</th>
+<th>Khách hàng</th>
+<th>Cơ hội</th>
+<th>Báo giá</th>
+<th>Hợp đồng</th>
+<th>Doanh số tháng</th>
+<th>KPI</th>
+<th>Trạng thái</th>
+<th>Thao tác</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>
+<span class="avatar">NA</span>
+<strong>Nguyễn Văn An</strong><br>
+<small>SALE001</small>
+</td>
+<td>Miền Bắc</td>
+<td>42</td>
+<td>16</td>
+<td>11</td>
+<td>6</td>
+<td><strong>620 triệu</strong></td>
+<td>
+<strong class="green">92%</strong>
+<div class="progress">
+<div class="progress-bar" style="width:92%"></div>
+</div>
+</td>
+<td><span class="status active">Đang làm việc</span></td>
+<td><a href="crm-khach-hang.html" class="action">Xem CRM</a></td>
+</tr>
+
+<tr>
+<td>
+<span class="avatar">TĐ</span>
+<strong>Trần Minh Đức</strong><br>
+<small>SALE002</small>
+</td>
+<td>Miền Bắc</td>
+<td>36</td>
+<td>12</td>
+<td>8</td>
+<td>4</td>
+<td><strong>480 triệu</strong></td>
+<td>
+<strong class="green">85%</strong>
+<div class="progress">
+<div class="progress-bar" style="width:85%"></div>
+</div>
+</td>
+<td><span class="status active">Đang làm việc</span></td>
+<td><a href="crm-khach-hang.html" class="action">Xem CRM</a></td>
+</tr>
+
+<tr>
+<td>
+<span class="avatar">LN</span>
+<strong>Lê Hoàng Nam</strong><br>
+<small>SALE003</small>
+</td>
+<td>Miền Trung</td>
+<td>29</td>
+<td>9</td>
+<td>7</td>
+<td>3</td>
+<td><strong>390 triệu</strong></td>
+<td>
+<strong class="orange">68%</strong>
+<div class="progress">
+<div class="progress-bar" style="width:68%"></div>
+</div>
+</td>
+<td><span class="status warning">Cần cải thiện KPI</span></td>
+<td><a href="crm-khach-hang.html" class="action">Xem CRM</a></td>
+</tr>
+
+<tr>
+<td>
+<span class="avatar">HT</span>
+<strong>Hoàng Thu Trang</strong><br>
+<small>SALE004</small>
+</td>
+<td>Miền Nam</td>
+<td>34</td>
+<td>9</td>
+<td>10</td>
+<td>5</td>
+<td><strong>540 triệu</strong></td>
+<td>
+<strong class="green">96%</strong>
+<div class="progress">
+<div class="progress-bar" style="width:96%"></div>
+</div>
+</td>
+<td><span class="status active">Đang làm việc</span></td>
+<td><a href="crm-khach-hang.html" class="action">Xem CRM</a></td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="grid">
+
+<div class="panel">
+
+<h2>KPI đội Sales</h2>
+
+<div class="summary-row">
+<span>Khách hàng mới tháng này</span>
+<strong>24 / 30</strong>
+</div>
+
+<div class="summary-row">
+<span>Báo giá đã gửi</span>
+<strong>58 / 70</strong>
+</div>
+
+<div class="summary-row">
+<span>Hợp đồng mới</span>
+<strong class="green">18 / 20</strong>
+</div>
+
+<div class="summary-row">
+<span>Doanh số</span>
+<strong class="green">1,86 / 2,2 tỷ</strong>
+</div>
+
+<div class="summary-row">
+<span>Tỷ lệ hoàn thành KPI</span>
+<strong class="green">84,5%</strong>
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>Hiệu quả chuyển đổi</h2>
+
+<div class="summary-row">
+<span>Cơ hội đang theo dõi</span>
+<strong>46</strong>
+</div>
+
+<div class="summary-row">
+<span>Đã gửi báo giá</span>
+<strong>18</strong>
+</div>
+
+<div class="summary-row">
+<span>Đã chuyển thành hợp đồng</span>
+<strong class="green">8</strong>
+</div>
+
+<div class="summary-row">
+<span>Tỷ lệ báo giá → hợp đồng</span>
+<strong class="blue">44%</strong>
+</div>
+
+<div class="summary-row">
+<span>Khách cần chăm sóc hôm nay</span>
+<strong class="orange">12</strong>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="modal" id="salesModal">
+
+<div class="modal-box">
+
+<h2>Thêm nhân viên Sales</h2>
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Họ và tên</label>
+<input type="text" placeholder="Nhập họ tên">
+</div>
+
+<div class="form-group">
+<label>Mã nhân viên</label>
+<input type="text" placeholder="VD: SALE005">
+</div>
+
+<div class="form-group">
+<label>Số điện thoại</label>
+<input type="tel" placeholder="09xxxxxxxx">
+</div>
+
+<div class="form-group">
+<label>Email</label>
+<input type="email" placeholder="sales@viettruck.vn">
+</div>
+
+<div class="form-group">
+<label>Khu vực phụ trách</label>
+<select>
+<option>Miền Bắc</option>
+<option>Miền Trung</option>
+<option>Miền Nam</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>Nhóm Sales</label>
+<select>
+<option>Sales doanh nghiệp</option>
+<option>Sales chủ hàng</option>
+<option>Sales dự án</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>KPI doanh số/tháng</label>
+<input type="number" placeholder="VNĐ">
+</div>
+
+<div class="form-group">
+<label>KPI khách hàng mới</label>
+<input type="number" placeholder="Số khách">
+</div>
+
+</div>
+
+<div class="form-group">
+<label>Ghi chú</label>
+<textarea placeholder="Kinh nghiệm, thị trường phụ trách, nhóm khách hàng..."></textarea>
+</div>
+
+<div class="modal-actions">
+
+<button class="cancel" onclick="closeModal()">
+Hủy
+</button>
+
+<button class="save" onclick="saveSales()">
+Lưu nhân viên
+</button>
+
+</div>
+
+</div>
+</div>
+
+<script>
+function openModal(){
+  document.getElementById("salesModal").style.display="flex";
+}
+
+function closeModal(){
+  document.getElementById("salesModal").style.display="none";
+}
+
+function saveSales(){
+  alert("Đã ghi nhận nhân viên Sales.");
+  closeModal();
+}
+</script>
+
+</body>
+</html>
