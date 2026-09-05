@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POD giao hàng | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:"Be Vietnam Pro",sans-serif;
+background:#f5f8f6;
+color:#14231b;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:0 20px;
+}
+
+.header{
+background:#fff;
+border-bottom:1px solid #e2e8e5;
+}
+
+.nav{
+height:76px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+text-decoration:none;
+color:#087d43;
+}
+
+.logo-icon{font-size:34px}
+
+.logo strong{
+font-size:25px;
+}
+
+.logo small{
+display:block;
+font-size:11px;
+color:#69766f;
+}
+
+.menu{
+display:flex;
+gap:24px;
+}
+
+.menu a{
+text-decoration:none;
+color:#17231d;
+font-size:14px;
+font-weight:600;
+}
+
+.menu a:hover{
+color:#078c4b;
+}
+
+.page-head{
+background:linear-gradient(135deg,#087d45,#0aa45a);
+color:white;
+padding:28px 0;
+}
+
+.page-head h1{
+margin:0 0 6px;
+font-size:28px;
+}
+
+.page-head p{
+margin:0;
+font-size:13px;
+opacity:.9;
+}
+
+.main{
+display:grid;
+grid-template-columns:1fr 320px;
+gap:22px;
+margin:26px auto 50px;
+}
+
+.card{
+background:white;
+border:1px solid #e0e7e3;
+border-radius:12px;
+padding:22px;
+margin-bottom:18px;
+}
+
+.card h2{
+margin:0 0 6px;
+font-size:20px;
+}
+
+.sub{
+font-size:13px;
+color:#6b7771;
+margin-bottom:20px;
+}
+
+.route-box{
+background:#f8faf9;
+border:1px solid #e8eeeb;
+border-radius:10px;
+padding:16px;
+margin-bottom:20px;
+}
+
+.route{
+font-size:21px;
+font-weight:800;
+margin-bottom:10px;
+}
+
+.route span{
+color:#078c4b;
+padding:0 8px;
+}
+
+.meta{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+font-size:12px;
+color:#66736c;
+}
+
+.meta strong{
+color:#1f2d26;
+}
+
+.field{
+margin-bottom:17px;
+}
+
+.field label{
+display:block;
+font-size:13px;
+font-weight:700;
+margin-bottom:7px;
+}
+
+.field input,
+.field textarea,
+.field select{
+width:100%;
+border:1px solid #d5dfda;
+border-radius:8px;
+font-family:inherit;
+font-size:14px;
+background:white;
+}
+
+.field input,
+.field select{
+height:48px;
+padding:0 12px;
+}
+
+.field textarea{
+min-height:105px;
+padding:12px;
+resize:vertical;
+}
+
+.upload-box{
+border:2px dashed #bfcfc6;
+background:#fafcfb;
+border-radius:10px;
+padding:22px;
+text-align:center;
+}
+
+.upload-box strong{
+display:block;
+margin-bottom:7px;
+}
+
+.upload-box span{
+font-size:12px;
+color:#748078;
+}
+
+.upload-box input{
+margin-top:14px;
+}
+
+.preview{
+display:none;
+margin-top:15px;
+}
+
+.preview img{
+max-width:100%;
+max-height:320px;
+border-radius:9px;
+border:1px solid #e2e8e5;
+}
+
+.check-row{
+display:flex;
+gap:9px;
+align-items:flex-start;
+font-size:12px;
+color:#59675f;
+line-height:1.6;
+margin-top:14px;
+}
+
+.check-row input{
+margin-top:3px;
+}
+
+.submit-btn{
+width:100%;
+border:0;
+border-radius:9px;
+background:#078c4b;
+color:white;
+padding:14px 18px;
+font-family:inherit;
+font-size:14px;
+font-weight:800;
+cursor:pointer;
+margin-top:20px;
+}
+
+.back-link{
+display:block;
+text-align:center;
+text-decoration:none;
+color:#078c4b;
+font-weight:700;
+font-size:13px;
+margin-top:14px;
+}
+
+.summary-row{
+display:flex;
+justify-content:space-between;
+gap:15px;
+padding:10px 0;
+border-bottom:1px solid #edf0ee;
+font-size:12px;
+}
+
+.summary-row:last-child{
+border-bottom:0;
+}
+
+.summary-row span{
+color:#6c7972;
+}
+
+.summary-row strong{
+text-align:right;
+}
+
+.status{
+display:inline-block;
+background:#e6f7ed;
+color:#078c4b;
+font-size:12px;
+font-weight:800;
+padding:8px 11px;
+border-radius:20px;
+margin-bottom:15px;
+}
+
+.notice{
+background:#edf7f1;
+border:1px solid #cae5d5;
+color:#315f47;
+border-radius:9px;
+padding:14px;
+font-size:12px;
+line-height:1.7;
+}
+
+.success{
+display:none;
+text-align:center;
+background:#fff;
+border:1px solid #bee2cc;
+border-radius:12px;
+padding:35px 22px;
+}
+
+.success-icon{
+font-size:50px;
+}
+
+.success h2{
+color:#078c4b;
+margin-bottom:9px;
+}
+
+.success p{
+font-size:13px;
+color:#66736c;
+line-height:1.7;
+}
+
+.success a{
+display:inline-block;
+margin-top:12px;
+background:#078c4b;
+color:white;
+text-decoration:none;
+padding:12px 18px;
+border-radius:8px;
+font-size:13px;
+font-weight:800;
+}
+
+.footer{
+background:#073c27;
+color:white;
+text-align:center;
+padding:28px 0;
+}
+
+.footer p{
+font-size:13px;
+opacity:.8;
+}
+
+@media(max-width:850px){
+.menu{display:none}
+.main{grid-template-columns:1fr}
+}
+
+@media(max-width:600px){
+.meta{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+<span class="logo-icon">🚚</span>
+<div>
+<strong>VietTruck</strong>
+<small>Kết nối hàng hóa Việt Nam</small>
+</div>
+</a>
+
+<nav class="menu">
+<a href="index.html">Trang chủ</a>
+<a href="tim-hang.html">Tìm hàng</a>
+<a href="tim-xe.html">Tìm xe</a>
+<a href="chuyen-da-nhan.html">Chuyến đã nhận</a>
+<a href="tai-khoan.html">Tài khoản</a>
+</nav>
+
+</div>
+</header>
+
+<section class="page-head">
+<div class="container">
+<h1>POD - Bằng chứng giao hàng</h1>
+<p>Xác nhận hàng đã được giao và lưu thông tin người nhận</p>
+</div>
+</section>
+
+<main class="container main">
+
+<section>
+
+<div class="card" id="podCard">
+
+<h2>Xác nhận hoàn tất giao hàng</h2>
+<div class="sub">Nhập thông tin người nhận và tải ảnh bằng chứng giao hàng.</div>
+
+<div class="route-box">
+
+<div class="route">
+Bắc Ninh <span>→</span> Hải Phòng
+</div>
+
+<div class="meta">
+<div>📦 Mã chuyến: <strong>VT-TRIP-090526-001</strong></div>
+<div>🚚 Xe: <strong>99C-123.45</strong></div>
+<div>⚖️ Hàng hóa: <strong>Điện tử · 5 tấn</strong></div>
+<div>📍 Giao tại: <strong>Hải An, Hải Phòng</strong></div>
+</div>
+
+</div>
+
+<form id="podForm">
+
+<div class="field">
+<label>Tên người nhận *</label>
+<input type="text" placeholder="Ví dụ: Nguyễn Văn An" required>
+</div>
+
+<div class="field">
+<label>Số điện thoại người nhận *</label>
+<input type="tel" placeholder="Ví dụ: 0912345678" required>
+</div>
+
+<div class="field">
+<label>Thời gian giao hàng *</label>
+<input type="datetime-local" id="deliveryTime" required>
+</div>
+
+<div class="field">
+<label>Tình trạng hàng hóa *</label>
+<select required>
+<option value="">Chọn tình trạng</option>
+<option>Đầy đủ, nguyên vẹn</option>
+<option>Đã giao đủ nhưng bao bì móp nhẹ</option>
+<option>Có thiếu hụt / hư hỏng</option>
+<option>Người nhận có ý kiến khác</option>
+</select>
+</div>
+
+<div class="field">
+<label>Ảnh bằng chứng giao hàng *</label>
+
+<div class="upload-box">
+<strong>📷 Tải ảnh POD</strong>
+<span>Ảnh hàng hóa, phiếu giao nhận hoặc người nhận hàng</span>
+
+<input type="file" id="podImage" accept="image/*" required>
+
+<div class="preview" id="preview">
+<img id="previewImage" alt="Ảnh POD">
+</div>
+
+</div>
+</div>
+
+<div class="field">
+<label>Tên người ký nhận</label>
+<input type="text" placeholder="Tên người ký trên biên bản">
+</div>
+
+<div class="field">
+<label>Ghi chú giao hàng</label>
+<textarea placeholder="Ví dụ: Đã giao đủ 20 kiện, người nhận kiểm tra và xác nhận hàng nguyên vẹn..."></textarea>
+</div>
+
+<label class="check-row">
+<input type="checkbox" required>
+<span>
+Tôi xác nhận hàng hóa đã được giao tới đúng địa điểm và thông tin POD trên là chính xác.
+</span>
+</label>
+
+<button type="submit" class="submit-btn">
+Xác nhận hoàn tất giao hàng
+</button>
+
+<a href="theo-doi-chuyen.html" class="back-link">
+← Quay lại theo dõi chuyến
+</a>
+
+</form>
+
+</div>
+
+<div class="success" id="successBox">
+
+<div class="success-icon">✅</div>
+
+<h2>Đã xác nhận giao hàng</h2>
+
+<p>
+POD của chuyến VT-TRIP-090526-001 đã được ghi nhận.<br>
+Chuyến hàng được chuyển sang trạng thái hoàn thành.
+</p>
+
+<a href="chuyen-da-nhan.html">
+Xem chuyến đã hoàn thành
+</a>
+
+</div>
+
+</section>
+
+<aside>
+
+<div class="card">
+
+<div class="status">
+✓ Đã giao hàng
+</div>
+
+<div class="summary-row">
+<span>Chủ hàng</span>
+<strong>Công ty ABC</strong>
+</div>
+
+<div class="summary-row">
+<span>Tài xế</span>
+<strong>Nguyễn Văn B</strong>
+</div>
+
+<div class="summary-row">
+<span>Biển số</span>
+<strong>99C-123.45</strong>
+</div>
+
+<div class="summary-row">
+<span>Điểm giao</span>
+<strong>Hải An, Hải Phòng</strong>
+</div>
+
+<div class="summary-row">
+<span>Cước vận chuyển</span>
+<strong>3.500.000 đ</strong>
+</div>
+
+</div>
+
+<div class="notice">
+📌 POD là bằng chứng quan trọng để xác nhận giao hàng, xử lý thanh toán và giải quyết tranh chấp nếu có.
+</div>
+
+</aside>
+
+</main>
+
+<footer class="footer">
+<div class="container">
+<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+<p>© 2026 VietTruck. Nền tảng kết nối chủ hàng, tài xế và nhà xe.</p>
+</div>
+</footer>
+
+<script>
+
+const podImage =
+document.getElementById("podImage");
+
+const preview =
+document.getElementById("preview");
+
+const previewImage =
+document.getElementById("previewImage");
+
+podImage.addEventListener("change",function(){
+
+const file = this.files[0];
+
+if(!file) return;
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+previewImage.src = e.target.result;
+
+preview.style.display = "block";
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+
+const deliveryTime =
+document.getElementById("deliveryTime");
+
+const now = new Date();
+
+now.setMinutes(
+now.getMinutes() - now.getTimezoneOffset()
+);
+
+deliveryTime.value =
+now.toISOString().slice(0,16);
+
+
+const podForm =
+document.getElementById("podForm");
+
+const podCard =
+document.getElementById("podCard");
+
+const successBox =
+document.getElementById("successBox");
+
+podForm.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+podCard.style.display = "none";
+
+successBox.style.display = "block";
+
+window.scrollTo({
+top:150,
+behavior:"smooth"
+});
+
+});
+
+</script>
+
+</body>
+</html>
