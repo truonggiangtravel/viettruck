@@ -1128,6 +1128,36 @@ const data = savedData
       ...JSON.parse(savedData)
     }
   : partnerData[partnerName];
+  const savedKYC = localStorage.getItem(
+  "viettruck_kyc_" + partnerName
+);
+
+const kycBadge = document.getElementById("kycBadge");
+
+if(kycBadge){
+
+  if(savedKYC === "approved"){
+
+    kycBadge.className = "badge verified";
+    kycBadge.textContent = "✓ Đã xác minh";
+
+  }else if(savedKYC === "rejected"){
+
+    kycBadge.className = "badge";
+    kycBadge.style.background = "#fee2e2";
+    kycBadge.style.color = "#991b1b";
+    kycBadge.textContent = "✕ Không đạt";
+
+  }else{
+
+    kycBadge.className = "badge";
+    kycBadge.style.background = "#fef3c7";
+    kycBadge.style.color = "#92400e";
+    kycBadge.textContent = "⏳ Chờ xác minh";
+
+  }
+
+}
 
 if(data){
 
