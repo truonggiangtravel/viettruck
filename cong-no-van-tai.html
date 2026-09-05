@@ -1,1 +1,471 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Công nợ vận tải | VietTruck</title>
 
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f5f7fa;color:#1f2937}
+
+.header{
+background:#fff;
+border-bottom:1px solid #e5e7eb;
+padding:16px 28px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:24px;
+font-weight:700;
+color:#16a34a;
+text-decoration:none;
+}
+
+.header-links{
+display:flex;
+gap:16px;
+flex-wrap:wrap;
+}
+
+.header-links a{
+color:#4b5563;
+text-decoration:none;
+font-size:14px;
+}
+
+.container{
+max-width:1220px;
+margin:30px auto;
+padding:0 20px;
+}
+
+.title-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:16px;
+margin-bottom:22px;
+}
+
+.title h1{
+font-size:28px;
+margin-bottom:8px;
+}
+
+.title p{color:#6b7280}
+
+.add-btn{
+background:#16a34a;
+color:white;
+border:0;
+padding:11px 16px;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:16px;
+margin-bottom:22px;
+}
+
+.stat{
+background:#fff;
+border-radius:12px;
+padding:20px;
+box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.stat small{color:#6b7280}
+
+.stat strong{
+display:block;
+font-size:27px;
+margin-top:8px;
+}
+
+.green{color:#16a34a}
+.red{color:#dc2626}
+.orange{color:#d97706}
+
+.filters{
+background:#fff;
+border-radius:12px;
+padding:18px;
+display:grid;
+grid-template-columns:2fr 1fr 1fr 1fr auto;
+gap:12px;
+margin-bottom:20px;
+box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+input,select{
+width:100%;
+border:1px solid #d1d5db;
+border-radius:8px;
+padding:11px;
+}
+
+.search-btn{
+border:0;
+background:#16a34a;
+color:#fff;
+border-radius:8px;
+padding:0 18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.table-wrap{
+background:#fff;
+border-radius:12px;
+overflow:auto;
+box-shadow:0 2px 10px rgba(0,0,0,.05);
+margin-bottom:22px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:1100px;
+}
+
+th{
+background:#f8fafc;
+padding:14px 16px;
+text-align:left;
+font-size:13px;
+color:#4b5563;
+border-bottom:1px solid #e5e7eb;
+}
+
+td{
+padding:15px 16px;
+border-bottom:1px solid #eef2f7;
+font-size:14px;
+}
+
+.status{
+display:inline-block;
+padding:5px 9px;
+border-radius:20px;
+font-size:11px;
+font-weight:bold;
+}
+
+.paid{background:#dcfce7;color:#15803d}
+.pending{background:#fef3c7;color:#b45309}
+.overdue{background:#fee2e2;color:#b91c1c}
+.reconcile{background:#dbeafe;color:#1d4ed8}
+
+.action{
+color:#16a34a;
+text-decoration:none;
+font-weight:bold;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+.panel{
+background:#fff;
+border-radius:12px;
+padding:20px;
+box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.panel h2{
+font-size:18px;
+margin-bottom:16px;
+}
+
+.summary-row{
+display:flex;
+justify-content:space-between;
+padding:11px 0;
+border-bottom:1px solid #eef2f7;
+font-size:14px;
+}
+
+.summary-row span{color:#6b7280}
+
+.quick-actions{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:15px;
+}
+
+.quick{
+display:block;
+padding:14px;
+border:1px solid #e5e7eb;
+border-radius:10px;
+text-decoration:none;
+color:#1f2937;
+background:#f8fafc;
+}
+
+.quick:hover{
+border-color:#16a34a;
+background:#f0fdf4;
+}
+
+.quick strong{
+display:block;
+margin-bottom:4px;
+}
+
+.quick small{color:#6b7280}
+
+@media(max-width:900px){
+.stats{grid-template-columns:repeat(2,1fr)}
+.filters{grid-template-columns:1fr 1fr}
+.grid{grid-template-columns:1fr}
+}
+
+@media(max-width:560px){
+.stats,.filters,.quick-actions{grid-template-columns:1fr}
+.title-row{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+<a href="index.html" class="logo">🚚 VietTruck</a>
+
+<div class="header-links">
+<a href="doi-soat-thanh-toan.html">Đối soát</a>
+<a href="chi-phi-van-tai.html">Chi phí</a>
+<a href="vi-viettruck.html">Ví VietTruck</a>
+<a href="dashboard.html">Dashboard</a>
+</div>
+
+</header>
+
+<div class="container">
+
+<div class="title-row">
+
+<div class="title">
+<h1>Quản lý công nợ vận tải</h1>
+<p>Theo dõi khoản phải thu, phải trả, đối soát và công nợ quá hạn.</p>
+</div>
+
+<button class="add-btn" onclick="alert('Chức năng đang được hoàn thiện')">
++ Thêm công nợ
+</button>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<small>Phải thu khách hàng</small>
+<strong class="green">286 triệu</strong>
+</div>
+
+<div class="stat">
+<small>Phải trả nhà xe</small>
+<strong>174 triệu</strong>
+</div>
+
+<div class="stat">
+<small>Công nợ quá hạn</small>
+<strong class="red">48 triệu</strong>
+</div>
+
+<div class="stat">
+<small>Chờ đối soát</small>
+<strong class="orange">36 triệu</strong>
+</div>
+
+</div>
+
+<div class="filters">
+
+<input type="text" placeholder="Tìm khách hàng, nhà xe hoặc mã chuyến">
+
+<select>
+<option>Tất cả loại công nợ</option>
+<option>Phải thu</option>
+<option>Phải trả</option>
+</select>
+
+<select>
+<option>Tất cả trạng thái</option>
+<option>Đã thanh toán</option>
+<option>Chờ thanh toán</option>
+<option>Quá hạn</option>
+<option>Chờ đối soát</option>
+</select>
+
+<select>
+<option>Tháng 09/2026</option>
+<option>Tháng 08/2026</option>
+<option>Quý III/2026</option>
+</select>
+
+<button class="search-btn">Tìm kiếm</button>
+
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Mã công nợ</th>
+<th>Đối tượng</th>
+<th>Loại</th>
+<th>Mã chuyến</th>
+<th>Số tiền</th>
+<th>Đã thanh toán</th>
+<th>Còn lại</th>
+<th>Hạn thanh toán</th>
+<th>Trạng thái</th>
+<th>Thao tác</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td><strong>CN-090526-001</strong></td>
+<td>Công ty ABC Logistics</td>
+<td>Phải thu</td>
+<td>DH-090526-007</td>
+<td>18.500.000đ</td>
+<td>10.000.000đ</td>
+<td><strong>8.500.000đ</strong></td>
+<td>10/09/2026</td>
+<td><span class="status pending">Chờ thanh toán</span></td>
+<td><a href="doi-soat-thanh-toan.html" class="action">Đối soát</a></td>
+</tr>
+
+<tr>
+<td><strong>CN-090526-002</strong></td>
+<td>Nhà xe Thành Công</td>
+<td>Phải trả</td>
+<td>DH-090526-004</td>
+<td>12.800.000đ</td>
+<td>0đ</td>
+<td><strong>12.800.000đ</strong></td>
+<td>08/09/2026</td>
+<td><span class="status reconcile">Chờ đối soát</span></td>
+<td><a href="doi-soat-thanh-toan.html" class="action">Đối soát</a></td>
+</tr>
+
+<tr>
+<td><strong>CN-040926-011</strong></td>
+<td>Công ty Minh Phát</td>
+<td>Phải thu</td>
+<td>DH-040926-015</td>
+<td>26.000.000đ</td>
+<td>6.000.000đ</td>
+<td><strong class="red">20.000.000đ</strong></td>
+<td>02/09/2026</td>
+<td><span class="status overdue">Quá hạn</span></td>
+<td><a href="doi-soat-thanh-toan.html" class="action">Xử lý</a></td>
+</tr>
+
+<tr>
+<td><strong>CN-030926-008</strong></td>
+<td>Nhà xe An Phú</td>
+<td>Phải trả</td>
+<td>DH-030926-021</td>
+<td>9.600.000đ</td>
+<td>9.600.000đ</td>
+<td><strong class="green">0đ</strong></td>
+<td>05/09/2026</td>
+<td><span class="status paid">Đã thanh toán</span></td>
+<td><a href="doi-soat-thanh-toan.html" class="action">Xem</a></td>
+</tr>
+
+</tbody>
+</table>
+
+</div>
+
+<div class="grid">
+
+<div class="panel">
+
+<h2>Tổng hợp công nợ</h2>
+
+<div class="summary-row">
+<span>Tổng phải thu</span>
+<strong>286 triệu</strong>
+</div>
+
+<div class="summary-row">
+<span>Đã thu</span>
+<strong class="green">198 triệu</strong>
+</div>
+
+<div class="summary-row">
+<span>Còn phải thu</span>
+<strong>88 triệu</strong>
+</div>
+
+<div class="summary-row">
+<span>Phải trả nhà xe</span>
+<strong>174 triệu</strong>
+</div>
+
+<div class="summary-row">
+<span>Công nợ quá hạn</span>
+<strong class="red">48 triệu</strong>
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>Thanh toán & đối soát</h2>
+
+<div class="quick-actions">
+
+<a href="doi-soat-thanh-toan.html" class="quick">
+<strong>🔄 Đối soát thanh toán</strong>
+<small>Đối chiếu cước, phụ phí và khấu trừ</small>
+</a>
+
+<a href="vi-viettruck.html" class="quick">
+<strong>💳 Ví VietTruck</strong>
+<small>Quản lý giao dịch và thanh toán</small>
+</a>
+
+<a href="chi-phi-van-tai.html" class="quick">
+<strong>💰 Chi phí vận tải</strong>
+<small>Theo dõi chi phí từng chuyến</small>
+</a>
+
+<a href="bao-cao-van-tai.html" class="quick">
+<strong>📊 Báo cáo vận tải</strong>
+<small>Theo dõi doanh thu và hiệu quả</small>
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
