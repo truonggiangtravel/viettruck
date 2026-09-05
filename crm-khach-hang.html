@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM khách hàng | VietTruck</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial,Helvetica,sans-serif;
+    }
+
+    body{
+      background:#f5f7fa;
+      color:#1f2937;
+    }
+
+    .header{
+      background:#fff;
+      border-bottom:1px solid #e5e7eb;
+      padding:16px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:700;
+      color:#16a34a;
+      text-decoration:none;
+    }
+
+    .header-links{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .header-links a{
+      color:#4b5563;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .container{
+      max-width:1220px;
+      margin:30px auto;
+      padding:0 20px;
+    }
+
+    .title-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .title h1{
+      font-size:28px;
+      margin-bottom:8px;
+    }
+
+    .title p{
+      color:#6b7280;
+    }
+
+    .add-btn{
+      background:#16a34a;
+      color:#fff;
+      border:0;
+      padding:11px 16px;
+      border-radius:8px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .stat{
+      background:#fff;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .stat small{
+      color:#6b7280;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:27px;
+      margin-top:8px;
+    }
+
+    .green{color:#16a34a;}
+    .orange{color:#d97706;}
+    .red{color:#dc2626;}
+    .blue{color:#2563eb;}
+
+    .filters{
+      background:#fff;
+      border-radius:12px;
+      padding:18px;
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr 1fr auto;
+      gap:12px;
+      margin-bottom:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    input,select,textarea{
+      width:100%;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      padding:11px;
+    }
+
+    textarea{
+      min-height:90px;
+      resize:vertical;
+    }
+
+    .search-btn{
+      border:0;
+      background:#16a34a;
+      color:#fff;
+      border-radius:8px;
+      padding:0 18px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .pipeline{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .column{
+      background:#eef2f7;
+      border-radius:12px;
+      padding:14px;
+    }
+
+    .column h3{
+      font-size:15px;
+      margin-bottom:12px;
+    }
+
+    .lead-card{
+      background:#fff;
+      border-radius:10px;
+      padding:14px;
+      margin-bottom:10px;
+      box-shadow:0 2px 8px rgba(0,0,0,.04);
+    }
+
+    .lead-card strong{
+      display:block;
+      margin-bottom:6px;
+    }
+
+    .lead-card small{
+      color:#6b7280;
+      line-height:1.6;
+    }
+
+    .tag{
+      display:inline-block;
+      margin-top:8px;
+      padding:5px 8px;
+      border-radius:20px;
+      background:#dcfce7;
+      color:#15803d;
+      font-size:11px;
+      font-weight:bold;
+    }
+
+    .table-wrap{
+      background:#fff;
+      border-radius:12px;
+      overflow:auto;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+      margin-bottom:22px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:1150px;
+    }
+
+    th{
+      background:#f8fafc;
+      padding:14px 16px;
+      text-align:left;
+      font-size:13px;
+      color:#4b5563;
+      border-bottom:1px solid #e5e7eb;
+    }
+
+    td{
+      padding:15px 16px;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+      vertical-align:top;
+    }
+
+    .status{
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:20px;
+      font-size:11px;
+      font-weight:bold;
+    }
+
+    .new{
+      background:#dbeafe;
+      color:#1d4ed8;
+    }
+
+    .contacted{
+      background:#fef3c7;
+      color:#b45309;
+    }
+
+    .quoted{
+      background:#ede9fe;
+      color:#6d28d9;
+    }
+
+    .won{
+      background:#dcfce7;
+      color:#15803d;
+    }
+
+    .action{
+      color:#16a34a;
+      text-decoration:none;
+      font-weight:bold;
+      font-size:13px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    .panel{
+      background:#fff;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .panel h2{
+      font-size:18px;
+      margin-bottom:16px;
+    }
+
+    .summary-row{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:11px 0;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+    }
+
+    .summary-row span{
+      color:#6b7280;
+    }
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.45);
+      z-index:100;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .modal-box{
+      background:#fff;
+      width:100%;
+      max-width:760px;
+      border-radius:14px;
+      padding:24px;
+      max-height:90vh;
+      overflow:auto;
+    }
+
+    .modal-box h2{
+      margin-bottom:18px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .form-group{
+      margin-bottom:12px;
+    }
+
+    .form-group label{
+      display:block;
+      font-size:13px;
+      font-weight:bold;
+      margin-bottom:6px;
+    }
+
+    .modal-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .cancel{
+      border:1px solid #d1d5db;
+      background:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+    }
+
+    .save{
+      border:0;
+      background:#16a34a;
+      color:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    @media(max-width:950px){
+      .stats,.pipeline{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .filters{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:560px){
+      .stats,.pipeline,.filters,.form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .title-row{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <a href="index.html" class="logo">🚚 VietTruck</a>
+
+  <div class="header-links">
+    <a href="quan-ly-khach-hang.html">Khách hàng</a>
+    <a href="trung-tam-bao-gia.html">Báo giá</a>
+    <a href="hop-dong-van-tai.html">Hợp đồng</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+
+</header>
+
+<div class="container">
+
+  <div class="title-row">
+
+    <div class="title">
+      <h1>CRM chăm sóc khách hàng</h1>
+      <p>Theo dõi khách tiềm năng, lịch sử liên hệ, nhu cầu vận chuyển, báo giá và tỷ lệ chuyển đổi.</p>
+    </div>
+
+    <button class="add-btn" onclick="openModal()">
+      + Thêm cơ hội
+    </button>
+
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Cơ hội đang theo dõi</small>
+      <strong>46</strong>
+    </div>
+
+    <div class="stat">
+      <small>Cần chăm sóc hôm nay</small>
+      <strong class="orange">12</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đã gửi báo giá</small>
+      <strong class="blue">18</strong>
+    </div>
+
+    <div class="stat">
+      <small>Tỷ lệ chuyển đổi</small>
+      <strong class="green">34%</strong>
+    </div>
+
+  </div>
+
+  <div class="filters">
+
+    <input type="text" placeholder="Tìm khách hàng, số điện thoại hoặc tuyến vận chuyển">
+
+    <select>
+      <option>Tất cả giai đoạn</option>
+      <option>Khách mới</option>
+      <option>Đã liên hệ</option>
+      <option>Đã gửi báo giá</option>
+      <option>Đã ký hợp đồng</option>
+    </select>
+
+    <select>
+      <option>Tất cả mức độ</option>
+      <option>Rất tiềm năng</option>
+      <option>Tiềm năng</option>
+      <option>Theo dõi</option>
+    </select>
+
+    <select>
+      <option>Tất cả nhân viên</option>
+      <option>Nguyễn Văn An</option>
+      <option>Trần Minh Đức</option>
+      <option>Lê Hoàng Nam</option>
+    </select>
+
+    <button class="search-btn">Tìm kiếm</button>
+
+  </div>
+
+  <div class="pipeline">
+
+    <div class="column">
+      <h3>🆕 Khách mới</h3>
+
+      <div class="lead-card">
+        <strong>Công ty Bắc Nam</strong>
+        <small>
+          Bắc Ninh → TP.HCM<br>
+          8-10 chuyến/tháng<br>
+          Liên hệ: 0986 123 456
+        </small>
+        <div class="tag">Rất tiềm năng</div>
+      </div>
+
+      <div class="lead-card">
+        <strong>Chủ hàng Hải Anh</strong>
+        <small>
+          Hải Phòng → Hà Nội<br>
+          Hàng điện tử
+        </small>
+      </div>
+    </div>
+
+    <div class="column">
+      <h3>📞 Đã liên hệ</h3>
+
+      <div class="lead-card">
+        <strong>Công ty Phú Thành</strong>
+        <small>
+          Hà Nội → Đà Nẵng<br>
+          Đang hỏi giá xe 8 tấn
+        </small>
+        <div class="tag">Tiềm năng</div>
+      </div>
+
+      <div class="lead-card">
+        <strong>Công ty An Việt</strong>
+        <small>
+          Bắc Giang → Bình Dương<br>
+          Chờ xác nhận sản lượng
+        </small>
+      </div>
+    </div>
+
+    <div class="column">
+      <h3>💬 Đã báo giá</h3>
+
+      <div class="lead-card">
+        <strong>Công ty Minh Long</strong>
+        <small>
+          Báo giá: 18,5 triệu/chuyến<br>
+          Chờ phản hồi khách hàng
+        </small>
+        <div class="tag">Rất tiềm năng</div>
+      </div>
+
+      <div class="lead-card">
+        <strong>Đại lý Hoàng Gia</strong>
+        <small>
+          Báo giá: 9,8 triệu/chuyến<br>
+          Cần gọi lại ngày 06/09
+        </small>
+      </div>
+    </div>
+
+    <div class="column">
+      <h3>✅ Đã chuyển đổi</h3>
+
+      <div class="lead-card">
+        <strong>Công ty ABC Logistics</strong>
+        <small>
+          Đã ký HĐ-2026-028<br>
+          38 chuyến đã phát sinh
+        </small>
+        <div class="tag">Đã ký hợp đồng</div>
+      </div>
+
+      <div class="lead-card">
+        <strong>Công ty Minh Phát</strong>
+        <small>
+          Đã ký HĐ-2026-019<br>
+          19 chuyến đã phát sinh
+        </small>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Khách hàng</th>
+          <th>Nhu cầu</th>
+          <th>Giá trị dự kiến</th>
+          <th>Nhân viên phụ trách</th>
+          <th>Liên hệ gần nhất</th>
+          <th>Lịch chăm sóc</th>
+          <th>Giai đoạn</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td><strong>Công ty Bắc Nam</strong></td>
+          <td>Bắc Ninh → TP.HCM</td>
+          <td><strong>180 triệu/tháng</strong></td>
+          <td>Nguyễn Văn An</td>
+          <td>04/09/2026</td>
+          <td>05/09/2026 - 15:00</td>
+          <td><span class="status new">Khách mới</span></td>
+          <td><a href="#" class="action">Chăm sóc</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>Công ty Phú Thành</strong></td>
+          <td>Hà Nội → Đà Nẵng</td>
+          <td><strong>96 triệu/tháng</strong></td>
+          <td>Trần Minh Đức</td>
+          <td>03/09/2026</td>
+          <td>06/09/2026 - 09:00</td>
+          <td><span class="status contacted">Đã liên hệ</span></td>
+          <td><a href="trung-tam-bao-gia.html" class="action">Tạo báo giá</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>Công ty Minh Long</strong></td>
+          <td>Hải Phòng → Bình Dương</td>
+          <td><strong>220 triệu/tháng</strong></td>
+          <td>Lê Hoàng Nam</td>
+          <td>04/09/2026</td>
+          <td>05/09/2026 - 16:30</td>
+          <td><span class="status quoted">Đã báo giá</span></td>
+          <td><a href="hop-dong-van-tai.html" class="action">Tạo hợp đồng</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>Công ty ABC Logistics</strong></td>
+          <td>Bắc Ninh → TP.HCM</td>
+          <td><strong>1,2 tỷ/năm</strong></td>
+          <td>Nguyễn Văn An</td>
+          <td>01/09/2026</td>
+          <td>-</td>
+          <td><span class="status won">Đã chuyển đổi</span></td>
+          <td><a href="quan-ly-khach-hang.html" class="action">Xem khách hàng</a></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="panel">
+
+      <h2>Hiệu quả bán hàng</h2>
+
+      <div class="summary-row">
+        <span>Khách mới tháng này</span>
+        <strong>24</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Đã liên hệ</span>
+        <strong>19</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Đã gửi báo giá</span>
+        <strong class="blue">18</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Đã ký hợp đồng</span>
+        <strong class="green">8</strong>
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <h2>Công việc cần xử lý</h2>
+
+      <div class="summary-row">
+        <span>Khách cần gọi hôm nay</span>
+        <strong class="orange">12</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Báo giá chờ phản hồi</span>
+        <strong>9</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Cơ hội trên 100 triệu/tháng</span>
+        <strong class="green">14</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Khách quá 7 ngày chưa chăm sóc</span>
+        <strong class="red">5</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal" id="crmModal">
+
+  <div class="modal-box">
+
+    <h2>Thêm cơ hội khách hàng</h2>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Tên khách hàng</label>
+        <input type="text" placeholder="Tên cá nhân hoặc doanh nghiệp">
+      </div>
+
+      <div class="form-group">
+        <label>Số điện thoại</label>
+        <input type="tel" placeholder="09xxxxxxxx">
+      </div>
+
+      <div class="form-group">
+        <label>Tuyến vận chuyển</label>
+        <input type="text" placeholder="VD: Bắc Ninh → TP.HCM">
+      </div>
+
+      <div class="form-group">
+        <label>Loại hàng</label>
+        <input type="text" placeholder="Điện tử, thực phẩm, máy móc...">
+      </div>
+
+      <div class="form-group">
+        <label>Số chuyến dự kiến/tháng</label>
+        <input type="number" placeholder="VD: 10">
+      </div>
+
+      <div class="form-group">
+        <label>Giá trị cơ hội</label>
+        <input type="number" placeholder="VNĐ">
+      </div>
+
+      <div class="form-group">
+        <label>Mức độ tiềm năng</label>
+        <select>
+          <option>Rất tiềm năng</option>
+          <option>Tiềm năng</option>
+          <option>Theo dõi</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Nhân viên phụ trách</label>
+        <select>
+          <option>Nguyễn Văn An</option>
+          <option>Trần Minh Đức</option>
+          <option>Lê Hoàng Nam</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Ngày chăm sóc tiếp theo</label>
+        <input type="date">
+      </div>
+
+      <div class="form-group">
+        <label>Giai đoạn</label>
+        <select>
+          <option>Khách mới</option>
+          <option>Đã liên hệ</option>
+          <option>Đã gửi báo giá</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label>Ghi chú</label>
+      <textarea placeholder="Nhu cầu, mức giá khách mong muốn, lịch gọi lại, người quyết định..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+
+      <button class="cancel" onclick="closeModal()">
+        Hủy
+      </button>
+
+      <button class="save" onclick="saveCRM()">
+        Lưu cơ hội
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  function openModal(){
+    document.getElementById("crmModal").style.display="flex";
+  }
+
+  function closeModal(){
+    document.getElementById("crmModal").style.display="none";
+  }
+
+  function saveCRM(){
+    alert("Đã ghi nhận cơ hội khách hàng.");
+    closeModal();
+  }
+</script>
+
+</body>
+</html>
