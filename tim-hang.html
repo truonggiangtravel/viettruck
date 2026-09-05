@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tìm hàng vận chuyển | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/style.css">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Be Vietnam Pro",sans-serif;background:#f6f8f7;color:#13221b}
+.container-page{max-width:1180px;margin:auto;padding:0 20px}
+
+/* HEADER */
+.search-header{
+ background:#fff;
+ border-bottom:1px solid #e5e9e7;
+ position:sticky;
+ top:0;
+ z-index:10;
+}
+.search-nav{
+ height:76px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:25px;
+}
+.logo{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ text-decoration:none;
+ color:#087b40;
+}
+.logo-icon{font-size:34px}
+.logo strong{font-size:25px}
+.logo small{display:block;font-size:11px;color:#65736c}
+
+.menu{
+ display:flex;
+ align-items:center;
+ gap:25px;
+}
+.menu a{
+ text-decoration:none;
+ color:#17221d;
+ font-weight:600;
+ font-size:14px;
+}
+.menu a.active,.menu a:hover{color:#078c4b}
+
+.nav-buttons{display:flex;gap:10px}
+.btn{
+ border:0;
+ border-radius:8px;
+ padding:12px 20px;
+ font-weight:700;
+ cursor:pointer;
+ text-decoration:none;
+ display:inline-block;
+}
+.btn-outline{
+ color:#078c4b;
+ background:#fff;
+ border:1px solid #078c4b;
+}
+.btn-green{background:#078c4b;color:#fff}
+
+/* TITLE */
+.page-head{
+ background:linear-gradient(135deg,#087d45,#0aa45a);
+ color:#fff;
+ padding:36px 0;
+}
+.page-head h1{margin:0 0 8px;font-size:30px}
+.page-head p{margin:0;opacity:.9}
+
+/* SEARCH */
+.search-box{
+ background:#fff;
+ margin-top:25px;
+ padding:24px;
+ border-radius:12px;
+ border:1px solid #e1e7e4;
+ box-shadow:0 4px 18px rgba(0,0,0,.04);
+}
+.search-grid{
+ display:grid;
+ grid-template-columns:1.2fr 1.2fr 1fr 1fr auto;
+ gap:12px;
+ align-items:end;
+}
+.field label{
+ display:block;
+ font-size:13px;
+ font-weight:700;
+ margin-bottom:7px;
+}
+.field input,.field select{
+ width:100%;
+ height:48px;
+ border:1px solid #d9e1dd;
+ border-radius:8px;
+ padding:0 12px;
+ font-family:inherit;
+ background:#fff;
+}
+.search-button{
+ height:48px;
+ padding:0 25px;
+ background:#078c4b;
+ color:white;
+ border:0;
+ border-radius:8px;
+ font-weight:700;
+ cursor:pointer;
+}
+
+/* CONTENT */
+.content-layout{
+ display:grid;
+ grid-template-columns:240px 1fr;
+ gap:22px;
+ margin-top:24px;
+ margin-bottom:50px;
+}
+
+/* FILTER */
+.filter{
+ background:#fff;
+ border:1px solid #e2e7e5;
+ border-radius:10px;
+ padding:20px;
+ height:max-content;
+}
+.filter h3{margin-top:0}
+.filter-group{
+ border-top:1px solid #eee;
+ padding:17px 0;
+}
+.filter-group strong{
+ display:block;
+ margin-bottom:12px;
+ font-size:14px;
+}
+.filter label{
+ display:block;
+ margin:9px 0;
+ font-size:13px;
+ color:#56635d;
+}
+
+/* RESULTS */
+.results-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:14px;
+}
+.results-head h2{margin:0;font-size:21px}
+.results-head span{font-size:13px;color:#6d7772}
+
+.cargo-card{
+ background:#fff;
+ border:1px solid #e1e6e4;
+ border-radius:10px;
+ padding:20px;
+ margin-bottom:12px;
+ display:grid;
+ grid-template-columns:1fr 170px;
+ gap:15px;
+ transition:.2s;
+}
+.cargo-card:hover{
+ box-shadow:0 5px 18px rgba(0,0,0,.07);
+ border-color:#b9dccc;
+}
+.route{
+ font-size:18px;
+ font-weight:800;
+ margin-bottom:10px;
+}
+.arrow{color:#078c4b;padding:0 6px}
+.tags{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+ margin:10px 0;
+}
+.tag{
+ background:#edf7f1;
+ color:#087a43;
+ padding:6px 9px;
+ border-radius:5px;
+ font-size:12px;
+}
+.details{
+ color:#68736e;
+ font-size:13px;
+ line-height:1.8;
+}
+.price-box{
+ text-align:right;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ align-items:flex-end;
+}
+.price{
+ color:#078c4b;
+ font-weight:800;
+ font-size:18px;
+ margin-bottom:4px;
+}
+.negotiable{font-size:12px;color:#777;margin-bottom:12px}
+
+.view-btn{
+ background:#078c4b;
+ color:white;
+ text-decoration:none;
+ border-radius:7px;
+ padding:10px 16px;
+ font-size:13px;
+ font-weight:700;
+}
+
+/* FOOTER */
+.footer{
+ background:#073c27;
+ color:#fff;
+ padding:30px 0;
+ text-align:center;
+}
+.footer p{opacity:.8;font-size:13px}
+
+@media(max-width:900px){
+ .menu{display:none}
+ .search-grid{grid-template-columns:1fr 1fr}
+ .content-layout{grid-template-columns:1fr}
+ .filter{display:none}
+}
+@media(max-width:600px){
+ .search-grid{grid-template-columns:1fr}
+ .cargo-card{grid-template-columns:1fr}
+ .price-box{text-align:left;align-items:flex-start}
+}
+</style>
+</head>
+
+<body>
+
+<header class="search-header">
+<div class="container-page search-nav">
+
+<a href="index.html" class="logo">
+<span class="logo-icon">🚚</span>
+<div>
+<strong>VietTruck</strong>
+<small>Kết nối hàng hóa Việt Nam</small>
+</div>
+</a>
+
+<nav class="menu">
+<a href="index.html">Trang chủ</a>
+<a href="tim-hang.html" class="active">Tìm hàng</a>
+<a href="#">Tìm xe</a>
+<a href="#">Đăng hàng</a>
+<a href="#">Bảng giá</a>
+<a href="#">Dịch vụ</a>
+<a href="#">Tin tức</a>
+<a href="#">Liên hệ</a>
+</nav>
+
+<div class="nav-buttons">
+<a href="#" class="btn btn-outline">Đăng nhập</a>
+<a href="#" class="btn btn-green">Đăng ký</a>
+</div>
+
+</div>
+</header>
+
+<section class="page-head">
+<div class="container-page">
+<h1>Tìm hàng vận chuyển</h1>
+<p>Hàng nghìn đơn hàng đang chờ tài xế trên toàn quốc</p>
+</div>
+</section>
+
+<main class="container-page">
+
+<section class="search-box">
+<div class="search-grid">
+
+<div class="field">
+<label>Nơi đi</label>
+<input type="text" placeholder="Tỉnh / Thành phố">
+</div>
+
+<div class="field">
+<label>Nơi đến</label>
+<input type="text" placeholder="Tỉnh / Thành phố">
+</div>
+
+<div class="field">
+<label>Loại hàng</label>
+<select>
+<option>Tất cả loại hàng</option>
+<option>Hàng tiêu dùng</option>
+<option>Máy móc</option>
+<option>Nông sản</option>
+<option>Vật liệu xây dựng</option>
+<option>Điện tử</option>
+</select>
+</div>
+
+<div class="field">
+<label>Ngày vận chuyển</label>
+<input type="date">
+</div>
+
+<button class="search-button">🔍 Tìm hàng</button>
+
+</div>
+</section>
+
+<div class="content-layout">
+
+<aside class="filter">
+<h3>Bộ lọc</h3>
+
+<div class="filter-group">
+<strong>Trọng lượng</strong>
+<label><input type="checkbox"> Dưới 1 tấn</label>
+<label><input type="checkbox"> 1 – 5 tấn</label>
+<label><input type="checkbox"> 5 – 10 tấn</label>
+<label><input type="checkbox"> Trên 10 tấn</label>
+</div>
+
+<div class="filter-group">
+<strong>Loại xe yêu cầu</strong>
+<label><input type="checkbox"> Xe tải thùng</label>
+<label><input type="checkbox"> Xe container</label>
+<label><input type="checkbox"> Xe lạnh</label>
+<label><input type="checkbox"> Xe đầu kéo</label>
+</div>
+
+<div class="filter-group">
+<strong>Giá cước</strong>
+<label><input type="checkbox"> Có giá</label>
+<label><input type="checkbox"> Thỏa thuận</label>
+</div>
+</aside>
+
+<section>
+
+<div class="results-head">
+<h2>Hàng hóa mới nhất</h2>
+<span>125 đơn hàng phù hợp</span>
+</div>
+
+<div class="cargo-card">
+<div>
+<div class="route">Bắc Ninh <span class="arrow">→</span> Hải Phòng</div>
+<div class="tags">
+<span class="tag">📦 Điện tử</span>
+<span class="tag">5 tấn</span>
+<span class="tag">Xe tải thùng</span>
+</div>
+<div class="details">
+📍 Yên Phong, Bắc Ninh → Hải An, Hải Phòng<br>
+🕒 Nhận hàng: Hôm nay · 14:00
+</div>
+</div>
+<div class="price-box">
+<div class="price">3.500.000 đ</div>
+<div class="negotiable">Có thể thương lượng</div>
+<a href="#" class="view-btn">Xem chi tiết</a>
+</div>
+</div>
+
+<div class="cargo-card">
+<div>
+<div class="route">Hà Nội <span class="arrow">→</span> Đà Nẵng</div>
+<div class="tags">
+<span class="tag">⚙️ Máy móc</span>
+<span class="tag">10 tấn</span>
+<span class="tag">Xe tải 15 tấn</span>
+</div>
+<div class="details">
+📍 Đông Anh, Hà Nội → Liên Chiểu, Đà Nẵng<br>
+🕒 Nhận hàng: Ngày mai · 08:00
+</div>
+</div>
+<div class="price-box">
+<div class="price">12.000.000 đ</div>
+<div class="negotiable">Giá đề xuất</div>
+<a href="#" class="view-btn">Xem chi tiết</a>
+</div>
+</div>
+
+<div class="cargo-card">
+<div>
+<div class="route">Hải Phòng <span class="arrow">→</span> Hà Nội</div>
+<div class="tags">
+<span class="tag">📦 Hàng tiêu dùng</span>
+<span class="tag">3 tấn</span>
+<span class="tag">Xe tải thùng</span>
+</div>
+<div class="details">
+📍 Lê Chân, Hải Phòng → Long Biên, Hà Nội<br>
+🕒 Nhận hàng: Hôm nay · 17:30
+</div>
+</div>
+<div class="price-box">
+<div class="price">Thỏa thuận</div>
+<div class="negotiable">Chủ hàng nhận báo giá</div>
+<a href="#" class="view-btn">Xem chi tiết</a>
+</div>
+</div>
+
+<div class="cargo-card">
+<div>
+<div class="route">Đồng Nai <span class="arrow">→</span> Cần Thơ</div>
+<div class="tags">
+<span class="tag">🌾 Nông sản</span>
+<span class="tag">15 tấn</span>
+<span class="tag">Xe lạnh</span>
+</div>
+<div class="details">
+📍 Biên Hòa, Đồng Nai → Ninh Kiều, Cần Thơ<br>
+🕒 Nhận hàng: 06/09/2026 · 06:00
+</div>
+</div>
+<div class="price-box">
+<div class="price">8.500.000 đ</div>
+<div class="negotiable">Có thể thương lượng</div>
+<a href="#" class="view-btn">Xem chi tiết</a>
+</div>
+</div>
+
+<div class="cargo-card">
+<div>
+<div class="route">TP.HCM <span class="arrow">→</span> Bình Dương</div>
+<div class="tags">
+<span class="tag">🏗️ Vật liệu xây dựng</span>
+<span class="tag">8 tấn</span>
+<span class="tag">Xe tải</span>
+</div>
+<div class="details">
+📍 Thủ Đức → Dĩ An, Bình Dương<br>
+🕒 Nhận hàng: 06/09/2026 · 09:00
+</div>
+</div>
+<div class="price-box">
+<div class="price">2.200.000 đ</div>
+<div class="negotiable">Giá đề xuất</div>
+<a href="#" class="view-btn">Xem chi tiết</a>
+</div>
+</div>
+
+</section>
+</div>
+
+</main>
+
+<footer class="footer">
+<div class="container-page">
+<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+<p>Nền tảng kết nối chủ hàng và tài xế trên toàn quốc</p>
+</div>
+</footer>
+
+</body>
+</html>
