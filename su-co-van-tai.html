@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sự cố vận tải | VietTruck</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f5f7fa;
+      color:#1f2937;
+    }
+
+    .header{
+      background:#fff;
+      border-bottom:1px solid #e5e7eb;
+      padding:16px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:700;
+      color:#16a34a;
+      text-decoration:none;
+    }
+
+    .header-links{
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+
+    .header-links a{
+      color:#4b5563;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .container{
+      max-width:1220px;
+      margin:30px auto;
+      padding:0 20px;
+    }
+
+    .title-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      margin-bottom:22px;
+    }
+
+    .title h1{
+      font-size:28px;
+      margin-bottom:7px;
+    }
+
+    .title p{
+      color:#6b7280;
+    }
+
+    .add-btn{
+      background:#16a34a;
+      color:#fff;
+      border:none;
+      padding:11px 16px;
+      border-radius:8px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .stat{
+      background:#fff;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .stat small{
+      color:#6b7280;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:27px;
+      margin-top:8px;
+    }
+
+    .filters{
+      background:#fff;
+      border-radius:12px;
+      padding:18px;
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr 1fr auto;
+      gap:12px;
+      margin-bottom:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    input,select{
+      width:100%;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      padding:11px 12px;
+      outline:none;
+    }
+
+    .search-btn{
+      border:none;
+      background:#16a34a;
+      color:#fff;
+      border-radius:8px;
+      padding:0 18px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .table-wrap{
+      background:#fff;
+      border-radius:12px;
+      overflow:auto;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+      margin-bottom:22px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:1050px;
+    }
+
+    th{
+      background:#f8fafc;
+      padding:14px 16px;
+      text-align:left;
+      font-size:13px;
+      color:#4b5563;
+      border-bottom:1px solid #e5e7eb;
+    }
+
+    td{
+      padding:15px 16px;
+      font-size:14px;
+      border-bottom:1px solid #eef2f7;
+      vertical-align:top;
+    }
+
+    tr:hover{
+      background:#fafafa;
+    }
+
+    .status{
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:20px;
+      font-size:11px;
+      font-weight:bold;
+      white-space:nowrap;
+    }
+
+    .urgent{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .processing{
+      background:#fef3c7;
+      color:#b45309;
+    }
+
+    .done{
+      background:#dcfce7;
+      color:#15803d;
+    }
+
+    .new{
+      background:#dbeafe;
+      color:#1d4ed8;
+    }
+
+    .action{
+      color:#16a34a;
+      text-decoration:none;
+      font-weight:bold;
+      font-size:13px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    .panel{
+      background:#fff;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .panel h2{
+      font-size:18px;
+      margin-bottom:15px;
+    }
+
+    .row{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:11px 0;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+    }
+
+    .row:last-child{
+      border-bottom:none;
+    }
+
+    .row span{
+      color:#6b7280;
+    }
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.45);
+      z-index:100;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .modal-box{
+      width:100%;
+      max-width:620px;
+      background:#fff;
+      border-radius:14px;
+      padding:24px;
+    }
+
+    .modal-box h2{
+      margin-bottom:18px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .form-group{
+      margin-bottom:12px;
+    }
+
+    .form-group label{
+      display:block;
+      font-size:13px;
+      margin-bottom:6px;
+      font-weight:bold;
+    }
+
+    textarea{
+      width:100%;
+      min-height:90px;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      padding:11px;
+      resize:vertical;
+    }
+
+    .modal-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .cancel{
+      border:1px solid #d1d5db;
+      background:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+    }
+
+    .save{
+      border:none;
+      background:#16a34a;
+      color:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    @media(max-width:900px){
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .filters{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:560px){
+      .stats,
+      .filters,
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .title-row{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <a href="index.html" class="logo">🚚 VietTruck</a>
+
+  <div class="header-links">
+    <a href="canh-bao-van-tai.html">Cảnh báo</a>
+    <a href="dieu-phoi-van-tai.html">Điều phối</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="title-row">
+
+    <div class="title">
+      <h1>Quản lý sự cố vận tải</h1>
+      <p>Ghi nhận, theo dõi và xử lý các sự cố phát sinh trong quá trình vận chuyển.</p>
+    </div>
+
+    <button class="add-btn" onclick="openModal()">
+      + Báo cáo sự cố
+    </button>
+
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Tổng sự cố tháng này</small>
+      <strong>18</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đang xử lý</small>
+      <strong>5</strong>
+    </div>
+
+    <div class="stat">
+      <small>Khẩn cấp</small>
+      <strong>2</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đã xử lý</small>
+      <strong>13</strong>
+    </div>
+
+  </div>
+
+  <div class="filters">
+
+    <input type="text" placeholder="Tìm mã sự cố, biển số, tài xế">
+
+    <select>
+      <option>Tất cả loại sự cố</option>
+      <option>Xe hỏng</option>
+      <option>Tai nạn</option>
+      <option>Giao hàng chậm</option>
+      <option>Hư hỏng hàng hóa</option>
+      <option>Mất hàng</option>
+      <option>Khách hàng khiếu nại</option>
+    </select>
+
+    <select>
+      <option>Tất cả mức độ</option>
+      <option>Khẩn cấp</option>
+      <option>Cao</option>
+      <option>Trung bình</option>
+      <option>Thấp</option>
+    </select>
+
+    <select>
+      <option>Tất cả trạng thái</option>
+      <option>Mới</option>
+      <option>Đang xử lý</option>
+      <option>Đã xử lý</option>
+    </select>
+
+    <button class="search-btn">Tìm kiếm</button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Mã sự cố</th>
+          <th>Thời gian</th>
+          <th>Loại sự cố</th>
+          <th>Xe / Tài xế</th>
+          <th>Chuyến hàng</th>
+          <th>Địa điểm</th>
+          <th>Mức độ</th>
+          <th>Trạng thái</th>
+          <th>Xử lý</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td><strong>SC-090526-001</strong></td>
+          <td>05/09/2026<br>10:25</td>
+          <td>Xe hỏng</td>
+          <td>
+            99H-456.78<br>
+            <small>Lê Văn Thành</small>
+          </td>
+          <td>DH-090526-007</td>
+          <td>QL18, Bắc Ninh</td>
+          <td><span class="status urgent">Khẩn cấp</span></td>
+          <td><span class="status processing">Đang xử lý</span></td>
+          <td><a href="#" class="action">Chi tiết</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>SC-090526-002</strong></td>
+          <td>05/09/2026<br>09:10</td>
+          <td>Giao hàng chậm</td>
+          <td>
+            30H-678.90<br>
+            <small>Phạm Quốc Anh</small>
+          </td>
+          <td>DH-090526-004</td>
+          <td>Hải Phòng</td>
+          <td><span class="status processing">Cao</span></td>
+          <td><span class="status processing">Đang xử lý</span></td>
+          <td><a href="#" class="action">Chi tiết</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>SC-040926-011</strong></td>
+          <td>04/09/2026<br>16:42</td>
+          <td>Hư hỏng hàng hóa</td>
+          <td>
+            98C-333.66<br>
+            <small>Trần Văn Cường</small>
+          </td>
+          <td>DH-040926-015</td>
+          <td>Gia Lâm, Hà Nội</td>
+          <td><span class="status new">Trung bình</span></td>
+          <td><span class="status done">Đã xử lý</span></td>
+          <td><a href="#" class="action">Chi tiết</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>SC-030926-008</strong></td>
+          <td>03/09/2026<br>14:05</td>
+          <td>Khách hàng khiếu nại</td>
+          <td>
+            99C-123.45<br>
+            <small>Nguyễn Văn Nam</small>
+          </td>
+          <td>DH-030926-021</td>
+          <td>Bắc Giang</td>
+          <td><span class="status new">Trung bình</span></td>
+          <td><span class="status done">Đã xử lý</span></td>
+          <td><a href="#" class="action">Chi tiết</a></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="panel">
+
+      <h2>Sự cố theo loại</h2>
+
+      <div class="row">
+        <span>Giao hàng chậm</span>
+        <strong>6</strong>
+      </div>
+
+      <div class="row">
+        <span>Xe hỏng</span>
+        <strong>4</strong>
+      </div>
+
+      <div class="row">
+        <span>Hư hỏng hàng hóa</span>
+        <strong>3</strong>
+      </div>
+
+      <div class="row">
+        <span>Khiếu nại khách hàng</span>
+        <strong>3</strong>
+      </div>
+
+      <div class="row">
+        <span>Khác</span>
+        <strong>2</strong>
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <h2>Kết quả xử lý</h2>
+
+      <div class="row">
+        <span>Đã xử lý trong ngày</span>
+        <strong>72%</strong>
+      </div>
+
+      <div class="row">
+        <span>Thời gian xử lý trung bình</span>
+        <strong>1 giờ 25 phút</strong>
+      </div>
+
+      <div class="row">
+        <span>Sự cố phải bồi thường</span>
+        <strong>3</strong>
+      </div>
+
+      <div class="row">
+        <span>Tổng bồi thường tháng</span>
+        <strong>18,5 triệu</strong>
+      </div>
+
+      <div class="row">
+        <span>Sự cố tái diễn</span>
+        <strong>1</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal" id="incidentModal">
+
+  <div class="modal-box">
+
+    <h2>Báo cáo sự cố mới</h2>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Loại sự cố</label>
+        <select>
+          <option>Xe hỏng</option>
+          <option>Tai nạn</option>
+          <option>Giao hàng chậm</option>
+          <option>Hư hỏng hàng hóa</option>
+          <option>Mất hàng</option>
+          <option>Khách hàng khiếu nại</option>
+          <option>Khác</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Mức độ</label>
+        <select>
+          <option>Khẩn cấp</option>
+          <option>Cao</option>
+          <option>Trung bình</option>
+          <option>Thấp</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Biển số xe</label>
+        <input type="text" placeholder="VD: 99H-456.78">
+      </div>
+
+      <div class="form-group">
+        <label>Mã chuyến</label>
+        <input type="text" placeholder="VD: DH-090526-007">
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label>Địa điểm xảy ra sự cố</label>
+      <input type="text" placeholder="Nhập địa điểm">
+    </div>
+
+    <div class="form-group">
+      <label>Mô tả sự cố</label>
+      <textarea placeholder="Mô tả chi tiết tình trạng sự cố..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+
+      <button class="cancel" onclick="closeModal()">
+        Hủy
+      </button>
+
+      <button class="save" onclick="saveIncident()">
+        Gửi báo cáo
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+  function openModal(){
+    document.getElementById("incidentModal").style.display="flex";
+  }
+
+  function closeModal(){
+    document.getElementById("incidentModal").style.display="none";
+  }
+
+  function saveIncident(){
+    alert("Đã ghi nhận báo cáo sự cố.");
+    closeModal();
+  }
+
+</script>
+
+</body>
+</html>
