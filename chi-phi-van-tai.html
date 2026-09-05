@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi phí vận tải | VietTruck</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f5f7fa;
+      color:#1f2937;
+    }
+
+    .header{
+      background:#fff;
+      border-bottom:1px solid #e5e7eb;
+      padding:16px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:700;
+      color:#16a34a;
+      text-decoration:none;
+    }
+
+    .header-links{
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+
+    .header-links a{
+      color:#4b5563;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .container{
+      max-width:1220px;
+      margin:30px auto;
+      padding:0 20px;
+    }
+
+    .title-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .title h1{
+      font-size:28px;
+      margin-bottom:8px;
+    }
+
+    .title p{
+      color:#6b7280;
+    }
+
+    .add-btn{
+      background:#16a34a;
+      color:#fff;
+      border:none;
+      padding:11px 16px;
+      border-radius:8px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .stat{
+      background:#fff;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .stat small{
+      color:#6b7280;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:27px;
+      margin-top:8px;
+    }
+
+    .green{
+      color:#16a34a;
+    }
+
+    .red{
+      color:#dc2626;
+    }
+
+    .filters{
+      background:#fff;
+      border-radius:12px;
+      padding:18px;
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr 1fr auto;
+      gap:12px;
+      margin-bottom:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    input, select{
+      width:100%;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      padding:11px 12px;
+      outline:none;
+    }
+
+    .search-btn{
+      border:none;
+      background:#16a34a;
+      color:#fff;
+      border-radius:8px;
+      padding:0 18px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .table-wrap{
+      background:#fff;
+      border-radius:12px;
+      overflow:auto;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+      margin-bottom:22px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:1100px;
+    }
+
+    th{
+      background:#f8fafc;
+      padding:14px 16px;
+      text-align:left;
+      font-size:13px;
+      color:#4b5563;
+      border-bottom:1px solid #e5e7eb;
+    }
+
+    td{
+      padding:15px 16px;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+      vertical-align:top;
+    }
+
+    tr:hover{
+      background:#fafafa;
+    }
+
+    .status{
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:20px;
+      font-size:11px;
+      font-weight:bold;
+      white-space:nowrap;
+    }
+
+    .paid{
+      background:#dcfce7;
+      color:#15803d;
+    }
+
+    .pending{
+      background:#fef3c7;
+      color:#b45309;
+    }
+
+    .over{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .action{
+      color:#16a34a;
+      text-decoration:none;
+      font-weight:bold;
+      font-size:13px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    .panel{
+      background:#fff;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .panel h2{
+      font-size:18px;
+      margin-bottom:16px;
+    }
+
+    .cost-row{
+      margin-bottom:16px;
+    }
+
+    .cost-top{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:7px;
+      font-size:14px;
+    }
+
+    .bar{
+      height:10px;
+      background:#eef2f7;
+      border-radius:20px;
+      overflow:hidden;
+    }
+
+    .fill{
+      height:100%;
+      background:#16a34a;
+      border-radius:20px;
+    }
+
+    .w85{width:85%}
+    .w65{width:65%}
+    .w48{width:48%}
+    .w35{width:35%}
+    .w24{width:24%}
+
+    .summary-row{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:11px 0;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+    }
+
+    .summary-row:last-child{
+      border-bottom:none;
+    }
+
+    .summary-row span{
+      color:#6b7280;
+    }
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.45);
+      z-index:100;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .modal-box{
+      background:#fff;
+      width:100%;
+      max-width:620px;
+      border-radius:14px;
+      padding:24px;
+    }
+
+    .modal-box h2{
+      margin-bottom:18px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .form-group{
+      margin-bottom:12px;
+    }
+
+    .form-group label{
+      display:block;
+      font-size:13px;
+      margin-bottom:6px;
+      font-weight:bold;
+    }
+
+    textarea{
+      width:100%;
+      min-height:90px;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      padding:11px;
+      resize:vertical;
+    }
+
+    .modal-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .cancel{
+      border:1px solid #d1d5db;
+      background:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+    }
+
+    .save{
+      border:none;
+      background:#16a34a;
+      color:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    @media(max-width:900px){
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .filters{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:560px){
+      .stats,
+      .filters,
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .title-row{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <a href="index.html" class="logo">🚚 VietTruck</a>
+
+  <div class="header-links">
+    <a href="bao-cao-van-tai.html">Báo cáo</a>
+    <a href="dieu-phoi-van-tai.html">Điều phối</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="title-row">
+
+    <div class="title">
+      <h1>Quản lý chi phí vận tải</h1>
+      <p>Theo dõi chi phí từng chuyến, từng xe và hiệu quả tài chính vận hành.</p>
+    </div>
+
+    <button class="add-btn" onclick="openModal()">
+      + Thêm chi phí
+    </button>
+
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Tổng doanh thu tháng</small>
+      <strong>486 triệu</strong>
+    </div>
+
+    <div class="stat">
+      <small>Tổng chi phí</small>
+      <strong class="red">318 triệu</strong>
+    </div>
+
+    <div class="stat">
+      <small>Lợi nhuận ước tính</small>
+      <strong class="green">168 triệu</strong>
+    </div>
+
+    <div class="stat">
+      <small>Chi phí / doanh thu</small>
+      <strong>65,4%</strong>
+    </div>
+
+  </div>
+
+  <div class="filters">
+
+    <input type="text" placeholder="Tìm mã chuyến, biển số xe hoặc tài xế">
+
+    <select>
+      <option>Tất cả loại chi phí</option>
+      <option>Nhiên liệu</option>
+      <option>Phí cầu đường</option>
+      <option>Lương tài xế</option>
+      <option>Bốc xếp</option>
+      <option>Bảo dưỡng</option>
+      <option>Sửa chữa</option>
+      <option>Chi phí khác</option>
+    </select>
+
+    <select>
+      <option>Tất cả xe</option>
+      <option>99C-123.45</option>
+      <option>99H-456.78</option>
+      <option>30H-678.90</option>
+      <option>98C-333.66</option>
+    </select>
+
+    <select>
+      <option>Tháng 09/2026</option>
+      <option>Tháng 08/2026</option>
+      <option>Quý III/2026</option>
+    </select>
+
+    <button class="search-btn">Tìm kiếm</button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Mã chuyến</th>
+          <th>Xe / Tài xế</th>
+          <th>Tuyến</th>
+          <th>Doanh thu</th>
+          <th>Nhiên liệu</th>
+          <th>Cầu đường</th>
+          <th>Chi phí khác</th>
+          <th>Tổng chi phí</th>
+          <th>Lợi nhuận</th>
+          <th>Trạng thái</th>
+          <th>Chi tiết</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td><strong>DH-090526-007</strong></td>
+          <td>
+            99H-456.78<br>
+            <small>Lê Văn Thành</small>
+          </td>
+          <td>Bắc Ninh → Hải Phòng</td>
+          <td>5.800.000đ</td>
+          <td>1.650.000đ</td>
+          <td>420.000đ</td>
+          <td>650.000đ</td>
+          <td><strong>2.720.000đ</strong></td>
+          <td class="green"><strong>3.080.000đ</strong></td>
+          <td><span class="status paid">Đã chốt</span></td>
+          <td><a href="#" class="action">Xem</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>DH-090526-004</strong></td>
+          <td>
+            30H-678.90<br>
+            <small>Phạm Quốc Anh</small>
+          </td>
+          <td>Hà Nội → Quảng Ninh</td>
+          <td>6.200.000đ</td>
+          <td>1.920.000đ</td>
+          <td>510.000đ</td>
+          <td>780.000đ</td>
+          <td><strong>3.210.000đ</strong></td>
+          <td class="green"><strong>2.990.000đ</strong></td>
+          <td><span class="status pending">Chờ chốt</span></td>
+          <td><a href="#" class="action">Xem</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>DH-040926-015</strong></td>
+          <td>
+            98C-333.66<br>
+            <small>Trần Văn Cường</small>
+          </td>
+          <td>Bắc Giang → Hà Nội</td>
+          <td>3.950.000đ</td>
+          <td>1.150.000đ</td>
+          <td>260.000đ</td>
+          <td>1.450.000đ</td>
+          <td><strong>2.860.000đ</strong></td>
+          <td class="green"><strong>1.090.000đ</strong></td>
+          <td><span class="status over">Chi phí cao</span></td>
+          <td><a href="#" class="action">Xem</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>DH-030926-021</strong></td>
+          <td>
+            99C-123.45<br>
+            <small>Nguyễn Văn Nam</small>
+          </td>
+          <td>Bắc Ninh → Hà Nội</td>
+          <td>3.200.000đ</td>
+          <td>920.000đ</td>
+          <td>180.000đ</td>
+          <td>420.000đ</td>
+          <td><strong>1.520.000đ</strong></td>
+          <td class="green"><strong>1.680.000đ</strong></td>
+          <td><span class="status paid">Đã chốt</span></td>
+          <td><a href="#" class="action">Xem</a></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="panel">
+
+      <h2>Cơ cấu chi phí</h2>
+
+      <div class="cost-row">
+        <div class="cost-top">
+          <span>Nhiên liệu</span>
+          <strong>134 triệu</strong>
+        </div>
+        <div class="bar"><div class="fill w85"></div></div>
+      </div>
+
+      <div class="cost-row">
+        <div class="cost-top">
+          <span>Lương & phụ cấp tài xế</span>
+          <strong>82 triệu</strong>
+        </div>
+        <div class="bar"><div class="fill w65"></div></div>
+      </div>
+
+      <div class="cost-row">
+        <div class="cost-top">
+          <span>Cầu đường / BOT</span>
+          <strong>48 triệu</strong>
+        </div>
+        <div class="bar"><div class="fill w48"></div></div>
+      </div>
+
+      <div class="cost-row">
+        <div class="cost-top">
+          <span>Bảo dưỡng / sửa chữa</span>
+          <strong>34 triệu</strong>
+        </div>
+        <div class="bar"><div class="fill w35"></div></div>
+      </div>
+
+      <div class="cost-row">
+        <div class="cost-top">
+          <span>Chi phí khác</span>
+          <strong>20 triệu</strong>
+        </div>
+        <div class="bar"><div class="fill w24"></div></div>
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <h2>Hiệu quả tài chính</h2>
+
+      <div class="summary-row">
+        <span>Doanh thu bình quân / chuyến</span>
+        <strong>1,48 triệu</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Chi phí bình quân / chuyến</span>
+        <strong>970.000đ</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Lợi nhuận bình quân / chuyến</span>
+        <strong class="green">512.000đ</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Chi phí nhiên liệu / km</span>
+        <strong>3.126đ</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Biên lợi nhuận</span>
+        <strong class="green">34,6%</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal" id="costModal">
+
+  <div class="modal-box">
+
+    <h2>Thêm chi phí vận tải</h2>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Mã chuyến</label>
+        <input type="text" placeholder="VD: DH-090526-007">
+      </div>
+
+      <div class="form-group">
+        <label>Biển số xe</label>
+        <input type="text" placeholder="VD: 99H-456.78">
+      </div>
+
+      <div class="form-group">
+        <label>Loại chi phí</label>
+        <select>
+          <option>Nhiên liệu</option>
+          <option>Phí cầu đường</option>
+          <option>Lương tài xế</option>
+          <option>Bốc xếp</option>
+          <option>Bảo dưỡng</option>
+          <option>Sửa chữa</option>
+          <option>Khác</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Số tiền</label>
+        <input type="number" placeholder="Nhập số tiền">
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label>Nội dung chi phí</label>
+      <textarea placeholder="VD: Đổ dầu chuyến Bắc Ninh - Hải Phòng..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+
+      <button class="cancel" onclick="closeModal()">
+        Hủy
+      </button>
+
+      <button class="save" onclick="saveCost()">
+        Lưu chi phí
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  function openModal(){
+    document.getElementById("costModal").style.display="flex";
+  }
+
+  function closeModal(){
+    document.getElementById("costModal").style.display="none";
+  }
+
+  function saveCost(){
+    alert("Đã ghi nhận chi phí vận tải.");
+    closeModal();
+  }
+</script>
+
+</body>
+</html>
