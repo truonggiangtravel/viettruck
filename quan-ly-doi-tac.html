@@ -1380,9 +1380,9 @@ function viewPartner(name){
 
 function editPartner(name){
 
-  alert(
-    "Chỉnh sửa đối tác: " + name
-  );
+  window.location.href =
+    "chinh-sua-doi-tac.html?name=" +
+    encodeURIComponent(name);
 
 }
 
