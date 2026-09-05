@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng hàng vận chuyển | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Be Vietnam Pro",sans-serif;
+  background:#f6f8f7;
+  color:#13221b;
+}
+.container{
+  max-width:1180px;
+  margin:auto;
+  padding:0 20px;
+}
+
+/* HEADER */
+.header{
+  background:#fff;
+  border-bottom:1px solid #e5e9e7;
+}
+.nav{
+  height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:22px;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:#087b40;
+}
+.logo-icon{font-size:34px}
+.logo strong{font-size:25px}
+.logo small{
+  display:block;
+  font-size:11px;
+  color:#65736c;
+}
+.menu{
+  display:flex;
+  gap:24px;
+}
+.menu a{
+  text-decoration:none;
+  color:#17221d;
+  font-weight:600;
+  font-size:14px;
+}
+.menu a.active,.menu a:hover{color:#078c4b}
+.nav-buttons{
+  display:flex;
+  gap:10px;
+}
+.btn{
+  padding:12px 20px;
+  border-radius:8px;
+  font-weight:700;
+  text-decoration:none;
+}
+.btn-outline{
+  color:#078c4b;
+  border:1px solid #078c4b;
+}
+.btn-green{
+  background:#078c4b;
+  color:#fff;
+}
+
+/* TITLE */
+.page-head{
+  background:linear-gradient(135deg,#087d45,#0aa45a);
+  color:#fff;
+  padding:36px 0;
+}
+.page-head h1{
+  margin:0 0 8px;
+  font-size:30px;
+}
+.page-head p{
+  margin:0;
+  opacity:.9;
+}
+
+/* FORM */
+.form-wrap{
+  max-width:900px;
+  margin:28px auto 50px;
+}
+.form-card{
+  background:#fff;
+  border:1px solid #e1e7e4;
+  border-radius:12px;
+  padding:28px;
+  box-shadow:0 5px 20px rgba(0,0,0,.04);
+}
+.form-card h2{
+  margin:0 0 22px;
+  font-size:22px;
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  border:1px solid #d8e1dc;
+  border-radius:8px;
+  padding:0 12px;
+  font-family:inherit;
+  font-size:14px;
+  background:#fff;
+}
+.field input,
+.field select{
+  height:48px;
+}
+.field textarea{
+  min-height:110px;
+  padding-top:12px;
+  resize:vertical;
+}
+.full{
+  grid-column:1/-1;
+}
+.section-title{
+  grid-column:1/-1;
+  font-size:15px;
+  font-weight:800;
+  margin-top:8px;
+  padding-top:18px;
+  border-top:1px solid #eef1ef;
+}
+.hint{
+  font-size:12px;
+  color:#6c7872;
+  margin-top:6px;
+}
+
+/* PRICE */
+.price-box{
+  display:flex;
+  gap:12px;
+}
+.price-box input{
+  flex:1;
+}
+.price-box select{
+  width:170px;
+}
+
+/* INFO BOX */
+.info-box{
+  background:#edf7f1;
+  border:1px solid #cde7d8;
+  border-radius:10px;
+  padding:16px;
+  color:#315c46;
+  font-size:13px;
+  line-height:1.7;
+}
+
+/* SUBMIT */
+.submit-area{
+  margin-top:24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+.submit-note{
+  color:#6e7974;
+  font-size:12px;
+  line-height:1.6;
+}
+.submit-btn{
+  border:0;
+  background:#078c4b;
+  color:#fff;
+  border-radius:8px;
+  padding:14px 28px;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+}
+.submit-btn:hover{
+  background:#06773f;
+}
+
+/* FOOTER */
+.footer{
+  background:#073c27;
+  color:#fff;
+  padding:30px 0;
+  text-align:center;
+}
+.footer p{
+  opacity:.8;
+  font-size:13px;
+}
+
+@media(max-width:900px){
+  .menu{display:none}
+}
+@media(max-width:700px){
+  .form-grid{grid-template-columns:1fr}
+  .full,.section-title{grid-column:auto}
+  .submit-area{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .submit-btn{width:100%}
+  .price-box{flex-direction:column}
+  .price-box select{width:100%}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="container nav">
+
+    <a href="index.html" class="logo">
+      <span class="logo-icon">🚚</span>
+      <div>
+        <strong>VietTruck</strong>
+        <small>Kết nối hàng hóa Việt Nam</small>
+      </div>
+    </a>
+
+    <nav class="menu">
+      <a href="index.html">Trang chủ</a>
+      <a href="tim-hang.html">Tìm hàng</a>
+      <a href="tim-xe.html">Tìm xe</a>
+      <a href="dang-hang.html" class="active">Đăng hàng</a>
+      <a href="#">Bảng giá</a>
+      <a href="#">Dịch vụ</a>
+      <a href="#">Tin tức</a>
+      <a href="#">Liên hệ</a>
+    </nav>
+
+    <div class="nav-buttons">
+      <a href="#" class="btn btn-outline">Đăng nhập</a>
+      <a href="#" class="btn btn-green">Đăng ký</a>
+    </div>
+
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="container">
+    <h1>Đăng hàng vận chuyển</h1>
+    <p>Đăng yêu cầu vận chuyển để kết nối nhanh với tài xế và nhà xe phù hợp</p>
+  </div>
+</section>
+
+<main class="container form-wrap">
+
+  <form class="form-card">
+    <h2>Thông tin đơn hàng</h2>
+
+    <div class="form-grid">
+
+      <div class="section-title">1. Tuyến vận chuyển</div>
+
+      <div class="field">
+        <label>Nơi lấy hàng *</label>
+        <input type="text" placeholder="Ví dụ: Yên Phong, Bắc Ninh" required>
+      </div>
+
+      <div class="field">
+        <label>Nơi giao hàng *</label>
+        <input type="text" placeholder="Ví dụ: Hải An, Hải Phòng" required>
+      </div>
+
+      <div class="field">
+        <label>Ngày lấy hàng *</label>
+        <input type="date" required>
+      </div>
+
+      <div class="field">
+        <label>Giờ dự kiến</label>
+        <input type="time">
+      </div>
+
+      <div class="section-title">2. Thông tin hàng hóa</div>
+
+      <div class="field">
+        <label>Loại hàng *</label>
+        <select required>
+          <option value="">Chọn loại hàng</option>
+          <option>Hàng tiêu dùng</option>
+          <option>Điện tử</option>
+          <option>Máy móc</option>
+          <option>Nông sản</option>
+          <option>Thực phẩm</option>
+          <option>Vật liệu xây dựng</option>
+          <option>Hàng lạnh</option>
+          <option>Hàng khác</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Trọng lượng *</label>
+        <input type="text" placeholder="Ví dụ: 5 tấn" required>
+      </div>
+
+      <div class="field">
+        <label>Kích thước hàng</label>
+        <input type="text" placeholder="Dài × Rộng × Cao">
+      </div>
+
+      <div class="field">
+        <label>Số kiện</label>
+        <input type="number" placeholder="Ví dụ: 20">
+      </div>
+
+      <div class="field full">
+        <label>Mô tả hàng hóa</label>
+        <textarea placeholder="Mô tả chi tiết loại hàng, quy cách đóng gói, yêu cầu bốc xếp..."></textarea>
+      </div>
+
+      <div class="section-title">3. Yêu cầu xe</div>
+
+      <div class="field">
+        <label>Loại xe mong muốn</label>
+        <select>
+          <option>Không yêu cầu</option>
+          <option>Xe tải thùng</option>
+          <option>Xe thùng kín</option>
+          <option>Xe thùng bạt</option>
+          <option>Xe tải lạnh</option>
+          <option>Xe container</option>
+          <option>Xe đầu kéo</option>
+          <option>Xe van</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Tải trọng xe</label>
+        <select>
+          <option>Không yêu cầu</option>
+          <option>Dưới 1 tấn</option>
+          <option>1 – 3.5 tấn</option>
+          <option>3.5 – 5 tấn</option>
+          <option>5 – 8 tấn</option>
+          <option>8 – 15 tấn</option>
+          <option>Trên 15 tấn</option>
+        </select>
+      </div>
+
+      <div class="section-title">4. Giá cước</div>
+
+      <div class="field full">
+        <label>Giá mong muốn</label>
+        <div class="price-box">
+          <input type="number" placeholder="Ví dụ: 3500000">
+          <select>
+            <option>VNĐ / chuyến</option>
+            <option>Thỏa thuận</option>
+          </select>
+        </div>
+        <div class="hint">Có thể để trống nếu muốn nhận báo giá từ tài xế.</div>
+      </div>
+
+      <div class="section-title">5. Thông tin liên hệ</div>
+
+      <div class="field">
+        <label>Họ và tên *</label>
+        <input type="text" placeholder="Tên người liên hệ" required>
+      </div>
+
+      <div class="field">
+        <label>Số điện thoại *</label>
+        <input type="tel" placeholder="09xxxxxxxx" required>
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input type="email" placeholder="example@email.com">
+      </div>
+
+      <div class="field">
+        <label>Tên công ty</label>
+        <input type="text" placeholder="Nếu có">
+      </div>
+
+      <div class="field full">
+        <div class="info-box">
+          🔒 Thông tin của bạn chỉ được sử dụng để kết nối với tài xế hoặc nhà xe phù hợp.
+          Trong phiên bản hiện tại, đây là giao diện demo và chưa gửi dữ liệu lên máy chủ.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="submit-area">
+      <div class="submit-note">
+        Bằng việc đăng hàng, bạn đồng ý với điều khoản sử dụng và chính sách bảo mật của VietTruck.
+      </div>
+
+      <button type="submit" class="submit-btn">Đăng hàng ngay</button>
+    </div>
+
+  </form>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+    <p>Nền tảng kết nối chủ hàng và tài xế trên toàn quốc</p>
+  </div>
+</footer>
+
+</body>
+</html>
