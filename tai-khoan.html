@@ -1,1 +1,537 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tài khoản của tôi | VietTruck</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:"Be Vietnam Pro",sans-serif;
+ background:#f6f8f7;
+ color:#13221b;
+}
+.container{max-width:1180px;margin:auto;padding:0 20px}
+
+/* HEADER */
+.header{
+ background:#fff;
+ border-bottom:1px solid #e5e9e7;
+}
+.nav{
+ height:76px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:20px;
+}
+.logo{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ text-decoration:none;
+ color:#087b40;
+}
+.logo-icon{font-size:34px}
+.logo strong{font-size:25px}
+.logo small{
+ display:block;
+ font-size:11px;
+ color:#65736c;
+}
+
+.menu{
+ display:flex;
+ gap:24px;
+}
+.menu a{
+ text-decoration:none;
+ color:#17221d;
+ font-weight:600;
+ font-size:14px;
+}
+.menu a:hover{color:#078c4b}
+
+.user-area{
+ display:flex;
+ align-items:center;
+ gap:10px;
+}
+.avatar{
+ width:40px;
+ height:40px;
+ border-radius:50%;
+ background:#078c4b;
+ color:#fff;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-weight:800;
+}
+.user-name{
+ font-size:13px;
+ font-weight:700;
+}
+
+/* BANNER */
+.page-head{
+ background:linear-gradient(135deg,#087d45,#0aa45a);
+ color:#fff;
+ padding:30px 0;
+}
+.page-head h1{
+ margin:0 0 7px;
+ font-size:28px;
+}
+.page-head p{
+ margin:0;
+ opacity:.9;
+}
+
+/* ACCOUNT */
+.account-layout{
+ display:grid;
+ grid-template-columns:250px 1fr;
+ gap:24px;
+ margin:28px auto 55px;
+}
+
+/* SIDEBAR */
+.sidebar{
+ background:#fff;
+ border:1px solid #e1e7e4;
+ border-radius:12px;
+ padding:18px;
+ height:max-content;
+}
+.profile-mini{
+ text-align:center;
+ padding:8px 0 20px;
+ border-bottom:1px solid #edf0ee;
+}
+.profile-avatar{
+ width:72px;
+ height:72px;
+ border-radius:50%;
+ background:#078c4b;
+ color:#fff;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ margin:0 auto 10px;
+ font-size:26px;
+ font-weight:800;
+}
+.profile-mini strong{
+ display:block;
+ font-size:16px;
+}
+.profile-mini span{
+ display:block;
+ color:#6b7771;
+ font-size:12px;
+ margin-top:4px;
+}
+
+.side-menu{
+ margin-top:14px;
+}
+.side-menu a{
+ display:block;
+ text-decoration:none;
+ color:#33423b;
+ padding:12px 13px;
+ border-radius:8px;
+ font-size:13px;
+ font-weight:600;
+ margin-bottom:4px;
+}
+.side-menu a:hover,
+.side-menu a.active{
+ background:#edf7f1;
+ color:#078c4b;
+}
+.logout{color:#b33a3a!important}
+
+/* CONTENT */
+.content{min-width:0}
+
+.welcome{
+ background:#fff;
+ border:1px solid #e1e7e4;
+ border-radius:12px;
+ padding:24px;
+ margin-bottom:18px;
+}
+.welcome h2{
+ margin:0 0 7px;
+ font-size:22px;
+}
+.welcome p{
+ margin:0;
+ color:#68746e;
+ font-size:13px;
+}
+
+/* STATS */
+.stats{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:14px;
+ margin-bottom:20px;
+}
+.stat{
+ background:#fff;
+ border:1px solid #e1e7e4;
+ border-radius:11px;
+ padding:18px;
+}
+.stat-icon{
+ font-size:25px;
+ margin-bottom:9px;
+}
+.stat strong{
+ display:block;
+ font-size:23px;
+ color:#078c4b;
+ margin-bottom:4px;
+}
+.stat span{
+ font-size:12px;
+ color:#68746e;
+}
+
+/* QUICK ACTIONS */
+.card{
+ background:#fff;
+ border:1px solid #e1e7e4;
+ border-radius:12px;
+ padding:22px;
+ margin-bottom:18px;
+}
+.card h3{
+ margin:0 0 17px;
+ font-size:18px;
+}
+
+.quick-grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:13px;
+}
+.quick{
+ text-decoration:none;
+ color:#15231c;
+ border:1px solid #e1e7e4;
+ border-radius:10px;
+ padding:18px;
+ transition:.2s;
+}
+.quick:hover{
+ border-color:#078c4b;
+ transform:translateY(-2px);
+}
+.quick-icon{
+ font-size:28px;
+ margin-bottom:10px;
+}
+.quick strong{
+ display:block;
+ font-size:14px;
+ margin-bottom:5px;
+}
+.quick span{
+ font-size:11px;
+ color:#6d7973;
+ line-height:1.5;
+}
+
+/* RECENT */
+.activity{
+ border-top:1px solid #edf0ee;
+ padding:14px 0;
+ display:flex;
+ justify-content:space-between;
+ gap:15px;
+}
+.activity:first-of-type{border-top:0}
+.activity-title{
+ font-size:13px;
+ font-weight:700;
+ margin-bottom:4px;
+}
+.activity-text{
+ font-size:12px;
+ color:#6b7771;
+}
+.activity-time{
+ white-space:nowrap;
+ color:#7b8680;
+ font-size:11px;
+}
+
+/* NOTICE */
+.notice{
+ background:#edf8f2;
+ border:1px solid #cbe9d8;
+ border-radius:10px;
+ padding:17px;
+ font-size:12px;
+ line-height:1.7;
+ color:#315b47;
+}
+
+/* FOOTER */
+.footer{
+ background:#073c27;
+ color:#fff;
+ padding:28px 0;
+ text-align:center;
+}
+.footer p{
+ opacity:.8;
+ font-size:13px;
+}
+
+/* MOBILE */
+@media(max-width:950px){
+ .menu{display:none}
+ .stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+ .account-layout{grid-template-columns:1fr}
+ .sidebar{display:none}
+ .quick-grid{grid-template-columns:1fr}
+ .stats{grid-template-columns:1fr 1fr}
+ .user-name{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+ <span class="logo-icon">🚚</span>
+ <div>
+  <strong>VietTruck</strong>
+  <small>Kết nối hàng hóa Việt Nam</small>
+ </div>
+</a>
+
+<nav class="menu">
+ <a href="index.html">Trang chủ</a>
+ <a href="tim-hang.html">Tìm hàng</a>
+ <a href="tim-xe.html">Tìm xe</a>
+ <a href="dang-hang.html">Đăng hàng</a>
+</nav>
+
+<div class="user-area">
+ <div class="avatar">A</div>
+ <div class="user-name">Nguyễn Văn A</div>
+</div>
+
+</div>
+</header>
+
+<section class="page-head">
+<div class="container">
+ <h1>Tài khoản của tôi</h1>
+ <p>Quản lý hoạt động vận chuyển của bạn trên VietTruck</p>
+</div>
+</section>
+
+<main class="container account-layout">
+
+<!-- MENU TRÁI -->
+<aside class="sidebar">
+
+<div class="profile-mini">
+ <div class="profile-avatar">A</div>
+ <strong>Nguyễn Văn A</strong>
+ <span>Chủ hàng / Tài xế</span>
+</div>
+
+<nav class="side-menu">
+
+ <a href="tai-khoan.html" class="active">
+  🏠 Tổng quan
+ </a>
+
+ <a href="#">
+  👤 Hồ sơ cá nhân
+ </a>
+
+ <a href="don-hang-cua-toi.html">
+  📦 Đơn hàng của tôi
+ </a>
+
+ <a href="xe-cua-toi.html">
+  🚚 Xe của tôi
+ </a>
+
+ <a href="#">
+  🧾 Chuyến đã nhận
+ </a>
+
+ <a href="#">
+  🔔 Thông báo
+ </a>
+
+ <a href="#">
+  💳 Lịch sử giao dịch
+ </a>
+
+ <a href="#">
+  ⚙️ Cài đặt
+ </a>
+
+ <a href="index.html" class="logout">
+  ↪ Đăng xuất
+ </a>
+
+</nav>
+</aside>
+
+<!-- NỘI DUNG -->
+<section class="content">
+
+<div class="welcome">
+ <h2>Xin chào, Nguyễn Văn A 👋</h2>
+ <p>Chào mừng bạn quay trở lại VietTruck. Đây là tổng quan tài khoản của bạn.</p>
+</div>
+
+<!-- THỐNG KÊ -->
+<div class="stats">
+
+<div class="stat">
+ <div class="stat-icon">📦</div>
+ <strong>5</strong>
+ <span>Đơn hàng đã đăng</span>
+</div>
+
+<div class="stat">
+ <div class="stat-icon">🚚</div>
+ <strong>4</strong>
+ <span>Xe đang quản lý</span>
+</div>
+
+<div class="stat">
+ <div class="stat-icon">🛣️</div>
+ <strong>12</strong>
+ <span>Chuyến hoàn thành</span>
+</div>
+
+<div class="stat">
+ <div class="stat-icon">⭐</div>
+ <strong>4.9</strong>
+ <span>Điểm đánh giá</span>
+</div>
+
+</div>
+
+<!-- THAO TÁC NHANH -->
+<div class="card">
+
+<h3>Thao tác nhanh</h3>
+
+<div class="quick-grid">
+
+<a href="dang-hang.html" class="quick">
+ <div class="quick-icon">📦</div>
+ <strong>Đăng hàng mới</strong>
+ <span>Tạo yêu cầu vận chuyển và nhận báo giá từ tài xế.</span>
+</a>
+
+<a href="tim-hang.html" class="quick">
+ <div class="quick-icon">🔎</div>
+ <strong>Tìm hàng</strong>
+ <span>Tìm chuyến hàng phù hợp cho xe đang trống.</span>
+</a>
+
+<a href="tim-xe.html" class="quick">
+ <div class="quick-icon">🚛</div>
+ <strong>Tìm xe</strong>
+ <span>Tìm tài xế và phương tiện phù hợp với đơn hàng.</span>
+</a>
+
+<a href="don-hang-cua-toi.html" class="quick">
+ <div class="quick-icon">📋</div>
+ <strong>Đơn hàng của tôi</strong>
+ <span>Theo dõi các đơn hàng và trạng thái vận chuyển.</span>
+</a>
+
+<a href="xe-cua-toi.html" class="quick">
+ <div class="quick-icon">🚚</div>
+ <strong>Xe của tôi</strong>
+ <span>Quản lý phương tiện và trạng thái nhận hàng.</span>
+</a>
+
+<a href="#" class="quick">
+ <div class="quick-icon">🔔</div>
+ <strong>Thông báo</strong>
+ <span>Xem báo giá, cập nhật đơn hàng và thông báo hệ thống.</span>
+</a>
+
+</div>
+</div>
+
+<!-- HOẠT ĐỘNG -->
+<div class="card">
+
+<h3>Hoạt động gần đây</h3>
+
+<div class="activity">
+ <div>
+  <div class="activity-title">Có báo giá mới cho đơn Bắc Ninh → Hải Phòng</div>
+  <div class="activity-text">Một tài xế vừa gửi mức giá 3.500.000 đ.</div>
+ </div>
+ <div class="activity-time">15 phút trước</div>
+</div>
+
+<div class="activity">
+ <div>
+  <div class="activity-title">Đơn hàng đang được vận chuyển</div>
+  <div class="activity-text">Chuyến TP.HCM → Cần Thơ đang trên đường giao hàng.</div>
+ </div>
+ <div class="activity-time">1 giờ trước</div>
+</div>
+
+<div class="activity">
+ <div>
+  <div class="activity-title">Xe 99C-123.45 đang sẵn sàng</div>
+  <div class="activity-text">Xe đã được hiển thị cho các chủ hàng tìm kiếm.</div>
+ </div>
+ <div class="activity-time">Hôm nay</div>
+</div>
+
+</div>
+
+<div class="notice">
+ 🔒 <strong>Tài khoản VietTruck:</strong>
+ Phiên bản hiện tại đang là giao diện demo. Khi xây dựng hệ thống chính thức,
+ dữ liệu tài khoản, đơn hàng, tài xế, xe, GPS và thanh toán sẽ được kết nối
+ với cơ sở dữ liệu và máy chủ.
+</div>
+
+</section>
+
+</main>
+
+<footer class="footer">
+<div class="container">
+ <strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+ <p>© 2026 VietTruck. Nền tảng kết nối chủ hàng, tài xế và nhà xe.</p>
+</div>
+</footer>
+
+</body>
+</html>
