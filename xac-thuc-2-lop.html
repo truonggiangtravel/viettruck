@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xác thực 2 lớp | VietTruck</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+body{
+  background:#f5f7fa;
+  color:#1f2937;
+}
+.header{
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  padding:16px 28px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  color:#16a34a;
+  font-size:24px;
+  font-weight:800;
+  text-decoration:none;
+}
+.header-links{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.header-links a{
+  color:#4b5563;
+  text-decoration:none;
+  font-size:14px;
+}
+.container{
+  max-width:900px;
+  margin:35px auto;
+  padding:0 20px;
+}
+.title{
+  margin-bottom:24px;
+}
+.title h1{
+  font-size:28px;
+  margin-bottom:8px;
+}
+.title p{
+  color:#6b7280;
+  line-height:1.6;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.card{
+  background:#fff;
+  border-radius:14px;
+  padding:24px;
+  box-shadow:0 3px 15px rgba(0,0,0,.06);
+}
+.card h2{
+  font-size:19px;
+  margin-bottom:14px;
+}
+.status-box{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  margin-bottom:18px;
+}
+.status{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:700;
+}
+.off{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+.on{
+  background:#dcfce7;
+  color:#15803d;
+}
+.method{
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  padding:15px;
+  margin-bottom:12px;
+}
+.method strong{
+  display:block;
+  margin-bottom:6px;
+}
+.method p{
+  color:#6b7280;
+  font-size:13px;
+  line-height:1.5;
+}
+button{
+  border:0;
+  border-radius:9px;
+  padding:11px 15px;
+  cursor:pointer;
+  font-weight:700;
+}
+.primary{
+  background:#16a34a;
+  color:#fff;
+}
+.secondary{
+  background:#fff;
+  border:1px solid #d1d5db;
+  color:#374151;
+}
+.danger{
+  background:#dc2626;
+  color:#fff;
+}
+.form-group{
+  margin-bottom:15px;
+}
+label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+input,select{
+  width:100%;
+  padding:11px 12px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+}
+.qr{
+  width:180px;
+  height:180px;
+  margin:18px auto;
+  background:
+    linear-gradient(90deg,#111 10px,transparent 10px) 0 0/30px 30px,
+    linear-gradient(#111 10px,transparent 10px) 0 0/30px 30px,
+    #fff;
+  border:10px solid #fff;
+  outline:1px solid #d1d5db;
+}
+.code{
+  text-align:center;
+  font-family:monospace;
+  font-weight:700;
+  letter-spacing:2px;
+  padding:10px;
+  background:#f3f4f6;
+  border-radius:8px;
+  margin-bottom:15px;
+}
+.recovery{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:12px;
+}
+.recovery span{
+  background:#f3f4f6;
+  padding:8px;
+  border-radius:7px;
+  font-family:monospace;
+  text-align:center;
+  font-size:13px;
+}
+.notice{
+  margin-top:20px;
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#9a3412;
+  padding:14px;
+  border-radius:10px;
+  font-size:13px;
+  line-height:1.6;
+}
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:16px;
+}
+@media(max-width:760px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <a href="dashboard.html" class="logo">🚚 VietTruck</a>
+
+  <div class="header-links">
+    <a href="quan-ly-tai-khoan.html">Tài khoản</a>
+    <a href="doi-mat-khau.html">Đổi mật khẩu</a>
+    <a href="cai-dat-he-thong.html">Cài đặt</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="title">
+    <h1>Xác thực 2 lớp (2FA)</h1>
+    <p>
+      Tăng cường bảo mật tài khoản VietTruck bằng mã xác thực bổ sung
+      sau khi nhập mật khẩu.
+    </p>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+
+      <h2>Trạng thái bảo mật</h2>
+
+      <div class="status-box">
+        <div>
+          <strong>Xác thực 2 lớp</strong>
+          <p style="font-size:13px;color:#6b7280;margin-top:5px;">
+            Tài khoản hiện chưa bật 2FA.
+          </p>
+        </div>
+
+        <span class="status off" id="statusBadge">
+          Chưa bật
+        </span>
+      </div>
+
+      <div class="method">
+        <strong>📱 Ứng dụng xác thực</strong>
+        <p>
+          Sử dụng Google Authenticator, Microsoft Authenticator
+          hoặc ứng dụng tương thích để nhận mã 6 số.
+        </p>
+      </div>
+
+      <div class="method">
+        <strong>📧 Email OTP</strong>
+        <p>
+          Gửi mã xác thực một lần tới email đã đăng ký.
+        </p>
+      </div>
+
+      <div class="method">
+        <strong>📲 SMS OTP</strong>
+        <p>
+          Gửi mã xác thực tới số điện thoại tài khoản.
+        </p>
+      </div>
+
+      <div class="actions">
+        <button class="primary" onclick="enable2FA()">
+          Bật xác thực 2 lớp
+        </button>
+
+        <button class="danger" onclick="disable2FA()">
+          Tắt 2FA
+        </button>
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>Thiết lập ứng dụng xác thực</h2>
+
+      <p style="color:#6b7280;font-size:13px;line-height:1.6;">
+        Quét mã QR bằng ứng dụng xác thực, sau đó nhập mã 6 số để xác nhận.
+      </p>
+
+      <div class="qr"></div>
+
+      <div class="code">
+        VT-2FA-DEMO-2026
+      </div>
+
+      <div class="form-group">
+        <label>Mã xác thực 6 số</label>
+        <input
+          id="otp"
+          type="text"
+          maxlength="6"
+          placeholder="Nhập mã 6 số"
+        >
+      </div>
+
+      <button class="primary" onclick="verifyCode()">
+        Xác nhận kích hoạt
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card" style="margin-top:20px;">
+
+    <h2>Mã khôi phục</h2>
+
+    <p style="font-size:13px;color:#6b7280;line-height:1.6;">
+      Lưu các mã này ở nơi an toàn để sử dụng nếu bạn mất thiết bị xác thực.
+    </p>
+
+    <div class="recovery">
+      <span>VT84-AK29</span>
+      <span>VT17-PL55</span>
+      <span>VT93-HM21</span>
+      <span>VT46-QX88</span>
+      <span>VT61-BN73</span>
+      <span>VT25-ZC40</span>
+    </div>
+
+  </div>
+
+
+  <div class="notice">
+    ⚠️ Trang này hiện chỉ là giao diện mô phỏng.
+    Mã QR, OTP và mã khôi phục phía trên không có giá trị bảo mật thật.
+    Khi triển khai chính thức, 2FA cần backend, secret key riêng cho từng tài khoản,
+    mã hóa an toàn và dịch vụ OTP phù hợp.
+  </div>
+
+</div>
+
+<script>
+
+function enable2FA(){
+  alert("Đã ghi nhận yêu cầu bật xác thực 2 lớp.");
+}
+
+function disable2FA(){
+
+  const badge = document.getElementById("statusBadge");
+
+  badge.innerText = "Chưa bật";
+  badge.className = "status off";
+
+  alert("Đã ghi nhận yêu cầu tắt 2FA.");
+}
+
+function verifyCode(){
+
+  const otp = document.getElementById("otp").value.trim();
+
+  if(otp.length !== 6 || isNaN(otp)){
+    alert("Vui lòng nhập mã xác thực gồm 6 chữ số.");
+    return;
+  }
+
+  const badge = document.getElementById("statusBadge");
+
+  badge.innerText = "Đã bật";
+  badge.className = "status on";
+
+  alert("Xác thực 2 lớp đã được kích hoạt mô phỏng.");
+}
+
+</script>
+
+</body>
+</html>
