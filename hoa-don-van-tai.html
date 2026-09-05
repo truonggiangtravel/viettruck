@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hóa đơn vận tải | VietTruck</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial,Helvetica,sans-serif;
+    }
+
+    body{
+      background:#f5f7fa;
+      color:#1f2937;
+    }
+
+    .header{
+      background:#fff;
+      border-bottom:1px solid #e5e7eb;
+      padding:16px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:700;
+      color:#16a34a;
+      text-decoration:none;
+    }
+
+    .header-links{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .header-links a{
+      color:#4b5563;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .container{
+      max-width:1220px;
+      margin:30px auto;
+      padding:0 20px;
+    }
+
+    .title-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .title h1{
+      font-size:28px;
+      margin-bottom:8px;
+    }
+
+    .title p{
+      color:#6b7280;
+    }
+
+    .add-btn{
+      background:#16a34a;
+      color:#fff;
+      border:0;
+      padding:11px 16px;
+      border-radius:8px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .stat{
+      background:#fff;
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .stat small{
+      color:#6b7280;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:27px;
+      margin-top:8px;
+    }
+
+    .green{color:#16a34a;}
+    .orange{color:#d97706;}
+    .red{color:#dc2626;}
+
+    .filters{
+      background:#fff;
+      padding:18px;
+      border-radius:12px;
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr 1fr auto;
+      gap:12px;
+      margin-bottom:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    input,select{
+      width:100%;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      padding:11px;
+    }
+
+    .search-btn{
+      border:0;
+      background:#16a34a;
+      color:#fff;
+      border-radius:8px;
+      padding:0 18px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .table-wrap{
+      background:#fff;
+      border-radius:12px;
+      overflow:auto;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+      margin-bottom:22px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:1150px;
+    }
+
+    th{
+      background:#f8fafc;
+      padding:14px 16px;
+      text-align:left;
+      font-size:13px;
+      color:#4b5563;
+      border-bottom:1px solid #e5e7eb;
+    }
+
+    td{
+      padding:15px 16px;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+    }
+
+    .status{
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:20px;
+      font-size:11px;
+      font-weight:bold;
+      white-space:nowrap;
+    }
+
+    .draft{
+      background:#f3f4f6;
+      color:#4b5563;
+    }
+
+    .issued{
+      background:#dbeafe;
+      color:#1d4ed8;
+    }
+
+    .paid{
+      background:#dcfce7;
+      color:#15803d;
+    }
+
+    .overdue{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .action{
+      color:#16a34a;
+      text-decoration:none;
+      font-weight:bold;
+      font-size:13px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    .panel{
+      background:#fff;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .panel h2{
+      font-size:18px;
+      margin-bottom:16px;
+    }
+
+    .summary-row{
+      display:flex;
+      justify-content:space-between;
+      padding:11px 0;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+    }
+
+    .summary-row span{
+      color:#6b7280;
+    }
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.45);
+      z-index:100;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .modal-box{
+      background:#fff;
+      width:100%;
+      max-width:680px;
+      border-radius:14px;
+      padding:24px;
+    }
+
+    .modal-box h2{
+      margin-bottom:18px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .form-group{
+      margin-bottom:12px;
+    }
+
+    .form-group label{
+      display:block;
+      font-size:13px;
+      font-weight:bold;
+      margin-bottom:6px;
+    }
+
+    textarea{
+      width:100%;
+      min-height:90px;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      padding:11px;
+      resize:vertical;
+    }
+
+    .modal-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .cancel{
+      border:1px solid #d1d5db;
+      background:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+    }
+
+    .save{
+      border:0;
+      background:#16a34a;
+      color:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    @media(max-width:900px){
+      .stats{grid-template-columns:repeat(2,1fr);}
+      .filters{grid-template-columns:1fr 1fr;}
+      .grid{grid-template-columns:1fr;}
+    }
+
+    @media(max-width:560px){
+      .stats,.filters,.form-grid{grid-template-columns:1fr;}
+      .title-row{flex-direction:column;align-items:flex-start;}
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <a href="index.html" class="logo">🚚 VietTruck</a>
+
+  <div class="header-links">
+    <a href="doi-soat-thanh-toan.html">Đối soát</a>
+    <a href="cong-no-van-tai.html">Công nợ</a>
+    <a href="vi-viettruck.html">Ví VietTruck</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+
+</header>
+
+<div class="container">
+
+  <div class="title-row">
+
+    <div class="title">
+      <h1>Quản lý hóa đơn vận tải</h1>
+      <p>Theo dõi hóa đơn cước vận chuyển, thuế VAT, thanh toán và công nợ.</p>
+    </div>
+
+    <button class="add-btn" onclick="openModal()">
+      + Tạo hóa đơn
+    </button>
+
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Doanh số hóa đơn</small>
+      <strong>524 triệu</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đã thanh toán</small>
+      <strong class="green">386 triệu</strong>
+    </div>
+
+    <div class="stat">
+      <small>Chờ thanh toán</small>
+      <strong class="orange">102 triệu</strong>
+    </div>
+
+    <div class="stat">
+      <small>Quá hạn</small>
+      <strong class="red">36 triệu</strong>
+    </div>
+
+  </div>
+
+  <div class="filters">
+
+    <input type="text" placeholder="Tìm số hóa đơn, khách hàng hoặc mã chuyến">
+
+    <select>
+      <option>Tất cả loại hóa đơn</option>
+      <option>Hóa đơn đầu ra</option>
+      <option>Hóa đơn đầu vào</option>
+    </select>
+
+    <select>
+      <option>Tất cả trạng thái</option>
+      <option>Nháp</option>
+      <option>Đã phát hành</option>
+      <option>Đã thanh toán</option>
+      <option>Quá hạn</option>
+    </select>
+
+    <select>
+      <option>Tháng 09/2026</option>
+      <option>Tháng 08/2026</option>
+      <option>Quý III/2026</option>
+    </select>
+
+    <button class="search-btn">Tìm kiếm</button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Số hóa đơn</th>
+          <th>Khách hàng / Nhà xe</th>
+          <th>Mã chuyến</th>
+          <th>Tiền trước thuế</th>
+          <th>VAT</th>
+          <th>Tổng thanh toán</th>
+          <th>Ngày phát hành</th>
+          <th>Hạn thanh toán</th>
+          <th>Trạng thái</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td><strong>VT-000128</strong></td>
+          <td>Công ty ABC Logistics</td>
+          <td>DH-090526-007</td>
+          <td>18.500.000đ</td>
+          <td>1.480.000đ</td>
+          <td><strong>19.980.000đ</strong></td>
+          <td>05/09/2026</td>
+          <td>15/09/2026</td>
+          <td><span class="status issued">Đã phát hành</span></td>
+          <td><a href="#" class="action">Xem</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>VT-000127</strong></td>
+          <td>Công ty Minh Phát</td>
+          <td>DH-040926-015</td>
+          <td>26.000.000đ</td>
+          <td>2.080.000đ</td>
+          <td><strong>28.080.000đ</strong></td>
+          <td>04/09/2026</td>
+          <td>12/09/2026</td>
+          <td><span class="status issued">Đã phát hành</span></td>
+          <td><a href="#" class="action">Xem</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>VT-000126</strong></td>
+          <td>Nhà xe Thành Công</td>
+          <td>DH-030926-018</td>
+          <td>12.800.000đ</td>
+          <td>1.024.000đ</td>
+          <td><strong>13.824.000đ</strong></td>
+          <td>03/09/2026</td>
+          <td>08/09/2026</td>
+          <td><span class="status paid">Đã thanh toán</span></td>
+          <td><a href="#" class="action">Xem</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>VT-000120</strong></td>
+          <td>Công ty Hưng Thịnh</td>
+          <td>DH-280826-011</td>
+          <td>32.000.000đ</td>
+          <td>2.560.000đ</td>
+          <td><strong>34.560.000đ</strong></td>
+          <td>28/08/2026</td>
+          <td>03/09/2026</td>
+          <td><span class="status overdue">Quá hạn</span></td>
+          <td><a href="cong-no-van-tai.html" class="action">Công nợ</a></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="panel">
+
+      <h2>Tổng hợp hóa đơn</h2>
+
+      <div class="summary-row">
+        <span>Hóa đơn đã phát hành</span>
+        <strong>524 triệu</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>VAT đầu ra</span>
+        <strong>41,9 triệu</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Đã thu tiền</span>
+        <strong class="green">386 triệu</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Còn phải thu</span>
+        <strong class="orange">138 triệu</strong>
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <h2>Liên kết tài chính</h2>
+
+      <div class="summary-row">
+        <span>Chờ đối soát</span>
+        <strong>12 hóa đơn</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Liên kết công nợ</span>
+        <strong>18 hóa đơn</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Đã thanh toán qua Ví VietTruck</span>
+        <strong class="green">27 hóa đơn</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Hóa đơn quá hạn</span>
+        <strong class="red">4 hóa đơn</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal" id="invoiceModal">
+
+  <div class="modal-box">
+
+    <h2>Tạo hóa đơn vận tải</h2>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Loại hóa đơn</label>
+        <select>
+          <option>Hóa đơn đầu ra</option>
+          <option>Hóa đơn đầu vào</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Khách hàng / Nhà xe</label>
+        <input type="text" placeholder="Nhập tên đối tác">
+      </div>
+
+      <div class="form-group">
+        <label>Mã chuyến</label>
+        <input type="text" placeholder="VD: DH-090526-007">
+      </div>
+
+      <div class="form-group">
+        <label>Tiền trước thuế</label>
+        <input type="number" placeholder="Nhập số tiền">
+      </div>
+
+      <div class="form-group">
+        <label>Thuế VAT (%)</label>
+        <select>
+          <option>8%</option>
+          <option>10%</option>
+          <option>0%</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Hạn thanh toán</label>
+        <input type="date">
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label>Ghi chú</label>
+      <textarea placeholder="Nội dung cước vận chuyển, phụ phí, chứng từ..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+
+      <button class="cancel" onclick="closeModal()">
+        Hủy
+      </button>
+
+      <button class="save" onclick="saveInvoice()">
+        Tạo hóa đơn
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  function openModal(){
+    document.getElementById("invoiceModal").style.display="flex";
+  }
+
+  function closeModal(){
+    document.getElementById("invoiceModal").style.display="none";
+  }
+
+  function saveInvoice(){
+    alert("Đã tạo hóa đơn vận tải.");
+    closeModal();
+  }
+</script>
+
+</body>
+</html>
