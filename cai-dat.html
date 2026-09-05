@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cài đặt tài khoản | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Be Vietnam Pro",sans-serif;background:#f6f8f7;color:#13221b}
+.container{max-width:1180px;margin:auto;padding:0 20px}
+
+.header{background:#fff;border-bottom:1px solid #e5e9e7}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:22px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#087b40}
+.logo-icon{font-size:34px}
+.logo strong{font-size:25px}
+.logo small{display:block;font-size:11px;color:#65736c}
+.menu{display:flex;gap:24px}
+.menu a{text-decoration:none;color:#17221d;font-weight:600;font-size:14px}
+.menu a:hover{color:#078c4b}
+
+.user-area{display:flex;align-items:center;gap:10px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#078c4b;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+.user-name{font-size:13px;font-weight:700}
+
+.page-head{background:linear-gradient(135deg,#087d45,#0aa45a);color:#fff;padding:30px 0}
+.page-head h1{margin:0 0 7px;font-size:28px}
+.page-head p{margin:0;opacity:.9}
+
+.account-layout{display:grid;grid-template-columns:250px 1fr;gap:24px;margin:28px auto 55px}
+
+.sidebar{background:#fff;border:1px solid #e1e7e4;border-radius:12px;padding:18px;height:max-content}
+.profile-mini{text-align:center;padding:8px 0 20px;border-bottom:1px solid #edf0ee}
+.profile-avatar{width:72px;height:72px;border-radius:50%;background:#078c4b;color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:26px;font-weight:800}
+.profile-mini strong{display:block;font-size:16px}
+.profile-mini span{display:block;color:#6b7771;font-size:12px;margin-top:4px}
+
+.side-menu{margin-top:14px}
+.side-menu a{display:block;text-decoration:none;color:#33423b;padding:12px 13px;border-radius:8px;font-size:13px;font-weight:600;margin-bottom:4px}
+.side-menu a:hover,.side-menu a.active{background:#edf7f1;color:#078c4b}
+.logout{color:#b33a3a!important}
+
+.card{background:#fff;border:1px solid #e1e7e4;border-radius:12px;padding:23px;margin-bottom:18px}
+.card h2{margin:0 0 5px;font-size:19px}
+.card p{margin:0 0 18px;color:#6c7772;font-size:12px}
+
+.setting-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
+padding:16px 0;
+border-top:1px solid #edf0ee;
+}
+.setting-row:first-of-type{border-top:0}
+.setting-info strong{display:block;font-size:13px;margin-bottom:5px}
+.setting-info span{font-size:12px;color:#6e7974;line-height:1.5}
+
+.toggle{
+position:relative;
+width:48px;
+height:26px;
+flex:0 0 auto;
+}
+.toggle input{display:none}
+.slider{
+position:absolute;
+cursor:pointer;
+inset:0;
+background:#ccd5d0;
+border-radius:30px;
+transition:.2s;
+}
+.slider:before{
+content:"";
+position:absolute;
+width:20px;
+height:20px;
+left:3px;
+top:3px;
+background:#fff;
+border-radius:50%;
+transition:.2s;
+}
+.toggle input:checked + .slider{background:#078c4b}
+.toggle input:checked + .slider:before{transform:translateX(22px)}
+
+.field{margin-top:15px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}
+.field input{width:100%;height:48px;border:1px solid #d8e1dc;border-radius:8px;padding:0 12px;font-family:inherit}
+
+.save-btn{
+margin-top:18px;
+border:0;
+border-radius:8px;
+background:#078c4b;
+color:#fff;
+padding:13px 22px;
+font-family:inherit;
+font-weight:800;
+cursor:pointer;
+}
+
+.danger-card{border-color:#efcccc}
+.danger-card h2{color:#a93838}
+.danger-btn{
+border:1px solid #dcaeae;
+background:#fff;
+color:#b33a3a;
+border-radius:8px;
+padding:11px 16px;
+font-family:inherit;
+font-weight:800;
+cursor:pointer;
+}
+
+.footer{background:#073c27;color:#fff;padding:28px 0;text-align:center}
+.footer p{opacity:.8;font-size:13px}
+
+@media(max-width:900px){.menu{display:none}}
+@media(max-width:760px){
+.account-layout{grid-template-columns:1fr}
+.sidebar{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+<span class="logo-icon">🚚</span>
+<div>
+<strong>VietTruck</strong>
+<small>Kết nối hàng hóa Việt Nam</small>
+</div>
+</a>
+
+<nav class="menu">
+<a href="index.html">Trang chủ</a>
+<a href="tim-hang.html">Tìm hàng</a>
+<a href="tim-xe.html">Tìm xe</a>
+<a href="dang-hang.html">Đăng hàng</a>
+</nav>
+
+<div class="user-area">
+<div class="avatar">A</div>
+<div class="user-name">Nguyễn Văn A</div>
+</div>
+
+</div>
+</header>
+
+<section class="page-head">
+<div class="container">
+<h1>Cài đặt tài khoản</h1>
+<p>Quản lý bảo mật, thông báo và quyền riêng tư tài khoản VietTruck</p>
+</div>
+</section>
+
+<main class="container account-layout">
+
+<aside class="sidebar">
+
+<div class="profile-mini">
+<div class="profile-avatar">A</div>
+<strong>Nguyễn Văn A</strong>
+<span>Chủ hàng / Tài xế</span>
+</div>
+
+<nav class="side-menu">
+<a href="tai-khoan.html">🏠 Tổng quan</a>
+<a href="ho-so-ca-nhan.html">👤 Hồ sơ cá nhân</a>
+<a href="don-hang-cua-toi.html">📦 Đơn hàng của tôi</a>
+<a href="xe-cua-toi.html">🚚 Xe của tôi</a>
+<a href="chuyen-da-nhan.html">🧾 Chuyến đã nhận</a>
+<a href="thong-bao.html">🔔 Thông báo</a>
+<a href="lich-su-giao-dich.html">💳 Lịch sử giao dịch</a>
+<a href="cai-dat.html" class="active">⚙️ Cài đặt</a>
+<a href="index.html" class="logout">↪ Đăng xuất</a>
+</nav>
+
+</aside>
+
+<section>
+
+<div class="card">
+<h2>Thông báo</h2>
+<p>Chọn loại thông báo bạn muốn nhận.</p>
+
+<div class="setting-row">
+<div class="setting-info">
+<strong>Báo giá mới</strong>
+<span>Thông báo khi tài xế gửi báo giá cho đơn hàng.</span>
+</div>
+<label class="toggle">
+<input type="checkbox" checked>
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="setting-row">
+<div class="setting-info">
+<strong>Cập nhật chuyến vận chuyển</strong>
+<span>Nhận thông báo khi trạng thái chuyến thay đổi.</span>
+</div>
+<label class="toggle">
+<input type="checkbox" checked>
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="setting-row">
+<div class="setting-info">
+<strong>Thông báo thanh toán</strong>
+<span>Thông báo giao dịch, đối soát và hoàn tiền.</span>
+</div>
+<label class="toggle">
+<input type="checkbox" checked>
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="setting-row">
+<div class="setting-info">
+<strong>Tin tức và ưu đãi</strong>
+<span>Nhận tin tức, chương trình và thông báo từ VietTruck.</span>
+</div>
+<label class="toggle">
+<input type="checkbox">
+<span class="slider"></span>
+</label>
+</div>
+
+</div>
+
+<div class="card">
+<h2>Bảo mật tài khoản</h2>
+<p>Thay đổi mật khẩu đăng nhập.</p>
+
+<div class="field">
+<label>Mật khẩu hiện tại</label>
+<input type="password" placeholder="Nhập mật khẩu hiện tại">
+</div>
+
+<div class="field">
+<label>Mật khẩu mới</label>
+<input type="password" placeholder="Tối thiểu 8 ký tự">
+</div>
+
+<div class="field">
+<label>Nhập lại mật khẩu mới</label>
+<input type="password" placeholder="Nhập lại mật khẩu">
+</div>
+
+<button class="save-btn" type="button" onclick="alert('Đã cập nhật mật khẩu demo')">
+Cập nhật mật khẩu
+</button>
+</div>
+
+<div class="card">
+<h2>Quyền riêng tư</h2>
+<p>Quản lý cách thông tin tài khoản được hiển thị.</p>
+
+<div class="setting-row">
+<div class="setting-info">
+<strong>Hiển thị số điện thoại</strong>
+<span>Cho phép đối tác đã ghép chuyến xem số điện thoại.</span>
+</div>
+<label class="toggle">
+<input type="checkbox" checked>
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="setting-row">
+<div class="setting-info">
+<strong>Hiển thị trạng thái xe</strong>
+<span>Cho phép chủ hàng tìm thấy xe đang sẵn sàng.</span>
+</div>
+<label class="toggle">
+<input type="checkbox" checked>
+<span class="slider"></span>
+</label>
+</div>
+
+</div>
+
+<div class="card danger-card">
+<h2>Quản lý tài khoản</h2>
+<p>Các thao tác này có thể ảnh hưởng đến quyền truy cập VietTruck.</p>
+
+<button type="button" class="danger-btn" onclick="alert('Chức năng khóa tài khoản sẽ được triển khai ở backend')">
+Tạm khóa tài khoản
+</button>
+</div>
+
+</section>
+
+</main>
+
+<footer class="footer">
+<div class="container">
+<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+<p>© 2026 VietTruck. Nền tảng kết nối chủ hàng, tài xế và nhà xe.</p>
+</div>
+</footer>
+
+</body>
+</html>
