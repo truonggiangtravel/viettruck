@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Chỉnh sửa đối tác - VietTruck</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  background:#f4f7f8;
+  color:#1f2937;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+.app{
+  display:flex;
+  min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:250px;
+  background:#0f5132;
+  color:#fff;
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  padding:24px 16px;
+  overflow-y:auto;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:800;
+  text-align:center;
+  margin-bottom:28px;
+}
+
+.logo span{
+  color:#ffc107;
+}
+
+.menu-title{
+  font-size:12px;
+  text-transform:uppercase;
+  opacity:.7;
+  margin:20px 12px 8px;
+}
+
+.menu-item{
+  display:block;
+  padding:12px 14px;
+  border-radius:10px;
+  margin-bottom:6px;
+}
+
+.menu-item:hover,
+.menu-item.active{
+  background:rgba(255,255,255,.15);
+}
+
+/* MAIN */
+
+.main{
+  margin-left:250px;
+  width:calc(100% - 250px);
+}
+
+.topbar{
+  min-height:72px;
+  background:white;
+  padding:16px 28px;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.topbar h1{
+  color:#0f5132;
+  font-size:22px;
+}
+
+.content{
+  padding:28px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.btn{
+  border:none;
+  border-radius:10px;
+  padding:11px 16px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.btn-primary{
+  background:#198754;
+  color:white;
+}
+
+.btn-light{
+  background:#eef3f0;
+  color:#0f5132;
+}
+
+/* HEADER */
+
+.profile-head{
+  background:linear-gradient(135deg,#0f5132,#198754);
+  color:white;
+  border-radius:18px;
+  padding:24px;
+  margin-bottom:22px;
+}
+
+.profile-head h2{
+  margin-bottom:7px;
+}
+
+.profile-head p{
+  opacity:.9;
+}
+
+/* CARD */
+
+.card{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  box-shadow:0 4px 18px rgba(0,0,0,.05);
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+.card-head{
+  padding:18px 20px;
+  border-bottom:1px solid #edf0f2;
+}
+
+.card-head h3{
+  color:#0f5132;
+}
+
+.card-body{
+  padding:20px;
+}
+
+/* FORM */
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.form-group.full{
+  grid-column:1/-1;
+}
+
+.form-group label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+
+.form-control{
+  width:100%;
+  padding:12px 13px;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  background:white;
+  outline:none;
+  font-size:14px;
+}
+
+.form-control:focus{
+  border-color:#198754;
+  box-shadow:0 0 0 3px rgba(25,135,84,.08);
+}
+
+textarea.form-control{
+  min-height:90px;
+  resize:vertical;
+}
+
+.readonly{
+  background:#f3f4f6;
+  color:#6b7280;
+}
+
+.actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  padding:18px 20px;
+  border-top:1px solid #e5e7eb;
+}
+
+/* NOTICE */
+
+.notice{
+  background:#fff8db;
+  border:1px solid #f4dc87;
+  padding:14px 16px;
+  border-radius:12px;
+  margin-bottom:20px;
+  color:#6b5500;
+  line-height:1.5;
+  font-size:13px;
+}
+
+@media(max-width:700px){
+
+  .sidebar{
+    position:static;
+    width:100%;
+  }
+
+  .app{
+    display:block;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+  }
+
+  .content{
+    padding:16px;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .topbar{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<div class="logo">
+Viet<span>Truck</span>
+</div>
+
+<div class="menu-title">Hệ thống</div>
+
+<a class="menu-item" href="dashboard.html">🏠 Dashboard</a>
+<a class="menu-item" href="quan-ly-don-hang.html">📦 Quản lý đơn hàng</a>
+<a class="menu-item" href="trung-tam-bao-gia.html">💰 Trung tâm báo giá</a>
+<a class="menu-item" href="hang-chieu-ve.html">🔄 Hàng chiều về</a>
+<a class="menu-item" href="quan-ly-doi-xe.html">🚛 Quản lý đội xe</a>
+
+<div class="menu-title">Doanh nghiệp</div>
+
+<a class="menu-item" href="thong-tin-doanh-nghiep.html">🏢 Thông tin doanh nghiệp</a>
+<a class="menu-item" href="quan-ly-nhan-vien.html">👥 Quản lý nhân viên</a>
+<a class="menu-item" href="phan-quyen-tai-khoan.html">🛡️ Phân quyền tài khoản</a>
+<a class="menu-item" href="nhat-ky-hoat-dong.html">📋 Nhật ký hoạt động</a>
+<a class="menu-item" href="quan-ly-chi-nhanh.html">📍 Quản lý chi nhánh</a>
+<a class="menu-item" href="quan-ly-hop-dong.html">📄 Quản lý hợp đồng</a>
+<a class="menu-item active" href="quan-ly-doi-tac.html">🤝 Quản lý đối tác</a>
+
+<div class="menu-title">Tài khoản</div>
+
+<a class="menu-item" href="tai-khoan.html">👤 Tài khoản</a>
+<a class="menu-item" href="vi-viettruck.html">💳 Ví VietTruck</a>
+<a class="menu-item" href="cai-dat.html">⚙️ Cài đặt</a>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="main">
+
+<div class="topbar">
+
+<h1>Chỉnh sửa đối tác</h1>
+
+<button class="btn btn-light" onclick="goBack()">
+← Quay lại hồ sơ
+</button>
+
+</div>
+
+<div class="content">
+
+<div class="profile-head">
+
+<h2 id="pagePartnerName">
+Đối tác VietTruck
+</h2>
+
+<p id="pagePartnerCode">
+Cập nhật thông tin hồ sơ đối tác
+</p>
+
+</div>
+
+<div class="notice">
+<strong>Lưu ý:</strong>
+Phiên bản hiện tại là giao diện thử nghiệm. Dữ liệu chỉnh sửa sẽ được lưu trên trình duyệt của thiết bị này. Khi xây dựng backend VietTruck, dữ liệu sẽ được lưu vào cơ sở dữ liệu trung tâm.
+</div>
+
+<section class="card">
+
+<div class="card-head">
+<h3>🏢 Thông tin đối tác</h3>
+</div>
+
+<div class="card-body">
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label>Tên doanh nghiệp / nhà xe</label>
+
+<input
+id="partnerName"
+class="form-control"
+type="text">
+
+</div>
+
+<div class="form-group">
+
+<label>Mã đối tác</label>
+
+<input
+id="partnerCode"
+class="form-control readonly"
+type="text"
+readonly>
+
+</div>
+
+<div class="form-group">
+
+<label>Loại đối tác</label>
+
+<select
+id="partnerType"
+class="form-control">
+
+<option>Chủ hàng</option>
+<option>Nhà xe</option>
+<option>Doanh nghiệp logistics</option>
+<option>Khách hàng doanh nghiệp</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Mã số thuế</label>
+
+<input
+id="taxCode"
+class="form-control"
+type="text">
+
+</div>
+
+<div class="form-group">
+
+<label>Người đại diện</label>
+
+<input
+id="representative"
+class="form-control"
+type="text">
+
+</div>
+
+<div class="form-group">
+
+<label>Số điện thoại</label>
+
+<input
+id="phone"
+class="form-control"
+type="tel">
+
+</div>
+
+<div class="form-group">
+
+<label>Email</label>
+
+<input
+id="email"
+class="form-control"
+type="email">
+
+</div>
+
+<div class="form-group">
+
+<label>Khu vực hoạt động</label>
+
+<input
+id="area"
+class="form-control"
+type="text">
+
+</div>
+
+<div class="form-group full">
+
+<label>Địa chỉ</label>
+
+<textarea
+id="address"
+class="form-control">
+</textarea>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="actions">
+
+<button
+class="btn btn-light"
+onclick="goBack()">
+Hủy
+</button>
+
+<button
+class="btn btn-primary"
+onclick="savePartner()">
+💾 Lưu thay đổi
+</button>
+
+</div>
+
+</section>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+/* DỮ LIỆU ĐỐI TÁC MẪU */
+
+const partnerData = {
+
+"Nhà xe Thành Công":{
+  type:"Nhà xe",
+  code:"VT-DT-000124",
+  representative:"Nguyễn Văn Thành",
+  phone:"0988 111 222",
+  email:"thanhcong@transport.vn",
+  tax:"0109XXXXXX",
+  address:"Hà Nội, Việt Nam",
+  area:"Miền Bắc & Bắc Trung Bộ"
+},
+
+"Công ty ABC Việt Nam":{
+  type:"Chủ hàng",
+  code:"VT-DT-000086",
+  representative:"Trần Văn Minh",
+  phone:"0901 234 567",
+  email:"contact@abc.vn",
+  tax:"2300XXXXXX",
+  address:"Bắc Ninh, Việt Nam",
+  area:"Bắc Ninh - Hà Nội - Hải Phòng"
+},
+
+"Logistics Đông Á":{
+  type:"Doanh nghiệp logistics",
+  code:"VT-DT-000173",
+  representative:"Lê Quốc Đông",
+  phone:"0977 888 999",
+  email:"info@donga-logistics.vn",
+  tax:"0202XXXXXX",
+  address:"Hải Phòng, Việt Nam",
+  area:"Toàn quốc"
+},
+
+"Công ty Minh Phát":{
+  type:"Khách hàng doanh nghiệp",
+  code:"VT-DT-000241",
+  representative:"Phạm Minh Đức",
+  phone:"0912 555 666",
+  email:"minhphat@gmail.com",
+  tax:"0318XXXXXX",
+  address:"TP. Hồ Chí Minh, Việt Nam",
+  area:"Miền Nam"
+},
+
+"Nhà xe Hoàng Gia":{
+  type:"Nhà xe",
+  code:"VT-DT-000058",
+  representative:"Đỗ Văn Hoàng",
+  phone:"0966 333 444",
+  email:"hoanggia@truck.vn",
+  tax:"0108XXXXXX",
+  address:"Hưng Yên, Việt Nam",
+  area:"Hưng Yên - Hà Nội - Bắc Ninh"
+}
+
+};
+
+
+/* ĐỌC ĐỐI TÁC TỪ URL */
+
+const params =
+new URLSearchParams(window.location.search);
+
+const originalName =
+params.get("name") || "Nhà xe Thành Công";
+
+
+/* KIỂM TRA DỮ LIỆU ĐÃ LƯU */
+
+const savedKey =
+"viettruck_partner_" + originalName;
+
+const savedData =
+localStorage.getItem(savedKey);
+
+let data;
+
+if(savedData){
+
+  data = JSON.parse(savedData);
+
+}else{
+
+  data =
+  partnerData[originalName] ||
+  partnerData["Nhà xe Thành Công"];
+
+}
+
+
+/* ĐƯA DỮ LIỆU VÀO FORM */
+
+document.getElementById(
+"pagePartnerName"
+).textContent = originalName;
+
+document.getElementById(
+"pagePartnerCode"
+).textContent =
+"Mã đối tác: " + data.code;
+
+
+document.getElementById(
+"partnerName"
+).value = originalName;
+
+document.getElementById(
+"partnerCode"
+).value = data.code;
+
+document.getElementById(
+"partnerType"
+).value = data.type;
+
+document.getElementById(
+"taxCode"
+).value = data.tax;
+
+document.getElementById(
+"representative"
+).value = data.representative;
+
+document.getElementById(
+"phone"
+).value = data.phone;
+
+document.getElementById(
+"email"
+).value = data.email;
+
+document.getElementById(
+"address"
+).value = data.address;
+
+document.getElementById(
+"area"
+).value = data.area;
+
+
+/* LƯU */
+
+function savePartner(){
+
+  const newName =
+  document.getElementById(
+  "partnerName"
+  ).value.trim();
+
+  if(!newName){
+
+    alert(
+    "Tên đối tác không được để trống."
+    );
+
+    return;
+  }
+
+  const updatedData = {
+
+    code:
+    document.getElementById(
+    "partnerCode"
+    ).value,
+
+    type:
+    document.getElementById(
+    "partnerType"
+    ).value,
+
+    tax:
+    document.getElementById(
+    "taxCode"
+    ).value.trim(),
+
+    representative:
+    document.getElementById(
+    "representative"
+    ).value.trim(),
+
+    phone:
+    document.getElementById(
+    "phone"
+    ).value.trim(),
+
+    email:
+    document.getElementById(
+    "email"
+    ).value.trim(),
+
+    address:
+    document.getElementById(
+    "address"
+    ).value.trim(),
+
+    area:
+    document.getElementById(
+    "area"
+    ).value.trim()
+
+  };
+
+  localStorage.setItem(
+    "viettruck_partner_" + newName,
+    JSON.stringify(updatedData)
+  );
+
+  if(newName !== originalName){
+
+    localStorage.removeItem(
+      "viettruck_partner_" + originalName
+    );
+
+  }
+
+  alert(
+    "Đã lưu thay đổi đối tác."
+  );
+
+  window.location.href =
+  "ho-so-doi-tac.html?name=" +
+  encodeURIComponent(newName);
+
+}
+
+
+/* QUAY LẠI */
+
+function goBack(){
+
+  window.location.href =
+  "ho-so-doi-tac.html?name=" +
+  encodeURIComponent(originalName);
+
+}
+
+</script>
+
+</body>
+</html>
