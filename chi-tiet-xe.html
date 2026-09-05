@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi tiết xe | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Be Vietnam Pro",sans-serif;background:#f6f8f7;color:#13221b}
+.container{max-width:1180px;margin:auto;padding:0 20px}
+
+.header{background:#fff;border-bottom:1px solid #e5e9e7}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:22px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#087b40}
+.logo-icon{font-size:34px}
+.logo strong{font-size:25px}
+.logo small{display:block;font-size:11px;color:#65736c}
+.menu{display:flex;gap:24px}
+.menu a{text-decoration:none;color:#17221d;font-weight:600;font-size:14px}
+.menu a:hover{color:#078c4b}
+
+.page-head{background:linear-gradient(135deg,#087d45,#0aa45a);color:#fff;padding:32px 0}
+.page-head h1{margin:0 0 6px;font-size:29px}
+.page-head p{margin:0;opacity:.9}
+
+.layout{display:grid;grid-template-columns:1fr 330px;gap:22px;margin:28px auto 50px}
+
+.card{background:#fff;border:1px solid #e1e7e4;border-radius:12px;padding:22px;margin-bottom:18px}
+.card h2{margin:0 0 18px;font-size:19px}
+
+.truck-title{display:flex;align-items:center;gap:18px;margin-bottom:20px}
+.truck-icon{width:85px;height:85px;border-radius:14px;background:#e6f4ec;display:flex;align-items:center;justify-content:center;font-size:44px}
+.truck-name{font-size:23px;font-weight:800;margin-bottom:6px}
+.verified{font-size:12px;color:#078c4b;font-weight:700}
+
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:15px}
+.tag{background:#edf7f1;color:#087a43;padding:7px 10px;border-radius:6px;font-size:12px}
+
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.info{background:#f8faf9;border:1px solid #edf0ee;border-radius:8px;padding:13px}
+.info span{display:block;font-size:11px;color:#75817b;margin-bottom:5px}
+.info strong{font-size:13px}
+
+.description{font-size:13px;color:#5f6d66;line-height:1.8}
+
+.driver{display:flex;align-items:center;gap:13px}
+.avatar{width:52px;height:52px;border-radius:50%;background:#078c4b;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px}
+.driver strong{display:block;font-size:15px}
+.driver span{display:block;color:#6b7771;font-size:12px;margin-top:4px}
+
+.status-box{text-align:center}
+.status{font-size:19px;font-weight:800;color:#078c4b;margin-bottom:6px}
+.status-note{font-size:12px;color:#75817b;margin-bottom:18px}
+
+.primary-btn,.secondary-btn{
+display:block;width:100%;text-align:center;text-decoration:none;border-radius:8px;padding:13px 15px;font-size:14px;font-weight:800;margin-bottom:10px
+}
+.primary-btn{background:#078c4b;color:#fff}
+.secondary-btn{border:1px solid #078c4b;color:#078c4b;background:#fff}
+
+.notice{background:#edf7f1;border:1px solid #cce6d7;border-radius:9px;padding:14px;font-size:12px;line-height:1.7;color:#315c46}
+
+.footer{background:#073c27;color:#fff;padding:28px 0;text-align:center}
+.footer p{opacity:.8;font-size:13px}
+
+@media(max-width:900px){
+.menu{display:none}
+.layout{grid-template-columns:1fr}
+.info-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+<span class="logo-icon">🚚</span>
+<div>
+<strong>VietTruck</strong>
+<small>Kết nối hàng hóa Việt Nam</small>
+</div>
+</a>
+
+<nav class="menu">
+<a href="index.html">Trang chủ</a>
+<a href="tim-hang.html">Tìm hàng</a>
+<a href="tim-xe.html">Tìm xe</a>
+<a href="dang-hang.html">Đăng hàng</a>
+<a href="tai-khoan.html">Tài khoản</a>
+</nav>
+
+</div>
+</header>
+
+<section class="page-head">
+<div class="container">
+<h1>Chi tiết xe</h1>
+<p>Phương tiện đã xác thực trên hệ thống VietTruck</p>
+</div>
+</section>
+
+<main class="container layout">
+
+<section>
+
+<div class="card">
+
+<div class="truck-title">
+<div class="truck-icon">🚚</div>
+
+<div>
+<div class="truck-name">Xe tải thùng kín 5 tấn</div>
+<div class="verified">✅ Xe và tài xế đã xác thực</div>
+</div>
+</div>
+
+<div class="tags">
+<span class="tag">5 tấn</span>
+<span class="tag">Thùng kín</span>
+<span class="tag">Dài 6.2m</span>
+<span class="tag">GPS</span>
+<span class="tag">Xe chiều về</span>
+</div>
+
+<div class="info-grid">
+
+<div class="info">
+<span>Biển số</span>
+<strong>99C-123.45</strong>
+</div>
+
+<div class="info">
+<span>Tải trọng</span>
+<strong>5 tấn</strong>
+</div>
+
+<div class="info">
+<span>Loại thùng</span>
+<strong>Thùng kín</strong>
+</div>
+
+<div class="info">
+<span>Kích thước thùng</span>
+<strong>6.2m × 2.2m × 2.3m</strong>
+</div>
+
+<div class="info">
+<span>Vị trí hiện tại</span>
+<strong>Yên Phong, Bắc Ninh</strong>
+</div>
+
+<div class="info">
+<span>Thời gian sẵn sàng</span>
+<strong>Ngay hôm nay</strong>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<h2>Tuyến xe mong muốn</h2>
+
+<div class="description">
+📍 Bắc Ninh → Hải Phòng<br>
+📍 Bắc Ninh → Hà Nội<br>
+📍 Bắc Ninh → Hải Dương<br><br>
+Tài xế ưu tiên các chuyến hàng chiều về và có thể nhận tuyến khác theo thỏa thuận.
+</div>
+</div>
+
+<div class="card">
+<h2>Thông tin tài xế / Nhà xe</h2>
+
+<div class="driver">
+<div class="avatar">B</div>
+
+<div>
+<strong>Nguyễn Văn B</strong>
+<span>🚚 Tài xế chuyên nghiệp</span>
+<span>⭐ 4.9/5 · 126 chuyến hoàn thành</span>
+<span>✅ Đã xác thực CCCD & GPLX</span>
+</div>
+</div>
+
+</div>
+
+<div class="card">
+<h2>Thông tin phương tiện</h2>
+<div class="description">
+Năm sản xuất: 2023<br>
+Tình trạng: Hoạt động tốt<br>
+Thiết bị GPS: Có<br>
+Bảo hiểm phương tiện: Còn hiệu lực<br>
+Đăng kiểm: Còn hiệu lực<br>
+Phù hợp: Điện tử, hàng tiêu dùng, máy móc nhẹ.
+</div>
+</div>
+
+</section>
+
+<aside>
+
+<div class="card status-box">
+
+<div class="status">● Sẵn sàng nhận hàng</div>
+<div class="status-note">Xe hiện đang ở Bắc Ninh</div>
+
+<a href="dang-nhap.html" class="primary-btn">Gửi yêu cầu vận chuyển</a>
+<a href="dang-nhap.html" class="secondary-btn">Liên hệ tài xế</a>
+
+</div>
+
+<div class="card">
+<h2>Thông tin nhanh</h2>
+
+<div class="description">
+Biển số: <strong>99C-123.45</strong><br><br>
+Tải trọng: <strong>5 tấn</strong><br>
+Số chuyến: <strong>126</strong><br>
+Tỷ lệ hoàn thành: <strong>98%</strong><br>
+Đánh giá: <strong>⭐ 4.9/5</strong>
+</div>
+
+</div>
+
+<div class="notice">
+🔒 Chỉ người dùng đã đăng nhập mới xem được thông tin liên hệ đầy đủ và gửi yêu cầu vận chuyển.
+</div>
+
+</aside>
+
+</main>
+
+<footer class="footer">
+<div class="container">
+<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+<p>© 2026 VietTruck. Nền tảng kết nối chủ hàng, tài xế và nhà xe.</p>
+</div>
+</footer>
+
+</body>
+</html>
