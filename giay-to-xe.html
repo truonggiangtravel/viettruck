@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý giấy tờ xe | VietTruck</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f5f7fa;
+      color:#1f2937;
+    }
+
+    .header{
+      background:#fff;
+      border-bottom:1px solid #e5e7eb;
+      padding:16px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:700;
+      color:#16a34a;
+      text-decoration:none;
+    }
+
+    .header-links{
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+
+    .back{
+      color:#4b5563;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .container{
+      max-width:1200px;
+      margin:30px auto;
+      padding:0 20px;
+    }
+
+    .title{
+      margin-bottom:22px;
+    }
+
+    .title h1{
+      font-size:28px;
+      margin-bottom:8px;
+    }
+
+    .title p{
+      color:#6b7280;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .stat{
+      background:#fff;
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .stat small{
+      color:#6b7280;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:26px;
+      margin-top:8px;
+    }
+
+    .filters{
+      background:#fff;
+      padding:18px;
+      border-radius:12px;
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr auto;
+      gap:12px;
+      margin-bottom:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .filters input,
+    .filters select{
+      width:100%;
+      padding:11px 12px;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      outline:none;
+    }
+
+    .filters button{
+      background:#16a34a;
+      color:#fff;
+      border:none;
+      border-radius:8px;
+      padding:0 18px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .table-wrap{
+      background:#fff;
+      border-radius:12px;
+      overflow:auto;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:1180px;
+    }
+
+    th{
+      background:#f8fafc;
+      text-align:left;
+      padding:14px 16px;
+      font-size:13px;
+      color:#4b5563;
+      border-bottom:1px solid #e5e7eb;
+    }
+
+    td{
+      padding:15px 16px;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+      vertical-align:middle;
+    }
+
+    tr:hover{
+      background:#fafafa;
+    }
+
+    .plate{
+      font-weight:bold;
+    }
+
+    .status{
+      display:inline-block;
+      padding:5px 10px;
+      border-radius:20px;
+      font-size:12px;
+      font-weight:bold;
+      white-space:nowrap;
+    }
+
+    .ok{
+      background:#dcfce7;
+      color:#15803d;
+    }
+
+    .warning{
+      background:#fef3c7;
+      color:#b45309;
+    }
+
+    .danger{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:8px 11px;
+      border-radius:7px;
+      background:#16a34a;
+      color:#fff;
+      text-decoration:none;
+      font-size:13px;
+      white-space:nowrap;
+    }
+
+    @media(max-width:900px){
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .filters{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(max-width:520px){
+      .stats{
+        grid-template-columns:1fr;
+      }
+
+      .filters{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <a href="index.html" class="logo">🚚 VietTruck</a>
+
+  <div class="header-links">
+    <a href="quan-ly-doi-xe.html" class="back">← Quản lý đội xe</a>
+    <a href="ho-so-nha-xe.html" class="back">Hồ sơ nhà xe</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="title">
+    <h1>Quản lý giấy tờ xe</h1>
+    <p>Theo dõi đăng ký xe, đăng kiểm, bảo hiểm, phù hiệu và giấy phép vận tải.</p>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Tổng phương tiện</small>
+      <strong>12</strong>
+    </div>
+
+    <div class="stat">
+      <small>Giấy tờ hợp lệ</small>
+      <strong>9</strong>
+    </div>
+
+    <div class="stat">
+      <small>Sắp hết hạn</small>
+      <strong>2</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đã hết hạn</small>
+      <strong>1</strong>
+    </div>
+
+  </div>
+
+  <div class="filters">
+
+    <input type="text" placeholder="Tìm theo biển số xe">
+
+    <select>
+      <option>Tất cả giấy tờ</option>
+      <option>Đăng kiểm</option>
+      <option>Bảo hiểm</option>
+      <option>Phù hiệu</option>
+      <option>Giấy phép vận tải</option>
+    </select>
+
+    <select>
+      <option>Tất cả trạng thái</option>
+      <option>Còn hiệu lực</option>
+      <option>Sắp hết hạn</option>
+      <option>Đã hết hạn</option>
+    </select>
+
+    <button>Tìm kiếm</button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Biển số</th>
+          <th>Đăng ký xe</th>
+          <th>Đăng kiểm</th>
+          <th>Bảo hiểm</th>
+          <th>Phù hiệu</th>
+          <th>Giấy phép vận tải</th>
+          <th>Trạng thái</th>
+          <th>Chi tiết</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td class="plate">99C-123.45</td>
+          <td>Hợp lệ</td>
+          <td>20/12/2026</td>
+          <td>15/01/2027</td>
+          <td>30/06/2027</td>
+          <td>31/12/2027</td>
+          <td>
+            <span class="status ok">Còn hiệu lực</span>
+          </td>
+          <td>
+            <a href="chi-tiet-xe.html" class="btn">Xem xe</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="plate">99H-456.78</td>
+          <td>Hợp lệ</td>
+          <td>25/09/2026</td>
+          <td>10/11/2026</td>
+          <td>05/10/2026</td>
+          <td>31/12/2027</td>
+          <td>
+            <span class="status warning">Sắp hết hạn</span>
+          </td>
+          <td>
+            <a href="chi-tiet-xe.html" class="btn">Xem xe</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="plate">30H-678.90</td>
+          <td>Hợp lệ</td>
+          <td>12/09/2026</td>
+          <td>02/10/2026</td>
+          <td>01/09/2026</td>
+          <td>30/06/2027</td>
+          <td>
+            <span class="status danger">Đã hết hạn</span>
+          </td>
+          <td>
+            <a href="chi-tiet-xe.html" class="btn">Xem xe</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="plate">98C-333.66</td>
+          <td>Hợp lệ</td>
+          <td>28/02/2027</td>
+          <td>05/03/2027</td>
+          <td>12/05/2027</td>
+          <td>31/12/2027</td>
+          <td>
+            <span class="status ok">Còn hiệu lực</span>
+          </td>
+          <td>
+            <a href="chi-tiet-xe.html" class="btn">Xem xe</a>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</body>
+</html>
