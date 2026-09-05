@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý tài xế | VietTruck</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f5f7fa;
+      color:#1f2937;
+    }
+
+    .header{
+      background:#fff;
+      border-bottom:1px solid #e5e7eb;
+      padding:16px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:700;
+      color:#16a34a;
+      text-decoration:none;
+    }
+
+    .header-links{
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+
+    .back{
+      color:#4b5563;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .container{
+      max-width:1200px;
+      margin:30px auto;
+      padding:0 20px;
+    }
+
+    .title-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .title h1{
+      font-size:28px;
+      margin-bottom:8px;
+    }
+
+    .title p{
+      color:#6b7280;
+    }
+
+    .add-btn{
+      background:#16a34a;
+      color:#fff;
+      text-decoration:none;
+      padding:11px 16px;
+      border-radius:8px;
+      font-weight:bold;
+      white-space:nowrap;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .stat{
+      background:#fff;
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .stat small{
+      color:#6b7280;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:26px;
+      margin-top:8px;
+    }
+
+    .filters{
+      background:#fff;
+      padding:18px;
+      border-radius:12px;
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr auto;
+      gap:12px;
+      margin-bottom:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .filters input,
+    .filters select{
+      width:100%;
+      padding:11px 12px;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      outline:none;
+    }
+
+    .filters button{
+      border:none;
+      background:#16a34a;
+      color:#fff;
+      border-radius:8px;
+      padding:0 18px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .table-wrap{
+      background:#fff;
+      border-radius:12px;
+      overflow:auto;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:1120px;
+    }
+
+    th{
+      background:#f8fafc;
+      text-align:left;
+      padding:14px 16px;
+      color:#4b5563;
+      font-size:13px;
+      border-bottom:1px solid #e5e7eb;
+    }
+
+    td{
+      padding:15px 16px;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+      vertical-align:middle;
+    }
+
+    tr:hover{
+      background:#fafafa;
+    }
+
+    .driver{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:170px;
+    }
+
+    .avatar{
+      width:40px;
+      height:40px;
+      border-radius:50%;
+      background:#dcfce7;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+    }
+
+    .driver strong{
+      display:block;
+      margin-bottom:4px;
+    }
+
+    .driver small{
+      color:#6b7280;
+    }
+
+    .status{
+      display:inline-block;
+      padding:5px 10px;
+      border-radius:20px;
+      font-size:12px;
+      font-weight:bold;
+      white-space:nowrap;
+    }
+
+    .running{
+      background:#dbeafe;
+      color:#1d4ed8;
+    }
+
+    .free{
+      background:#dcfce7;
+      color:#15803d;
+    }
+
+    .offline{
+      background:#f3f4f6;
+      color:#6b7280;
+    }
+
+    .warning{
+      background:#fef3c7;
+      color:#b45309;
+    }
+
+    .rating{
+      font-weight:bold;
+      color:#b45309;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:8px 11px;
+      border-radius:7px;
+      background:#16a34a;
+      color:#fff;
+      text-decoration:none;
+      font-size:13px;
+      white-space:nowrap;
+    }
+
+    @media(max-width:900px){
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .filters{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .title-row{
+        align-items:flex-start;
+      }
+    }
+
+    @media(max-width:520px){
+      .stats{
+        grid-template-columns:1fr;
+      }
+
+      .filters{
+        grid-template-columns:1fr;
+      }
+
+      .title-row{
+        flex-direction:column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <a href="index.html" class="logo">🚚 VietTruck</a>
+
+  <div class="header-links">
+    <a href="quan-ly-doi-xe.html" class="back">← Quản lý đội xe</a>
+    <a href="ho-so-nha-xe.html" class="back">Hồ sơ nhà xe</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="title-row">
+    <div class="title">
+      <h1>Quản lý tài xế</h1>
+      <p>Quản lý tài xế, giấy phép lái xe, xe phụ trách và trạng thái hoạt động.</p>
+    </div>
+
+    <a href="#" class="add-btn">+ Thêm tài xế</a>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Tổng tài xế</small>
+      <strong>18</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đang vận chuyển</small>
+      <strong>6</strong>
+    </div>
+
+    <div class="stat">
+      <small>Sẵn sàng nhận chuyến</small>
+      <strong>9</strong>
+    </div>
+
+    <div class="stat">
+      <small>Cảnh báo GPLX</small>
+      <strong>2</strong>
+    </div>
+
+  </div>
+
+  <div class="filters">
+
+    <input type="text" placeholder="Tìm tên, SĐT hoặc biển số xe">
+
+    <select>
+      <option>Tất cả trạng thái</option>
+      <option>Đang vận chuyển</option>
+      <option>Sẵn sàng</option>
+      <option>Ngoại tuyến</option>
+    </select>
+
+    <select>
+      <option>Tất cả hạng GPLX</option>
+      <option>C</option>
+      <option>C1</option>
+      <option>CE</option>
+      <option>FC</option>
+    </select>
+
+    <button>Tìm kiếm</button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Tài xế</th>
+          <th>Số điện thoại</th>
+          <th>GPLX</th>
+          <th>Hạn GPLX</th>
+          <th>Xe phụ trách</th>
+          <th>Số chuyến</th>
+          <th>Đánh giá</th>
+          <th>Trạng thái</th>
+          <th>Hồ sơ</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>
+            <div class="driver">
+              <div class="avatar">👨‍✈️</div>
+              <div>
+                <strong>Nguyễn Văn Nam</strong>
+                <small>TX001</small>
+              </div>
+            </div>
+          </td>
+          <td>0988 123 456</td>
+          <td>FC</td>
+          <td>18/06/2028</td>
+          <td>99C-123.45</td>
+          <td>286</td>
+          <td><span class="rating">★ 4.9</span></td>
+          <td><span class="status running">Đang vận chuyển</span></td>
+          <td>
+            <a href="ho-so-tai-xe.html" class="btn">Xem hồ sơ</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="driver">
+              <div class="avatar">👨‍✈️</div>
+              <div>
+                <strong>Trần Văn Cường</strong>
+                <small>TX002</small>
+              </div>
+            </div>
+          </td>
+          <td>0977 456 789</td>
+          <td>C</td>
+          <td>12/11/2027</td>
+          <td>99H-456.78</td>
+          <td>194</td>
+          <td><span class="rating">★ 4.8</span></td>
+          <td><span class="status free">Sẵn sàng</span></td>
+          <td>
+            <a href="ho-so-tai-xe.html" class="btn">Xem hồ sơ</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="driver">
+              <div class="avatar">👨‍✈️</div>
+              <div>
+                <strong>Phạm Quốc Anh</strong>
+                <small>TX003</small>
+              </div>
+            </div>
+          </td>
+          <td>0966 888 222</td>
+          <td>FC</td>
+          <td>25/10/2026</td>
+          <td>30H-678.90</td>
+          <td>327</td>
+          <td><span class="rating">★ 4.7</span></td>
+          <td><span class="status warning">GPLX sắp hết hạn</span></td>
+          <td>
+            <a href="ho-so-tai-xe.html" class="btn">Xem hồ sơ</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="driver">
+              <div class="avatar">👨‍✈️</div>
+              <div>
+                <strong>Lê Văn Thành</strong>
+                <small>TX004</small>
+              </div>
+            </div>
+          </td>
+          <td>0912 345 678</td>
+          <td>C1</td>
+          <td>03/03/2029</td>
+          <td>Chưa phân công</td>
+          <td>152</td>
+          <td><span class="rating">★ 4.9</span></td>
+          <td><span class="status offline">Ngoại tuyến</span></td>
+          <td>
+            <a href="ho-so-tai-xe.html" class="btn">Xem hồ sơ</a>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</body>
+</html>
