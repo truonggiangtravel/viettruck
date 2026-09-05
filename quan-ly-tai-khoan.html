@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quản lý tài khoản | VietTruck</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+body{
+  background:#f5f7fa;
+  color:#1f2937;
+}
+.header{
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  padding:16px 28px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  font-size:24px;
+  font-weight:700;
+  color:#16a34a;
+  text-decoration:none;
+}
+.header-links{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.header-links a{
+  color:#4b5563;
+  text-decoration:none;
+  font-size:14px;
+}
+.container{
+  max-width:1220px;
+  margin:30px auto;
+  padding:0 20px;
+}
+.title-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin-bottom:22px;
+}
+.title h1{
+  font-size:28px;
+  margin-bottom:8px;
+}
+.title p{
+  color:#6b7280;
+}
+.add-btn{
+  background:#16a34a;
+  color:#fff;
+  border:0;
+  padding:11px 16px;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:22px;
+}
+.stat{
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+.stat small{
+  color:#6b7280;
+}
+.stat strong{
+  display:block;
+  font-size:27px;
+  margin-top:8px;
+}
+.green{color:#16a34a}
+.blue{color:#2563eb}
+.orange{color:#d97706}
+.red{color:#dc2626}
+
+.filters{
+  background:#fff;
+  border-radius:12px;
+  padding:18px;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr auto;
+  gap:12px;
+  margin-bottom:20px;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+input,select,textarea{
+  width:100%;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  padding:11px;
+  background:#fff;
+}
+textarea{
+  min-height:85px;
+  resize:vertical;
+}
+.search-btn{
+  border:0;
+  background:#16a34a;
+  color:#fff;
+  border-radius:8px;
+  padding:0 18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.table-wrap{
+  background:#fff;
+  border-radius:12px;
+  overflow:auto;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+  margin-bottom:22px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1250px;
+}
+th{
+  background:#f8fafc;
+  padding:14px 16px;
+  text-align:left;
+  color:#4b5563;
+  font-size:13px;
+  border-bottom:1px solid #e5e7eb;
+}
+td{
+  padding:15px 16px;
+  border-bottom:1px solid #eef2f7;
+  font-size:14px;
+  vertical-align:top;
+}
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
+}
+.admin{background:#fee2e2;color:#b91c1c}
+.manager{background:#ede9fe;color:#6d28d9}
+.sales{background:#dbeafe;color:#1d4ed8}
+.dispatch{background:#dcfce7;color:#15803d}
+.accounting{background:#fef3c7;color:#b45309}
+.cskh{background:#fce7f3;color:#be185d}
+
+.status{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
+}
+.active{background:#dcfce7;color:#15803d}
+.locked{background:#fee2e2;color:#b91c1c}
+.pending{background:#fef3c7;color:#b45309}
+
+.action{
+  color:#16a34a;
+  text-decoration:none;
+  font-weight:bold;
+  font-size:13px;
+  margin-right:10px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.panel{
+  background:#fff;
+  border-radius:12px;
+  padding:20px;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+.panel h2{
+  font-size:18px;
+  margin-bottom:16px;
+}
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:11px 0;
+  border-bottom:1px solid #eef2f7;
+  font-size:14px;
+}
+.row span{
+  color:#6b7280;
+}
+.quick-link{
+  display:block;
+  padding:11px 0;
+  border-bottom:1px solid #eef2f7;
+  color:#374151;
+  text-decoration:none;
+}
+.quick-link:hover{
+  color:#16a34a;
+}
+.notice{
+  margin-top:20px;
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#9a3412;
+  padding:14px;
+  border-radius:10px;
+  font-size:14px;
+  line-height:1.6;
+}
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:100;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.modal-box{
+  width:100%;
+  max-width:760px;
+  max-height:90vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:14px;
+  padding:24px;
+}
+.modal-box h2{
+  margin-bottom:18px;
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.form-group{
+  margin-bottom:12px;
+}
+.form-group label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+.modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:18px;
+}
+.cancel{
+  border:1px solid #d1d5db;
+  background:#fff;
+  padding:10px 16px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.save{
+  border:0;
+  background:#16a34a;
+  color:#fff;
+  padding:10px 16px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+@media(max-width:900px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .filters{grid-template-columns:1fr 1fr}
+  .grid{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .stats,.filters,.form-grid{grid-template-columns:1fr}
+  .title-row{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <a href="index.html" class="logo">🚚 VietTruck</a>
+
+  <div class="header-links">
+    <a href="quan-ly-nhan-su.html">Nhân sự</a>
+    <a href="phan-quyen-he-thong.html">Phân quyền</a>
+    <a href="nhat-ky-he-thong.html">Nhật ký</a>
+    <a href="cai-dat-he-thong.html">Cài đặt</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+
+</header>
+
+<div class="container">
+
+  <div class="title-row">
+
+    <div class="title">
+      <h1>Quản lý tài khoản</h1>
+      <p>Quản lý tài khoản đăng nhập, vai trò, trạng thái và bảo mật người dùng VietTruck.</p>
+    </div>
+
+    <button class="add-btn" onclick="openModal()">
+      + Tạo tài khoản
+    </button>
+
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Tổng tài khoản</small>
+      <strong>31</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đang hoạt động</small>
+      <strong class="green">27</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đang bị khóa</small>
+      <strong class="red">2</strong>
+    </div>
+
+    <div class="stat">
+      <small>Chờ kích hoạt</small>
+      <strong class="orange">2</strong>
+    </div>
+
+  </div>
+
+  <div class="filters">
+
+    <input type="text" placeholder="Tìm username, nhân viên, email">
+
+    <select>
+      <option>Tất cả vai trò</option>
+      <option>Admin</option>
+      <option>Quản lý</option>
+      <option>Sales</option>
+      <option>Điều phối</option>
+      <option>Kế toán</option>
+      <option>CSKH</option>
+    </select>
+
+    <select>
+      <option>Tất cả bộ phận</option>
+      <option>Ban quản trị</option>
+      <option>Sales</option>
+      <option>Điều phối</option>
+      <option>Kế toán</option>
+      <option>CSKH</option>
+    </select>
+
+    <select>
+      <option>Tất cả trạng thái</option>
+      <option>Hoạt động</option>
+      <option>Đã khóa</option>
+      <option>Chờ kích hoạt</option>
+    </select>
+
+    <button class="search-btn">Tìm kiếm</button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Tài khoản</th>
+          <th>Nhân viên</th>
+          <th>Bộ phận</th>
+          <th>Vai trò</th>
+          <th>Email</th>
+          <th>Đăng nhập gần nhất</th>
+          <th>Thiết bị</th>
+          <th>2FA</th>
+          <th>Trạng thái</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td><strong>admin</strong></td>
+          <td>Quản trị VietTruck</td>
+          <td>Ban quản trị</td>
+          <td><span class="badge admin">Admin</span></td>
+          <td>admin@viettruck.vn</td>
+          <td>05/09/2026 14:12</td>
+          <td>Windows / Firefox</td>
+          <td><span class="status active">Đã bật</span></td>
+          <td><span class="status active">Hoạt động</span></td>
+          <td>
+            <a href="#" class="action" onclick="resetPassword()">Đặt lại MK</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td><strong>hai.dp</strong></td>
+          <td>Nguyễn Văn Hải</td>
+          <td>Điều phối</td>
+          <td><span class="badge dispatch">Điều phối</span></td>
+          <td>hai@viettruck.vn</td>
+          <td>05/09/2026 13:48</td>
+          <td>Android / Chrome</td>
+          <td><span class="status pending">Chưa bật</span></td>
+          <td><span class="status active">Hoạt động</span></td>
+          <td>
+            <a href="#" class="action" onclick="lockAccount()">Khóa</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td><strong>an.sales</strong></td>
+          <td>Nguyễn Văn An</td>
+          <td>Sales</td>
+          <td><span class="badge sales">Sales</span></td>
+          <td>an.sales@viettruck.vn</td>
+          <td>05/09/2026 13:20</td>
+          <td>Windows / Chrome</td>
+          <td><span class="status pending">Chưa bật</span></td>
+          <td><span class="status active">Hoạt động</span></td>
+          <td>
+            <a href="#" class="action" onclick="lockAccount()">Khóa</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td><strong>ha.ketoan</strong></td>
+          <td>Trần Thu Hà</td>
+          <td>Kế toán</td>
+          <td><span class="badge accounting">Kế toán</span></td>
+          <td>ha.kt@viettruck.vn</td>
+          <td>05/09/2026 12:55</td>
+          <td>Windows / Edge</td>
+          <td><span class="status active">Đã bật</span></td>
+          <td><span class="status active">Hoạt động</span></td>
+          <td>
+            <a href="#" class="action" onclick="resetPassword()">Đặt lại MK</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td><strong>trang.cskh</strong></td>
+          <td>Lê Minh Trang</td>
+          <td>CSKH</td>
+          <td><span class="badge cskh">CSKH</span></td>
+          <td>trang.cskh@viettruck.vn</td>
+          <td>04/09/2026 17:22</td>
+          <td>iPhone / Safari</td>
+          <td><span class="status pending">Chưa bật</span></td>
+          <td><span class="status active">Hoạt động</span></td>
+          <td>
+            <a href="#" class="action" onclick="lockAccount()">Khóa</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td><strong>nam.tech</strong></td>
+          <td>Phạm Quốc Nam</td>
+          <td>Kỹ thuật</td>
+          <td><span class="badge manager">Quản lý</span></td>
+          <td>nam.tech@viettruck.vn</td>
+          <td>01/09/2026 09:16</td>
+          <td>Windows / Chrome</td>
+          <td><span class="status active">Đã bật</span></td>
+          <td><span class="status locked">Đã khóa</span></td>
+          <td>
+            <a href="#" class="action" onclick="unlockAccount()">Mở khóa</a>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="panel">
+
+      <h2>Tài khoản theo vai trò</h2>
+
+      <div class="row">
+        <span>Admin</span>
+        <strong>3</strong>
+      </div>
+
+      <div class="row">
+        <span>Quản lý</span>
+        <strong>4</strong>
+      </div>
+
+      <div class="row">
+        <span>Sales</span>
+        <strong>8</strong>
+      </div>
+
+      <div class="row">
+        <span>Điều phối</span>
+        <strong>7</strong>
+      </div>
+
+      <div class="row">
+        <span>Kế toán</span>
+        <strong>5</strong>
+      </div>
+
+      <div class="row">
+        <span>CSKH</span>
+        <strong>4</strong>
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <h2>Quản trị & bảo mật</h2>
+
+      <a href="phan-quyen-he-thong.html" class="quick-link">
+        🔐 Phân quyền hệ thống
+      </a>
+
+      <a href="quan-ly-nhan-su.html" class="quick-link">
+        👥 Quản lý nhân sự
+      </a>
+
+      <a href="nhat-ky-he-thong.html" class="quick-link">
+        📋 Nhật ký hoạt động
+      </a>
+
+      <a href="cai-dat-he-thong.html" class="quick-link">
+        ⚙️ Cài đặt bảo mật
+      </a>
+
+    </div>
+
+  </div>
+
+  <div class="notice">
+    ⚠️ Trang hiện là giao diện mô phỏng. Việc tạo tài khoản, khóa/mở khóa, đổi mật khẩu và xác thực 2 lớp chỉ hoạt động thật khi VietTruck có hệ thống đăng nhập, backend và cơ sở dữ liệu.
+  </div>
+
+</div>
+
+<div class="modal" id="accountModal">
+
+  <div class="modal-box">
+
+    <h2>Tạo tài khoản VietTruck</h2>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Nhân viên</label>
+        <select>
+          <option>Chọn nhân viên</option>
+          <option>Nguyễn Văn Hải</option>
+          <option>Nguyễn Văn An</option>
+          <option>Trần Thu Hà</option>
+          <option>Lê Minh Trang</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Tên đăng nhập</label>
+        <input type="text" placeholder="VD: nguyenvanan">
+      </div>
+
+      <div class="form-group">
+        <label>Email đăng nhập</label>
+        <input type="email" placeholder="email@viettruck.vn">
+      </div>
+
+      <div class="form-group">
+        <label>Vai trò</label>
+        <select>
+          <option>Sales</option>
+          <option>Điều phối</option>
+          <option>Kế toán</option>
+          <option>CSKH</option>
+          <option>Quản lý</option>
+          <option>Admin</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Mật khẩu tạm thời</label>
+        <input type="password" placeholder="Nhập mật khẩu tạm thời">
+      </div>
+
+      <div class="form-group">
+        <label>Trạng thái</label>
+        <select>
+          <option>Hoạt động</option>
+          <option>Chờ kích hoạt</option>
+          <option>Đã khóa</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label>Ghi chú</label>
+      <textarea placeholder="Phạm vi tài khoản, yêu cầu bảo mật..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button class="cancel" onclick="closeModal()">Hủy</button>
+      <button class="save" onclick="saveAccount()">Tạo tài khoản</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function openModal(){
+  document.getElementById("accountModal").style.display="flex";
+}
+
+function closeModal(){
+  document.getElementById("accountModal").style.display="none";
+}
+
+function saveAccount(){
+  alert("Đã ghi nhận tài khoản VietTruck.");
+  closeModal();
+}
+
+function resetPassword(){
+  alert("Đã ghi nhận yêu cầu đặt lại mật khẩu.");
+}
+
+function lockAccount(){
+  alert("Đã ghi nhận yêu cầu khóa tài khoản.");
+}
+
+function unlockAccount(){
+  alert("Đã ghi nhận yêu cầu mở khóa tài khoản.");
+}
+</script>
+
+</body>
+</html>
