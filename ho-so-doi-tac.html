@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hồ sơ đối tác - VietTruck</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  background:#f4f7f8;
+  color:#1f2937;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+.app{
+  display:flex;
+  min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:250px;
+  background:#0f5132;
+  color:#fff;
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  padding:24px 16px;
+  overflow-y:auto;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:800;
+  text-align:center;
+  margin-bottom:28px;
+}
+
+.logo span{
+  color:#ffc107;
+}
+
+.menu-title{
+  font-size:12px;
+  text-transform:uppercase;
+  opacity:.7;
+  margin:20px 12px 8px;
+}
+
+.menu-item{
+  display:block;
+  padding:12px 14px;
+  border-radius:10px;
+  margin-bottom:6px;
+}
+
+.menu-item:hover,
+.menu-item.active{
+  background:rgba(255,255,255,.15);
+}
+
+/* MAIN */
+
+.main{
+  margin-left:250px;
+  width:calc(100% - 250px);
+}
+
+.topbar{
+  min-height:72px;
+  background:#fff;
+  padding:16px 28px;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.topbar h1{
+  color:#0f5132;
+  font-size:22px;
+}
+
+.top-actions{
+  display:flex;
+  gap:10px;
+}
+
+.btn{
+  border:none;
+  border-radius:10px;
+  padding:11px 16px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.btn-primary{
+  background:#198754;
+  color:white;
+}
+
+.btn-light{
+  background:#eef3f0;
+  color:#0f5132;
+}
+
+.content{
+  padding:28px;
+  max-width:1400px;
+  margin:auto;
+}
+
+/* PROFILE HEADER */
+
+.profile-header{
+  background:linear-gradient(135deg,#0f5132,#198754);
+  color:white;
+  border-radius:18px;
+  padding:26px;
+  margin-bottom:22px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.profile-left{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.avatar{
+  width:72px;
+  height:72px;
+  border-radius:16px;
+  background:white;
+  color:#0f5132;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+}
+
+.profile-title h2{
+  margin-bottom:7px;
+}
+
+.profile-title p{
+  opacity:.9;
+  margin-bottom:8px;
+}
+
+.badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.verified{
+  background:#d1fae5;
+  color:#065f46;
+}
+
+.owner{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
+
+.carrier{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.partner{
+  background:#ede9fe;
+  color:#5b21b6;
+}
+
+.warning{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+/* GRID */
+
+.grid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:20px;
+}
+
+.card{
+  background:white;
+  border:1px solid #e8ece9;
+  border-radius:16px;
+  box-shadow:0 4px 18px rgba(0,0,0,.05);
+  margin-bottom:20px;
+  overflow:hidden;
+}
+
+.card-head{
+  padding:17px 20px;
+  border-bottom:1px solid #edf0f2;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.card-head h3{
+  color:#0f5132;
+  font-size:17px;
+}
+
+.card-body{
+  padding:20px;
+}
+
+/* INFO */
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.info-item{
+  padding-bottom:12px;
+  border-bottom:1px solid #edf0f2;
+}
+
+.info-item label{
+  display:block;
+  font-size:12px;
+  color:#6b7280;
+  margin-bottom:5px;
+}
+
+.info-item strong{
+  font-size:14px;
+}
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.stat{
+  background:#f8faf9;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:15px;
+}
+
+.stat strong{
+  display:block;
+  color:#0f5132;
+  font-size:22px;
+  margin-bottom:5px;
+}
+
+.stat span{
+  font-size:12px;
+  color:#6b7280;
+}
+
+/* CONTACT */
+
+.contact{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:13px 0;
+  border-bottom:1px solid #edf0f2;
+}
+
+.contact:last-child{
+  border-bottom:none;
+}
+
+.contact-icon{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#dff3e7;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.contact strong{
+  display:block;
+  margin-bottom:4px;
+}
+
+.contact small{
+  color:#6b7280;
+}
+
+/* DOCUMENT */
+
+.document{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:13px 0;
+  border-bottom:1px solid #edf0f2;
+}
+
+.document:last-child{
+  border-bottom:none;
+}
+
+.document-info strong{
+  display:block;
+  margin-bottom:4px;
+}
+
+.document-info small{
+  color:#6b7280;
+}
+
+.status-ok{
+  color:#198754;
+  font-weight:700;
+  font-size:13px;
+}
+
+/* TABLE */
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:760px;
+}
+
+th,
+td{
+  text-align:left;
+  padding:13px 14px;
+  border-bottom:1px solid #edf0f2;
+  font-size:13px;
+}
+
+th{
+  background:#f8faf9;
+  color:#374151;
+}
+
+.success{
+  background:#d1fae5;
+  color:#065f46;
+}
+
+.pending{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+/* CAPACITY */
+
+.capacity{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.capacity-box{
+  border:1px solid #e5e7eb;
+  background:#f8faf9;
+  border-radius:12px;
+  padding:15px;
+}
+
+.capacity-box span{
+  display:block;
+  color:#6b7280;
+  font-size:12px;
+  margin-bottom:5px;
+}
+
+.capacity-box strong{
+  color:#0f5132;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:700px){
+  .sidebar{
+    position:static;
+    width:100%;
+  }
+
+  .app{
+    display:block;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+  }
+
+  .content{
+    padding:16px;
+  }
+
+  .info-grid,
+  .stats,
+  .capacity{
+    grid-template-columns:1fr;
+  }
+
+  .topbar{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar">
+
+  <div class="logo">Viet<span>Truck</span></div>
+
+  <div class="menu-title">Hệ thống</div>
+
+  <a class="menu-item" href="dashboard.html">🏠 Dashboard</a>
+  <a class="menu-item" href="quan-ly-don-hang.html">📦 Quản lý đơn hàng</a>
+  <a class="menu-item" href="trung-tam-bao-gia.html">💰 Trung tâm báo giá</a>
+  <a class="menu-item" href="hang-chieu-ve.html">🔄 Hàng chiều về</a>
+  <a class="menu-item" href="quan-ly-doi-xe.html">🚛 Quản lý đội xe</a>
+
+  <div class="menu-title">Doanh nghiệp</div>
+
+  <a class="menu-item" href="thong-tin-doanh-nghiep.html">🏢 Thông tin doanh nghiệp</a>
+  <a class="menu-item" href="quan-ly-nhan-vien.html">👥 Quản lý nhân viên</a>
+  <a class="menu-item" href="phan-quyen-tai-khoan.html">🛡️ Phân quyền tài khoản</a>
+  <a class="menu-item" href="nhat-ky-hoat-dong.html">📋 Nhật ký hoạt động</a>
+  <a class="menu-item" href="quan-ly-chi-nhanh.html">📍 Quản lý chi nhánh</a>
+  <a class="menu-item" href="quan-ly-hop-dong.html">📄 Quản lý hợp đồng</a>
+  <a class="menu-item active" href="quan-ly-doi-tac.html">🤝 Quản lý đối tác</a>
+
+  <div class="menu-title">Tài khoản</div>
+
+  <a class="menu-item" href="tai-khoan.html">👤 Tài khoản</a>
+  <a class="menu-item" href="vi-viettruck.html">💳 Ví VietTruck</a>
+  <a class="menu-item" href="cai-dat.html">⚙️ Cài đặt</a>
+
+</aside>
+
+<main class="main">
+
+<div class="topbar">
+
+  <h1>Hồ sơ đối tác</h1>
+
+  <div class="top-actions">
+
+    <button
+      class="btn btn-light"
+      onclick="location.href='quan-ly-doi-tac.html'">
+      ← Danh sách đối tác
+    </button>
+
+    <button
+      class="btn btn-primary"
+      onclick="editProfile()">
+      ✏️ Chỉnh sửa
+    </button>
+
+  </div>
+
+</div>
+
+<div class="content">
+
+<!-- HEADER -->
+
+<div class="profile-header">
+
+  <div class="profile-left">
+
+    <div class="avatar">
+      🚛
+    </div>
+
+    <div class="profile-title">
+
+      <h2>Nhà xe Thành Công</h2>
+
+      <p>
+        Mã đối tác: VT-DT-000124
+      </p>
+
+      <span class="badge carrier">
+        Nhà xe
+      </span>
+
+      <span class="badge verified">
+        ✓ Đã xác minh
+      </span>
+
+    </div>
+
+  </div>
+
+  <div>
+    Đối tác từ: <strong>01/2026</strong>
+  </div>
+
+</div>
+
+<!-- STATS -->
+
+<div class="card">
+
+  <div class="card-body">
+
+    <div class="stats">
+
+      <div class="stat">
+        <strong>312</strong>
+        <span>Chuyến đã thực hiện</span>
+      </div>
+
+      <div class="stat">
+        <strong>98,6%</strong>
+        <span>Tỷ lệ hoàn thành</span>
+      </div>
+
+      <div class="stat">
+        <strong>4.8/5</strong>
+        <span>Đánh giá</span>
+      </div>
+
+      <div class="stat">
+        <strong>2,46 tỷ</strong>
+        <span>Giá trị giao dịch</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="grid">
+
+<!-- CỘT TRÁI -->
+
+<div>
+
+<!-- THÔNG TIN DOANH NGHIỆP -->
+
+<section class="card">
+
+  <div class="card-head">
+    <h3>🏢 Thông tin doanh nghiệp</h3>
+  </div>
+
+  <div class="card-body">
+
+    <div class="info-grid">
+
+      <div class="info-item">
+        <label>Tên doanh nghiệp / nhà xe</label>
+        <strong>Nhà xe Thành Công</strong>
+      </div>
+
+      <div class="info-item">
+        <label>Mã số thuế</label>
+        <strong>0109XXXXXX</strong>
+      </div>
+
+      <div class="info-item">
+        <label>Loại đối tác</label>
+        <strong>Nhà xe vận tải</strong>
+      </div>
+
+      <div class="info-item">
+        <label>Người đại diện</label>
+        <strong>Nguyễn Văn Thành</strong>
+      </div>
+
+      <div class="info-item">
+        <label>Số điện thoại</label>
+        <strong>0988 111 222</strong>
+      </div>
+
+      <div class="info-item">
+        <label>Email</label>
+        <strong>thanhcong@transport.vn</strong>
+      </div>
+
+      <div class="info-item">
+        <label>Địa chỉ</label>
+        <strong>Hà Nội, Việt Nam</strong>
+      </div>
+
+      <div class="info-item">
+        <label>Khu vực hoạt động</label>
+        <strong>Miền Bắc & Bắc Trung Bộ</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- NĂNG LỰC -->
+
+<section class="card">
+
+  <div class="card-head">
+    <h3>🚛 Năng lực vận tải</h3>
+  </div>
+
+  <div class="card-body">
+
+    <div class="capacity">
+
+      <div class="capacity-box">
+        <span>Tổng số xe</span>
+        <strong>28 xe</strong>
+      </div>
+
+      <div class="capacity-box">
+        <span>Tài xế</span>
+        <strong>31 tài xế</strong>
+      </div>
+
+      <div class="capacity-box">
+        <span>Loại xe</span>
+        <strong>1.25T – 15T</strong>
+      </div>
+
+      <div class="capacity-box">
+        <span>Xe container</span>
+        <strong>6 xe</strong>
+      </div>
+
+      <div class="capacity-box">
+        <span>Tuyến chính</span>
+        <strong>HN – BN – HP</strong>
+      </div>
+
+      <div class="capacity-box">
+        <span>Hàng nhận vận chuyển</span>
+        <strong>Hàng công nghiệp</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- HỢP ĐỒNG -->
+
+<section class="card">
+
+  <div class="card-head">
+
+    <h3>📄 Hợp đồng liên quan</h3>
+
+    <button
+      class="btn btn-light"
+      onclick="location.href='quan-ly-hop-dong.html'">
+      Xem tất cả
+    </button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Số hợp đồng</th>
+          <th>Nội dung</th>
+          <th>Ngày ký</th>
+          <th>Giá trị</th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>VT-HĐ-2026-035</td>
+          <td>Cung cấp phương tiện vận tải</td>
+          <td>15/08/2026</td>
+          <td>850 triệu</td>
+          <td>
+            <span class="badge success">
+              Đang hiệu lực
+            </span>
+          </td>
+        </tr>
+
+        <tr>
+          <td>VT-HĐ-2026-011</td>
+          <td>Hợp tác khai thác hàng chiều về</td>
+          <td>10/02/2026</td>
+          <td>600 triệu</td>
+          <td>
+            <span class="badge success">
+              Đang hiệu lực
+            </span>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+<!-- GIAO DỊCH -->
+
+<section class="card">
+
+  <div class="card-head">
+    <h3>📦 Giao dịch gần đây</h3>
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Mã đơn</th>
+          <th>Tuyến</th>
+          <th>Ngày</th>
+          <th>Cước phí</th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>VT-20260905-018</td>
+          <td>Bắc Ninh → Hải Phòng</td>
+          <td>05/09/2026</td>
+          <td>5.800.000 đ</td>
+          <td>
+            <span class="badge success">
+              Hoàn thành
+            </span>
+          </td>
+        </tr>
+
+        <tr>
+          <td>VT-20260903-114</td>
+          <td>Hà Nội → Thanh Hóa</td>
+          <td>03/09/2026</td>
+          <td>7.200.000 đ</td>
+          <td>
+            <span class="badge success">
+              Hoàn thành
+            </span>
+          </td>
+        </tr>
+
+        <tr>
+          <td>VT-20260902-082</td>
+          <td>Hưng Yên → Bắc Ninh</td>
+          <td>02/09/2026</td>
+          <td>3.900.000 đ</td>
+          <td>
+            <span class="badge pending">
+              Đang vận chuyển
+            </span>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+</div>
+
+<!-- CỘT PHẢI -->
+
+<div>
+
+<!-- LIÊN HỆ -->
+
+<section class="card">
+
+  <div class="card-head">
+    <h3>👤 Người liên hệ</h3>
+  </div>
+
+  <div class="card-body">
+
+    <div class="contact">
+
+      <div class="contact-icon">
+        👤
+      </div>
+
+      <div>
+        <strong>Nguyễn Văn Thành</strong>
+        <small>Giám đốc</small>
+      </div>
+
+    </div>
+
+    <div class="contact">
+
+      <div class="contact-icon">
+        📞
+      </div>
+
+      <div>
+        <strong>0988 111 222</strong>
+        <small>Số điện thoại</small>
+      </div>
+
+    </div>
+
+    <div class="contact">
+
+      <div class="contact-icon">
+        ✉️
+      </div>
+
+      <div>
+        <strong>thanhcong@transport.vn</strong>
+        <small>Email</small>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- PHÁP LÝ -->
+
+<section class="card">
+
+  <div class="card-head">
+    <h3>🛡️ Hồ sơ pháp lý</h3>
+  </div>
+
+  <div class="card-body">
+
+    <div class="document">
+
+      <div class="document-info">
+        <strong>Giấy đăng ký kinh doanh</strong>
+        <small>Đã tải lên hệ thống</small>
+      </div>
+
+      <span class="status-ok">
+        ✓ Hợp lệ
+      </span>
+
+    </div>
+
+    <div class="document">
+
+      <div class="document-info">
+        <strong>Giấy phép kinh doanh vận tải</strong>
+        <small>Còn hiệu lực</small>
+      </div>
+
+      <span class="status-ok">
+        ✓ Hợp lệ
+      </span>
+
+    </div>
+
+    <div class="document">
+
+      <div class="document-info">
+        <strong>Mã số thuế</strong>
+        <small>Đã đối chiếu</small>
+      </div>
+
+      <span class="status-ok">
+        ✓ Xác minh
+      </span>
+
+    </div>
+
+    <div class="document">
+
+      <div class="document-info">
+        <strong>Tài khoản ngân hàng</strong>
+        <small>Đã xác thực chủ tài khoản</small>
+      </div>
+
+      <span class="status-ok">
+        ✓ Xác minh
+      </span>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ĐÁNH GIÁ -->
+
+<section class="card">
+
+  <div class="card-head">
+    <h3>⭐ Đánh giá đối tác</h3>
+  </div>
+
+  <div class="card-body">
+
+    <div class="info-item">
+      <label>Uy tín vận chuyển</label>
+      <strong>★★★★★ 4.8/5</strong>
+    </div>
+
+    <div class="info-item">
+      <label>Đúng giờ</label>
+      <strong>97%</strong>
+    </div>
+
+    <div class="info-item">
+      <label>Tỷ lệ hủy chuyến</label>
+      <strong>1,2%</strong>
+    </div>
+
+    <div class="info-item">
+      <label>Khiếu nại</label>
+      <strong>2 / 312 chuyến</strong>
+    </div>
+
+  </div>
+
+</section>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+function editProfile(){
+  alert(
+    "Chức năng chỉnh sửa hồ sơ đối tác sẽ được kết nối ở bước tiếp theo."
+  );
+}
+
+</script>
+
+</body>
+</html>
