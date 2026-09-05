@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi tiết đơn hàng | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Be Vietnam Pro",sans-serif;background:#f6f8f7;color:#13221b}
+.container{max-width:1180px;margin:auto;padding:0 20px}
+
+.header{background:#fff;border-bottom:1px solid #e5e9e7}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:22px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#087b40}
+.logo-icon{font-size:34px}
+.logo strong{font-size:25px}
+.logo small{display:block;font-size:11px;color:#65736c}
+.menu{display:flex;gap:24px}
+.menu a{text-decoration:none;color:#17221d;font-weight:600;font-size:14px}
+.menu a:hover{color:#078c4b}
+
+.page-head{background:linear-gradient(135deg,#087d45,#0aa45a);color:#fff;padding:32px 0}
+.page-head h1{margin:0 0 6px;font-size:29px}
+.page-head p{margin:0;opacity:.9}
+
+.layout{display:grid;grid-template-columns:1fr 330px;gap:22px;margin:28px auto 50px}
+
+.card{background:#fff;border:1px solid #e1e7e4;border-radius:12px;padding:22px;margin-bottom:18px}
+.card h2{margin:0 0 18px;font-size:19px}
+
+.route{font-size:24px;font-weight:800;margin-bottom:13px}
+.arrow{color:#078c4b;padding:0 8px}
+
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:15px}
+.tag{background:#edf7f1;color:#087a43;padding:7px 10px;border-radius:6px;font-size:12px}
+
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.info{background:#f8faf9;border:1px solid #edf0ee;border-radius:8px;padding:13px}
+.info span{display:block;font-size:11px;color:#75817b;margin-bottom:5px}
+.info strong{font-size:13px}
+
+.description{font-size:13px;color:#5f6d66;line-height:1.8}
+
+.owner{display:flex;align-items:center;gap:13px}
+.avatar{width:52px;height:52px;border-radius:50%;background:#078c4b;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px}
+.owner strong{display:block;font-size:15px}
+.owner span{display:block;color:#6b7771;font-size:12px;margin-top:4px}
+
+.price-box{text-align:center}
+.price{font-size:26px;font-weight:800;color:#078c4b;margin-bottom:5px}
+.price-note{font-size:12px;color:#75817b;margin-bottom:18px}
+
+.primary-btn,.secondary-btn{
+display:block;width:100%;text-align:center;text-decoration:none;border-radius:8px;padding:13px 15px;font-size:14px;font-weight:800;margin-bottom:10px
+}
+.primary-btn{background:#078c4b;color:#fff}
+.secondary-btn{border:1px solid #078c4b;color:#078c4b;background:#fff}
+
+.notice{background:#edf7f1;border:1px solid #cce6d7;border-radius:9px;padding:14px;font-size:12px;line-height:1.7;color:#315c46}
+
+.footer{background:#073c27;color:#fff;padding:28px 0;text-align:center}
+.footer p{opacity:.8;font-size:13px}
+
+@media(max-width:900px){
+.menu{display:none}
+.layout{grid-template-columns:1fr}
+.info-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+<span class="logo-icon">🚚</span>
+<div>
+<strong>VietTruck</strong>
+<small>Kết nối hàng hóa Việt Nam</small>
+</div>
+</a>
+
+<nav class="menu">
+<a href="index.html">Trang chủ</a>
+<a href="tim-hang.html">Tìm hàng</a>
+<a href="tim-xe.html">Tìm xe</a>
+<a href="dang-hang.html">Đăng hàng</a>
+<a href="tai-khoan.html">Tài khoản</a>
+</nav>
+
+</div>
+</header>
+
+<section class="page-head">
+<div class="container">
+<h1>Chi tiết đơn hàng</h1>
+<p>Mã đơn: VT-090526-001 · Đang tìm xe</p>
+</div>
+</section>
+
+<main class="container layout">
+
+<section>
+
+<div class="card">
+<div class="route">Bắc Ninh <span class="arrow">→</span> Hải Phòng</div>
+
+<div class="tags">
+<span class="tag">📦 Điện tử</span>
+<span class="tag">5 tấn</span>
+<span class="tag">Xe tải thùng</span>
+<span class="tag">Hàng thường</span>
+</div>
+
+<div class="info-grid">
+
+<div class="info">
+<span>Nơi lấy hàng</span>
+<strong>Yên Phong, Bắc Ninh</strong>
+</div>
+
+<div class="info">
+<span>Nơi giao hàng</span>
+<strong>Hải An, Hải Phòng</strong>
+</div>
+
+<div class="info">
+<span>Ngày lấy hàng</span>
+<strong>05/09/2026</strong>
+</div>
+
+<div class="info">
+<span>Giờ lấy hàng</span>
+<strong>14:00</strong>
+</div>
+
+<div class="info">
+<span>Trọng lượng</span>
+<strong>5 tấn</strong>
+</div>
+
+<div class="info">
+<span>Loại xe yêu cầu</span>
+<strong>Xe tải thùng kín</strong>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<h2>Mô tả hàng hóa</h2>
+<div class="description">
+Hàng điện tử đóng thùng carton, đã đóng pallet. Yêu cầu xe thùng kín, sạch, không thấm nước.
+Chủ hàng có hỗ trợ bốc xếp tại điểm lấy hàng.
+</div>
+</div>
+
+<div class="card">
+<h2>Thông tin chủ hàng</h2>
+
+<div class="owner">
+<div class="avatar">A</div>
+
+<div>
+<strong>Công ty ABC Việt Nam</strong>
+<span>✅ Đã xác thực doanh nghiệp</span>
+<span>⭐ Đánh giá: 4.9/5</span>
+</div>
+</div>
+
+</div>
+
+<div class="card">
+<h2>Lộ trình dự kiến</h2>
+<div class="description">
+📍 Yên Phong, Bắc Ninh<br>
+↓<br>
+🛣 Quốc lộ 18 → Cao tốc Hà Nội – Hải Phòng<br>
+↓<br>
+📍 Hải An, Hải Phòng<br><br>
+Quãng đường tham khảo: khoảng 120 km.
+</div>
+</div>
+
+</section>
+
+<aside>
+
+<div class="card price-box">
+<div class="price">3.500.000 đ</div>
+<div class="price-note">Giá chủ hàng đề xuất · Có thể thương lượng</div>
+
+<a href="dang-nhap.html" class="primary-btn">Gửi báo giá</a>
+<a href="dang-nhap.html" class="secondary-btn">Nhận chuyến</a>
+</div>
+
+<div class="card">
+<h2>Thông tin đơn</h2>
+
+<div class="description">
+Mã đơn: <strong>VT-090526-001</strong><br><br>
+Đăng: 15 phút trước<br>
+Trạng thái: <strong style="color:#078c4b">Đang tìm xe</strong><br>
+Đã có: <strong>3 báo giá</strong><br>
+Hình thức: <strong>Thương lượng trực tiếp</strong>
+</div>
+</div>
+
+<div class="notice">
+🔒 Để gửi báo giá hoặc nhận chuyến, tài xế cần đăng nhập và hoàn thiện thông tin tài khoản/xe.
+</div>
+
+</aside>
+
+</main>
+
+<footer class="footer">
+<div class="container">
+<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+<p>© 2026 VietTruck. Nền tảng kết nối chủ hàng, tài xế và nhà xe.</p>
+</div>
+</footer>
+
+</body>
+</html>
