@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xe của tôi | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Be Vietnam Pro",sans-serif;
+  background:#f6f8f7;
+  color:#13221b;
+}
+.container{max-width:1180px;margin:auto;padding:0 20px}
+
+.header{
+  background:#fff;
+  border-bottom:1px solid #e5e9e7;
+}
+.nav{
+  height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:22px;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:#087b40;
+}
+.logo-icon{font-size:34px}
+.logo strong{font-size:25px}
+.logo small{display:block;font-size:11px;color:#65736c}
+
+.menu{display:flex;gap:24px}
+.menu a{
+  text-decoration:none;
+  color:#17221d;
+  font-weight:600;
+  font-size:14px;
+}
+.menu a:hover{color:#078c4b}
+
+.user-area{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#078c4b;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+}
+.user-name{
+  font-size:13px;
+  font-weight:700;
+}
+
+.page-head{
+  background:linear-gradient(135deg,#087d45,#0aa45a);
+  color:#fff;
+  padding:30px 0;
+}
+.page-head h1{
+  margin:0 0 7px;
+  font-size:28px;
+}
+.page-head p{
+  margin:0;
+  opacity:.9;
+}
+
+.account-layout{
+  display:grid;
+  grid-template-columns:250px 1fr;
+  gap:24px;
+  margin:28px auto 55px;
+}
+
+.sidebar{
+  background:#fff;
+  border:1px solid #e1e7e4;
+  border-radius:12px;
+  padding:18px;
+  height:max-content;
+}
+.profile-mini{
+  text-align:center;
+  padding:8px 0 20px;
+  border-bottom:1px solid #edf0ee;
+}
+.profile-avatar{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  background:#078c4b;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 10px;
+  font-size:26px;
+  font-weight:800;
+}
+.profile-mini strong{
+  display:block;
+  font-size:16px;
+}
+.profile-mini span{
+  display:block;
+  color:#6b7771;
+  font-size:12px;
+  margin-top:4px;
+}
+.side-menu{
+  margin-top:14px;
+}
+.side-menu a{
+  display:block;
+  text-decoration:none;
+  color:#33423b;
+  padding:12px 13px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:4px;
+}
+.side-menu a:hover,
+.side-menu a.active{
+  background:#edf7f1;
+  color:#078c4b;
+}
+.logout{color:#b33a3a!important}
+
+.content{min-width:0}
+
+.top-card{
+  background:#fff;
+  border:1px solid #e1e7e4;
+  border-radius:12px;
+  padding:22px;
+  margin-bottom:18px;
+}
+.top-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+.top-row h2{
+  margin:0 0 6px;
+  font-size:22px;
+}
+.top-row p{
+  margin:0;
+  color:#68746e;
+  font-size:13px;
+}
+.new-btn{
+  text-decoration:none;
+  background:#078c4b;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:800;
+}
+
+.summary{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-bottom:18px;
+}
+.summary-box{
+  background:#fff;
+  border:1px solid #e1e7e4;
+  border-radius:10px;
+  padding:17px;
+}
+.summary-box span{
+  display:block;
+  font-size:12px;
+  color:#6d7973;
+  margin-bottom:7px;
+}
+.summary-box strong{
+  color:#078c4b;
+  font-size:23px;
+}
+
+.truck-card{
+  background:#fff;
+  border:1px solid #e1e7e4;
+  border-radius:12px;
+  margin-bottom:14px;
+  overflow:hidden;
+}
+.truck-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  padding:15px 18px;
+  background:#fafcfb;
+  border-bottom:1px solid #edf0ee;
+}
+.plate{
+  font-weight:800;
+  font-size:15px;
+}
+.verify{
+  font-size:11px;
+  color:#078c4b;
+  font-weight:800;
+}
+
+.truck-body{
+  display:grid;
+  grid-template-columns:85px 1fr 190px;
+  gap:18px;
+  align-items:center;
+  padding:20px;
+}
+.truck-icon{
+  width:72px;
+  height:72px;
+  border-radius:12px;
+  background:#e6f4ec;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:38px;
+}
+.truck-name{
+  font-size:18px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-bottom:10px;
+}
+.tag{
+  background:#edf7f1;
+  color:#087a43;
+  padding:6px 9px;
+  border-radius:5px;
+  font-size:12px;
+}
+.details{
+  font-size:13px;
+  color:#65726c;
+  line-height:1.8;
+}
+.status-side{text-align:right}
+.status{
+  color:#078c4b;
+  font-weight:800;
+  margin-bottom:5px;
+}
+.status.offline{color:#8b9590}
+.note{
+  color:#75817b;
+  font-size:11px;
+  margin-bottom:14px;
+}
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:7px;
+}
+.action-btn{
+  text-decoration:none;
+  padding:9px 11px;
+  border-radius:7px;
+  font-size:12px;
+  font-weight:700;
+}
+.btn-view{
+  background:#078c4b;
+  color:#fff;
+}
+.btn-light{
+  border:1px solid #d9e1dd;
+  background:#fff;
+  color:#435149;
+}
+.btn-hide{
+  border:1px solid #ecd7a7;
+  color:#956b00;
+  background:#fff;
+}
+
+.footer{
+  background:#073c27;
+  color:#fff;
+  padding:28px 0;
+  text-align:center;
+}
+.footer p{
+  opacity:.8;
+  font-size:13px;
+}
+
+@media(max-width:950px){
+  .menu{display:none}
+  .summary{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  .account-layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .truck-body{grid-template-columns:70px 1fr}
+  .status-side{
+    grid-column:1/-1;
+    text-align:left;
+  }
+  .actions{justify-content:flex-start}
+  .top-row{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+  <span class="logo-icon">🚚</span>
+  <div>
+    <strong>VietTruck</strong>
+    <small>Kết nối hàng hóa Việt Nam</small>
+  </div>
+</a>
+
+<nav class="menu">
+  <a href="index.html">Trang chủ</a>
+  <a href="tim-hang.html">Tìm hàng</a>
+  <a href="tim-xe.html">Tìm xe</a>
+  <a href="dang-hang.html">Đăng hàng</a>
+</nav>
+
+<div class="user-area">
+  <div class="avatar">A</div>
+  <div class="user-name">Nguyễn Văn A</div>
+</div>
+
+</div>
+</header>
+
+<section class="page-head">
+<div class="container">
+  <h1>Xe của tôi</h1>
+  <p>Quản lý phương tiện, trạng thái xe và tuyến vận chuyển mong muốn</p>
+</div>
+</section>
+
+<main class="container account-layout">
+
+<aside class="sidebar">
+
+<div class="profile-mini">
+  <div class="profile-avatar">A</div>
+  <strong>Nguyễn Văn A</strong>
+  <span>🚚 Tài xế / Nhà xe</span>
+</div>
+
+<nav class="side-menu">
+  <a href="tai-khoan.html">🏠 Tổng quan</a>
+  <a href="#">👤 Hồ sơ cá nhân</a>
+  <a href="don-hang-cua-toi.html">📦 Đơn hàng của tôi</a>
+  <a href="xe-cua-toi.html" class="active">🚚 Xe của tôi</a>
+  <a href="#">🧾 Chuyến đã nhận</a>
+  <a href="#">🔔 Thông báo</a>
+  <a href="#">💳 Lịch sử giao dịch</a>
+  <a href="#">⚙️ Cài đặt</a>
+  <a href="index.html" class="logout">↪ Đăng xuất</a>
+</nav>
+
+</aside>
+
+<section class="content">
+
+<div class="top-card">
+  <div class="top-row">
+    <div>
+      <h2>Quản lý phương tiện</h2>
+      <p>Thêm xe, cập nhật trạng thái và quản lý các phương tiện đang hoạt động.</p>
+    </div>
+
+    <a href="#" class="new-btn">+ Đăng xe mới</a>
+  </div>
+</div>
+
+<div class="summary">
+
+<div class="summary-box">
+  <span>Tổng số xe</span>
+  <strong>4</strong>
+</div>
+
+<div class="summary-box">
+  <span>Đang sẵn sàng</span>
+  <strong>3</strong>
+</div>
+
+<div class="summary-box">
+  <span>Đang vận chuyển</span>
+  <strong>1</strong>
+</div>
+
+<div class="summary-box">
+  <span>Xe đã xác thực</span>
+  <strong>4</strong>
+</div>
+
+</div>
+
+<div class="truck-card">
+
+<div class="truck-head">
+  <div class="plate">Biển số: 99C-123.45</div>
+  <div class="verify">✅ Đã xác thực</div>
+</div>
+
+<div class="truck-body">
+
+<div class="truck-icon">🚚</div>
+
+<div>
+  <div class="truck-name">Xe tải thùng kín 5 tấn</div>
+
+  <div class="tags">
+    <span class="tag">5 tấn</span>
+    <span class="tag">Thùng kín</span>
+    <span class="tag">Dài 6.2m</span>
+  </div>
+
+  <div class="details">
+    📍 Hiện tại: Yên Phong, Bắc Ninh<br>
+    🛣 Tuyến mong muốn: Bắc Ninh → Hải Phòng / Hà Nội<br>
+    🕒 Có thể nhận hàng ngay
+  </div>
+</div>
+
+<div class="status-side">
+  <div class="status">● Sẵn sàng</div>
+  <div class="note">Đang hiển thị trên Tìm xe</div>
+
+  <div class="actions">
+    <a href="#" class="action-btn btn-view">Xem xe</a>
+    <a href="#" class="action-btn btn-light">Chỉnh sửa</a>
+    <a href="#" class="action-btn btn-hide">Tạm ẩn</a>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="truck-card">
+
+<div class="truck-head">
+  <div class="plate">Biển số: 99H-678.90</div>
+  <div class="verify">✅ Đã xác thực</div>
+</div>
+
+<div class="truck-body">
+
+<div class="truck-icon">🚛</div>
+
+<div>
+  <div class="truck-name">Xe đầu kéo container 30 tấn</div>
+
+  <div class="tags">
+    <span class="tag">30 tấn</span>
+    <span class="tag">Container</span>
+    <span class="tag">Đường dài</span>
+  </div>
+
+  <div class="details">
+    📍 Hiện tại: Hải Phòng<br>
+    🛣 Tuyến mong muốn: Hải Phòng → Đà Nẵng → TP.HCM<br>
+    🕒 Sẵn sàng từ 14:00 hôm nay
+  </div>
+</div>
+
+<div class="status-side">
+  <div class="status">● Sẵn sàng</div>
+  <div class="note">Ưu tiên hàng đường dài</div>
+
+  <div class="actions">
+    <a href="#" class="action-btn btn-view">Xem xe</a>
+    <a href="#" class="action-btn btn-light">Chỉnh sửa</a>
+    <a href="#" class="action-btn btn-hide">Tạm ẩn</a>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="truck-card">
+
+<div class="truck-head">
+  <div class="plate">Biển số: 29H-456.78</div>
+  <div class="verify">✅ Đã xác thực</div>
+</div>
+
+<div class="truck-body">
+
+<div class="truck-icon">🚚</div>
+
+<div>
+  <div class="truck-name">Xe tải lạnh 3.5 tấn</div>
+
+  <div class="tags">
+    <span class="tag">3.5 tấn</span>
+    <span class="tag">Xe lạnh</span>
+    <span class="tag">Thực phẩm</span>
+  </div>
+
+  <div class="details">
+    📍 Hiện tại: Hà Nội<br>
+    🛣 Tuyến mong muốn: Hà Nội → Bắc Ninh / Hải Dương<br>
+    ❄ Nhiệt độ thùng: -5°C đến 10°C
+  </div>
+</div>
+
+<div class="status-side">
+  <div class="status">● Sẵn sàng</div>
+  <div class="note">Có thể nhận hàng lạnh</div>
+
+  <div class="actions">
+    <a href="#" class="action-btn btn-view">Xem xe</a>
+    <a href="#" class="action-btn btn-light">Chỉnh sửa</a>
+    <a href="#" class="action-btn btn-hide">Tạm ẩn</a>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="truck-card">
+
+<div class="truck-head">
+  <div class="plate">Biển số: 30G-888.88</div>
+  <div class="verify">✅ Đã xác thực</div>
+</div>
+
+<div class="truck-body">
+
+<div class="truck-icon">🚚</div>
+
+<div>
+  <div class="truck-name">Xe tải thùng bạt 8 tấn</div>
+
+  <div class="tags">
+    <span class="tag">8 tấn</span>
+    <span class="tag">Thùng bạt</span>
+    <span class="tag">Dài 7.5m</span>
+  </div>
+
+  <div class="details">
+    📍 Đang thực hiện chuyến: Hà Nội → Thanh Hóa<br>
+    📦 Hàng tiêu dùng · 7 tấn<br>
+    🕒 Dự kiến hoàn thành: 18:00 hôm nay
+  </div>
+</div>
+
+<div class="status-side">
+  <div class="status offline">● Đang vận chuyển</div>
+  <div class="note">Tạm không nhận chuyến mới</div>
+
+  <div class="actions">
+    <a href="#" class="action-btn btn-view">Theo dõi chuyến</a>
+    <a href="#" class="action-btn btn-light">Chi tiết</a>
+  </div>
+</div>
+
+</div>
+</div>
+
+</section>
+
+</main>
+
+<footer class="footer">
+<div class="container">
+  <strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+  <p>Nền tảng kết nối chủ hàng và tài xế trên toàn quốc</p>
+</div>
+</footer>
+
+</body>
+</html>
