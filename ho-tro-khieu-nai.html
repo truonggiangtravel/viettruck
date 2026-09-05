@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hỗ trợ & Khiếu nại | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:"Be Vietnam Pro",sans-serif;
+background:#f4f7f5;
+color:#14231b;
+}
+.container{
+max-width:1180px;
+margin:auto;
+padding:0 20px;
+}
+.header{
+background:#fff;
+border-bottom:1px solid #e1e8e4;
+}
+.nav{
+height:74px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+}
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+text-decoration:none;
+color:#087d43;
+}
+.logo-icon{font-size:32px}
+.logo strong{font-size:24px}
+.logo small{
+display:block;
+font-size:11px;
+color:#69766f;
+}
+.menu{
+display:flex;
+gap:22px;
+}
+.menu a{
+text-decoration:none;
+color:#17231d;
+font-size:13px;
+font-weight:600;
+}
+.menu a:hover,
+.menu a.active{
+color:#078c4b;
+}
+.page-head{
+padding:28px 0 18px;
+}
+.page-head h1{
+margin:0 0 5px;
+font-size:27px;
+}
+.page-head p{
+margin:0;
+font-size:13px;
+color:#6c7972;
+}
+.main{
+display:grid;
+grid-template-columns:1fr 320px;
+gap:20px;
+padding-bottom:50px;
+}
+.card{
+background:#fff;
+border:1px solid #e0e7e3;
+border-radius:12px;
+padding:20px;
+margin-bottom:18px;
+}
+.card h2{
+margin:0 0 15px;
+font-size:18px;
+}
+.support-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+margin-bottom:18px;
+}
+.support-item{
+border:1px solid #e1e8e4;
+border-radius:10px;
+padding:15px;
+background:#fafcfb;
+cursor:pointer;
+}
+.support-item:hover{
+border-color:#7ec29d;
+background:#f2faf5;
+}
+.support-icon{
+font-size:29px;
+margin-bottom:8px;
+}
+.support-item strong{
+display:block;
+font-size:12px;
+margin-bottom:5px;
+}
+.support-item span{
+font-size:10px;
+color:#718078;
+line-height:1.5;
+}
+.field{
+margin-bottom:14px;
+}
+.field label{
+display:block;
+font-size:10px;
+font-weight:800;
+color:#68766e;
+margin-bottom:6px;
+}
+.field input,
+.field select,
+.field textarea{
+width:100%;
+border:1px solid #d9e2dd;
+border-radius:8px;
+padding:10px;
+font-family:inherit;
+font-size:12px;
+background:#fff;
+}
+.field input,
+.field select{
+height:43px;
+}
+.field textarea{
+min-height:120px;
+resize:vertical;
+}
+.upload{
+border:2px dashed #d6e1db;
+border-radius:10px;
+padding:18px;
+text-align:center;
+font-size:11px;
+color:#74817a;
+}
+.upload input{
+margin-top:10px;
+}
+.preview{
+margin-top:12px;
+display:none;
+}
+.preview img{
+max-width:100%;
+max-height:230px;
+border-radius:8px;
+border:1px solid #e1e8e4;
+}
+.submit-btn{
+width:100%;
+border:0;
+border-radius:8px;
+background:#078c4b;
+color:#fff;
+padding:13px;
+font-family:inherit;
+font-size:12px;
+font-weight:800;
+cursor:pointer;
+margin-top:8px;
+}
+.ticket{
+border:1px solid #e1e8e4;
+border-radius:10px;
+padding:14px;
+margin-bottom:12px;
+}
+.ticket-top{
+display:flex;
+justify-content:space-between;
+gap:12px;
+margin-bottom:7px;
+}
+.ticket-code{
+font-size:11px;
+font-weight:800;
+}
+.ticket-status{
+font-size:9px;
+font-weight:800;
+padding:5px 8px;
+border-radius:20px;
+}
+.processing{
+background:#fff3d6;
+color:#956a05;
+}
+.resolved{
+background:#e7f7ed;
+color:#087d43;
+}
+.ticket p{
+margin:4px 0;
+font-size:10px;
+color:#6d7973;
+line-height:1.6;
+}
+.row{
+display:flex;
+justify-content:space-between;
+gap:15px;
+padding:10px 0;
+border-bottom:1px solid #edf1ef;
+font-size:11px;
+}
+.row:last-child{border-bottom:0}
+.row span{color:#75817b}
+.row strong{text-align:right}
+.notice{
+background:#edf7f1;
+border:1px solid #c9e5d4;
+border-radius:9px;
+padding:14px;
+font-size:11px;
+line-height:1.7;
+color:#315e46;
+}
+.success{
+display:none;
+background:#fff;
+border:1px solid #bfe1cc;
+border-radius:12px;
+padding:32px 20px;
+text-align:center;
+}
+.success-icon{font-size:48px}
+.success h2{
+color:#078c4b;
+margin:8px 0;
+}
+.success p{
+font-size:12px;
+color:#68766e;
+line-height:1.7;
+}
+.success a{
+display:inline-block;
+margin-top:10px;
+background:#078c4b;
+color:white;
+text-decoration:none;
+padding:11px 15px;
+border-radius:8px;
+font-size:11px;
+font-weight:800;
+}
+.footer{
+background:#073c27;
+color:#fff;
+text-align:center;
+padding:26px 0;
+}
+.footer p{
+font-size:12px;
+opacity:.8;
+}
+@media(max-width:900px){
+.main{grid-template-columns:1fr}
+.support-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:650px){
+.menu{display:none}
+.support-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+<span class="logo-icon">🚚</span>
+<div>
+<strong>VietTruck</strong>
+<small>Kết nối hàng hóa Việt Nam</small>
+</div>
+</a>
+
+<nav class="menu">
+<a href="index.html">Trang chủ</a>
+<a href="tim-hang.html">Tìm hàng</a>
+<a href="hang-chieu-ve.html">Hàng chiều về</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="vi-viettruck.html">Ví VietTruck</a>
+<a href="ho-tro-khieu-nai.html" class="active">Hỗ trợ</a>
+</nav>
+
+</div>
+</header>
+
+<main class="container">
+
+<section class="page-head">
+<h1>Trung tâm hỗ trợ & khiếu nại</h1>
+<p>Gửi yêu cầu hỗ trợ, phản ánh sự cố hoặc tranh chấp liên quan đến chuyến vận chuyển.</p>
+</section>
+
+<section class="main">
+
+<div>
+
+<div class="card">
+
+<h2>Bạn cần hỗ trợ vấn đề gì?</h2>
+
+<div class="support-grid">
+
+<div class="support-item" data-type="Hàng hóa hư hỏng">
+<div class="support-icon">📦</div>
+<strong>Hàng hóa hư hỏng</strong>
+<span>Móp, vỡ, ướt hoặc thất thoát hàng.</span>
+</div>
+
+<div class="support-item" data-type="Giao hàng chậm">
+<div class="support-icon">⏱️</div>
+<strong>Giao hàng chậm</strong>
+<span>Chuyến giao trễ so với thời gian cam kết.</span>
+</div>
+
+<div class="support-item" data-type="Sai cước vận chuyển">
+<div class="support-icon">💰</div>
+<strong>Sai cước vận chuyển</strong>
+<span>Phát sinh hoặc tính sai tiền cước.</span>
+</div>
+
+<div class="support-item" data-type="Thiếu POD">
+<div class="support-icon">📄</div>
+<strong>Thiếu POD</strong>
+<span>Thiếu ảnh, chữ ký hoặc chứng từ giao hàng.</span>
+</div>
+
+<div class="support-item" data-type="Thanh toán chậm">
+<div class="support-icon">💳</div>
+<strong>Thanh toán chậm</strong>
+<span>Tiền cước chưa được đối soát hoặc ghi nhận.</span>
+</div>
+
+<div class="support-item" data-type="Khác">
+<div class="support-icon">🛠️</div>
+<strong>Vấn đề khác</strong>
+<span>Trường hợp cần bộ phận VietTruck hỗ trợ.</span>
+</div>
+
+</div>
+
+</div>
+
+<div class="card" id="formCard">
+
+<h2>Tạo yêu cầu hỗ trợ</h2>
+
+<div class="field">
+<label>MÃ CHUYẾN / MÃ ĐƠN</label>
+<input type="text" value="VT-TRIP-090526-001">
+</div>
+
+<div class="field">
+<label>LOẠI VẤN ĐỀ</label>
+<select id="issueType">
+<option>Hàng hóa hư hỏng</option>
+<option>Giao hàng chậm</option>
+<option>Sai cước vận chuyển</option>
+<option>Thiếu POD</option>
+<option>Thanh toán chậm</option>
+<option>Khác</option>
+</select>
+</div>
+
+<div class="field">
+<label>MỨC ĐỘ</label>
+<select>
+<option>Thông thường</option>
+<option>Quan trọng</option>
+<option>Khẩn cấp</option>
+</select>
+</div>
+
+<div class="field">
+<label>TIÊU ĐỀ</label>
+<input type="text" id="titleInput" placeholder="Ví dụ: Hàng bị móp khi giao">
+</div>
+
+<div class="field">
+<label>MÔ TẢ CHI TIẾT</label>
+<textarea id="descriptionInput" placeholder="Mô tả rõ tình trạng, thời gian xảy ra và nội dung bạn cần VietTruck hỗ trợ..."></textarea>
+</div>
+
+<div class="field">
+<label>ẢNH / CHỨNG TỪ ĐÍNH KÈM</label>
+
+<div class="upload">
+Chọn ảnh hoặc chứng từ liên quan để minh họa sự cố.
+<br>
+<input type="file" id="fileInput" accept="image/*">
+
+<div class="preview" id="preview">
+<img id="previewImage" alt="Ảnh đính kèm">
+</div>
+
+</div>
+
+</div>
+
+<button class="submit-btn" id="submitBtn">
+Gửi yêu cầu hỗ trợ
+</button>
+
+</div>
+
+<div class="success" id="successBox">
+
+<div class="success-icon">✅</div>
+
+<h2>Đã gửi yêu cầu hỗ trợ</h2>
+
+<p>
+Mã yêu cầu: <strong>VT-SP-20260905-001</strong><br>
+Bộ phận hỗ trợ VietTruck sẽ tiếp nhận và xử lý yêu cầu của bạn.
+</p>
+
+<a href="dashboard.html">
+Về Dashboard
+</a>
+
+</div>
+
+</div>
+
+<aside>
+
+<div class="card">
+
+<h2>Yêu cầu gần đây</h2>
+
+<div class="ticket">
+
+<div class="ticket-top">
+<div class="ticket-code">VT-SP-001</div>
+<div class="ticket-status processing">
+Đang xử lý
+</div>
+</div>
+
+<p><strong>Thiếu POD giao hàng</strong></p>
+<p>Chuyến VT-003 · 04/09/2026</p>
+
+</div>
+
+<div class="ticket">
+
+<div class="ticket-top">
+<div class="ticket-code">VT-SP-002</div>
+<div class="ticket-status resolved">
+Đã xử lý
+</div>
+</div>
+
+<p><strong>Đối soát tiền cước</strong></p>
+<p>Chuyến VT-002 · 01/09/2026</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Thời gian hỗ trợ</h2>
+
+<div class="row">
+<span>Yêu cầu thường</span>
+<strong>Trong 24 giờ</strong>
+</div>
+
+<div class="row">
+<span>Vấn đề thanh toán</span>
+<strong>1–2 ngày</strong>
+</div>
+
+<div class="row">
+<span>Tranh chấp chuyến</span>
+<strong>2–5 ngày</strong>
+</div>
+
+<div class="row">
+<span>Khẩn cấp</span>
+<strong style="color:#078c4b">Ưu tiên xử lý</strong>
+</div>
+
+</div>
+
+<div class="notice">
+📌 Trang này hiện là mô phỏng frontend. Ảnh đính kèm chỉ được xem trước trên trình duyệt và yêu cầu chưa được gửi tới hệ thống hỗ trợ thật.
+</div>
+
+</aside>
+
+</section>
+
+</main>
+
+<footer class="footer">
+<div class="container">
+<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+<p>© 2026 VietTruck. Trung tâm hỗ trợ vận tải.</p>
+</div>
+</footer>
+
+<script>
+
+const issueItems =
+document.querySelectorAll(".support-item");
+
+const issueType =
+document.getElementById("issueType");
+
+issueItems.forEach(function(item){
+
+item.addEventListener("click",function(){
+
+issueType.value =
+this.dataset.type;
+
+document.getElementById("formCard")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+});
+
+});
+
+const fileInput =
+document.getElementById("fileInput");
+
+const preview =
+document.getElementById("preview");
+
+const previewImage =
+document.getElementById("previewImage");
+
+fileInput.addEventListener("change",function(){
+
+const file =
+this.files[0];
+
+if(!file){
+preview.style.display = "none";
+return;
+}
+
+const reader =
+new FileReader();
+
+reader.onload =
+function(e){
+
+previewImage.src =
+e.target.result;
+
+preview.style.display =
+"block";
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+const submitBtn =
+document.getElementById("submitBtn");
+
+const formCard =
+document.getElementById("formCard");
+
+const successBox =
+document.getElementById("successBox");
+
+submitBtn.addEventListener("click",function(){
+
+const title =
+document.getElementById("titleInput").value.trim();
+
+const description =
+document.getElementById("descriptionInput").value.trim();
+
+if(!title){
+alert("Vui lòng nhập tiêu đề yêu cầu.");
+return;
+}
+
+if(!description){
+alert("Vui lòng mô tả chi tiết vấn đề.");
+return;
+}
+
+formCard.style.display =
+"none";
+
+successBox.style.display =
+"block";
+
+window.scrollTo({
+top:150,
+behavior:"smooth"
+});
+
+});
+
+</script>
+
+</body>
+</html>
