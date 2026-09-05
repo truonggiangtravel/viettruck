@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Điều phối vận tải | VietTruck</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f5f7fa;
+      color:#1f2937;
+    }
+
+    .header{
+      background:#fff;
+      border-bottom:1px solid #e5e7eb;
+      padding:16px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:700;
+      color:#16a34a;
+      text-decoration:none;
+    }
+
+    .header-links{
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+
+    .back{
+      color:#4b5563;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .container{
+      max-width:1220px;
+      margin:30px auto;
+      padding:0 20px;
+    }
+
+    .title-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .title h1{
+      font-size:28px;
+      margin-bottom:8px;
+    }
+
+    .title p{
+      color:#6b7280;
+    }
+
+    .assign-btn{
+      background:#16a34a;
+      color:#fff;
+      text-decoration:none;
+      padding:11px 16px;
+      border-radius:8px;
+      font-weight:bold;
+      white-space:nowrap;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:14px;
+      margin-bottom:22px;
+    }
+
+    .stat{
+      background:#fff;
+      padding:18px;
+      border-radius:12px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .stat small{
+      color:#6b7280;
+    }
+
+    .stat strong{
+      display:block;
+      margin-top:8px;
+      font-size:25px;
+    }
+
+    .workspace{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr 1fr;
+      gap:16px;
+      align-items:start;
+    }
+
+    .column{
+      background:#eef2f7;
+      border-radius:12px;
+      padding:14px;
+      min-height:480px;
+    }
+
+    .column-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:14px;
+    }
+
+    .column-title h2{
+      font-size:16px;
+    }
+
+    .count{
+      background:#fff;
+      min-width:28px;
+      height:28px;
+      border-radius:20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+      font-weight:bold;
+    }
+
+    .trip-card{
+      background:#fff;
+      border-radius:10px;
+      padding:15px;
+      margin-bottom:12px;
+      box-shadow:0 2px 8px rgba(0,0,0,.05);
+    }
+
+    .trip-code{
+      font-size:12px;
+      color:#6b7280;
+      margin-bottom:6px;
+    }
+
+    .route{
+      font-weight:bold;
+      margin-bottom:8px;
+      line-height:1.4;
+    }
+
+    .meta{
+      font-size:13px;
+      color:#6b7280;
+      line-height:1.6;
+    }
+
+    .price{
+      margin-top:8px;
+      font-weight:bold;
+      color:#16a34a;
+    }
+
+    .status{
+      display:inline-block;
+      margin-top:10px;
+      padding:5px 9px;
+      border-radius:18px;
+      font-size:11px;
+      font-weight:bold;
+    }
+
+    .waiting{
+      background:#fef3c7;
+      color:#b45309;
+    }
+
+    .assigned{
+      background:#e0e7ff;
+      color:#4338ca;
+    }
+
+    .running{
+      background:#dbeafe;
+      color:#1d4ed8;
+    }
+
+    .done{
+      background:#dcfce7;
+      color:#15803d;
+    }
+
+    .danger{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .actions{
+      display:flex;
+      gap:8px;
+      margin-top:12px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:7px 10px;
+      border-radius:7px;
+      text-decoration:none;
+      font-size:12px;
+      font-weight:bold;
+    }
+
+    .btn-green{
+      background:#16a34a;
+      color:#fff;
+    }
+
+    .btn-outline{
+      border:1px solid #d1d5db;
+      color:#374151;
+      background:#fff;
+    }
+
+    .bottom-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      margin-top:22px;
+    }
+
+    .panel{
+      background:#fff;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .panel h3{
+      margin-bottom:14px;
+      font-size:18px;
+    }
+
+    .resource{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 0;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+    }
+
+    .resource:last-child{
+      border-bottom:none;
+    }
+
+    .resource span{
+      color:#6b7280;
+    }
+
+    .alert{
+      padding:12px;
+      border-radius:9px;
+      margin-bottom:10px;
+      background:#fff7ed;
+      color:#9a3412;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    @media(max-width:1050px){
+      .stats{
+        grid-template-columns:repeat(3,1fr);
+      }
+
+      .workspace{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(max-width:700px){
+      .stats{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .workspace{
+        grid-template-columns:1fr;
+      }
+
+      .bottom-grid{
+        grid-template-columns:1fr;
+      }
+
+      .title-row{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+
+    @media(max-width:460px){
+      .stats{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <a href="index.html" class="logo">🚚 VietTruck</a>
+
+  <div class="header-links">
+    <a href="quan-ly-doi-xe.html" class="back">Đội xe</a>
+    <a href="quan-ly-tai-xe.html" class="back">Tài xế</a>
+    <a href="ho-so-nha-xe.html" class="back">Hồ sơ nhà xe</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="title-row">
+    <div class="title">
+      <h1>Bảng điều phối vận tải</h1>
+      <p>Theo dõi và điều hành toàn bộ chuyến hàng, xe và tài xế trên một màn hình.</p>
+    </div>
+
+    <a href="phan-cong-chuyen.html" class="assign-btn">
+      + Phân công chuyến
+    </a>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Chờ phân công</small>
+      <strong>8</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đã phân công</small>
+      <strong>5</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đang vận chuyển</small>
+      <strong>6</strong>
+    </div>
+
+    <div class="stat">
+      <small>Hoàn thành hôm nay</small>
+      <strong>14</strong>
+    </div>
+
+    <div class="stat">
+      <small>Cảnh báo</small>
+      <strong>2</strong>
+    </div>
+
+  </div>
+
+  <div class="workspace">
+
+    <div class="column">
+
+      <div class="column-title">
+        <h2>Chờ phân công</h2>
+        <div class="count">8</div>
+      </div>
+
+      <div class="trip-card">
+        <div class="trip-code">DH-090526-001</div>
+        <div class="route">Bắc Ninh → Hải Phòng</div>
+        <div class="meta">
+          Linh kiện điện tử · 8 tấn<br>
+          Nhận hàng: 18:00
+        </div>
+        <div class="price">3.200.000đ</div>
+        <span class="status waiting">Chờ phân công</span>
+
+        <div class="actions">
+          <a href="phan-cong-chuyen.html" class="btn btn-green">Phân công</a>
+        </div>
+      </div>
+
+      <div class="trip-card">
+        <div class="trip-code">DH-090526-002</div>
+        <div class="route">Hà Nội → Bắc Giang</div>
+        <div class="meta">
+          Thực phẩm đóng gói · 5 tấn<br>
+          Nhận hàng: 19:30
+        </div>
+        <div class="price">2.450.000đ</div>
+        <span class="status waiting">Chờ phân công</span>
+      </div>
+
+    </div>
+
+    <div class="column">
+
+      <div class="column-title">
+        <h2>Đã phân công</h2>
+        <div class="count">5</div>
+      </div>
+
+      <div class="trip-card">
+        <div class="trip-code">DH-090526-004</div>
+        <div class="route">Bắc Ninh → Hà Nội</div>
+        <div class="meta">
+          Xe: 99C-123.45<br>
+          Tài xế: Nguyễn Văn Nam<br>
+          Khởi hành: 18:30
+        </div>
+        <span class="status assigned">Đã phân công</span>
+
+        <div class="actions">
+          <a href="theo-doi-hanh-trinh.html" class="btn btn-outline">Theo dõi</a>
+        </div>
+      </div>
+
+      <div class="trip-card">
+        <div class="trip-code">DH-090526-005</div>
+        <div class="route">Bắc Giang → Hà Nội</div>
+        <div class="meta">
+          Xe: 98C-333.66<br>
+          Tài xế: Trần Văn Cường<br>
+          Khởi hành: 20:00
+        </div>
+        <span class="status assigned">Đã phân công</span>
+      </div>
+
+    </div>
+
+    <div class="column">
+
+      <div class="column-title">
+        <h2>Đang vận chuyển</h2>
+        <div class="count">6</div>
+      </div>
+
+      <div class="trip-card">
+        <div class="trip-code">DH-090526-006</div>
+        <div class="route">Bắc Ninh → Quảng Ninh</div>
+        <div class="meta">
+          Xe: 30H-678.90<br>
+          Tài xế: Phạm Quốc Anh<br>
+          Tiến độ: 72%
+        </div>
+        <span class="status running">Đang vận chuyển</span>
+
+        <div class="actions">
+          <a href="theo-doi-hanh-trinh.html" class="btn btn-green">GPS</a>
+        </div>
+      </div>
+
+      <div class="trip-card">
+        <div class="trip-code">DH-090526-007</div>
+        <div class="route">Hải Phòng → Hà Nội</div>
+        <div class="meta">
+          Xe: 99H-456.78<br>
+          Tài xế: Lê Văn Thành<br>
+          Tiến độ: 46%
+        </div>
+        <span class="status danger">Chậm 25 phút</span>
+      </div>
+
+    </div>
+
+    <div class="column">
+
+      <div class="column-title">
+        <h2>Hoàn thành</h2>
+        <div class="count">14</div>
+      </div>
+
+      <div class="trip-card">
+        <div class="trip-code">DH-090526-008</div>
+        <div class="route">Hà Nội → Bắc Ninh</div>
+        <div class="meta">
+          Xe: 99C-123.45<br>
+          Tài xế: Nguyễn Văn Nam<br>
+          Hoàn thành: 15:20
+        </div>
+        <div class="price">1.850.000đ</div>
+        <span class="status done">Hoàn thành</span>
+
+        <div class="actions">
+          <a href="lich-su-hanh-trinh.html" class="btn btn-outline">Lịch sử</a>
+        </div>
+      </div>
+
+      <div class="trip-card">
+        <div class="trip-code">DH-090526-009</div>
+        <div class="route">Bắc Giang → Bắc Ninh</div>
+        <div class="meta">
+          Xe: 98C-333.66<br>
+          Tài xế: Trần Văn Cường<br>
+          Hoàn thành: 14:05
+        </div>
+        <div class="price">1.420.000đ</div>
+        <span class="status done">Hoàn thành</span>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="bottom-grid">
+
+    <div class="panel">
+
+      <h3>Nguồn lực sẵn sàng</h3>
+
+      <div class="resource">
+        <span>Xe đang rảnh</span>
+        <strong>7 xe</strong>
+      </div>
+
+      <div class="resource">
+        <span>Tài xế sẵn sàng</span>
+        <strong>9 người</strong>
+      </div>
+
+      <div class="resource">
+        <span>Xe sắp hoàn thành chuyến</span>
+        <strong>3 xe</strong>
+      </div>
+
+      <div class="resource">
+        <span>Xe đang bảo dưỡng</span>
+        <strong>2 xe</strong>
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <h3>Cảnh báo điều hành</h3>
+
+      <div class="alert">
+        ⚠️ Chuyến DH-090526-007 đang chậm khoảng 25 phút so với kế hoạch.
+      </div>
+
+      <div class="alert">
+        ⚠️ Xe 30H-678.90 có đăng kiểm sắp hết hạn.
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
