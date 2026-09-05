@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trung tâm báo giá | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:"Be Vietnam Pro",sans-serif;
+background:#f4f7f5;
+color:#14231b;
+}
+
+.container{
+max-width:1220px;
+margin:auto;
+padding:0 20px;
+}
+
+.header{
+background:#fff;
+border-bottom:1px solid #e1e8e4;
+}
+
+.nav{
+height:74px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+text-decoration:none;
+color:#087d43;
+}
+
+.logo-icon{font-size:32px}
+
+.logo strong{font-size:24px}
+
+.logo small{
+display:block;
+font-size:11px;
+color:#69766f;
+}
+
+.menu{
+display:flex;
+gap:22px;
+}
+
+.menu a{
+text-decoration:none;
+color:#17231d;
+font-size:13px;
+font-weight:600;
+}
+
+.menu a:hover,
+.menu a.active{
+color:#078c4b;
+}
+
+.page-head{
+padding:28px 0 18px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+}
+
+.page-head h1{
+margin:0 0 5px;
+font-size:27px;
+}
+
+.page-head p{
+margin:0;
+font-size:13px;
+color:#6c7972;
+}
+
+.back-btn{
+text-decoration:none;
+background:#fff;
+border:1px solid #dbe5df;
+color:#1e2e25;
+padding:10px 14px;
+border-radius:8px;
+font-size:11px;
+font-weight:700;
+white-space:nowrap;
+}
+
+.layout{
+display:grid;
+grid-template-columns:1fr 330px;
+gap:20px;
+padding-bottom:50px;
+}
+
+.card{
+background:#fff;
+border:1px solid #e0e7e3;
+border-radius:12px;
+padding:20px;
+margin-bottom:18px;
+}
+
+.order-head{
+display:flex;
+justify-content:space-between;
+gap:18px;
+align-items:flex-start;
+}
+
+.order-code{
+font-size:11px;
+color:#77847d;
+margin-bottom:6px;
+}
+
+.route{
+font-size:23px;
+font-weight:800;
+}
+
+.route span{
+color:#078c4b;
+padding:0 8px;
+}
+
+.status{
+display:inline-block;
+background:#e8f5ee;
+color:#078c4b;
+padding:7px 10px;
+border-radius:20px;
+font-size:10px;
+font-weight:800;
+}
+
+.order-info{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
+margin-top:18px;
+padding-top:16px;
+border-top:1px solid #edf1ef;
+}
+
+.info span{
+display:block;
+font-size:10px;
+color:#7b8781;
+margin-bottom:5px;
+}
+
+.info strong{
+font-size:12px;
+}
+
+.section-title{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+margin-bottom:15px;
+}
+
+.section-title h2{
+margin:0;
+font-size:19px;
+}
+
+.count{
+font-size:11px;
+font-weight:700;
+color:#6f7d75;
+}
+
+.quote{
+border:1px solid #e0e7e3;
+border-radius:11px;
+padding:17px;
+margin-bottom:13px;
+}
+
+.quote.best{
+border:2px solid #078c4b;
+background:#fbfffc;
+}
+
+.quote-top{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:15px;
+}
+
+.driver{
+display:flex;
+gap:12px;
+}
+
+.avatar{
+width:45px;
+height:45px;
+border-radius:50%;
+background:#e9f6ee;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+}
+
+.driver-name{
+font-size:14px;
+font-weight:800;
+margin-bottom:4px;
+}
+
+.rating{
+font-size:11px;
+color:#727f78;
+}
+
+.price{
+text-align:right;
+}
+
+.price strong{
+display:block;
+font-size:21px;
+color:#078c4b;
+}
+
+.price small{
+font-size:10px;
+color:#77847d;
+}
+
+.best-label{
+display:inline-block;
+background:#078c4b;
+color:white;
+padding:5px 8px;
+border-radius:15px;
+font-size:9px;
+font-weight:800;
+margin-top:6px;
+}
+
+.quote-details{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+margin:16px 0;
+padding:14px 0;
+border-top:1px solid #edf1ef;
+border-bottom:1px solid #edf1ef;
+}
+
+.quote-note{
+font-size:11px;
+color:#65736b;
+line-height:1.6;
+margin-bottom:14px;
+}
+
+.quote-actions{
+display:flex;
+justify-content:flex-end;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.btn{
+border:0;
+border-radius:7px;
+padding:10px 13px;
+font-family:inherit;
+font-size:10px;
+font-weight:800;
+cursor:pointer;
+}
+
+.btn-outline{
+background:#fff;
+border:1px solid #d8e2dc;
+color:#1e2d25;
+}
+
+.btn-green{
+background:#078c4b;
+color:#fff;
+}
+
+.btn-disabled{
+background:#e5ebe8;
+color:#87918c;
+cursor:default;
+}
+
+.summary-row{
+display:flex;
+justify-content:space-between;
+gap:15px;
+padding:10px 0;
+border-bottom:1px solid #edf1ef;
+font-size:11px;
+}
+
+.summary-row:last-child{
+border-bottom:0;
+}
+
+.summary-row span{
+color:#75817b;
+}
+
+.summary-row strong{
+text-align:right;
+}
+
+.highlight{
+color:#078c4b;
+}
+
+.notice{
+background:#edf7f1;
+border:1px solid #c9e5d4;
+border-radius:9px;
+padding:14px;
+font-size:11px;
+line-height:1.7;
+color:#315e46;
+}
+
+.success{
+display:none;
+background:#fff;
+border:1px solid #bfe1cc;
+border-radius:12px;
+padding:30px 20px;
+text-align:center;
+margin-bottom:18px;
+}
+
+.success-icon{
+font-size:48px;
+}
+
+.success h2{
+color:#078c4b;
+margin:8px 0;
+}
+
+.success p{
+font-size:12px;
+color:#68766e;
+line-height:1.7;
+}
+
+.success a{
+display:inline-block;
+margin-top:10px;
+text-decoration:none;
+background:#078c4b;
+color:white;
+padding:11px 16px;
+border-radius:8px;
+font-size:11px;
+font-weight:800;
+}
+
+.footer{
+background:#073c27;
+color:white;
+text-align:center;
+padding:26px 0;
+}
+
+.footer p{
+font-size:12px;
+opacity:.8;
+}
+
+@media(max-width:950px){
+.layout{grid-template-columns:1fr}
+.order-info,
+.quote-details{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:700px){
+.menu{display:none}
+.page-head{
+align-items:flex-start;
+flex-direction:column;
+}
+}
+
+@media(max-width:520px){
+.order-info,
+.quote-details{
+grid-template-columns:1fr;
+}
+.quote-top{
+flex-direction:column;
+}
+.price{text-align:left}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+<span class="logo-icon">🚚</span>
+
+<div>
+<strong>VietTruck</strong>
+<small>Kết nối hàng hóa Việt Nam</small>
+</div>
+</a>
+
+<nav class="menu">
+<a href="index.html">Trang chủ</a>
+<a href="tim-hang.html">Tìm hàng</a>
+<a href="tim-xe.html">Tìm xe</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="quan-ly-don-hang.html">Quản lý đơn</a>
+<a href="trung-tam-bao-gia.html" class="active">Báo giá</a>
+</nav>
+
+</div>
+</header>
+
+<main class="container">
+
+<section class="page-head">
+
+<div>
+<h1>Trung tâm báo giá</h1>
+<p>So sánh báo giá từ tài xế và nhà xe trước khi chọn đơn vị vận chuyển</p>
+</div>
+
+<a href="quan-ly-don-hang.html" class="back-btn">
+← Quản lý đơn hàng
+</a>
+
+</section>
+
+<section class="layout">
+
+<div>
+
+<div class="card">
+
+<div class="order-head">
+
+<div>
+<div class="order-code">
+Mã đơn: VT-ORDER-001
+</div>
+
+<div class="route">
+Bắc Ninh <span>→</span> Hải Phòng
+</div>
+</div>
+
+<span class="status">
+Đang nhận báo giá
+</span>
+
+</div>
+
+<div class="order-info">
+
+<div class="info">
+<span>LOẠI HÀNG</span>
+<strong>Linh kiện điện tử</strong>
+</div>
+
+<div class="info">
+<span>TRỌNG LƯỢNG</span>
+<strong>5 tấn</strong>
+</div>
+
+<div class="info">
+<span>LOẠI XE</span>
+<strong>Xe tải 5–8 tấn</strong>
+</div>
+
+<div class="info">
+<span>NGÀY LẤY</span>
+<strong>05/09/2026</strong>
+</div>
+
+</div>
+
+</div>
+
+<div class="success" id="successBox">
+
+<div class="success-icon">✅</div>
+
+<h2>Đã chọn nhà vận chuyển</h2>
+
+<p>
+Báo giá đã được xác nhận. Chuyến vận chuyển sẽ được chuyển sang trạng thái đã nhận.
+</p>
+
+<a href="chuyen-da-nhan.html">
+Xem chuyến đã nhận
+</a>
+
+</div>
+
+<div class="card" id="quoteList">
+
+<div class="section-title">
+<h2>Báo giá nhận được</h2>
+<div class="count">4 báo giá</div>
+</div>
+
+<div class="quote best">
+
+<div class="quote-top">
+
+<div class="driver">
+
+<div class="avatar">🚚</div>
+
+<div>
+<div class="driver-name">
+Nguyễn Văn B
+</div>
+
+<div class="rating">
+⭐ 4.9 · 186 chuyến · Xác minh VietTruck
+</div>
+
+<div class="best-label">
+ĐỀ XUẤT TỐT
+</div>
+
+</div>
+
+</div>
+
+<div class="price">
+<strong>3.350.000 đ</strong>
+<small>Đã bao gồm phí vận chuyển</small>
+</div>
+
+</div>
+
+<div class="quote-details">
+
+<div class="info">
+<span>XE</span>
+<strong>99C-123.45</strong>
+</div>
+
+<div class="info">
+<span>LOẠI XE</span>
+<strong>Thùng kín 8 tấn</strong>
+</div>
+
+<div class="info">
+<span>NHẬN HÀNG</span>
+<strong>08:00 – 09:00</strong>
+</div>
+
+<div class="info">
+<span>DỰ KIẾN GIAO</span>
+<strong>13:30</strong>
+</div>
+
+</div>
+
+<div class="quote-note">
+Tài xế có thể đến nhận hàng từ 08:00. Xe thùng kín, có bạt và dây chằng hàng đầy đủ.
+</div>
+
+<div class="quote-actions">
+
+<button class="btn btn-outline">
+Xem hồ sơ
+</button>
+
+<button class="btn btn-green choose-btn"
+data-driver="Nguyễn Văn B"
+data-price="3.350.000 đ">
+Chọn báo giá
+</button>
+
+</div>
+
+</div>
+
+<div class="quote">
+
+<div class="quote-top">
+
+<div class="driver">
+
+<div class="avatar">🚛</div>
+
+<div>
+<div class="driver-name">
+Công ty Vận tải Minh Phát
+</div>
+
+<div class="rating">
+⭐ 4.8 · 324 chuyến · Nhà xe xác minh
+</div>
+</div>
+
+</div>
+
+<div class="price">
+<strong>3.500.000 đ</strong>
+<small>Giá trọn gói</small>
+</div>
+
+</div>
+
+<div class="quote-details">
+
+<div class="info">
+<span>XE</span>
+<strong>98C-456.78</strong>
+</div>
+
+<div class="info">
+<span>LOẠI XE</span>
+<strong>Thùng kín 7 tấn</strong>
+</div>
+
+<div class="info">
+<span>NHẬN HÀNG</span>
+<strong>07:30 – 08:30</strong>
+</div>
+
+<div class="info">
+<span>DỰ KIẾN GIAO</span>
+<strong>13:00</strong>
+</div>
+
+</div>
+
+<div class="quote-note">
+Có hóa đơn vận chuyển. Hỗ trợ bốc xếp nếu chủ hàng yêu cầu.
+</div>
+
+<div class="quote-actions">
+
+<button class="btn btn-outline">
+Xem hồ sơ
+</button>
+
+<button class="btn btn-green choose-btn"
+data-driver="Công ty Vận tải Minh Phát"
+data-price="3.500.000 đ">
+Chọn báo giá
+</button>
+
+</div>
+
+</div>
+
+<div class="quote">
+
+<div class="quote-top">
+
+<div class="driver">
+
+<div class="avatar">🚚</div>
+
+<div>
+<div class="driver-name">
+Trần Văn C
+</div>
+
+<div class="rating">
+⭐ 4.7 · 98 chuyến
+</div>
+</div>
+
+</div>
+
+<div class="price">
+<strong>3.250.000 đ</strong>
+<small>Giá thấp nhất</small>
+</div>
+
+</div>
+
+<div class="quote-details">
+
+<div class="info">
+<span>XE</span>
+<strong>29H-678.90</strong>
+</div>
+
+<div class="info">
+<span>LOẠI XE</span>
+<strong>Xe tải 5 tấn</strong>
+</div>
+
+<div class="info">
+<span>NHẬN HÀNG</span>
+<strong>09:00 – 10:00</strong>
+</div>
+
+<div class="info">
+<span>DỰ KIẾN GIAO</span>
+<strong>15:00</strong>
+</div>
+
+</div>
+
+<div class="quote-note">
+Có thể nhận hàng trong buổi sáng. Giá chưa bao gồm phí bốc xếp tại kho.
+</div>
+
+<div class="quote-actions">
+
+<button class="btn btn-outline">
+Xem hồ sơ
+</button>
+
+<button class="btn btn-green choose-btn"
+data-driver="Trần Văn C"
+data-price="3.250.000 đ">
+Chọn báo giá
+</button>
+
+</div>
+
+</div>
+
+<div class="quote">
+
+<div class="quote-top">
+
+<div class="driver">
+
+<div class="avatar">🚛</div>
+
+<div>
+<div class="driver-name">
+Vận tải Hoàng Long
+</div>
+
+<div class="rating">
+⭐ 4.6 · 73 chuyến
+</div>
+</div>
+
+</div>
+
+<div class="price">
+<strong>3.650.000 đ</strong>
+<small>Xe đời mới</small>
+</div>
+
+</div>
+
+<div class="quote-details">
+
+<div class="info">
+<span>XE</span>
+<strong>15C-234.56</strong>
+</div>
+
+<div class="info">
+<span>LOẠI XE</span>
+<strong>Thùng kín 8 tấn</strong>
+</div>
+
+<div class="info">
+<span>NHẬN HÀNG</span>
+<strong>08:00</strong>
+</div>
+
+<div class="info">
+<span>DỰ KIẾN GIAO</span>
+<strong>13:00</strong>
+</div>
+
+</div>
+
+<div class="quote-note">
+Xe có GPS, camera hành trình và bảo hiểm hàng hóa cơ bản.
+</div>
+
+<div class="quote-actions">
+
+<button class="btn btn-outline">
+Xem hồ sơ
+</button>
+
+<button class="btn btn-green choose-btn"
+data-driver="Vận tải Hoàng Long"
+data-price="3.650.000 đ">
+Chọn báo giá
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<aside>
+
+<div class="card">
+
+<div class="section-title">
+<h2>So sánh nhanh</h2>
+</div>
+
+<div class="summary-row">
+<span>Giá thấp nhất</span>
+<strong class="highlight">3.250.000 đ</strong>
+</div>
+
+<div class="summary-row">
+<span>Giá trung bình</span>
+<strong>3.437.500 đ</strong>
+</div>
+
+<div class="summary-row">
+<span>Đánh giá cao nhất</span>
+<strong>⭐ 4.9</strong>
+</div>
+
+<div class="summary-row">
+<span>Báo giá nhận được</span>
+<strong>4</strong>
+</div>
+
+<div class="summary-row">
+<span>Thời gian còn lại</span>
+<strong>01:42:16</strong>
+</div>
+
+</div>
+
+<div class="notice">
+💡 Không nên chỉ chọn giá thấp nhất. VietTruck có thể xếp hạng báo giá dựa trên giá, điểm uy tín, số chuyến hoàn thành, loại xe và tỷ lệ giao hàng đúng giờ.
+</div>
+
+</aside>
+
+</section>
+
+</main>
+
+<footer class="footer">
+<div class="container">
+<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+<p>© 2026 VietTruck. Trung tâm báo giá vận tải.</p>
+</div>
+</footer>
+
+<script>
+
+const chooseButtons =
+document.querySelectorAll(".choose-btn");
+
+const quoteList =
+document.getElementById("quoteList");
+
+const successBox =
+document.getElementById("successBox");
+
+chooseButtons.forEach(function(button){
+
+button.addEventListener("click",function(){
+
+const driver =
+this.dataset.driver;
+
+const price =
+this.dataset.price;
+
+const confirmChoose =
+confirm(
+"Bạn muốn chọn " +
+driver +
+" với giá " +
+price +
+"?"
+);
+
+if(!confirmChoose){
+return;
+}
+
+quoteList.style.display =
+"none";
+
+successBox.style.display =
+"block";
+
+window.scrollTo({
+top:150,
+behavior:"smooth"
+});
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
