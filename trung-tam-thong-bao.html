@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trung tâm thông báo | VietTruck</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+body{
+  background:#f5f7fa;
+  color:#1f2937;
+}
+.header{
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  padding:16px 28px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  font-size:24px;
+  font-weight:700;
+  color:#16a34a;
+  text-decoration:none;
+}
+.header-links{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.header-links a{
+  color:#4b5563;
+  text-decoration:none;
+  font-size:14px;
+}
+.container{
+  max-width:1200px;
+  margin:30px auto;
+  padding:0 20px;
+}
+.title-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin-bottom:22px;
+}
+.title h1{
+  font-size:28px;
+  margin-bottom:8px;
+}
+.title p{
+  color:#6b7280;
+}
+.mark-btn{
+  background:#16a34a;
+  color:#fff;
+  border:0;
+  padding:11px 16px;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:22px;
+}
+.stat{
+  background:#fff;
+  border-radius:12px;
+  padding:20px;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+.stat small{
+  color:#6b7280;
+}
+.stat strong{
+  display:block;
+  margin-top:8px;
+  font-size:27px;
+}
+.red{color:#dc2626}
+.orange{color:#d97706}
+.blue{color:#2563eb}
+.green{color:#16a34a}
+
+.layout{
+  display:grid;
+  grid-template-columns:250px 1fr;
+  gap:20px;
+}
+.sidebar,
+.main{
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+.sidebar{
+  padding:14px;
+  align-self:start;
+}
+.filter-btn{
+  width:100%;
+  border:0;
+  background:none;
+  padding:12px 14px;
+  text-align:left;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  color:#4b5563;
+  margin-bottom:4px;
+}
+.filter-btn.active{
+  background:#dcfce7;
+  color:#15803d;
+}
+.count{
+  float:right;
+  background:#eef2f7;
+  padding:2px 7px;
+  border-radius:20px;
+  font-size:11px;
+}
+.filter-btn.active .count{
+  background:#bbf7d0;
+}
+.main{
+  padding:20px;
+}
+.toolbar{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr auto;
+  gap:10px;
+  margin-bottom:18px;
+}
+input,select{
+  width:100%;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  padding:11px;
+}
+.search-btn{
+  border:0;
+  background:#16a34a;
+  color:#fff;
+  border-radius:8px;
+  padding:0 16px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.notification{
+  display:grid;
+  grid-template-columns:52px 1fr auto;
+  gap:14px;
+  padding:17px 0;
+  border-bottom:1px solid #eef2f7;
+}
+.notification.unread{
+  background:#f0fdf4;
+  margin:0 -20px;
+  padding:17px 20px;
+}
+.icon{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:21px;
+}
+.icon.red{background:#fee2e2}
+.icon.orange{background:#fef3c7}
+.icon.blue{background:#dbeafe}
+.icon.green{background:#dcfce7}
+.icon.purple{background:#ede9fe}
+.notification h3{
+  font-size:15px;
+  margin-bottom:5px;
+}
+.notification p{
+  color:#6b7280;
+  font-size:13px;
+  line-height:1.5;
+}
+.meta{
+  margin-top:7px;
+  font-size:12px;
+  color:#9ca3af;
+}
+.badge{
+  display:inline-block;
+  margin-left:6px;
+  padding:4px 8px;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:bold;
+}
+.urgent{background:#fee2e2;color:#b91c1c}
+.warning{background:#fef3c7;color:#b45309}
+.info{background:#dbeafe;color:#1d4ed8}
+.success{background:#dcfce7;color:#15803d}
+.actions{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+}
+.action-btn{
+  border:1px solid #d1d5db;
+  background:#fff;
+  border-radius:7px;
+  padding:7px 9px;
+  cursor:pointer;
+  font-size:12px;
+}
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:22px;
+}
+.quick{
+  border:1px solid #e5e7eb;
+  padding:15px;
+  border-radius:10px;
+  text-decoration:none;
+  color:#374151;
+  font-size:13px;
+  font-weight:bold;
+  text-align:center;
+}
+.quick:hover{
+  border-color:#16a34a;
+  color:#16a34a;
+}
+.notice{
+  margin-top:20px;
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#9a3412;
+  padding:14px;
+  border-radius:10px;
+  font-size:14px;
+  line-height:1.6;
+}
+@media(max-width:900px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .layout{grid-template-columns:1fr}
+  .sidebar{
+    display:flex;
+    overflow:auto;
+    gap:5px;
+  }
+  .filter-btn{
+    width:auto;
+    white-space:nowrap;
+  }
+  .quick-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .stats,.toolbar,.quick-grid{grid-template-columns:1fr}
+  .title-row{flex-direction:column;align-items:flex-start}
+  .notification{grid-template-columns:45px 1fr}
+  .actions{grid-column:2}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <a href="index.html" class="logo">🚚 VietTruck</a>
+
+  <div class="header-links">
+    <a href="canh-bao-van-tai.html">Cảnh báo</a>
+    <a href="ho-tro-khieu-nai.html">Hỗ trợ</a>
+    <a href="cai-dat-he-thong.html">Cài đặt</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="title-row">
+    <div class="title">
+      <h1>Trung tâm thông báo</h1>
+      <p>Tập trung cảnh báo vận tải, tài chính, hệ thống, khách hàng và công việc cần xử lý.</p>
+    </div>
+
+    <button class="mark-btn" onclick="markAllRead()">
+      ✓ Đánh dấu đã đọc
+    </button>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Chưa đọc</small>
+      <strong class="red">18</strong>
+    </div>
+
+    <div class="stat">
+      <small>Khẩn cấp</small>
+      <strong class="orange">5</strong>
+    </div>
+
+    <div class="stat">
+      <small>Cần xử lý hôm nay</small>
+      <strong class="blue">12</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đã xử lý</small>
+      <strong class="green">146</strong>
+    </div>
+
+  </div>
+
+  <div class="layout">
+
+    <aside class="sidebar">
+
+      <button class="filter-btn active">
+        🔔 Tất cả
+        <span class="count">18</span>
+      </button>
+
+      <button class="filter-btn">
+        🚚 Vận tải
+        <span class="count">7</span>
+      </button>
+
+      <button class="filter-btn">
+        💰 Tài chính
+        <span class="count">4</span>
+      </button>
+
+      <button class="filter-btn">
+        👥 Khách hàng
+        <span class="count">3</span>
+      </button>
+
+      <button class="filter-btn">
+        🔐 Hệ thống
+        <span class="count">2</span>
+      </button>
+
+      <button class="filter-btn">
+        🎧 Hỗ trợ
+        <span class="count">2</span>
+      </button>
+
+    </aside>
+
+    <main class="main">
+
+      <div class="toolbar">
+
+        <input type="text" placeholder="Tìm nội dung thông báo">
+
+        <select>
+          <option>Tất cả mức độ</option>
+          <option>Khẩn cấp</option>
+          <option>Cảnh báo</option>
+          <option>Thông tin</option>
+        </select>
+
+        <select>
+          <option>Hôm nay</option>
+          <option>7 ngày gần nhất</option>
+          <option>30 ngày gần nhất</option>
+        </select>
+
+        <button class="search-btn">Tìm</button>
+
+      </div>
+
+      <div class="notification unread">
+
+        <div class="icon red">🚨</div>
+
+        <div>
+          <h3>
+            Xe 99C-123.45 có nguy cơ giao hàng trễ
+            <span class="badge urgent">KHẨN CẤP</span>
+          </h3>
+
+          <p>
+            Chuyến VT260905-018 hiện chậm khoảng 42 phút so với kế hoạch giao hàng.
+          </p>
+
+          <div class="meta">
+            Điều phối vận tải • 5 phút trước
+          </div>
+        </div>
+
+        <div class="actions">
+          <a href="theo-doi-hanh-trinh.html" class="action-btn">Xem</a>
+        </div>
+
+      </div>
+
+      <div class="notification unread">
+
+        <div class="icon orange">💰</div>
+
+        <div>
+          <h3>
+            Công nợ khách hàng đã quá hạn
+            <span class="badge warning">CẢNH BÁO</span>
+          </h3>
+
+          <p>
+            Công ty Minh Phát còn công nợ 48.000.000đ và đã quá hạn thanh toán 6 ngày.
+          </p>
+
+          <div class="meta">
+            Kế toán • 18 phút trước
+          </div>
+        </div>
+
+        <div class="actions">
+          <a href="cong-no-van-tai.html" class="action-btn">Xử lý</a>
+        </div>
+
+      </div>
+
+      <div class="notification unread">
+
+        <div class="icon orange">📄</div>
+
+        <div>
+          <h3>
+            Đăng kiểm xe sắp hết hạn
+            <span class="badge warning">CẢNH BÁO</span>
+          </h3>
+
+          <p>
+            Xe 98C-456.78 còn 12 ngày trước khi hết hạn đăng kiểm.
+          </p>
+
+          <div class="meta">
+            Quản lý đội xe • 35 phút trước
+          </div>
+        </div>
+
+        <div class="actions">
+          <a href="giay-to-xe.html" class="action-btn">Xem</a>
+        </div>
+
+      </div>
+
+      <div class="notification">
+
+        <div class="icon blue">📦</div>
+
+        <div>
+          <h3>
+            Có đơn hàng mới cần báo giá
+            <span class="badge info">THÔNG TIN</span>
+          </h3>
+
+          <p>
+            Khách hàng vừa đăng yêu cầu vận chuyển Bắc Ninh → TP.HCM, tải trọng 8 tấn.
+          </p>
+
+          <div class="meta">
+            Trung tâm báo giá • 1 giờ trước
+          </div>
+        </div>
+
+        <div class="actions">
+          <a href="trung-tam-bao-gia.html" class="action-btn">Báo giá</a>
+        </div>
+
+      </div>
+
+      <div class="notification">
+
+        <div class="icon purple">🔐</div>
+
+        <div>
+          <h3>
+            Phát hiện đăng nhập sai nhiều lần
+            <span class="badge warning">BẢO MẬT</span>
+          </h3>
+
+          <p>
+            Một tài khoản đã nhập sai mật khẩu 5 lần từ cùng địa chỉ IP.
+          </p>
+
+          <div class="meta">
+            Hệ thống • 2 giờ trước
+          </div>
+        </div>
+
+        <div class="actions">
+          <a href="nhat-ky-he-thong.html" class="action-btn">Kiểm tra</a>
+        </div>
+
+      </div>
+
+      <div class="notification">
+
+        <div class="icon green">✅</div>
+
+        <div>
+          <h3>
+            Đối soát thanh toán hoàn tất
+            <span class="badge success">HOÀN TẤT</span>
+          </h3>
+
+          <p>
+            Chuyến VT260904-026 đã hoàn tất đối soát và chuyển sang trạng thái chờ thanh toán.
+          </p>
+
+          <div class="meta">
+            Đối soát • 3 giờ trước
+          </div>
+        </div>
+
+        <div class="actions">
+          <a href="doi-soat-thanh-toan.html" class="action-btn">Xem</a>
+        </div>
+
+      </div>
+
+      <div class="notification">
+
+        <div class="icon blue">🎧</div>
+
+        <div>
+          <h3>
+            Có khiếu nại mới từ khách hàng
+            <span class="badge info">CSKH</span>
+          </h3>
+
+          <p>
+            Khách hàng phản ánh thời gian cập nhật trạng thái chuyến chưa chính xác.
+          </p>
+
+          <div class="meta">
+            Hỗ trợ khách hàng • 4 giờ trước
+          </div>
+        </div>
+
+        <div class="actions">
+          <a href="ho-tro-khieu-nai.html" class="action-btn">Xử lý</a>
+        </div>
+
+      </div>
+
+      <div class="quick-grid">
+
+        <a href="canh-bao-van-tai.html" class="quick">
+          ⚠️ Cảnh báo vận tải
+        </a>
+
+        <a href="cong-no-van-tai.html" class="quick">
+          💰 Công nợ
+        </a>
+
+        <a href="su-co-van-tai.html" class="quick">
+          🚨 Sự cố
+        </a>
+
+        <a href="ho-tro-khieu-nai.html" class="quick">
+          🎧 Hỗ trợ & khiếu nại
+        </a>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <div class="notice">
+    ⚠️ Trung tâm thông báo hiện là giao diện mô phỏng. Khi VietTruck có backend, hệ thống mới có thể tạo thông báo tự động, lưu trạng thái đã đọc và gửi thông báo theo đúng tài khoản người dùng.
+  </div>
+
+</div>
+
+<script>
+function markAllRead(){
+  document.querySelectorAll(".notification").forEach(function(item){
+    item.classList.remove("unread");
+  });
+
+  alert("Đã đánh dấu các thông báo trên giao diện là đã đọc.");
+}
+
+document.querySelectorAll(".filter-btn").forEach(function(button){
+  button.addEventListener("click",function(){
+
+    document.querySelectorAll(".filter-btn").forEach(function(btn){
+      btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+  });
+});
+</script>
+
+</body>
+</html>
