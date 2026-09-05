@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lịch sử hành trình | VietTruck</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f5f7fa;
+      color:#1f2937;
+    }
+
+    .header{
+      background:#fff;
+      border-bottom:1px solid #e5e7eb;
+      padding:16px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:700;
+      color:#16a34a;
+      text-decoration:none;
+    }
+
+    .back{
+      text-decoration:none;
+      color:#4b5563;
+      font-size:14px;
+    }
+
+    .container{
+      max-width:1200px;
+      margin:30px auto;
+      padding:0 20px;
+    }
+
+    .page-title{
+      margin-bottom:22px;
+    }
+
+    .page-title h1{
+      font-size:28px;
+      margin-bottom:7px;
+    }
+
+    .page-title p{
+      color:#6b7280;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .stat{
+      background:#fff;
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .stat small{
+      color:#6b7280;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:26px;
+      margin-top:8px;
+    }
+
+    .filters{
+      background:#fff;
+      border-radius:12px;
+      padding:18px;
+      margin-bottom:20px;
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr 1fr auto;
+      gap:12px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .filters input,
+    .filters select{
+      width:100%;
+      padding:11px 12px;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      outline:none;
+    }
+
+    .filters button{
+      border:none;
+      background:#16a34a;
+      color:#fff;
+      border-radius:8px;
+      padding:0 18px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .table-wrap{
+      background:#fff;
+      border-radius:12px;
+      overflow:auto;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:1050px;
+    }
+
+    th{
+      background:#f8fafc;
+      color:#4b5563;
+      font-size:13px;
+      text-align:left;
+      padding:14px 16px;
+      border-bottom:1px solid #e5e7eb;
+    }
+
+    td{
+      padding:15px 16px;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+      vertical-align:middle;
+    }
+
+    tr:hover{
+      background:#fafafa;
+    }
+
+    .plate{
+      font-weight:bold;
+    }
+
+    .route{
+      font-weight:600;
+    }
+
+    .status{
+      display:inline-block;
+      padding:5px 10px;
+      border-radius:20px;
+      font-size:12px;
+      font-weight:bold;
+    }
+
+    .done{
+      background:#dcfce7;
+      color:#15803d;
+    }
+
+    .running{
+      background:#dbeafe;
+      color:#1d4ed8;
+    }
+
+    .cancel{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:8px 11px;
+      border-radius:7px;
+      background:#16a34a;
+      color:#fff;
+      text-decoration:none;
+      font-size:13px;
+      white-space:nowrap;
+    }
+
+    @media(max-width:900px){
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .filters{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .filters button{
+        min-height:42px;
+      }
+    }
+
+    @media(max-width:520px){
+      .stats{
+        grid-template-columns:1fr;
+      }
+
+      .filters{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <a class="logo" href="index.html">🚚 VietTruck</a>
+  <a class="back" href="theo-doi-hanh-trinh.html">← Theo dõi hành trình</a>
+</header>
+
+<div class="container">
+
+  <div class="page-title">
+    <h1>Lịch sử hành trình</h1>
+    <p>Tra cứu các chuyến xe đã thực hiện trên hệ thống VietTruck.</p>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Tổng chuyến</small>
+      <strong>128</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đã hoàn thành</small>
+      <strong>114</strong>
+    </div>
+
+    <div class="stat">
+      <small>Tổng quãng đường</small>
+      <strong>18.420 km</strong>
+    </div>
+
+    <div class="stat">
+      <small>Doanh thu</small>
+      <strong>486 triệu</strong>
+    </div>
+
+  </div>
+
+  <div class="filters">
+
+    <input type="text" placeholder="Tìm biển số xe hoặc tài xế">
+
+    <select>
+      <option>Tất cả trạng thái</option>
+      <option>Đã hoàn thành</option>
+      <option>Đang vận chuyển</option>
+      <option>Đã hủy</option>
+    </select>
+
+    <input type="date">
+
+    <input type="date">
+
+    <button>Tìm kiếm</button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Phương tiện</th>
+          <th>Tài xế</th>
+          <th>Tuyến đường</th>
+          <th>Khởi hành</th>
+          <th>Kết thúc</th>
+          <th>Quãng đường</th>
+          <th>Doanh thu</th>
+          <th>Trạng thái</th>
+          <th>Chi tiết</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td class="plate">99C-123.45</td>
+          <td>Nguyễn Văn Nam</td>
+          <td class="route">Bắc Ninh → Hà Nội</td>
+          <td>05/09/2026 08:20</td>
+          <td>05/09/2026 10:05</td>
+          <td>42 km</td>
+          <td>1.250.000đ</td>
+          <td>
+            <span class="status done">Đã hoàn thành</span>
+          </td>
+          <td>
+            <a href="theo-doi-hanh-trinh.html" class="btn">Xem hành trình</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="plate">99H-456.78</td>
+          <td>Trần Văn Cường</td>
+          <td class="route">Bắc Ninh → Hải Phòng</td>
+          <td>05/09/2026 07:30</td>
+          <td>05/09/2026 11:15</td>
+          <td>118 km</td>
+          <td>2.850.000đ</td>
+          <td>
+            <span class="status done">Đã hoàn thành</span>
+          </td>
+          <td>
+            <a href="theo-doi-hanh-trinh.html" class="btn">Xem hành trình</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="plate">30H-678.90</td>
+          <td>Phạm Quốc Anh</td>
+          <td class="route">Hà Nội → Bắc Giang</td>
+          <td>05/09/2026 13:10</td>
+          <td>—</td>
+          <td>36 km</td>
+          <td>1.600.000đ</td>
+          <td>
+            <span class="status running">Đang vận chuyển</span>
+          </td>
+          <td>
+            <a href="theo-doi-hanh-trinh.html" class="btn">Xem hành trình</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="plate">98C-333.66</td>
+          <td>Lê Văn Thành</td>
+          <td class="route">Bắc Giang → Hà Nội</td>
+          <td>04/09/2026 16:00</td>
+          <td>04/09/2026 16:25</td>
+          <td>8 km</td>
+          <td>0đ</td>
+          <td>
+            <span class="status cancel">Đã hủy</span>
+          </td>
+          <td>
+            <a href="theo-doi-hanh-trinh.html" class="btn">Xem hành trình</a>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</body>
+</html>
