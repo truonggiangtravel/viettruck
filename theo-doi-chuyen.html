@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theo dõi chuyến hàng | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:"Be Vietnam Pro",sans-serif;
+background:#f5f8f6;
+color:#14231b;
+}
+
+.container{
+max-width:1180px;
+margin:auto;
+padding:0 20px;
+}
+
+/* HEADER */
+
+.header{
+background:#fff;
+border-bottom:1px solid #e3e9e6;
+}
+
+.nav{
+height:76px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+text-decoration:none;
+color:#087c42;
+}
+
+.logo-icon{font-size:34px}
+
+.logo strong{
+font-size:25px;
+}
+
+.logo small{
+display:block;
+font-size:11px;
+color:#68756e;
+}
+
+.menu{
+display:flex;
+gap:24px;
+}
+
+.menu a{
+text-decoration:none;
+color:#17231d;
+font-size:14px;
+font-weight:600;
+}
+
+.menu a:hover{
+color:#078c4b;
+}
+
+/* TITLE */
+
+.page-head{
+background:linear-gradient(135deg,#087d45,#09a45a);
+color:white;
+padding:28px 0;
+}
+
+.page-head h1{
+margin:0 0 6px;
+font-size:28px;
+}
+
+.page-head p{
+margin:0;
+font-size:13px;
+opacity:.9;
+}
+
+/* MAIN */
+
+.layout{
+display:grid;
+grid-template-columns:1fr 335px;
+gap:22px;
+margin:26px auto 50px;
+}
+
+.card{
+background:#fff;
+border:1px solid #e0e7e3;
+border-radius:12px;
+padding:21px;
+margin-bottom:18px;
+}
+
+.card h2{
+margin:0 0 16px;
+font-size:19px;
+}
+
+/* TRIP HEADER */
+
+.trip-top{
+display:flex;
+justify-content:space-between;
+gap:20px;
+align-items:flex-start;
+}
+
+.trip-code{
+font-size:12px;
+color:#718079;
+margin-bottom:7px;
+}
+
+.route{
+font-size:23px;
+font-weight:800;
+}
+
+.route span{
+color:#078c4b;
+padding:0 8px;
+}
+
+.live{
+background:#e7f7ed;
+color:#087b40;
+font-size:12px;
+font-weight:800;
+padding:8px 11px;
+border-radius:20px;
+white-space:nowrap;
+}
+
+.live-dot{
+display:inline-block;
+width:8px;
+height:8px;
+background:#08a154;
+border-radius:50%;
+margin-right:5px;
+}
+
+/* PROGRESS */
+
+.progress-wrap{
+margin-top:25px;
+}
+
+.progress-line{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+position:relative;
+}
+
+.progress-line:before{
+content:"";
+position:absolute;
+top:17px;
+left:10%;
+right:10%;
+height:4px;
+background:#dce5e0;
+z-index:1;
+}
+
+.progress-fill{
+position:absolute;
+top:17px;
+left:10%;
+height:4px;
+background:#078c4b;
+z-index:2;
+transition:.4s;
+width:0%;
+}
+
+.step{
+text-align:center;
+position:relative;
+z-index:3;
+}
+
+.circle{
+width:38px;
+height:38px;
+border-radius:50%;
+background:#dce5e0;
+color:#6b7771;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:auto;
+font-weight:800;
+border:4px solid white;
+}
+
+.step.active .circle,
+.step.done .circle{
+background:#078c4b;
+color:#fff;
+}
+
+.step strong{
+display:block;
+font-size:11px;
+margin-top:8px;
+}
+
+.step span{
+font-size:10px;
+color:#7b8781;
+}
+
+/* MAP */
+
+#map{
+height:420px;
+border-radius:10px;
+z-index:1;
+}
+
+.map-info{
+display:flex;
+justify-content:space-between;
+gap:10px;
+margin-top:13px;
+font-size:12px;
+color:#67746d;
+}
+
+.gps-live{
+color:#078c4b;
+font-weight:800;
+}
+
+/* INFO */
+
+.info-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.info{
+background:#f8faf9;
+border:1px solid #e9eeeb;
+border-radius:8px;
+padding:13px;
+}
+
+.info span{
+display:block;
+font-size:11px;
+color:#78837e;
+margin-bottom:5px;
+}
+
+.info strong{
+font-size:13px;
+}
+
+/* RIGHT */
+
+.driver{
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.avatar{
+width:54px;
+height:54px;
+border-radius:50%;
+background:#078c4b;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:19px;
+font-weight:800;
+}
+
+.driver strong{
+display:block;
+font-size:14px;
+}
+
+.driver span{
+display:block;
+font-size:11px;
+color:#6b7871;
+margin-top:4px;
+}
+
+.status-title{
+font-size:12px;
+color:#76827c;
+margin-bottom:7px;
+}
+
+.current-status{
+font-size:20px;
+font-weight:800;
+color:#078c4b;
+margin-bottom:15px;
+}
+
+.status-btn{
+width:100%;
+border:0;
+border-radius:8px;
+padding:13px;
+background:#078c4b;
+color:#fff;
+font-family:inherit;
+font-weight:800;
+cursor:pointer;
+margin-top:9px;
+}
+
+.status-btn:disabled{
+background:#c7d2cc;
+cursor:not-allowed;
+}
+
+.contact-btn{
+display:block;
+text-decoration:none;
+text-align:center;
+border:1px solid #078c4b;
+color:#078c4b;
+padding:12px;
+border-radius:8px;
+font-size:13px;
+font-weight:800;
+margin-top:10px;
+}
+
+.summary-row{
+display:flex;
+justify-content:space-between;
+gap:15px;
+border-bottom:1px solid #edf0ee;
+padding:10px 0;
+font-size:12px;
+}
+
+.summary-row:last-child{
+border:0;
+}
+
+.summary-row span{
+color:#6d7973;
+}
+
+.summary-row strong{
+text-align:right;
+}
+
+.notice{
+background:#edf7f1;
+border:1px solid #cae5d5;
+color:#315f47;
+border-radius:9px;
+padding:14px;
+font-size:12px;
+line-height:1.7;
+}
+
+/* COMPLETED */
+
+.completed{
+display:none;
+background:#e8f8ee;
+border:1px solid #bee2cc;
+border-radius:10px;
+padding:18px;
+text-align:center;
+margin-top:18px;
+}
+
+.completed strong{
+display:block;
+color:#078c4b;
+font-size:17px;
+margin-bottom:7px;
+}
+
+.completed span{
+font-size:12px;
+color:#5e6c65;
+}
+
+/* FOOTER */
+
+.footer{
+background:#073c27;
+color:white;
+padding:28px 0;
+text-align:center;
+}
+
+.footer p{
+opacity:.8;
+font-size:13px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.menu{display:none}
+
+.layout{
+grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:650px){
+
+.info-grid{
+grid-template-columns:1fr;
+}
+
+.trip-top{
+flex-direction:column;
+}
+
+.progress-line{
+grid-template-columns:repeat(4,1fr);
+}
+
+.step strong{
+font-size:9px;
+}
+
+#map{
+height:320px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+<div class="container nav">
+
+<a href="index.html" class="logo">
+
+<span class="logo-icon">🚚</span>
+
+<div>
+<strong>VietTruck</strong>
+<small>Kết nối hàng hóa Việt Nam</small>
+</div>
+
+</a>
+
+<nav class="menu">
+
+<a href="index.html">Trang chủ</a>
+
+<a href="tim-hang.html">Tìm hàng</a>
+
+<a href="tim-xe.html">Tìm xe</a>
+
+<a href="dang-hang.html">Đăng hàng</a>
+
+<a href="tai-khoan.html">Tài khoản</a>
+
+</nav>
+
+</div>
+
+</header>
+
+<section class="page-head">
+
+<div class="container">
+
+<h1>Theo dõi chuyến hàng</h1>
+
+<p>Theo dõi vị trí xe và trạng thái vận chuyển theo thời gian thực</p>
+
+</div>
+
+</section>
+
+<main class="container layout">
+
+<section>
+
+<div class="card">
+
+<div class="trip-top">
+
+<div>
+
+<div class="trip-code">
+Mã chuyến: VT-TRIP-090526-001
+</div>
+
+<div class="route">
+Bắc Ninh <span>→</span> Hải Phòng
+</div>
+
+</div>
+
+<div class="live">
+
+<span class="live-dot"></span>
+GPS đang hoạt động
+
+</div>
+
+</div>
+
+
+<div class="progress-wrap">
+
+<div class="progress-line">
+
+<div class="progress-fill" id="progressFill"></div>
+
+
+<div class="step active" id="step0">
+
+<div class="circle">✓</div>
+
+<strong>Đã nhận chuyến</strong>
+
+<span>13:10</span>
+
+</div>
+
+
+<div class="step" id="step1">
+
+<div class="circle">1</div>
+
+<strong>Đã nhận hàng</strong>
+
+<span id="time1">--:--</span>
+
+</div>
+
+
+<div class="step" id="step2">
+
+<div class="circle">2</div>
+
+<strong>Đang vận chuyển</strong>
+
+<span id="time2">--:--</span>
+
+</div>
+
+
+<div class="step" id="step3">
+
+<div class="circle">3</div>
+
+<strong>Đã giao</strong>
+
+<span id="time3">--:--</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>📍 Vị trí xe trực tiếp</h2>
+
+<div id="map"></div>
+
+<div class="map-info">
+
+<span id="locationText">
+Xe hiện tại: Yên Phong, Bắc Ninh
+</span>
+
+<span class="gps-live">
+● GPS LIVE
+</span>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Thông tin chuyến</h2>
+
+<div class="info-grid">
+
+<div class="info">
+<span>Điểm lấy hàng</span>
+<strong>Yên Phong, Bắc Ninh</strong>
+</div>
+
+<div class="info">
+<span>Điểm giao hàng</span>
+<strong>Hải An, Hải Phòng</strong>
+</div>
+
+<div class="info">
+<span>Hàng hóa</span>
+<strong>Điện tử</strong>
+</div>
+
+<div class="info">
+<span>Trọng lượng</span>
+<strong>5 tấn</strong>
+</div>
+
+<div class="info">
+<span>Thời gian lấy</span>
+<strong>05/09/2026 · 14:00</strong>
+</div>
+
+<div class="info">
+<span>Dự kiến giao</span>
+<strong>05/09/2026 · 17:00</strong>
+</div>
+
+</div>
+
+<div class="completed" id="completedBox">
+
+<strong>✅ Chuyến hàng đã hoàn thành</strong>
+
+<span>
+Hàng đã được giao tới Hải An, Hải Phòng.
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+
+<aside>
+
+<div class="card">
+
+<div class="status-title">
+TRẠNG THÁI HIỆN TẠI
+</div>
+
+<div class="current-status" id="currentStatus">
+Đã nhận chuyến
+</div>
+
+<button class="status-btn" id="nextStatus">
+Xác nhận đã nhận hàng
+</button>
+
+<a href="chuyen-da-nhan.html" class="contact-btn">
+← Chuyến đã nhận
+</a>
+
+</div>
+
+
+<div class="card">
+
+<h2>Tài xế & phương tiện</h2>
+
+<div class="driver">
+
+<div class="avatar">
+B
+</div>
+
+<div>
+
+<strong>Nguyễn Văn B</strong>
+
+<span>⭐ 4.9/5 · 126 chuyến</span>
+
+<span>🚚 99C-123.45</span>
+
+<span>Xe tải thùng kín 5 tấn</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Thông tin hành trình</h2>
+
+<div class="summary-row">
+
+<span>Quãng đường</span>
+
+<strong>~120 km</strong>
+
+</div>
+
+<div class="summary-row">
+
+<span>Đã di chuyển</span>
+
+<strong id="distance">
+0 km
+</strong>
+
+</div>
+
+<div class="summary-row">
+
+<span>Còn lại</span>
+
+<strong id="remaining">
+120 km
+</strong>
+
+</div>
+
+<div class="summary-row">
+
+<span>Tốc độ</span>
+
+<strong id="speed">
+0 km/h
+</strong>
+
+</div>
+
+<div class="summary-row">
+
+<span>Dự kiến đến</span>
+
+<strong>
+17:00
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="notice">
+
+📡 Phiên bản này mô phỏng GPS để kiểm tra giao diện.
+
+Khi VietTruck triển khai thật, vị trí sẽ được lấy từ điện thoại tài xế hoặc thiết bị GPS trên xe và gửi về máy chủ theo thời gian thực.
+
+</div>
+
+</aside>
+
+</main>
+
+
+<footer class="footer">
+
+<div class="container">
+
+<strong>
+VietTruck – Kết nối hàng hóa Việt Nam
+</strong>
+
+<p>
+© 2026 VietTruck. Nền tảng kết nối chủ hàng, tài xế và nhà xe.
+</p>
+
+</div>
+
+</footer>
+
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+
+/* MAP */
+
+const start = [21.1908,106.0029];
+
+const middle = [21.0750,106.3200];
+
+const end = [20.8449,106.6881];
+
+const map = L.map("map").setView(start,10);
+
+L.tileLayer(
+"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+{
+maxZoom:19,
+attribution:"© OpenStreetMap"
+}
+).addTo(map);
+
+
+/* ROUTE */
+
+const route = L.polyline(
+[start,middle,end],
+{
+weight:5
+}
+).addTo(map);
+
+map.fitBounds(route.getBounds(),{
+padding:[30,30]
+});
+
+
+/* POINTS */
+
+L.marker(start)
+.addTo(map)
+.bindPopup("📦 Điểm lấy hàng<br>Yên Phong, Bắc Ninh");
+
+
+L.marker(end)
+.addTo(map)
+.bindPopup("🏁 Điểm giao hàng<br>Hải An, Hải Phòng");
+
+
+/* TRUCK */
+
+const truckIcon = L.divIcon({
+
+html:
+'<div style="font-size:30px">🚚</div>',
+
+className:"",
+
+iconSize:[35,35]
+
+});
+
+const truckMarker = L.marker(
+start,
+{icon:truckIcon}
+).addTo(map);
+
+truckMarker.bindPopup(
+"🚚 Xe 99C-123.45"
+);
+
+
+/* STATUS */
+
+let status = 0;
+
+const statuses = [
+
+"Đã nhận chuyến",
+
+"Đã nhận hàng",
+
+"Đang vận chuyển",
+
+"Đã giao"
+
+];
+
+const buttonTexts = [
+
+"Xác nhận đã nhận hàng",
+
+"Bắt đầu vận chuyển",
+
+"Xác nhận đã giao hàng",
+
+"Chuyến đã hoàn thành"
+
+];
+
+const nextStatus =
+document.getElementById("nextStatus");
+
+const currentStatus =
+document.getElementById("currentStatus");
+
+const progressFill =
+document.getElementById("progressFill");
+
+
+function getTime(){
+
+const now = new Date();
+
+return now
+.toLocaleTimeString(
+"vi-VN",
+{
+hour:"2-digit",
+minute:"2-digit"
+}
+);
+
+}
+
+
+nextStatus.addEventListener(
+"click",
+function(){
+
+if(status >= 3) return;
+
+status++;
+
+currentStatus.textContent =
+statuses[status];
+
+nextStatus.textContent =
+buttonTexts[status];
+
+
+/* PROGRESS */
+
+for(let i=0;i<=status;i++){
+
+document
+.getElementById("step"+i)
+.classList.add("done");
+
+}
+
+progressFill.style.width =
+(status * 26.6) + "%";
+
+
+/* TIME */
+
+if(status > 0){
+
+document
+.getElementById("time"+status)
+.textContent =
+getTime();
+
+}
+
+
+/* GPS DEMO */
+
+if(status === 1){
+
+truckMarker.setLatLng(start);
+
+document.getElementById(
+"locationText"
+).textContent =
+"Xe đang tại điểm lấy hàng - Yên Phong, Bắc Ninh";
+
+document.getElementById(
+"speed"
+).textContent =
+"0 km/h";
+
+}
+
+
+if(status === 2){
+
+truckMarker.setLatLng(middle);
+
+map.panTo(middle);
+
+document.getElementById(
+"locationText"
+).textContent =
+"Xe đang trên đường tới Hải Phòng";
+
+document.getElementById(
+"distance"
+).textContent =
+"65 km";
+
+document.getElementById(
+"remaining"
+).textContent =
+"55 km";
+
+document.getElementById(
+"speed"
+).textContent =
+"62 km/h";
+
+}
+
+
+if(status === 3){
+
+truckMarker.setLatLng(end);
+
+map.panTo(end);
+
+document.getElementById(
+"locationText"
+).textContent =
+"Xe đã tới Hải An, Hải Phòng";
+
+document.getElementById(
+"distance"
+).textContent =
+"120 km";
+
+document.getElementById(
+"remaining"
+).textContent =
+"0 km";
+
+document.getElementById(
+"speed"
+).textContent =
+"0 km/h";
+
+nextStatus.disabled = true;
+
+document.getElementById(
+"completedBox"
+).style.display =
+"block";
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
