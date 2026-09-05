@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tìm xe vận chuyển | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Be Vietnam Pro",sans-serif;background:#f6f8f7;color:#13221b}
+.container{max-width:1180px;margin:auto;padding:0 20px}
+
+/* HEADER */
+.header{background:#fff;border-bottom:1px solid #e5e9e7}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:22px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#087b40}
+.logo-icon{font-size:34px}
+.logo strong{font-size:25px}
+.logo small{display:block;font-size:11px;color:#65736c}
+.menu{display:flex;gap:24px}
+.menu a{text-decoration:none;color:#17221d;font-weight:600;font-size:14px}
+.menu a.active,.menu a:hover{color:#078c4b}
+.nav-buttons{display:flex;gap:10px}
+.btn{padding:12px 20px;border-radius:8px;font-weight:700;text-decoration:none}
+.btn-outline{color:#078c4b;border:1px solid #078c4b}
+.btn-green{background:#078c4b;color:white}
+
+/* TITLE */
+.page-head{background:linear-gradient(135deg,#087d45,#0aa45a);color:#fff;padding:36px 0}
+.page-head h1{margin:0 0 8px;font-size:30px}
+.page-head p{margin:0;opacity:.9}
+
+/* SEARCH */
+.search-box{background:#fff;margin-top:25px;padding:24px;border-radius:12px;border:1px solid #e1e7e4}
+.search-grid{display:grid;grid-template-columns:1.2fr 1.2fr 1fr 1fr auto;gap:12px;align-items:end}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}
+.field input,.field select{width:100%;height:48px;border:1px solid #d9e1dd;border-radius:8px;padding:0 12px;font-family:inherit;background:white}
+.search-btn{height:48px;padding:0 25px;background:#078c4b;color:#fff;border:0;border-radius:8px;font-weight:700;cursor:pointer}
+
+/* CONTENT */
+.layout{display:grid;grid-template-columns:240px 1fr;gap:22px;margin-top:24px;margin-bottom:50px}
+.filter{background:#fff;border:1px solid #e2e7e5;border-radius:10px;padding:20px;height:max-content}
+.filter h3{margin-top:0}
+.filter-group{border-top:1px solid #eee;padding:17px 0}
+.filter-group strong{display:block;margin-bottom:12px;font-size:14px}
+.filter label{display:block;margin:9px 0;font-size:13px;color:#56635d}
+
+.results-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.results-head h2{margin:0;font-size:21px}
+.results-head span{font-size:13px;color:#6d7772}
+
+/* TRUCK CARDS */
+.truck-card{
+background:#fff;
+border:1px solid #e1e6e4;
+border-radius:10px;
+padding:20px;
+margin-bottom:12px;
+display:grid;
+grid-template-columns:75px 1fr 180px;
+gap:16px;
+align-items:center;
+}
+.truck-card:hover{box-shadow:0 5px 18px rgba(0,0,0,.07);border-color:#b9dccc}
+.truck-icon{
+width:64px;height:64px;
+background:#e5f3eb;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:35px;
+}
+.truck-name{font-size:18px;font-weight:800;margin-bottom:5px}
+.route{font-size:14px;color:#53635b;margin-bottom:8px}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
+.tag{background:#edf7f1;color:#087a43;padding:6px 9px;border-radius:5px;font-size:12px}
+.details{font-size:13px;color:#69756f;line-height:1.7}
+.status-box{text-align:right}
+.status{color:#078c4b;font-weight:800;margin-bottom:5px}
+.available{font-size:12px;color:#777;margin-bottom:12px}
+.view-btn{display:inline-block;background:#078c4b;color:#fff;text-decoration:none;padding:10px 16px;border-radius:7px;font-size:13px;font-weight:700}
+
+/* FOOTER */
+.footer{background:#073c27;color:white;padding:30px 0;text-align:center}
+.footer p{font-size:13px;opacity:.8}
+
+@media(max-width:900px){
+.menu{display:none}
+.search-grid{grid-template-columns:1fr 1fr}
+.layout{grid-template-columns:1fr}
+.filter{display:none}
+}
+@media(max-width:600px){
+.search-grid{grid-template-columns:1fr}
+.truck-card{grid-template-columns:65px 1fr}
+.status-box{grid-column:1/-1;text-align:left}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+<span class="logo-icon">🚚</span>
+<div>
+<strong>VietTruck</strong>
+<small>Kết nối hàng hóa Việt Nam</small>
+</div>
+</a>
+
+<nav class="menu">
+<a href="index.html">Trang chủ</a>
+<a href="tim-hang.html">Tìm hàng</a>
+<a href="tim-xe.html" class="active">Tìm xe</a>
+<a href="#">Đăng hàng</a>
+<a href="#">Bảng giá</a>
+<a href="#">Dịch vụ</a>
+<a href="#">Tin tức</a>
+<a href="#">Liên hệ</a>
+</nav>
+
+<div class="nav-buttons">
+<a href="#" class="btn btn-outline">Đăng nhập</a>
+<a href="#" class="btn btn-green">Đăng ký</a>
+</div>
+
+</div>
+</header>
+
+<section class="page-head">
+<div class="container">
+<h1>Tìm xe vận chuyển</h1>
+<p>Tìm xe trống phù hợp với tuyến đường và loại hàng của bạn</p>
+</div>
+</section>
+
+<main class="container">
+
+<section class="search-box">
+<div class="search-grid">
+
+<div class="field">
+<label>Xe đang ở</label>
+<input type="text" placeholder="Tỉnh / Thành phố">
+</div>
+
+<div class="field">
+<label>Đi đến</label>
+<input type="text" placeholder="Tỉnh / Thành phố">
+</div>
+
+<div class="field">
+<label>Loại xe</label>
+<select>
+<option>Tất cả loại xe</option>
+<option>Xe tải thùng</option>
+<option>Xe container</option>
+<option>Xe tải lạnh</option>
+<option>Xe đầu kéo</option>
+<option>Xe van</option>
+</select>
+</div>
+
+<div class="field">
+<label>Ngày cần xe</label>
+<input type="date">
+</div>
+
+<button class="search-btn">🔍 Tìm xe</button>
+
+</div>
+</section>
+
+<div class="layout">
+
+<aside class="filter">
+<h3>Bộ lọc</h3>
+
+<div class="filter-group">
+<strong>Tải trọng</strong>
+<label><input type="checkbox"> Dưới 1 tấn</label>
+<label><input type="checkbox"> 1 – 3.5 tấn</label>
+<label><input type="checkbox"> 3.5 – 8 tấn</label>
+<label><input type="checkbox"> 8 – 15 tấn</label>
+<label><input type="checkbox"> Trên 15 tấn</label>
+</div>
+
+<div class="filter-group">
+<strong>Loại xe</strong>
+<label><input type="checkbox"> Xe tải thùng</label>
+<label><input type="checkbox"> Container</label>
+<label><input type="checkbox"> Xe lạnh</label>
+<label><input type="checkbox"> Đầu kéo</label>
+</div>
+
+<div class="filter-group">
+<strong>Trạng thái</strong>
+<label><input type="checkbox"> Sẵn sàng ngay</label>
+<label><input type="checkbox"> Xe chiều về</label>
+</div>
+
+</aside>
+
+<section>
+
+<div class="results-head">
+<h2>Xe trống mới nhất</h2>
+<span>86 xe đang sẵn sàng</span>
+</div>
+
+<div class="truck-card">
+<div class="truck-icon">🚚</div>
+<div>
+<div class="truck-name">Xe tải thùng 5 tấn</div>
+<div class="route">Hà Nội → Hải Phòng</div>
+<div class="tags">
+<span class="tag">5 tấn</span>
+<span class="tag">Thùng kín</span>
+<span class="tag">Xe chiều về</span>
+</div>
+<div class="details">
+📍 Hiện tại: Long Biên, Hà Nội<br>
+🕒 Sẵn sàng: Hôm nay · 13:30
+</div>
+</div>
+<div class="status-box">
+<div class="status">● Sẵn sàng</div>
+<div class="available">Có thể nhận hàng ngay</div>
+<a href="#" class="view-btn">Xem xe</a>
+</div>
+</div>
+
+<div class="truck-card">
+<div class="truck-icon">🚛</div>
+<div>
+<div class="truck-name">Xe container 15 tấn</div>
+<div class="route">Hải Phòng → Đà Nẵng</div>
+<div class="tags">
+<span class="tag">15 tấn</span>
+<span class="tag">Container</span>
+<span class="tag">Đường dài</span>
+</div>
+<div class="details">
+📍 Hiện tại: Hải An, Hải Phòng<br>
+🕒 Sẵn sàng: Hôm nay · 18:00
+</div>
+</div>
+<div class="status-box">
+<div class="status">● Sẵn sàng</div>
+<div class="available">Đã xác thực tài xế</div>
+<a href="#" class="view-btn">Xem xe</a>
+</div>
+</div>
+
+<div class="truck-card">
+<div class="truck-icon">🚚</div>
+<div>
+<div class="truck-name">Xe tải lạnh 3.5 tấn</div>
+<div class="route">TP.HCM → Hà Nội</div>
+<div class="tags">
+<span class="tag">3.5 tấn</span>
+<span class="tag">Xe lạnh</span>
+<span class="tag">Thực phẩm</span>
+</div>
+<div class="details">
+📍 Hiện tại: Thủ Đức, TP.HCM<br>
+🕒 Sẵn sàng: Ngày mai · 06:00
+</div>
+</div>
+<div class="status-box">
+<div class="status">● Sẵn sàng</div>
+<div class="available">Có GPS theo dõi</div>
+<a href="#" class="view-btn">Xem xe</a>
+</div>
+</div>
+
+<div class="truck-card">
+<div class="truck-icon">🚛</div>
+<div>
+<div class="truck-name">Xe đầu kéo 30 tấn</div>
+<div class="route">Bắc Ninh → Cần Thơ</div>
+<div class="tags">
+<span class="tag">30 tấn</span>
+<span class="tag">Đầu kéo</span>
+<span class="tag">Toàn quốc</span>
+</div>
+<div class="details">
+📍 Hiện tại: Yên Phong, Bắc Ninh<br>
+🕒 Sẵn sàng: 06/09/2026 · 07:00
+</div>
+</div>
+<div class="status-box">
+<div class="status">● Sẵn sàng</div>
+<div class="available">Nhận chuyến đường dài</div>
+<a href="#" class="view-btn">Xem xe</a>
+</div>
+</div>
+
+<div class="truck-card">
+<div class="truck-icon">🚚</div>
+<div>
+<div class="truck-name">Xe tải thùng 8 tấn</div>
+<div class="route">Đồng Nai → Hải Phòng</div>
+<div class="tags">
+<span class="tag">8 tấn</span>
+<span class="tag">Thùng bạt</span>
+<span class="tag">Xe chiều về</span>
+</div>
+<div class="details">
+📍 Hiện tại: Biên Hòa, Đồng Nai<br>
+🕒 Sẵn sàng: 06/09/2026 · 09:30
+</div>
+</div>
+<div class="status-box">
+<div class="status">● Sẵn sàng</div>
+<div class="available">Ưu tiên hàng chiều về</div>
+<a href="#" class="view-btn">Xem xe</a>
+</div>
+</div>
+
+</section>
+</div>
+
+</main>
+
+<footer class="footer">
+<div class="container">
+<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+<p>Nền tảng kết nối chủ hàng và tài xế trên toàn quốc</p>
+</div>
+</footer>
+
+</body>
+</html>
