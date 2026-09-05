@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quản lý đơn hàng | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:"Be Vietnam Pro",sans-serif;
+background:#f4f7f5;
+color:#14231b;
+}
+
+.container{
+max-width:1220px;
+margin:auto;
+padding:0 20px;
+}
+
+.header{
+background:#fff;
+border-bottom:1px solid #e1e8e4;
+}
+
+.nav{
+height:74px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+text-decoration:none;
+color:#087d43;
+}
+
+.logo-icon{font-size:32px}
+
+.logo strong{
+font-size:24px;
+}
+
+.logo small{
+display:block;
+font-size:11px;
+color:#69766f;
+}
+
+.menu{
+display:flex;
+gap:22px;
+}
+
+.menu a{
+text-decoration:none;
+color:#17231d;
+font-size:13px;
+font-weight:600;
+}
+
+.menu a:hover,
+.menu a.active{
+color:#078c4b;
+}
+
+.page-head{
+padding:28px 0 18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
+}
+
+.page-head h1{
+margin:0 0 5px;
+font-size:27px;
+}
+
+.page-head p{
+margin:0;
+font-size:13px;
+color:#6c7972;
+}
+
+.new-order{
+text-decoration:none;
+background:#078c4b;
+color:#fff;
+padding:12px 17px;
+border-radius:8px;
+font-size:12px;
+font-weight:800;
+white-space:nowrap;
+}
+
+.summary{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:12px;
+margin-bottom:20px;
+}
+
+.summary-card{
+background:#fff;
+border:1px solid #e0e7e3;
+border-radius:11px;
+padding:16px;
+}
+
+.summary-card span{
+display:block;
+font-size:10px;
+font-weight:700;
+color:#78847e;
+margin-bottom:7px;
+}
+
+.summary-card strong{
+font-size:24px;
+}
+
+.filters{
+background:#fff;
+border:1px solid #e0e7e3;
+border-radius:11px;
+padding:15px;
+margin-bottom:18px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.filter-btn{
+border:1px solid #dce5e0;
+background:#fff;
+border-radius:20px;
+padding:9px 13px;
+font-family:inherit;
+font-size:11px;
+font-weight:700;
+cursor:pointer;
+}
+
+.filter-btn.active{
+background:#078c4b;
+color:#fff;
+border-color:#078c4b;
+}
+
+.order-list{
+display:grid;
+gap:15px;
+padding-bottom:50px;
+}
+
+.order-card{
+background:#fff;
+border:1px solid #e0e7e3;
+border-radius:12px;
+padding:18px;
+}
+
+.order-top{
+display:flex;
+justify-content:space-between;
+gap:15px;
+align-items:flex-start;
+padding-bottom:14px;
+border-bottom:1px solid #edf1ef;
+}
+
+.order-code{
+font-size:11px;
+color:#78847e;
+margin-bottom:6px;
+}
+
+.route{
+font-size:19px;
+font-weight:800;
+}
+
+.route span{
+color:#078c4b;
+padding:0 7px;
+}
+
+.status{
+display:inline-block;
+padding:7px 10px;
+border-radius:20px;
+font-size:10px;
+font-weight:800;
+white-space:nowrap;
+}
+
+.waiting{
+background:#fff3d6;
+color:#946707;
+}
+
+.accepted{
+background:#eef0ff;
+color:#5553a6;
+}
+
+.running{
+background:#e8f1ff;
+color:#2563ae;
+}
+
+.delivered{
+background:#e9f8ef;
+color:#087d43;
+}
+
+.paid{
+background:#daf4e5;
+color:#06713b;
+}
+
+.order-body{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
+padding:16px 0;
+}
+
+.info span{
+display:block;
+font-size:10px;
+color:#7b8781;
+margin-bottom:5px;
+}
+
+.info strong{
+font-size:12px;
+}
+
+.order-bottom{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.price{
+font-size:12px;
+color:#69766f;
+}
+
+.price strong{
+font-size:18px;
+color:#078c4b;
+margin-left:5px;
+}
+
+.actions{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.btn{
+text-decoration:none;
+border-radius:7px;
+padding:9px 12px;
+font-size:10px;
+font-weight:800;
+}
+
+.btn-outline{
+border:1px solid #d8e2dc;
+color:#1d2b24;
+background:#fff;
+}
+
+.btn-green{
+background:#078c4b;
+color:#fff;
+}
+
+.empty{
+display:none;
+background:#fff;
+border:1px solid #e0e7e3;
+border-radius:12px;
+padding:40px 20px;
+text-align:center;
+color:#708078;
+font-size:13px;
+}
+
+.footer{
+background:#073c27;
+color:#fff;
+text-align:center;
+padding:26px 0;
+}
+
+.footer p{
+font-size:12px;
+opacity:.8;
+}
+
+@media(max-width:950px){
+.summary{
+grid-template-columns:repeat(2,1fr);
+}
+
+.order-body{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:700px){
+.menu{display:none}
+
+.page-head{
+align-items:flex-start;
+flex-direction:column;
+}
+
+.summary{
+grid-template-columns:1fr 1fr;
+}
+}
+
+@media(max-width:500px){
+.order-body{
+grid-template-columns:1fr;
+}
+
+.summary{
+grid-template-columns:1fr;
+}
+
+.order-top{
+flex-direction:column;
+}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+<span class="logo-icon">🚚</span>
+<div>
+<strong>VietTruck</strong>
+<small>Kết nối hàng hóa Việt Nam</small>
+</div>
+</a>
+
+<nav class="menu">
+<a href="index.html">Trang chủ</a>
+<a href="tim-hang.html">Tìm hàng</a>
+<a href="tim-xe.html">Tìm xe</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="quan-ly-don-hang.html" class="active">Quản lý đơn</a>
+<a href="tai-khoan.html">Tài khoản</a>
+</nav>
+
+</div>
+</header>
+
+<main class="container">
+
+<section class="page-head">
+
+<div>
+<h1>Quản lý đơn hàng</h1>
+<p>Theo dõi toàn bộ đơn vận chuyển của bạn theo từng trạng thái</p>
+</div>
+
+<a href="dang-hang.html" class="new-order">
++ Đăng đơn mới
+</a>
+
+</section>
+
+<section class="summary">
+
+<div class="summary-card">
+<span>CHỜ TÀI XẾ</span>
+<strong>3</strong>
+</div>
+
+<div class="summary-card">
+<span>ĐÃ NHẬN</span>
+<strong>2</strong>
+</div>
+
+<div class="summary-card">
+<span>ĐANG VẬN CHUYỂN</span>
+<strong>2</strong>
+</div>
+
+<div class="summary-card">
+<span>ĐÃ GIAO</span>
+<strong>4</strong>
+</div>
+
+<div class="summary-card">
+<span>ĐÃ THANH TOÁN</span>
+<strong>11</strong>
+</div>
+
+</section>
+
+<section class="filters">
+
+<button class="filter-btn active" data-filter="all">
+Tất cả
+</button>
+
+<button class="filter-btn" data-filter="waiting">
+Chờ tài xế
+</button>
+
+<button class="filter-btn" data-filter="accepted">
+Đã nhận
+</button>
+
+<button class="filter-btn" data-filter="running">
+Đang vận chuyển
+</button>
+
+<button class="filter-btn" data-filter="delivered">
+Đã giao
+</button>
+
+<button class="filter-btn" data-filter="paid">
+Đã thanh toán
+</button>
+
+</section>
+
+<section class="order-list" id="orderList">
+
+<div class="order-card" data-status="waiting">
+
+<div class="order-top">
+<div>
+<div class="order-code">Mã đơn: VT-ORDER-001</div>
+<div class="route">
+Bắc Ninh <span>→</span> Hải Phòng
+</div>
+</div>
+
+<span class="status waiting">
+Chờ tài xế
+</span>
+</div>
+
+<div class="order-body">
+
+<div class="info">
+<span>LOẠI HÀNG</span>
+<strong>Linh kiện điện tử</strong>
+</div>
+
+<div class="info">
+<span>TRỌNG LƯỢNG</span>
+<strong>5 tấn</strong>
+</div>
+
+<div class="info">
+<span>LOẠI XE</span>
+<strong>Xe tải 5–8 tấn</strong>
+</div>
+
+<div class="info">
+<span>NGÀY LẤY HÀNG</span>
+<strong>05/09/2026</strong>
+</div>
+
+</div>
+
+<div class="order-bottom">
+
+<div class="price">
+Cước dự kiến
+<strong>3.500.000 đ</strong>
+</div>
+
+<div class="actions">
+<a href="chi-tiet-don-hang.html" class="btn btn-outline">Xem chi tiết</a>
+<a href="gui-bao-gia.html" class="btn btn-green">Xem báo giá</a>
+</div>
+
+</div>
+
+</div>
+
+<div class="order-card" data-status="accepted">
+
+<div class="order-top">
+<div>
+<div class="order-code">Mã đơn: VT-ORDER-002</div>
+<div class="route">
+Hà Nội <span>→</span> Bắc Giang
+</div>
+</div>
+
+<span class="status accepted">
+Đã nhận
+</span>
+</div>
+
+<div class="order-body">
+
+<div class="info">
+<span>TÀI XẾ</span>
+<strong>Nguyễn Văn B</strong>
+</div>
+
+<div class="info">
+<span>BIỂN SỐ</span>
+<strong>99C-123.45</strong>
+</div>
+
+<div class="info">
+<span>LOẠI XE</span>
+<strong>Xe tải thùng</strong>
+</div>
+
+<div class="info">
+<span>NGÀY NHẬN</span>
+<strong>05/09/2026</strong>
+</div>
+
+</div>
+
+<div class="order-bottom">
+
+<div class="price">
+Cước
+<strong>2.200.000 đ</strong>
+</div>
+
+<div class="actions">
+<a href="chi-tiet-don-hang.html" class="btn btn-outline">Chi tiết</a>
+<a href="chuyen-da-nhan.html" class="btn btn-green">Xem chuyến</a>
+</div>
+
+</div>
+
+</div>
+
+<div class="order-card" data-status="running">
+
+<div class="order-top">
+<div>
+<div class="order-code">Mã đơn: VT-ORDER-003</div>
+<div class="route">
+Bắc Ninh <span>→</span> Quảng Ninh
+</div>
+</div>
+
+<span class="status running">
+Đang vận chuyển
+</span>
+</div>
+
+<div class="order-body">
+
+<div class="info">
+<span>TÀI XẾ</span>
+<strong>Trần Văn C</strong>
+</div>
+
+<div class="info">
+<span>BIỂN SỐ</span>
+<strong>98C-456.78</strong>
+</div>
+
+<div class="info">
+<span>TIẾN ĐỘ</span>
+<strong>Đã đi 72%</strong>
+</div>
+
+<div class="info">
+<span>GPS</span>
+<strong style="color:#078c4b">Đang hoạt động</strong>
+</div>
+
+</div>
+
+<div class="order-bottom">
+
+<div class="price">
+Cước
+<strong>5.800.000 đ</strong>
+</div>
+
+<div class="actions">
+<a href="chi-tiet-don-hang.html" class="btn btn-outline">Chi tiết</a>
+<a href="theo-doi-chuyen.html" class="btn btn-green">Theo dõi GPS</a>
+</div>
+
+</div>
+
+</div>
+
+<div class="order-card" data-status="delivered">
+
+<div class="order-top">
+<div>
+<div class="order-code">Mã đơn: VT-ORDER-004</div>
+<div class="route">
+Hải Phòng <span>→</span> Hà Nội
+</div>
+</div>
+
+<span class="status delivered">
+Đã giao
+</span>
+</div>
+
+<div class="order-body">
+
+<div class="info">
+<span>THỜI GIAN GIAO</span>
+<strong>04/09/2026 16:35</strong>
+</div>
+
+<div class="info">
+<span>POD</span>
+<strong style="color:#078c4b">Đã xác nhận</strong>
+</div>
+
+<div class="info">
+<span>TÀI XẾ</span>
+<strong>Lê Văn D</strong>
+</div>
+
+<div class="info">
+<span>THANH TOÁN</span>
+<strong>Chờ đối soát</strong>
+</div>
+
+</div>
+
+<div class="order-bottom">
+
+<div class="price">
+Cước
+<strong>4.100.000 đ</strong>
+</div>
+
+<div class="actions">
+<a href="pod-giao-hang.html" class="btn btn-outline">Xem POD</a>
+<a href="thanh-toan-doi-soat.html" class="btn btn-green">Thanh toán</a>
+</div>
+
+</div>
+
+</div>
+
+<div class="order-card" data-status="paid">
+
+<div class="order-top">
+<div>
+<div class="order-code">Mã đơn: VT-ORDER-005</div>
+<div class="route">
+Bắc Ninh <span>→</span> Hà Nam
+</div>
+</div>
+
+<span class="status paid">
+Đã thanh toán
+</span>
+</div>
+
+<div class="order-body">
+
+<div class="info">
+<span>HOÀN THÀNH</span>
+<strong>03/09/2026</strong>
+</div>
+
+<div class="info">
+<span>THANH TOÁN</span>
+<strong style="color:#078c4b">Hoàn tất</strong>
+</div>
+
+<div class="info">
+<span>POD</span>
+<strong style="color:#078c4b">Hợp lệ</strong>
+</div>
+
+<div class="info">
+<span>ĐÁNH GIÁ</span>
+<strong>Chưa đánh giá</strong>
+</div>
+
+</div>
+
+<div class="order-bottom">
+
+<div class="price">
+Cước
+<strong>3.900.000 đ</strong>
+</div>
+
+<div class="actions">
+<a href="lich-su-giao-dich.html" class="btn btn-outline">Giao dịch</a>
+<a href="danh-gia-chuyen.html" class="btn btn-green">Đánh giá</a>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<div class="empty" id="emptyBox">
+Không có đơn hàng nào ở trạng thái này.
+</div>
+
+</main>
+
+<footer class="footer">
+<div class="container">
+<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+<p>© 2026 VietTruck. Quản lý vận tải trực tuyến.</p>
+</div>
+</footer>
+
+<script>
+
+const buttons =
+document.querySelectorAll(".filter-btn");
+
+const orders =
+document.querySelectorAll(".order-card");
+
+const emptyBox =
+document.getElementById("emptyBox");
+
+buttons.forEach(function(button){
+
+button.addEventListener("click",function(){
+
+buttons.forEach(function(btn){
+btn.classList.remove("active");
+});
+
+this.classList.add("active");
+
+const filter =
+this.dataset.filter;
+
+let visible = 0;
+
+orders.forEach(function(order){
+
+if(
+filter === "all" ||
+order.dataset.status === filter
+){
+
+order.style.display = "block";
+
+visible++;
+
+}else{
+
+order.style.display = "none";
+
+}
+
+});
+
+if(visible === 0){
+emptyBox.style.display = "block";
+}else{
+emptyBox.style.display = "none";
+}
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
