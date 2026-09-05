@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nhận chuyến | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Be Vietnam Pro",sans-serif;
+  background:#f6f8f7;
+  color:#13221b;
+}
+.container{max-width:1180px;margin:auto;padding:0 20px}
+
+.header{
+  background:#fff;
+  border-bottom:1px solid #e5e9e7;
+}
+.nav{
+  height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:22px;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:#087b40;
+}
+.logo-icon{font-size:34px}
+.logo strong{font-size:25px}
+.logo small{display:block;font-size:11px;color:#65736c}
+
+.menu{display:flex;gap:24px}
+.menu a{
+  text-decoration:none;
+  color:#17221d;
+  font-weight:600;
+  font-size:14px;
+}
+.menu a:hover{color:#078c4b}
+
+.page-head{
+  background:linear-gradient(135deg,#087d45,#0aa45a);
+  color:#fff;
+  padding:30px 0;
+}
+.page-head h1{
+  margin:0 0 7px;
+  font-size:28px;
+}
+.page-head p{
+  margin:0;
+  opacity:.9;
+}
+
+.layout{
+  display:grid;
+  grid-template-columns:1fr 340px;
+  gap:22px;
+  margin:28px auto 55px;
+}
+
+.card{
+  background:#fff;
+  border:1px solid #e1e7e4;
+  border-radius:12px;
+  padding:22px;
+  margin-bottom:18px;
+}
+.card h2{
+  margin:0 0 6px;
+  font-size:20px;
+}
+.card p.sub{
+  margin:0 0 22px;
+  color:#6b7771;
+  font-size:13px;
+}
+
+.order-box{
+  background:#f8faf9;
+  border:1px solid #e8eeeb;
+  border-radius:10px;
+  padding:17px;
+  margin-bottom:20px;
+}
+.route{
+  font-size:21px;
+  font-weight:800;
+  margin-bottom:12px;
+}
+.route span{
+  color:#078c4b;
+  padding:0 8px;
+}
+.order-meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+  color:#65736c;
+  font-size:12px;
+}
+.order-meta strong{color:#202d27}
+
+.confirm-box{
+  border:1px solid #dce6e1;
+  border-radius:10px;
+  padding:18px;
+  margin-top:17px;
+}
+.confirm-row{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  padding:11px 0;
+  border-bottom:1px solid #edf0ee;
+  font-size:13px;
+}
+.confirm-row:last-child{border-bottom:0}
+.confirm-row span{color:#6c7972}
+.confirm-row strong{text-align:right}
+
+.field{
+  margin-top:18px;
+}
+.field label{
+  display:block;
+  margin-bottom:7px;
+  font-size:13px;
+  font-weight:700;
+}
+.field select,
+.field textarea{
+  width:100%;
+  border:1px solid #d6e0db;
+  border-radius:8px;
+  background:#fff;
+  font-family:inherit;
+  font-size:14px;
+}
+.field select{
+  height:48px;
+  padding:0 12px;
+}
+.field textarea{
+  min-height:100px;
+  padding:12px;
+  resize:vertical;
+}
+
+.check-row{
+  display:flex;
+  gap:9px;
+  align-items:flex-start;
+  margin-top:18px;
+  font-size:12px;
+  color:#59665f;
+  line-height:1.6;
+}
+.check-row input{margin-top:3px}
+
+.accept-btn{
+  width:100%;
+  border:0;
+  border-radius:9px;
+  background:#078c4b;
+  color:white;
+  padding:14px 18px;
+  font-family:inherit;
+  font-weight:800;
+  font-size:14px;
+  cursor:pointer;
+  margin-top:20px;
+}
+
+.cancel-link{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  color:#6d7973;
+  font-size:13px;
+  margin-top:14px;
+}
+
+.price{
+  color:#078c4b;
+  font-size:27px;
+  font-weight:800;
+  margin-bottom:5px;
+}
+.small{
+  font-size:12px;
+  color:#6b7771;
+  line-height:1.7;
+}
+.divider{
+  border-top:1px solid #edf0ee;
+  margin:17px 0;
+}
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:11px;
+  font-size:12px;
+}
+.summary-row span{color:#6d7973}
+.summary-row strong{text-align:right}
+
+.notice{
+  background:#fff6df;
+  border:1px solid #ead9a8;
+  color:#725b20;
+  border-radius:9px;
+  padding:14px;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.success-box{
+  display:none;
+  background:#fff;
+  border:1px solid #bfe3ce;
+  border-radius:12px;
+  padding:35px 25px;
+  text-align:center;
+}
+.success-icon{
+  font-size:50px;
+  margin-bottom:10px;
+}
+.success-box h2{
+  color:#078c4b;
+  margin-bottom:10px;
+}
+.success-box p{
+  color:#65736c;
+  font-size:13px;
+  line-height:1.7;
+}
+.success-btn{
+  display:inline-block;
+  margin-top:12px;
+  text-decoration:none;
+  background:#078c4b;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:800;
+}
+
+.footer{
+  background:#073c27;
+  color:#fff;
+  padding:28px 0;
+  text-align:center;
+}
+.footer p{opacity:.8;font-size:13px}
+
+@media(max-width:900px){
+  .menu{display:none}
+  .layout{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+  .order-meta{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+  <span class="logo-icon">🚚</span>
+  <div>
+    <strong>VietTruck</strong>
+    <small>Kết nối hàng hóa Việt Nam</small>
+  </div>
+</a>
+
+<nav class="menu">
+  <a href="index.html">Trang chủ</a>
+  <a href="tim-hang.html">Tìm hàng</a>
+  <a href="tim-xe.html">Tìm xe</a>
+  <a href="dang-hang.html">Đăng hàng</a>
+  <a href="tai-khoan.html">Tài khoản</a>
+</nav>
+
+</div>
+</header>
+
+<section class="page-head">
+<div class="container">
+  <h1>Xác nhận nhận chuyến</h1>
+  <p>Kiểm tra thông tin trước khi nhận vận chuyển đơn hàng</p>
+</div>
+</section>
+
+<main class="container layout">
+
+<section>
+
+<div class="card" id="confirmCard">
+
+<h2>Thông tin chuyến hàng</h2>
+<p class="sub">Bạn đang chuẩn bị nhận chuyến vận chuyển dưới đây.</p>
+
+<div class="order-box">
+
+<div class="route">
+Bắc Ninh <span>→</span> Hải Phòng
+</div>
+
+<div class="order-meta">
+<div>📦 Hàng hóa: <strong>Điện tử</strong></div>
+<div>⚖️ Trọng lượng: <strong>5 tấn</strong></div>
+<div>🚚 Yêu cầu xe: <strong>Thùng kín</strong></div>
+<div>🕒 Nhận hàng: <strong>05/09/2026 · 14:00</strong></div>
+</div>
+
+</div>
+
+<div class="confirm-box">
+
+<div class="confirm-row">
+<span>Mã đơn</span>
+<strong>VT-090526-001</strong>
+</div>
+
+<div class="confirm-row">
+<span>Điểm lấy hàng</span>
+<strong>Yên Phong, Bắc Ninh</strong>
+</div>
+
+<div class="confirm-row">
+<span>Điểm giao hàng</span>
+<strong>Hải An, Hải Phòng</strong>
+</div>
+
+<div class="confirm-row">
+<span>Giá vận chuyển</span>
+<strong style="color:#078c4b">3.500.000 đ</strong>
+</div>
+
+<div class="confirm-row">
+<span>Thanh toán</span>
+<strong>Sau khi giao hàng</strong>
+</div>
+
+</div>
+
+<form id="acceptForm">
+
+<div class="field">
+<label>Chọn xe nhận chuyến *</label>
+
+<select required>
+<option value="">Chọn phương tiện</option>
+<option>99C-123.45 · Xe tải thùng kín 5 tấn</option>
+<option>29H-456.78 · Xe tải 8 tấn</option>
+</select>
+</div>
+
+<div class="field">
+<label>Ghi chú cho chủ hàng</label>
+
+<textarea placeholder="Ví dụ: Xe sẽ có mặt trước 30 phút, tài xế liên hệ trước khi tới..."></textarea>
+</div>
+
+<label class="check-row">
+<input type="checkbox" required>
+
+<span>
+Tôi đã kiểm tra thông tin hàng hóa, tuyến đường và giá vận chuyển. Tôi đồng ý thực hiện chuyến hàng theo nội dung trên.
+</span>
+</label>
+
+<label class="check-row">
+<input type="checkbox" required>
+
+<span>
+Tôi xác nhận phương tiện có giấy tờ, đăng kiểm và điều kiện kỹ thuật phù hợp để vận chuyển hàng hóa.
+</span>
+</label>
+
+<button type="submit" class="accept-btn">
+Xác nhận nhận chuyến
+</button>
+
+<a href="chi-tiet-don-hang.html" class="cancel-link">
+← Quay lại đơn hàng
+</a>
+
+</form>
+
+</div>
+
+<div class="success-box" id="successBox">
+
+<div class="success-icon">✅</div>
+
+<h2>Nhận chuyến thành công</h2>
+
+<p>
+Chuyến Bắc Ninh → Hải Phòng đã được thêm vào danh sách chuyến của bạn.<br>
+Ở phiên bản có backend, VietTruck sẽ đồng thời thông báo cho chủ hàng và khóa đơn để tránh nhiều tài xế cùng nhận.
+</p>
+
+<a href="chuyen-da-nhan.html" class="success-btn">
+Xem chuyến đã nhận
+</a>
+
+</div>
+
+</section>
+
+<aside>
+
+<div class="card">
+
+<div class="price">3.500.000 đ</div>
+<div class="small">Cước vận chuyển dự kiến</div>
+
+<div class="divider"></div>
+
+<div class="summary-row">
+<span>Quãng đường</span>
+<strong>~120 km</strong>
+</div>
+
+<div class="summary-row">
+<span>Loại hàng</span>
+<strong>Điện tử</strong>
+</div>
+
+<div class="summary-row">
+<span>Tải trọng</span>
+<strong>5 tấn</strong>
+</div>
+
+<div class="summary-row">
+<span>Loại xe</span>
+<strong>Thùng kín</strong>
+</div>
+
+<div class="summary-row">
+<span>Chủ hàng</span>
+<strong>Công ty ABC</strong>
+</div>
+
+<div class="summary-row">
+<span>Đánh giá</span>
+<strong>⭐ 4.9/5</strong>
+</div>
+
+</div>
+
+<div class="notice">
+⚠️ Sau khi nhận chuyến, tài xế có trách nhiệm liên hệ chủ hàng và thực hiện vận chuyển đúng thời gian đã xác nhận.
+</div>
+
+</aside>
+
+</main>
+
+<footer class="footer">
+<div class="container">
+<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+<p>© 2026 VietTruck. Nền tảng kết nối chủ hàng, tài xế và nhà xe.</p>
+</div>
+</footer>
+
+<script>
+const acceptForm = document.getElementById("acceptForm");
+const confirmCard = document.getElementById("confirmCard");
+const successBox = document.getElementById("successBox");
+
+acceptForm.addEventListener("submit", function(e){
+  e.preventDefault();
+
+  confirmCard.style.display = "none";
+  successBox.style.display = "block";
+
+  window.scrollTo({
+    top:150,
+    behavior:"smooth"
+  });
+});
+</script>
+
+</body>
+</html>
