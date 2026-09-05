@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lịch sử giao dịch | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Be Vietnam Pro",sans-serif;
+  background:#f6f8f7;
+  color:#13221b;
+}
+.container{max-width:1180px;margin:auto;padding:0 20px}
+
+.header{
+  background:#fff;
+  border-bottom:1px solid #e5e9e7;
+}
+.nav{
+  height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:22px;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:#087b40;
+}
+.logo-icon{font-size:34px}
+.logo strong{font-size:25px}
+.logo small{display:block;font-size:11px;color:#65736c}
+
+.menu{display:flex;gap:24px}
+.menu a{
+  text-decoration:none;
+  color:#17221d;
+  font-weight:600;
+  font-size:14px;
+}
+.menu a:hover{color:#078c4b}
+
+.user-area{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#078c4b;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+}
+.user-name{
+  font-size:13px;
+  font-weight:700;
+}
+
+.page-head{
+  background:linear-gradient(135deg,#087d45,#0aa45a);
+  color:#fff;
+  padding:30px 0;
+}
+.page-head h1{
+  margin:0 0 7px;
+  font-size:28px;
+}
+.page-head p{
+  margin:0;
+  opacity:.9;
+}
+
+.account-layout{
+  display:grid;
+  grid-template-columns:250px 1fr;
+  gap:24px;
+  margin:28px auto 55px;
+}
+
+.sidebar{
+  background:#fff;
+  border:1px solid #e1e7e4;
+  border-radius:12px;
+  padding:18px;
+  height:max-content;
+}
+.profile-mini{
+  text-align:center;
+  padding:8px 0 20px;
+  border-bottom:1px solid #edf0ee;
+}
+.profile-avatar{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  background:#078c4b;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 10px;
+  font-size:26px;
+  font-weight:800;
+}
+.profile-mini strong{
+  display:block;
+  font-size:16px;
+}
+.profile-mini span{
+  display:block;
+  color:#6b7771;
+  font-size:12px;
+  margin-top:4px;
+}
+.side-menu{
+  margin-top:14px;
+}
+.side-menu a{
+  display:block;
+  text-decoration:none;
+  color:#33423b;
+  padding:12px 13px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:4px;
+}
+.side-menu a:hover,
+.side-menu a.active{
+  background:#edf7f1;
+  color:#078c4b;
+}
+.logout{color:#b33a3a!important}
+
+.content{min-width:0}
+
+.top-card{
+  background:#fff;
+  border:1px solid #e1e7e4;
+  border-radius:12px;
+  padding:22px;
+  margin-bottom:18px;
+}
+.top-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+.top-row h2{
+  margin:0 0 6px;
+  font-size:22px;
+}
+.top-row p{
+  margin:0;
+  color:#68746e;
+  font-size:13px;
+}
+
+.summary{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-bottom:18px;
+}
+.summary-box{
+  background:#fff;
+  border:1px solid #e1e7e4;
+  border-radius:10px;
+  padding:18px;
+}
+.summary-box span{
+  display:block;
+  font-size:12px;
+  color:#6d7973;
+  margin-bottom:7px;
+}
+.summary-box strong{
+  color:#078c4b;
+  font-size:22px;
+}
+.summary-box .negative{
+  color:#b33a3a;
+}
+
+.filter-card{
+  background:#fff;
+  border:1px solid #e1e7e4;
+  border-radius:12px;
+  padding:18px;
+  margin-bottom:18px;
+}
+.filters{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr auto;
+  gap:12px;
+  align-items:end;
+}
+.field label{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+.field input,
+.field select{
+  width:100%;
+  height:44px;
+  border:1px solid #d8e1dc;
+  border-radius:8px;
+  padding:0 11px;
+  font-family:inherit;
+  background:#fff;
+}
+.filter-btn{
+  height:44px;
+  border:0;
+  border-radius:8px;
+  background:#078c4b;
+  color:#fff;
+  padding:0 18px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.transaction-card{
+  background:#fff;
+  border:1px solid #e1e7e4;
+  border-radius:12px;
+  margin-bottom:12px;
+  overflow:hidden;
+}
+.transaction-head{
+  padding:14px 18px;
+  background:#fafcfb;
+  border-bottom:1px solid #edf0ee;
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+}
+.code{
+  font-size:12px;
+  color:#748079;
+}
+.status{
+  font-size:11px;
+  font-weight:800;
+  padding:6px 10px;
+  border-radius:20px;
+}
+.success{
+  background:#e9f8ef;
+  color:#087b40;
+}
+.pending{
+  background:#fff4d9;
+  color:#956600;
+}
+.refund{
+  background:#e7f3ff;
+  color:#1769aa;
+}
+.failed{
+  background:#fdecec;
+  color:#b33a3a;
+}
+
+.transaction-body{
+  display:grid;
+  grid-template-columns:1fr 180px;
+  gap:20px;
+  padding:18px;
+}
+.transaction-title{
+  font-size:15px;
+  font-weight:800;
+  margin-bottom:7px;
+}
+.transaction-meta{
+  font-size:12px;
+  color:#65726c;
+  line-height:1.8;
+}
+.amount-side{
+  text-align:right;
+}
+.amount{
+  font-size:18px;
+  font-weight:800;
+  color:#078c4b;
+  margin-bottom:5px;
+}
+.amount.out{
+  color:#b33a3a;
+}
+.amount.refund-amount{
+  color:#1769aa;
+}
+.amount-note{
+  font-size:11px;
+  color:#7b8680;
+}
+.actions{
+  margin-top:14px;
+}
+.action-btn{
+  display:inline-block;
+  text-decoration:none;
+  color:#078c4b;
+  font-size:12px;
+  font-weight:800;
+}
+
+.empty{
+  display:none;
+  background:#fff;
+  border:1px solid #e1e7e4;
+  border-radius:12px;
+  padding:35px;
+  text-align:center;
+  color:#748079;
+  font-size:13px;
+}
+
+.footer{
+  background:#073c27;
+  color:#fff;
+  padding:28px 0;
+  text-align:center;
+}
+.footer p{
+  opacity:.8;
+  font-size:13px;
+}
+
+@media(max-width:950px){
+  .menu{display:none}
+  .summary{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  .account-layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .filters{grid-template-columns:1fr}
+  .transaction-body{grid-template-columns:1fr}
+  .amount-side{text-align:left}
+  .top-row{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+  <span class="logo-icon">🚚</span>
+  <div>
+    <strong>VietTruck</strong>
+    <small>Kết nối hàng hóa Việt Nam</small>
+  </div>
+</a>
+
+<nav class="menu">
+  <a href="index.html">Trang chủ</a>
+  <a href="tim-hang.html">Tìm hàng</a>
+  <a href="tim-xe.html">Tìm xe</a>
+  <a href="dang-hang.html">Đăng hàng</a>
+</nav>
+
+<div class="user-area">
+  <div class="avatar">A</div>
+  <div class="user-name">Nguyễn Văn A</div>
+</div>
+
+</div>
+</header>
+
+<section class="page-head">
+<div class="container">
+  <h1>Lịch sử giao dịch</h1>
+  <p>Theo dõi thanh toán, phí dịch vụ, hoàn tiền và các giao dịch trên VietTruck</p>
+</div>
+</section>
+
+<main class="container account-layout">
+
+<aside class="sidebar">
+
+<div class="profile-mini">
+  <div class="profile-avatar">A</div>
+  <strong>Nguyễn Văn A</strong>
+  <span>Chủ hàng / Tài xế</span>
+</div>
+
+<nav class="side-menu">
+  <a href="tai-khoan.html">🏠 Tổng quan</a>
+  <a href="#">👤 Hồ sơ cá nhân</a>
+  <a href="don-hang-cua-toi.html">📦 Đơn hàng của tôi</a>
+  <a href="xe-cua-toi.html">🚚 Xe của tôi</a>
+  <a href="chuyen-da-nhan.html">🧾 Chuyến đã nhận</a>
+  <a href="thong-bao.html">🔔 Thông báo</a>
+  <a href="lich-su-giao-dich.html" class="active">💳 Lịch sử giao dịch</a>
+  <a href="#">⚙️ Cài đặt</a>
+  <a href="index.html" class="logout">↪ Đăng xuất</a>
+</nav>
+
+</aside>
+
+<section class="content">
+
+<div class="top-card">
+  <div class="top-row">
+    <div>
+      <h2>Giao dịch của tôi</h2>
+      <p>Quản lý các khoản thanh toán và đối soát trên tài khoản VietTruck.</p>
+    </div>
+  </div>
+</div>
+
+<div class="summary">
+
+<div class="summary-box">
+  <span>Tổng doanh thu</span>
+  <strong>46.500.000 đ</strong>
+</div>
+
+<div class="summary-box">
+  <span>Tổng đã thanh toán</span>
+  <strong class="negative">18.200.000 đ</strong>
+</div>
+
+<div class="summary-box">
+  <span>Đang chờ đối soát</span>
+  <strong>8.500.000 đ</strong>
+</div>
+
+<div class="summary-box">
+  <span>Đã hoàn tiền</span>
+  <strong>2.200.000 đ</strong>
+</div>
+
+</div>
+
+<div class="filter-card">
+<div class="filters">
+
+<div class="field">
+  <label>Từ ngày</label>
+  <input type="date" id="fromDate">
+</div>
+
+<div class="field">
+  <label>Đến ngày</label>
+  <input type="date" id="toDate">
+</div>
+
+<div class="field">
+  <label>Loại giao dịch</label>
+  <select id="typeFilter">
+    <option value="all">Tất cả</option>
+    <option value="income">Nhận tiền</option>
+    <option value="payment">Thanh toán</option>
+    <option value="fee">Phí dịch vụ</option>
+    <option value="refund">Hoàn tiền</option>
+  </select>
+</div>
+
+<button class="filter-btn" id="filterBtn">Lọc giao dịch</button>
+
+</div>
+</div>
+
+<div id="transactionList">
+
+<div class="transaction-card" data-type="income">
+  <div class="transaction-head">
+    <div class="code">GD-090526-001 · 05/09/2026 10:30</div>
+    <div class="status success">Thành công</div>
+  </div>
+
+  <div class="transaction-body">
+    <div>
+      <div class="transaction-title">Nhận thanh toán chuyến Bắc Ninh → Hải Phòng</div>
+      <div class="transaction-meta">
+        Mã chuyến: VT-TRIP-090526-001<br>
+        Phương thức: Chuyển khoản ngân hàng<br>
+        Đối tác: Công ty ABC Việt Nam
+      </div>
+    </div>
+
+    <div class="amount-side">
+      <div class="amount">+3.500.000 đ</div>
+      <div class="amount-note">Đã ghi nhận</div>
+      <div class="actions">
+        <a href="#" class="action-btn">Xem chi tiết →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="transaction-card" data-type="payment">
+  <div class="transaction-head">
+    <div class="code">GD-080526-017 · 04/09/2026 16:20</div>
+    <div class="status success">Thành công</div>
+  </div>
+
+  <div class="transaction-body">
+    <div>
+      <div class="transaction-title">Thanh toán cước vận chuyển Hà Nội → Đà Nẵng</div>
+      <div class="transaction-meta">
+        Mã đơn: VT-080526-017<br>
+        Nhà xe: Minh Phát Logistics<br>
+        Phương thức: Chuyển khoản
+      </div>
+    </div>
+
+    <div class="amount-side">
+      <div class="amount out">-12.000.000 đ</div>
+      <div class="amount-note">Đã thanh toán</div>
+      <div class="actions">
+        <a href="#" class="action-btn">Xem hóa đơn →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="transaction-card" data-type="fee">
+  <div class="transaction-head">
+    <div class="code">GD-080526-018 · 04/09/2026 16:21</div>
+    <div class="status success">Thành công</div>
+  </div>
+
+  <div class="transaction-body">
+    <div>
+      <div class="transaction-title">Phí dịch vụ VietTruck</div>
+      <div class="transaction-meta">
+        Liên quan chuyến Hà Nội → Đà Nẵng<br>
+        Nội dung: Phí nền tảng<br>
+        Thuế: Đang cập nhật
+      </div>
+    </div>
+
+    <div class="amount-side">
+      <div class="amount out">-240.000 đ</div>
+      <div class="amount-note">Phí dịch vụ</div>
+      <div class="actions">
+        <a href="#" class="action-btn">Chi tiết phí →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="transaction-card" data-type="refund">
+  <div class="transaction-head">
+    <div class="code">GD-020926-004 · 02/09/2026 18:05</div>
+    <div class="status refund">Đã hoàn tiền</div>
+  </div>
+
+  <div class="transaction-body">
+    <div>
+      <div class="transaction-title">Hoàn tiền đơn Đồng Nai → Bình Dương</div>
+      <div class="transaction-meta">
+        Lý do: Điều chỉnh cước sau đối soát<br>
+        Phương thức hoàn: Tài khoản ngân hàng<br>
+        Thời gian xử lý: Hoàn tất
+      </div>
+    </div>
+
+    <div class="amount-side">
+      <div class="amount refund-amount">+2.200.000 đ</div>
+      <div class="amount-note">Đã hoàn tiền</div>
+      <div class="actions">
+        <a href="#" class="action-btn">Xem chi tiết →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="transaction-card" data-type="income">
+  <div class="transaction-head">
+    <div class="code">GD-010926-009 · 01/09/2026 09:10</div>
+    <div class="status pending">Chờ đối soát</div>
+  </div>
+
+  <div class="transaction-body">
+    <div>
+      <div class="transaction-title">Cước chuyến TP.HCM → Cần Thơ</div>
+      <div class="transaction-meta">
+        Mã chuyến: VT-TRIP-010926-009<br>
+        Giá trị chuyến: 8.500.000 đ<br>
+        Trạng thái: Chờ xác nhận giao hàng
+      </div>
+    </div>
+
+    <div class="amount-side">
+      <div class="amount">8.500.000 đ</div>
+      <div class="amount-note">Chưa đối soát</div>
+      <div class="actions">
+        <a href="#" class="action-btn">Xem chuyến →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="empty" id="empty">
+  Không có giao dịch phù hợp với bộ lọc.
+</div>
+
+</section>
+
+</main>
+
+<footer class="footer">
+<div class="container">
+  <strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+  <p>© 2026 VietTruck. Nền tảng kết nối chủ hàng, tài xế và nhà xe.</p>
+</div>
+</footer>
+
+<script>
+const typeFilter = document.getElementById("typeFilter");
+const filterBtn = document.getElementById("filterBtn");
+const transactions = document.querySelectorAll(".transaction-card");
+const empty = document.getElementById("empty");
+
+filterBtn.addEventListener("click", function(){
+  const type = typeFilter.value;
+  let visible = 0;
+
+  transactions.forEach(item => {
+    if(type === "all" || item.dataset.type === type){
+      item.style.display = "block";
+      visible++;
+    }else{
+      item.style.display = "none";
+    }
+  });
+
+  empty.style.display = visible === 0 ? "block" : "none";
+});
+</script>
+
+</body>
+</html>
