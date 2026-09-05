@@ -1091,6 +1091,92 @@ function editProfile(){
 };
   const params = new URLSearchParams(window.location.search);
 const partnerName = params.get("name");
+  const data = partnerData[partnerName];
+
+if(data){
+
+  // Tên đối tác
+  const title = document.querySelector(".profile-title h2");
+  if(title){
+    title.textContent = partnerName;
+  }
+
+  // Icon
+  const avatar = document.querySelector(".avatar");
+  if(avatar){
+    avatar.textContent = data.icon;
+  }
+
+  // Mã đối tác
+  const profileText = document.querySelector(".profile-title p");
+  if(profileText){
+    profileText.textContent = "Mã đối tác: " + data.code;
+  }
+
+  // Loại đối tác
+  const profileBadges = document.querySelectorAll(".profile-title .badge");
+
+  if(profileBadges[0]){
+    profileBadges[0].textContent = data.type;
+  }
+
+  // Thông tin doanh nghiệp
+  const infoItems = document.querySelectorAll(".info-grid .info-item strong");
+
+  if(infoItems.length >= 8){
+
+    infoItems[0].textContent = partnerName;
+    infoItems[1].textContent = data.tax;
+    infoItems[2].textContent = data.type;
+    infoItems[3].textContent = data.representative;
+    infoItems[4].textContent = data.phone;
+    infoItems[5].textContent = data.email;
+    infoItems[6].textContent = data.address;
+    infoItems[7].textContent = data.area;
+
+  }
+
+  // Năng lực
+  const capacities = document.querySelectorAll(".capacity-box strong");
+
+  if(capacities.length >= 2){
+
+    capacities[0].textContent = data.vehicles;
+    capacities[1].textContent = data.drivers;
+
+  }
+
+  // Người liên hệ
+  const contacts = document.querySelectorAll(".contact strong");
+
+  if(contacts.length >= 3){
+
+    contacts[0].textContent = data.representative;
+    contacts[1].textContent = data.phone;
+    contacts[2].textContent = data.email;
+
+  }
+
+  // Thống kê đầu trang
+  const stats = document.querySelectorAll(".stat strong");
+
+  if(stats.length >= 3){
+
+    stats[0].textContent = data.transactions;
+    stats[2].textContent = data.rating;
+
+  }
+
+  // Đánh giá bên phải
+  const ratingItems = document.querySelectorAll(".card .info-item strong");
+
+  if(ratingItems.length > 8){
+    ratingItems[ratingItems.length - 4].textContent = "★★★★★ " + data.rating;
+  }
+
+  document.title = partnerName + " - VietTruck";
+
+}
 
 if(partnerName){
 
