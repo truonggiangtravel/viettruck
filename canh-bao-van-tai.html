@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cảnh báo vận tải | VietTruck</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f5f7fa;
+      color:#1f2937;
+    }
+
+    .header{
+      background:#fff;
+      border-bottom:1px solid #e5e7eb;
+      padding:16px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:700;
+      color:#16a34a;
+      text-decoration:none;
+    }
+
+    .header-links{
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+
+    .back{
+      color:#4b5563;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .container{
+      max-width:1200px;
+      margin:30px auto;
+      padding:0 20px;
+    }
+
+    .title-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .title h1{
+      font-size:28px;
+      margin-bottom:8px;
+    }
+
+    .title p{
+      color:#6b7280;
+    }
+
+    .btn-main{
+      background:#16a34a;
+      color:#fff;
+      text-decoration:none;
+      padding:11px 16px;
+      border-radius:8px;
+      font-weight:bold;
+      white-space:nowrap;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .stat{
+      background:#fff;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .stat small{
+      color:#6b7280;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:26px;
+      margin-top:8px;
+    }
+
+    .filters{
+      background:#fff;
+      padding:18px;
+      border-radius:12px;
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr 1fr auto;
+      gap:12px;
+      margin-bottom:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .filters input,
+    .filters select{
+      width:100%;
+      padding:11px 12px;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      outline:none;
+    }
+
+    .filters button{
+      border:none;
+      background:#16a34a;
+      color:#fff;
+      border-radius:8px;
+      padding:0 18px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:2fr 1fr;
+      gap:20px;
+    }
+
+    .panel{
+      background:#fff;
+      border-radius:12px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+      overflow:hidden;
+    }
+
+    .panel-title{
+      padding:18px 20px;
+      border-bottom:1px solid #e5e7eb;
+      font-size:18px;
+      font-weight:bold;
+    }
+
+    .alert-item{
+      padding:18px 20px;
+      border-bottom:1px solid #eef2f7;
+      display:grid;
+      grid-template-columns:48px 1fr auto;
+      gap:14px;
+      align-items:start;
+    }
+
+    .alert-item:last-child{
+      border-bottom:none;
+    }
+
+    .icon{
+      width:42px;
+      height:42px;
+      border-radius:10px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:20px;
+    }
+
+    .critical-icon{
+      background:#fee2e2;
+    }
+
+    .warning-icon{
+      background:#fef3c7;
+    }
+
+    .info-icon{
+      background:#dbeafe;
+    }
+
+    .alert-content h3{
+      font-size:15px;
+      margin-bottom:6px;
+    }
+
+    .alert-content p{
+      color:#6b7280;
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .alert-meta{
+      margin-top:8px;
+      font-size:12px;
+      color:#9ca3af;
+    }
+
+    .status{
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:20px;
+      font-size:11px;
+      font-weight:bold;
+      white-space:nowrap;
+    }
+
+    .critical{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .warning{
+      background:#fef3c7;
+      color:#b45309;
+    }
+
+    .info{
+      background:#dbeafe;
+      color:#1d4ed8;
+    }
+
+    .done{
+      background:#dcfce7;
+      color:#15803d;
+    }
+
+    .side-box{
+      padding:18px 20px;
+      border-bottom:1px solid #eef2f7;
+    }
+
+    .side-box:last-child{
+      border-bottom:none;
+    }
+
+    .side-box h3{
+      font-size:16px;
+      margin-bottom:12px;
+    }
+
+    .summary-row{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:9px 0;
+      font-size:14px;
+      border-bottom:1px solid #f1f5f9;
+    }
+
+    .summary-row:last-child{
+      border-bottom:none;
+    }
+
+    .summary-row span{
+      color:#6b7280;
+    }
+
+    .link{
+      display:block;
+      text-decoration:none;
+      color:#16a34a;
+      font-weight:bold;
+      padding:8px 0;
+      font-size:14px;
+    }
+
+    @media(max-width:900px){
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .filters{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:560px){
+      .stats{
+        grid-template-columns:1fr;
+      }
+
+      .filters{
+        grid-template-columns:1fr;
+      }
+
+      .title-row{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .alert-item{
+        grid-template-columns:42px 1fr;
+      }
+
+      .alert-item .status{
+        grid-column:2;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <a href="index.html" class="logo">🚚 VietTruck</a>
+
+  <div class="header-links">
+    <a href="dieu-phoi-van-tai.html" class="back">← Điều phối vận tải</a>
+    <a href="dashboard.html" class="back">Dashboard</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="title-row">
+
+    <div class="title">
+      <h1>Trung tâm cảnh báo vận tải</h1>
+      <p>Theo dõi các cảnh báo liên quan đến chuyến hàng, xe, tài xế và giấy tờ.</p>
+    </div>
+
+    <a href="dieu-phoi-van-tai.html" class="btn-main">
+      Mở bảng điều phối
+    </a>
+
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Tổng cảnh báo</small>
+      <strong>12</strong>
+    </div>
+
+    <div class="stat">
+      <small>Mức khẩn cấp</small>
+      <strong>3</strong>
+    </div>
+
+    <div class="stat">
+      <small>Cần xử lý hôm nay</small>
+      <strong>5</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đã xử lý</small>
+      <strong>18</strong>
+    </div>
+
+  </div>
+
+  <div class="filters">
+
+    <input type="text" placeholder="Tìm biển số xe, tài xế hoặc mã chuyến">
+
+    <select>
+      <option>Tất cả loại cảnh báo</option>
+      <option>Chuyến hàng</option>
+      <option>Đăng kiểm</option>
+      <option>Bảo hiểm</option>
+      <option>Bảo dưỡng</option>
+      <option>GPLX</option>
+      <option>GPS</option>
+    </select>
+
+    <select>
+      <option>Tất cả mức độ</option>
+      <option>Khẩn cấp</option>
+      <option>Cảnh báo</option>
+      <option>Thông tin</option>
+    </select>
+
+    <select>
+      <option>Tất cả trạng thái</option>
+      <option>Chưa xử lý</option>
+      <option>Đã xử lý</option>
+    </select>
+
+    <button>Tìm kiếm</button>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="panel">
+
+      <div class="panel-title">
+        Cảnh báo mới nhất
+      </div>
+
+      <div class="alert-item">
+
+        <div class="icon critical-icon">⏰</div>
+
+        <div class="alert-content">
+          <h3>Chuyến DH-090526-007 đang giao chậm</h3>
+          <p>
+            Xe 99H-456.78 đang chậm khoảng 25 phút so với lịch dự kiến.
+            Tài xế: Lê Văn Thành.
+          </p>
+          <div class="alert-meta">Cập nhật 5 phút trước</div>
+        </div>
+
+        <span class="status critical">Khẩn cấp</span>
+
+      </div>
+
+      <div class="alert-item">
+
+        <div class="icon critical-icon">📄</div>
+
+        <div class="alert-content">
+          <h3>Đăng kiểm xe 30H-678.90 sắp hết hạn</h3>
+          <p>
+            Hạn đăng kiểm còn dưới 7 ngày. Cần lên lịch kiểm định lại phương tiện.
+          </p>
+          <div class="alert-meta">Cập nhật 20 phút trước</div>
+        </div>
+
+        <span class="status critical">Khẩn cấp</span>
+
+      </div>
+
+      <div class="alert-item">
+
+        <div class="icon warning-icon">🔧</div>
+
+        <div class="alert-content">
+          <h3>Xe 99H-456.78 sắp đến mốc bảo dưỡng</h3>
+          <p>
+            Số km hiện tại 118.900 km. Mốc bảo dưỡng tiếp theo 120.000 km.
+          </p>
+          <div class="alert-meta">Cập nhật 1 giờ trước</div>
+        </div>
+
+        <span class="status warning">Cảnh báo</span>
+
+      </div>
+
+      <div class="alert-item">
+
+        <div class="icon warning-icon">🪪</div>
+
+        <div class="alert-content">
+          <h3>GPLX tài xế Phạm Quốc Anh sắp hết hạn</h3>
+          <p>
+            GPLX hạng FC sẽ hết hạn ngày 25/10/2026. Cần cập nhật hồ sơ mới.
+          </p>
+          <div class="alert-meta">Cập nhật hôm nay</div>
+        </div>
+
+        <span class="status warning">Cảnh báo</span>
+
+      </div>
+
+      <div class="alert-item">
+
+        <div class="icon info-icon">📡</div>
+
+        <div class="alert-content">
+          <h3>Xe 98C-333.66 mất tín hiệu GPS</h3>
+          <p>
+            Hệ thống chưa nhận được vị trí mới trong hơn 15 phút.
+          </p>
+          <div class="alert-meta">Cập nhật 12 phút trước</div>
+        </div>
+
+        <span class="status info">Thông tin</span>
+
+      </div>
+
+      <div class="alert-item">
+
+        <div class="icon info-icon">🛡️</div>
+
+        <div class="alert-content">
+          <h3>Bảo hiểm xe 99H-456.78 sắp hết hạn</h3>
+          <p>
+            Hợp đồng bảo hiểm còn khoảng 60 ngày hiệu lực.
+          </p>
+          <div class="alert-meta">Cập nhật hôm qua</div>
+        </div>
+
+        <span class="status info">Thông tin</span>
+
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <div class="panel-title">
+        Tổng quan
+      </div>
+
+      <div class="side-box">
+
+        <h3>Theo nhóm cảnh báo</h3>
+
+        <div class="summary-row">
+          <span>Chuyến hàng</span>
+          <strong>3</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Giấy tờ xe</span>
+          <strong>3</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Bảo dưỡng</span>
+          <strong>2</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Tài xế</span>
+          <strong>2</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>GPS / hành trình</span>
+          <strong>2</strong>
+        </div>
+
+      </div>
+
+      <div class="side-box">
+
+        <h3>Truy cập nhanh</h3>
+
+        <a href="dieu-phoi-van-tai.html" class="link">
+          🚚 Điều phối vận tải
+        </a>
+
+        <a href="theo-doi-hanh-trinh.html" class="link">
+          📍 Theo dõi hành trình
+        </a>
+
+        <a href="bao-duong-xe.html" class="link">
+          🔧 Bảo dưỡng xe
+        </a>
+
+        <a href="giay-to-xe.html" class="link">
+          📄 Giấy tờ xe
+        </a>
+
+        <a href="quan-ly-tai-xe.html" class="link">
+          👨‍✈️ Quản lý tài xế
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
