@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quản lý điều phối | VietTruck</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+body{
+  background:#f5f7fa;
+  color:#1f2937;
+}
+.header{
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  padding:16px 28px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  font-size:24px;
+  font-weight:700;
+  color:#16a34a;
+  text-decoration:none;
+}
+.header-links{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.header-links a{
+  color:#4b5563;
+  text-decoration:none;
+  font-size:14px;
+}
+.container{
+  max-width:1220px;
+  margin:30px auto;
+  padding:0 20px;
+}
+.title-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin-bottom:22px;
+}
+.title h1{
+  font-size:28px;
+  margin-bottom:8px;
+}
+.title p{
+  color:#6b7280;
+}
+.add-btn{
+  background:#16a34a;
+  color:#fff;
+  border:0;
+  padding:11px 16px;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:22px;
+}
+.stat{
+  background:#fff;
+  border-radius:12px;
+  padding:20px;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+.stat small{
+  color:#6b7280;
+}
+.stat strong{
+  display:block;
+  font-size:27px;
+  margin-top:8px;
+}
+.green{color:#16a34a}
+.blue{color:#2563eb}
+.orange{color:#d97706}
+.red{color:#dc2626}
+
+.filters{
+  background:#fff;
+  border-radius:12px;
+  padding:18px;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr auto;
+  gap:12px;
+  margin-bottom:20px;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+input,select,textarea{
+  width:100%;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  padding:11px;
+}
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+.search-btn{
+  border:0;
+  background:#16a34a;
+  color:#fff;
+  border-radius:8px;
+  padding:0 18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.table-wrap{
+  background:#fff;
+  border-radius:12px;
+  overflow:auto;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+  margin-bottom:22px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1200px;
+}
+th{
+  background:#f8fafc;
+  padding:14px 16px;
+  text-align:left;
+  font-size:13px;
+  color:#4b5563;
+  border-bottom:1px solid #e5e7eb;
+}
+td{
+  padding:15px 16px;
+  border-bottom:1px solid #eef2f7;
+  font-size:14px;
+  vertical-align:top;
+}
+.status{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
+}
+.active{background:#dcfce7;color:#15803d}
+.busy{background:#fef3c7;color:#b45309}
+.off{background:#fee2e2;color:#b91c1c}
+
+.action{
+  color:#16a34a;
+  text-decoration:none;
+  font-weight:bold;
+  font-size:13px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.panel{
+  background:#fff;
+  border-radius:12px;
+  padding:20px;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+.panel h2{
+  font-size:18px;
+  margin-bottom:16px;
+}
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:11px 0;
+  border-bottom:1px solid #eef2f7;
+  font-size:14px;
+}
+.summary-row span{
+  color:#6b7280;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:100;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.modal-box{
+  background:#fff;
+  width:100%;
+  max-width:720px;
+  border-radius:14px;
+  padding:24px;
+  max-height:90vh;
+  overflow:auto;
+}
+.modal-box h2{
+  margin-bottom:18px;
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.form-group{
+  margin-bottom:12px;
+}
+.form-group label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+.modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:18px;
+}
+.cancel{
+  border:1px solid #d1d5db;
+  background:#fff;
+  padding:10px 16px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.save{
+  border:0;
+  background:#16a34a;
+  color:#fff;
+  padding:10px 16px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+@media(max-width:900px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .filters{grid-template-columns:1fr 1fr}
+  .grid{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .stats,.filters,.form-grid{grid-template-columns:1fr}
+  .title-row{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <a href="index.html" class="logo">🚚 VietTruck</a>
+
+  <div class="header-links">
+    <a href="dieu-phoi-van-tai.html">Điều phối vận tải</a>
+    <a href="phan-cong-chuyen.html">Phân công chuyến</a>
+    <a href="quan-ly-tai-xe.html">Tài xế</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="title-row">
+    <div class="title">
+      <h1>Quản lý nhân viên điều phối</h1>
+      <p>Theo dõi nhân sự điều phối, số chuyến phụ trách, tỷ lệ đúng giờ, xử lý sự cố và hiệu suất làm việc.</p>
+    </div>
+
+    <button class="add-btn" onclick="openModal()">
+      + Thêm điều phối viên
+    </button>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Điều phối viên</small>
+      <strong>8</strong>
+    </div>
+
+    <div class="stat">
+      <small>Chuyến đang phụ trách</small>
+      <strong class="blue">46</strong>
+    </div>
+
+    <div class="stat">
+      <small>Tỷ lệ giao đúng giờ</small>
+      <strong class="green">94,6%</strong>
+    </div>
+
+    <div class="stat">
+      <small>Sự cố đang xử lý</small>
+      <strong class="orange">6</strong>
+    </div>
+
+  </div>
+
+  <div class="filters">
+
+    <input type="text" placeholder="Tìm tên, mã nhân viên hoặc số điện thoại">
+
+    <select>
+      <option>Tất cả khu vực</option>
+      <option>Miền Bắc</option>
+      <option>Miền Trung</option>
+      <option>Miền Nam</option>
+    </select>
+
+    <select>
+      <option>Tất cả ca làm việc</option>
+      <option>Ca sáng</option>
+      <option>Ca chiều</option>
+      <option>Ca tối</option>
+    </select>
+
+    <select>
+      <option>Tất cả trạng thái</option>
+      <option>Đang trực</option>
+      <option>Đang bận</option>
+      <option>Nghỉ ca</option>
+    </select>
+
+    <button class="search-btn">Tìm kiếm</button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Mã NV</th>
+          <th>Điều phối viên</th>
+          <th>Khu vực</th>
+          <th>Ca làm việc</th>
+          <th>Chuyến đang xử lý</th>
+          <th>Chuyến hôm nay</th>
+          <th>Đúng giờ</th>
+          <th>Sự cố</th>
+          <th>Trạng thái</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td><strong>DP001</strong></td>
+          <td>
+            <strong>Nguyễn Văn Hải</strong><br>
+            <small>0988 112 233</small>
+          </td>
+          <td>Miền Bắc</td>
+          <td>Ca sáng</td>
+          <td>8 chuyến</td>
+          <td>14 chuyến</td>
+          <td class="green"><strong>97%</strong></td>
+          <td>1</td>
+          <td><span class="status active">Đang trực</span></td>
+          <td><a href="dieu-phoi-van-tai.html" class="action">Xem chuyến</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>DP002</strong></td>
+          <td>
+            <strong>Trần Quốc Nam</strong><br>
+            <small>0912 445 566</small>
+          </td>
+          <td>Miền Bắc</td>
+          <td>Ca sáng</td>
+          <td>11 chuyến</td>
+          <td>16 chuyến</td>
+          <td class="green"><strong>95%</strong></td>
+          <td>2</td>
+          <td><span class="status busy">Đang bận</span></td>
+          <td><a href="dieu-phoi-van-tai.html" class="action">Xem chuyến</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>DP003</strong></td>
+          <td>
+            <strong>Lê Minh Anh</strong><br>
+            <small>0904 667 788</small>
+          </td>
+          <td>Miền Trung</td>
+          <td>Ca chiều</td>
+          <td>6 chuyến</td>
+          <td>9 chuyến</td>
+          <td class="green"><strong>93%</strong></td>
+          <td>1</td>
+          <td><span class="status active">Đang trực</span></td>
+          <td><a href="dieu-phoi-van-tai.html" class="action">Xem chuyến</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>DP004</strong></td>
+          <td>
+            <strong>Phạm Quốc Trung</strong><br>
+            <small>0977 889 900</small>
+          </td>
+          <td>Miền Nam</td>
+          <td>Ca tối</td>
+          <td>0 chuyến</td>
+          <td>7 chuyến</td>
+          <td class="green"><strong>96%</strong></td>
+          <td>0</td>
+          <td><span class="status off">Nghỉ ca</span></td>
+          <td><a href="#" class="action">Xem hồ sơ</a></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="panel">
+      <h2>Hiệu suất điều phối</h2>
+
+      <div class="summary-row">
+        <span>Tổng chuyến hôm nay</span>
+        <strong>78</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Đã phân công xe</span>
+        <strong class="green">72</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Chờ phân công</span>
+        <strong class="orange">6</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Giao đúng giờ</span>
+        <strong class="green">94,6%</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Chuyến có sự cố</span>
+        <strong class="red">6</strong>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Công việc điều phối</h2>
+
+      <div class="summary-row">
+        <span>Chuyến cần phân công</span>
+        <strong class="orange">6</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Xe mất tín hiệu GPS</span>
+        <strong class="red">2</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Chuyến có nguy cơ trễ</span>
+        <strong class="orange">4</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Sự cố cần xử lý</span>
+        <strong class="red">6</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Chuyến đã hoàn thành</span>
+        <strong class="green">38</strong>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal" id="dispatcherModal">
+
+  <div class="modal-box">
+
+    <h2>Thêm điều phối viên</h2>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Họ và tên</label>
+        <input type="text" placeholder="Nhập họ tên">
+      </div>
+
+      <div class="form-group">
+        <label>Mã nhân viên</label>
+        <input type="text" placeholder="VD: DP005">
+      </div>
+
+      <div class="form-group">
+        <label>Số điện thoại</label>
+        <input type="tel" placeholder="09xxxxxxxx">
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="dieuphoi@viettruck.vn">
+      </div>
+
+      <div class="form-group">
+        <label>Khu vực phụ trách</label>
+        <select>
+          <option>Miền Bắc</option>
+          <option>Miền Trung</option>
+          <option>Miền Nam</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Ca làm việc</label>
+        <select>
+          <option>Ca sáng</option>
+          <option>Ca chiều</option>
+          <option>Ca tối</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Trạng thái</label>
+        <select>
+          <option>Đang trực</option>
+          <option>Đang bận</option>
+          <option>Nghỉ ca</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Số chuyến tối đa phụ trách</label>
+        <input type="number" placeholder="VD: 15">
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label>Ghi chú</label>
+      <textarea placeholder="Kinh nghiệm, tuyến phụ trách, loại xe thường điều phối..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button class="cancel" onclick="closeModal()">Hủy</button>
+      <button class="save" onclick="saveDispatcher()">Lưu nhân viên</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function openModal(){
+  document.getElementById("dispatcherModal").style.display="flex";
+}
+
+function closeModal(){
+  document.getElementById("dispatcherModal").style.display="none";
+}
+
+function saveDispatcher(){
+  alert("Đã ghi nhận điều phối viên.");
+  closeModal();
+}
+</script>
+
+</body>
+</html>
