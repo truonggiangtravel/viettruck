@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phân công chuyến | VietTruck</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f5f7fa;
+      color:#1f2937;
+    }
+
+    .header{
+      background:#fff;
+      border-bottom:1px solid #e5e7eb;
+      padding:16px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:700;
+      color:#16a34a;
+      text-decoration:none;
+    }
+
+    .back{
+      color:#4b5563;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .container{
+      max-width:1180px;
+      margin:30px auto;
+      padding:0 20px;
+    }
+
+    .title{
+      margin-bottom:22px;
+    }
+
+    .title h1{
+      font-size:28px;
+      margin-bottom:7px;
+    }
+
+    .title p{
+      color:#6b7280;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .stat{
+      background:#fff;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .stat small{
+      color:#6b7280;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:26px;
+      margin-top:8px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    .card{
+      background:#fff;
+      border-radius:12px;
+      padding:22px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .card h2{
+      font-size:19px;
+      margin-bottom:18px;
+    }
+
+    .field{
+      margin-bottom:16px;
+    }
+
+    .field label{
+      display:block;
+      font-size:13px;
+      font-weight:bold;
+      margin-bottom:7px;
+      color:#374151;
+    }
+
+    .field input,
+    .field select,
+    .field textarea{
+      width:100%;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      padding:11px 12px;
+      outline:none;
+      background:#fff;
+    }
+
+    .field textarea{
+      min-height:90px;
+      resize:vertical;
+    }
+
+    .trip{
+      border:1px solid #e5e7eb;
+      border-radius:10px;
+      padding:16px;
+      margin-bottom:12px;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .trip:hover{
+      border-color:#16a34a;
+      background:#f8fff9;
+    }
+
+    .trip.active{
+      border:2px solid #16a34a;
+      background:#f0fdf4;
+    }
+
+    .trip-top{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:8px;
+    }
+
+    .trip strong{
+      font-size:15px;
+    }
+
+    .price{
+      color:#16a34a;
+      font-weight:bold;
+    }
+
+    .route{
+      font-weight:bold;
+      margin-bottom:6px;
+    }
+
+    .meta{
+      font-size:13px;
+      color:#6b7280;
+      line-height:1.6;
+    }
+
+    .summary{
+      margin-top:20px;
+      background:#f8fafc;
+      border-radius:10px;
+      padding:16px;
+    }
+
+    .summary-row{
+      display:flex;
+      justify-content:space-between;
+      gap:15px;
+      padding:8px 0;
+      border-bottom:1px solid #e5e7eb;
+      font-size:14px;
+    }
+
+    .summary-row:last-child{
+      border-bottom:none;
+    }
+
+    .summary span{
+      color:#6b7280;
+    }
+
+    .btn{
+      width:100%;
+      margin-top:18px;
+      border:none;
+      background:#16a34a;
+      color:#fff;
+      padding:13px;
+      border-radius:9px;
+      font-weight:bold;
+      font-size:15px;
+      cursor:pointer;
+    }
+
+    .note{
+      margin-top:12px;
+      font-size:12px;
+      color:#6b7280;
+      line-height:1.5;
+    }
+
+    @media(max-width:850px){
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:520px){
+      .stats{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <a href="index.html" class="logo">🚚 VietTruck</a>
+  <a href="quan-ly-tai-xe.html" class="back">← Quản lý tài xế</a>
+</header>
+
+<div class="container">
+
+  <div class="title">
+    <h1>Phân công chuyến</h1>
+    <p>Ghép chuyến hàng với phương tiện và tài xế phù hợp.</p>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Chuyến chờ phân công</small>
+      <strong>8</strong>
+    </div>
+
+    <div class="stat">
+      <small>Tài xế sẵn sàng</small>
+      <strong>9</strong>
+    </div>
+
+    <div class="stat">
+      <small>Xe đang rảnh</small>
+      <strong>7</strong>
+    </div>
+
+    <div class="stat">
+      <small>Đang thực hiện</small>
+      <strong>6</strong>
+    </div>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+
+      <h2>1. Chọn chuyến hàng</h2>
+
+      <div class="trip active">
+        <div class="trip-top">
+          <strong>DH-090526-001</strong>
+          <span class="price">3.200.000đ</span>
+        </div>
+
+        <div class="route">Bắc Ninh → Hải Phòng</div>
+
+        <div class="meta">
+          Hàng: Linh kiện điện tử<br>
+          Khối lượng: 8 tấn<br>
+          Nhận hàng: 18:00 - 05/09/2026
+        </div>
+      </div>
+
+      <div class="trip">
+        <div class="trip-top">
+          <strong>DH-090526-002</strong>
+          <span class="price">2.450.000đ</span>
+        </div>
+
+        <div class="route">Hà Nội → Bắc Giang</div>
+
+        <div class="meta">
+          Hàng: Thực phẩm đóng gói<br>
+          Khối lượng: 5 tấn<br>
+          Nhận hàng: 19:30 - 05/09/2026
+        </div>
+      </div>
+
+      <div class="trip">
+        <div class="trip-top">
+          <strong>DH-090526-003</strong>
+          <span class="price">4.800.000đ</span>
+        </div>
+
+        <div class="route">Bắc Ninh → Quảng Ninh</div>
+
+        <div class="meta">
+          Hàng: Máy móc công nghiệp<br>
+          Khối lượng: 12 tấn<br>
+          Nhận hàng: 06:30 - 06/09/2026
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h2>2. Chọn xe và tài xế</h2>
+
+      <div class="field">
+        <label>Phương tiện</label>
+
+        <select id="vehicle">
+          <option>99C-123.45 - Xe tải 8 tấn</option>
+          <option>99H-456.78 - Xe tải 10 tấn</option>
+          <option>30H-678.90 - Đầu kéo container</option>
+          <option>98C-333.66 - Xe tải 5 tấn</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Tài xế</label>
+
+        <select id="driver">
+          <option>Nguyễn Văn Nam - GPLX FC - ★ 4.9</option>
+          <option>Trần Văn Cường - GPLX C - ★ 4.8</option>
+          <option>Phạm Quốc Anh - GPLX FC - ★ 4.7</option>
+          <option>Lê Văn Thành - GPLX C1 - ★ 4.9</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Thời gian tài xế nhận chuyến</label>
+        <input type="datetime-local">
+      </div>
+
+      <div class="field">
+        <label>Số điện thoại điều phối</label>
+        <input type="text" value="0901 234 567">
+      </div>
+
+      <div class="field">
+        <label>Ghi chú cho tài xế</label>
+        <textarea placeholder="Ví dụ: Liên hệ kho trước 30 phút, mang theo bạt phủ hàng..."></textarea>
+      </div>
+
+      <div class="summary">
+
+        <div class="summary-row">
+          <span>Mã chuyến</span>
+          <strong>DH-090526-001</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Tuyến</span>
+          <strong>Bắc Ninh → Hải Phòng</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Xe</span>
+          <strong>99C-123.45</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Tài xế</span>
+          <strong>Nguyễn Văn Nam</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Cước vận chuyển</span>
+          <strong>3.200.000đ</strong>
+        </div>
+
+      </div>
+
+      <button class="btn" onclick="assignTrip()">
+        Xác nhận phân công chuyến
+      </button>
+
+      <div class="note">
+        Sau khi xác nhận, chuyến sẽ chuyển sang trạng thái
+        “Đã phân công” và tài xế có thể bắt đầu hành trình.
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function assignTrip(){
+  alert(
+    "Phân công chuyến thành công!\\n\\n" +
+    "Chuyến: DH-090526-001\\n" +
+    "Xe: 99C-123.45\\n" +
+    "Tài xế: Nguyễn Văn Nam"
+  );
+}
+</script>
+
+</body>
+</html>
