@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đổi mật khẩu | VietTruck</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:#f5f7fa;
+  color:#1f2937;
+}
+
+.header{
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  padding:16px 28px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  color:#16a34a;
+  font-size:24px;
+  font-weight:800;
+  text-decoration:none;
+}
+
+.header-links{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.header-links a{
+  color:#4b5563;
+  text-decoration:none;
+  font-size:14px;
+}
+
+.container{
+  max-width:560px;
+  margin:60px auto;
+  padding:0 20px;
+}
+
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:32px;
+  box-shadow:0 5px 25px rgba(0,0,0,.07);
+}
+
+.icon{
+  width:64px;
+  height:64px;
+  margin:0 auto 18px;
+  border-radius:50%;
+  background:#dcfce7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+}
+
+h1{
+  text-align:center;
+  font-size:27px;
+  margin-bottom:9px;
+}
+
+.desc{
+  text-align:center;
+  color:#6b7280;
+  font-size:14px;
+  line-height:1.6;
+  margin-bottom:28px;
+}
+
+.form-group{
+  margin-bottom:18px;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+
+.password-box{
+  position:relative;
+}
+
+input{
+  width:100%;
+  padding:13px 45px 13px 14px;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  outline:none;
+  font-size:14px;
+}
+
+input:focus{
+  border-color:#16a34a;
+  box-shadow:0 0 0 3px rgba(22,163,74,.1);
+}
+
+.eye{
+  position:absolute;
+  right:14px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  user-select:none;
+}
+
+.rules{
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  padding:15px;
+  margin-bottom:20px;
+}
+
+.rules strong{
+  display:block;
+  margin-bottom:9px;
+  font-size:13px;
+}
+
+.rules p{
+  font-size:12px;
+  color:#6b7280;
+  line-height:1.8;
+}
+
+.save-btn{
+  width:100%;
+  border:0;
+  border-radius:9px;
+  padding:14px;
+  background:#16a34a;
+  color:#fff;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.save-btn:hover{
+  background:#15803d;
+}
+
+.back{
+  text-align:center;
+  margin-top:20px;
+}
+
+.back a{
+  color:#16a34a;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:700;
+}
+
+.success{
+  display:none;
+  background:#f0fdf4;
+  border:1px solid #bbf7d0;
+  color:#166534;
+  padding:14px;
+  border-radius:10px;
+  margin-top:18px;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.notice{
+  margin-top:20px;
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#9a3412;
+  padding:14px;
+  border-radius:10px;
+  font-size:12px;
+  line-height:1.6;
+}
+
+@media(max-width:600px){
+  .header{
+    padding:15px 18px;
+  }
+
+  .header-links{
+    gap:10px;
+  }
+
+  .container{
+    margin:30px auto;
+  }
+
+  .card{
+    padding:24px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <a href="dashboard.html" class="logo">
+    🚚 VietTruck
+  </a>
+
+  <div class="header-links">
+    <a href="quan-ly-tai-khoan.html">Tài khoản</a>
+    <a href="cai-dat-he-thong.html">Cài đặt</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+
+</header>
+
+<div class="container">
+
+  <div class="card">
+
+    <div class="icon">🔐</div>
+
+    <h1>Đổi mật khẩu</h1>
+
+    <p class="desc">
+      Thay đổi mật khẩu đăng nhập tài khoản VietTruck.
+      Không sử dụng mật khẩu dễ đoán hoặc chia sẻ mật khẩu với người khác.
+    </p>
+
+    <form onsubmit="changePassword(event)">
+
+      <div class="form-group">
+
+        <label>Mật khẩu hiện tại</label>
+
+        <div class="password-box">
+
+          <input
+            id="currentPassword"
+            type="password"
+            placeholder="Nhập mật khẩu hiện tại"
+            required
+          >
+
+          <span class="eye"
+                onclick="togglePassword('currentPassword')">
+            👁
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>Mật khẩu mới</label>
+
+        <div class="password-box">
+
+          <input
+            id="newPassword"
+            type="password"
+            placeholder="Nhập mật khẩu mới"
+            minlength="8"
+            required
+          >
+
+          <span class="eye"
+                onclick="togglePassword('newPassword')">
+            👁
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>Nhập lại mật khẩu mới</label>
+
+        <div class="password-box">
+
+          <input
+            id="confirmPassword"
+            type="password"
+            placeholder="Nhập lại mật khẩu mới"
+            minlength="8"
+            required
+          >
+
+          <span class="eye"
+                onclick="togglePassword('confirmPassword')">
+            👁
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="rules">
+
+        <strong>Yêu cầu mật khẩu</strong>
+
+        <p>
+          ✓ Tối thiểu 8 ký tự<br>
+          ✓ Nên có chữ hoa và chữ thường<br>
+          ✓ Nên có ít nhất một chữ số<br>
+          ✓ Nên có ký tự đặc biệt<br>
+          ✓ Không sử dụng lại mật khẩu cũ
+        </p>
+
+      </div>
+
+
+      <button type="submit" class="save-btn">
+        Đổi mật khẩu
+      </button>
+
+    </form>
+
+
+    <div class="success" id="successBox">
+      ✅ Đã ghi nhận yêu cầu đổi mật khẩu.
+      Trong hệ thống chính thức, bạn sẽ cần đăng nhập lại bằng mật khẩu mới.
+    </div>
+
+
+    <div class="back">
+      <a href="dashboard.html">
+        ← Quay lại Dashboard
+      </a>
+    </div>
+
+
+    <div class="notice">
+      ⚠️ Đây là giao diện mô phỏng. Mật khẩu hiện chưa được lưu hoặc thay đổi thật.
+      Khi triển khai chính thức, chức năng này cần backend, cơ sở dữ liệu,
+      xác thực phiên đăng nhập và lưu mật khẩu dưới dạng mã hóa/băm an toàn.
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+function togglePassword(id){
+
+  const input = document.getElementById(id);
+
+  if(input.type === "password"){
+    input.type = "text";
+  }else{
+    input.type = "password";
+  }
+
+}
+
+
+function changePassword(event){
+
+  event.preventDefault();
+
+  const current =
+    document.getElementById("currentPassword").value;
+
+  const newPassword =
+    document.getElementById("newPassword").value;
+
+  const confirm =
+    document.getElementById("confirmPassword").value;
+
+
+  if(newPassword.length < 8){
+
+    alert("Mật khẩu mới phải có ít nhất 8 ký tự.");
+    return;
+
+  }
+
+
+  if(newPassword !== confirm){
+
+    alert("Mật khẩu mới nhập lại chưa khớp.");
+    return;
+
+  }
+
+
+  if(current === newPassword){
+
+    alert("Mật khẩu mới không nên giống mật khẩu hiện tại.");
+    return;
+
+  }
+
+
+  document.getElementById("successBox").style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>
