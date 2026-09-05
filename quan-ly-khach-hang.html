@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý khách hàng | VietTruck</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial,Helvetica,sans-serif;
+    }
+
+    body{
+      background:#f5f7fa;
+      color:#1f2937;
+    }
+
+    .header{
+      background:#fff;
+      border-bottom:1px solid #e5e7eb;
+      padding:16px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:700;
+      color:#16a34a;
+      text-decoration:none;
+    }
+
+    .header-links{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .header-links a{
+      color:#4b5563;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .container{
+      max-width:1220px;
+      margin:30px auto;
+      padding:0 20px;
+    }
+
+    .title-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .title h1{
+      font-size:28px;
+      margin-bottom:8px;
+    }
+
+    .title p{
+      color:#6b7280;
+    }
+
+    .add-btn{
+      background:#16a34a;
+      color:#fff;
+      border:0;
+      padding:11px 16px;
+      border-radius:8px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .stat{
+      background:#fff;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .stat small{
+      color:#6b7280;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:27px;
+      margin-top:8px;
+    }
+
+    .green{color:#16a34a;}
+    .orange{color:#d97706;}
+    .red{color:#dc2626;}
+    .blue{color:#2563eb;}
+
+    .filters{
+      background:#fff;
+      border-radius:12px;
+      padding:18px;
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr 1fr auto;
+      gap:12px;
+      margin-bottom:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    input,select,textarea{
+      width:100%;
+      border:1px solid #d1d5db;
+      border-radius:8px;
+      padding:11px;
+    }
+
+    textarea{
+      min-height:90px;
+      resize:vertical;
+    }
+
+    .search-btn{
+      border:0;
+      background:#16a34a;
+      color:#fff;
+      border-radius:8px;
+      padding:0 18px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .table-wrap{
+      background:#fff;
+      border-radius:12px;
+      overflow:auto;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+      margin-bottom:22px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:1200px;
+    }
+
+    th{
+      background:#f8fafc;
+      padding:14px 16px;
+      text-align:left;
+      font-size:13px;
+      color:#4b5563;
+      border-bottom:1px solid #e5e7eb;
+    }
+
+    td{
+      padding:15px 16px;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+      vertical-align:top;
+    }
+
+    .status{
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:20px;
+      font-size:11px;
+      font-weight:bold;
+      white-space:nowrap;
+    }
+
+    .active{
+      background:#dcfce7;
+      color:#15803d;
+    }
+
+    .potential{
+      background:#dbeafe;
+      color:#1d4ed8;
+    }
+
+    .warning{
+      background:#fef3c7;
+      color:#b45309;
+    }
+
+    .inactive{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .action{
+      color:#16a34a;
+      text-decoration:none;
+      font-weight:bold;
+      font-size:13px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    .panel{
+      background:#fff;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .panel h2{
+      font-size:18px;
+      margin-bottom:16px;
+    }
+
+    .summary-row{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:11px 0;
+      border-bottom:1px solid #eef2f7;
+      font-size:14px;
+    }
+
+    .summary-row span{
+      color:#6b7280;
+    }
+
+    .quick-link{
+      display:block;
+      text-decoration:none;
+      color:#374151;
+      padding:11px 0;
+      border-bottom:1px solid #eef2f7;
+    }
+
+    .quick-link:hover{
+      color:#16a34a;
+    }
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.45);
+      z-index:100;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .modal-box{
+      background:#fff;
+      width:100%;
+      max-width:760px;
+      border-radius:14px;
+      padding:24px;
+      max-height:90vh;
+      overflow:auto;
+    }
+
+    .modal-box h2{
+      margin-bottom:18px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .form-group{
+      margin-bottom:12px;
+    }
+
+    .form-group label{
+      display:block;
+      font-size:13px;
+      font-weight:bold;
+      margin-bottom:6px;
+    }
+
+    .modal-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .cancel{
+      border:1px solid #d1d5db;
+      background:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+    }
+
+    .save{
+      border:0;
+      background:#16a34a;
+      color:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    @media(max-width:900px){
+      .stats{grid-template-columns:repeat(2,1fr);}
+      .filters{grid-template-columns:1fr 1fr;}
+      .grid{grid-template-columns:1fr;}
+    }
+
+    @media(max-width:560px){
+      .stats,.filters,.form-grid{grid-template-columns:1fr;}
+      .title-row{flex-direction:column;align-items:flex-start;}
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <a href="index.html" class="logo">🚚 VietTruck</a>
+
+  <div class="header-links">
+    <a href="trung-tam-bao-gia.html">Báo giá</a>
+    <a href="hop-dong-van-tai.html">Hợp đồng</a>
+    <a href="cong-no-van-tai.html">Công nợ</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+
+</header>
+
+<div class="container">
+
+  <div class="title-row">
+
+    <div class="title">
+      <h1>Quản lý khách hàng</h1>
+      <p>Quản lý chủ hàng, doanh nghiệp, liên hệ, đơn hàng, báo giá, hợp đồng và công nợ.</p>
+    </div>
+
+    <button class="add-btn" onclick="openModal()">
+      + Thêm khách hàng
+    </button>
+
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <small>Tổng khách hàng</small>
+      <strong>168</strong>
+    </div>
+
+    <div class="stat">
+      <small>Khách đang hoạt động</small>
+      <strong class="green">126</strong>
+    </div>
+
+    <div class="stat">
+      <small>Khách tiềm năng</small>
+      <strong class="blue">31</strong>
+    </div>
+
+    <div class="stat">
+      <small>Có công nợ quá hạn</small>
+      <strong class="red">11</strong>
+    </div>
+
+  </div>
+
+  <div class="filters">
+
+    <input type="text" placeholder="Tìm tên khách hàng, công ty, số điện thoại">
+
+    <select>
+      <option>Tất cả loại khách hàng</option>
+      <option>Doanh nghiệp</option>
+      <option>Chủ hàng cá nhân</option>
+      <option>Đại lý</option>
+      <option>Khách hàng dự án</option>
+    </select>
+
+    <select>
+      <option>Tất cả khu vực</option>
+      <option>Miền Bắc</option>
+      <option>Miền Trung</option>
+      <option>Miền Nam</option>
+    </select>
+
+    <select>
+      <option>Tất cả trạng thái</option>
+      <option>Đang hoạt động</option>
+      <option>Tiềm năng</option>
+      <option>Cần chăm sóc</option>
+      <option>Ngừng giao dịch</option>
+    </select>
+
+    <button class="search-btn">Tìm kiếm</button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Mã KH</th>
+          <th>Khách hàng</th>
+          <th>Liên hệ</th>
+          <th>Khu vực</th>
+          <th>Đơn hàng</th>
+          <th>Doanh thu</th>
+          <th>Công nợ</th>
+          <th>Hợp đồng</th>
+          <th>Trạng thái</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td><strong>KH00128</strong></td>
+          <td>
+            <strong>Công ty ABC Logistics</strong><br>
+            <small>MST: 2300123456</small>
+          </td>
+          <td>
+            Nguyễn Văn Minh<br>
+            0988 123 456
+          </td>
+          <td>Bắc Ninh</td>
+          <td>38 chuyến</td>
+          <td><strong>1,28 tỷ</strong></td>
+          <td class="green"><strong>0 đ</strong></td>
+          <td>HĐ-2026-028</td>
+          <td><span class="status active">Đang hoạt động</span></td>
+          <td><a href="#" class="action">Xem hồ sơ</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>KH00117</strong></td>
+          <td>
+            <strong>Công ty Minh Phát</strong><br>
+            <small>MST: 0107654321</small>
+          </td>
+          <td>
+            Trần Quốc Hùng<br>
+            0912 555 668
+          </td>
+          <td>Hà Nội</td>
+          <td>19 chuyến</td>
+          <td><strong>620 triệu</strong></td>
+          <td class="orange"><strong>48 triệu</strong></td>
+          <td>HĐ-2026-019</td>
+          <td><span class="status warning">Cần chăm sóc</span></td>
+          <td><a href="cong-no-van-tai.html" class="action">Xem công nợ</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>KH00142</strong></td>
+          <td>
+            <strong>Chủ hàng Hoàng Anh</strong><br>
+            <small>Cá nhân</small>
+          </td>
+          <td>
+            Hoàng Anh<br>
+            0975 221 889
+          </td>
+          <td>Hải Phòng</td>
+          <td>4 chuyến</td>
+          <td><strong>96 triệu</strong></td>
+          <td>12 triệu</td>
+          <td>Chưa có</td>
+          <td><span class="status potential">Tiềm năng</span></td>
+          <td><a href="trung-tam-bao-gia.html" class="action">Tạo báo giá</a></td>
+        </tr>
+
+        <tr>
+          <td><strong>KH00086</strong></td>
+          <td>
+            <strong>Công ty Đông Á</strong><br>
+            <small>MST: 0201987654</small>
+          </td>
+          <td>
+            Lê Thành Nam<br>
+            0904 336 998
+          </td>
+          <td>Hải Dương</td>
+          <td>44 chuyến</td>
+          <td><strong>730 triệu</strong></td>
+          <td>0 đ</td>
+          <td>HĐ-2025-014</td>
+          <td><span class="status inactive">Ngừng giao dịch</span></td>
+          <td><a href="#" class="action">Xem hồ sơ</a></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="panel">
+
+      <h2>Tổng hợp khách hàng</h2>
+
+      <div class="summary-row">
+        <span>Khách hàng doanh nghiệp</span>
+        <strong>112</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Chủ hàng cá nhân</span>
+        <strong>38</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Khách mới tháng này</span>
+        <strong class="green">14</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Khách chưa phát sinh đơn</span>
+        <strong class="orange">22</strong>
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <h2>Liên kết nghiệp vụ</h2>
+
+      <a href="trung-tam-bao-gia.html" class="quick-link">
+        💬 Trung tâm báo giá
+      </a>
+
+      <a href="hop-dong-van-tai.html" class="quick-link">
+        📝 Hợp đồng vận tải
+      </a>
+
+      <a href="quan-ly-don-hang.html" class="quick-link">
+        🚚 Quản lý đơn hàng
+      </a>
+
+      <a href="cong-no-van-tai.html" class="quick-link">
+        🧾 Công nợ vận tải
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal" id="customerModal">
+
+  <div class="modal-box">
+
+    <h2>Thêm khách hàng</h2>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Loại khách hàng</label>
+        <select>
+          <option>Doanh nghiệp</option>
+          <option>Chủ hàng cá nhân</option>
+          <option>Đại lý</option>
+          <option>Khách hàng dự án</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Tên khách hàng / công ty</label>
+        <input type="text" placeholder="Nhập tên khách hàng">
+      </div>
+
+      <div class="form-group">
+        <label>Mã số thuế</label>
+        <input type="text" placeholder="Nhập mã số thuế">
+      </div>
+
+      <div class="form-group">
+        <label>Người liên hệ</label>
+        <input type="text" placeholder="Họ và tên">
+      </div>
+
+      <div class="form-group">
+        <label>Số điện thoại</label>
+        <input type="tel" placeholder="09xxxxxxxx">
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="email@congty.vn">
+      </div>
+
+      <div class="form-group">
+        <label>Tỉnh / thành phố</label>
+        <input type="text" placeholder="Ví dụ: Bắc Ninh">
+      </div>
+
+      <div class="form-group">
+        <label>Trạng thái</label>
+        <select>
+          <option>Tiềm năng</option>
+          <option>Đang hoạt động</option>
+          <option>Cần chăm sóc</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label>Địa chỉ</label>
+      <input type="text" placeholder="Địa chỉ khách hàng">
+    </div>
+
+    <div class="form-group">
+      <label>Ghi chú</label>
+      <textarea placeholder="Nhu cầu vận chuyển, tuyến thường đi, loại hàng, điều khoản thanh toán..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+
+      <button class="cancel" onclick="closeModal()">
+        Hủy
+      </button>
+
+      <button class="save" onclick="saveCustomer()">
+        Lưu khách hàng
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  function openModal(){
+    document.getElementById("customerModal").style.display="flex";
+  }
+
+  function closeModal(){
+    document.getElementById("customerModal").style.display="none";
+  }
+
+  function saveCustomer(){
+    alert("Đã ghi nhận khách hàng.");
+    closeModal();
+  }
+</script>
+
+</body>
+</html>
