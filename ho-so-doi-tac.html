@@ -1006,6 +1006,89 @@ function editProfile(){
     "Chức năng chỉnh sửa hồ sơ đối tác sẽ được kết nối ở bước tiếp theo."
   );
 }
+  const partnerData = {
+
+  "Nhà xe Thành Công": {
+    type: "Nhà xe",
+    code: "VT-DT-000124",
+    icon: "🚛",
+    representative: "Nguyễn Văn Thành",
+    phone: "0988 111 222",
+    email: "thanhcong@transport.vn",
+    tax: "0109XXXXXX",
+    address: "Hà Nội, Việt Nam",
+    area: "Miền Bắc & Bắc Trung Bộ",
+    vehicles: "28 xe",
+    drivers: "31 tài xế",
+    rating: "4.8/5",
+    transactions: "312 chuyến"
+  },
+
+  "Công ty ABC Việt Nam": {
+    type: "Chủ hàng",
+    code: "VT-DT-000086",
+    icon: "📦",
+    representative: "Trần Văn Minh",
+    phone: "0901 234 567",
+    email: "contact@abc.vn",
+    tax: "2300XXXXXX",
+    address: "Bắc Ninh, Việt Nam",
+    area: "Bắc Ninh - Hà Nội - Hải Phòng",
+    vehicles: "Không áp dụng",
+    drivers: "Không áp dụng",
+    rating: "4.9/5",
+    transactions: "126 đơn"
+  },
+
+  "Logistics Đông Á": {
+    type: "Doanh nghiệp logistics",
+    code: "VT-DT-000173",
+    icon: "🌐",
+    representative: "Lê Quốc Đông",
+    phone: "0977 888 999",
+    email: "info@donga-logistics.vn",
+    tax: "0202XXXXXX",
+    address: "Hải Phòng, Việt Nam",
+    area: "Toàn quốc",
+    vehicles: "42 xe liên kết",
+    drivers: "48 tài xế liên kết",
+    rating: "4.7/5",
+    transactions: "84 đơn"
+  },
+
+  "Công ty Minh Phát": {
+    type: "Khách hàng doanh nghiệp",
+    code: "VT-DT-000241",
+    icon: "🏢",
+    representative: "Phạm Minh Đức",
+    phone: "0912 555 666",
+    email: "minhphat@gmail.com",
+    tax: "0318XXXXXX",
+    address: "TP. Hồ Chí Minh, Việt Nam",
+    area: "Miền Nam",
+    vehicles: "Không áp dụng",
+    drivers: "Không áp dụng",
+    rating: "Chưa đánh giá",
+    transactions: "3 đơn"
+  },
+
+  "Nhà xe Hoàng Gia": {
+    type: "Nhà xe",
+    code: "VT-DT-000058",
+    icon: "🚛",
+    representative: "Đỗ Văn Hoàng",
+    phone: "0966 333 444",
+    email: "hoanggia@truck.vn",
+    tax: "0108XXXXXX",
+    address: "Hưng Yên, Việt Nam",
+    area: "Hưng Yên - Hà Nội - Bắc Ninh",
+    vehicles: "18 xe",
+    drivers: "21 tài xế",
+    rating: "4.5/5",
+    transactions: "158 chuyến"
+  }
+
+};
   const params = new URLSearchParams(window.location.search);
 const partnerName = params.get("name");
 
