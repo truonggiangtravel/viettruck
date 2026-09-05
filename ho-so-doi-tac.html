@@ -1020,6 +1020,19 @@ function editProfile(){
   encodeURIComponent(partnerName);
 
 }
+  function verifyPartner(){
+
+  const params =
+  new URLSearchParams(window.location.search);
+
+  const partnerName =
+  params.get("name") || "Nhà xe Thành Công";
+
+  window.location.href =
+  "xac-minh-doi-tac.html?name=" +
+  encodeURIComponent(partnerName);
+
+}
   const partnerData = {
 
   "Nhà xe Thành Công": {
