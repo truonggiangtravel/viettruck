@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Lịch sử giao dịch - VietTruck</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  background:#f4f7f8;
+  color:#1f2937;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+.app{
+  display:flex;
+  min-height:100vh;
+}
+
+.sidebar{
+  width:250px;
+  background:#0f5132;
+  color:#fff;
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  padding:24px 16px;
+  overflow-y:auto;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:800;
+  text-align:center;
+  margin-bottom:28px;
+}
+
+.logo span{
+  color:#ffc107;
+}
+
+.menu-title{
+  font-size:12px;
+  text-transform:uppercase;
+  opacity:.7;
+  margin:20px 12px 8px;
+}
+
+.menu-item{
+  display:block;
+  padding:12px 14px;
+  border-radius:10px;
+  margin-bottom:6px;
+}
+
+.menu-item:hover,
+.menu-item.active{
+  background:rgba(255,255,255,.15);
+}
+
+.main{
+  margin-left:250px;
+  width:calc(100% - 250px);
+}
+
+.topbar{
+  min-height:72px;
+  background:#fff;
+  padding:16px 28px;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.topbar h1{
+  color:#0f5132;
+  font-size:22px;
+}
+
+.content{
+  padding:28px;
+  max-width:1400px;
+  margin:auto;
+}
+
+.hero{
+  background:linear-gradient(135deg,#0f5132,#198754);
+  color:white;
+  border-radius:18px;
+  padding:24px;
+  margin-bottom:22px;
+}
+
+.hero h2{
+  margin-bottom:8px;
+}
+
+.hero p{
+  opacity:.9;
+  line-height:1.6;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:22px;
+}
+
+.stat{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,.05);
+}
+
+.stat-icon{
+  font-size:25px;
+  margin-bottom:9px;
+}
+
+.stat strong{
+  display:block;
+  font-size:25px;
+  color:#0f5132;
+  margin-bottom:4px;
+}
+
+.stat span{
+  font-size:13px;
+  color:#6b7280;
+}
+
+.card{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  box-shadow:0 4px 18px rgba(0,0,0,.05);
+  overflow:hidden;
+}
+
+.card-head{
+  padding:18px 20px;
+  border-bottom:1px solid #edf0f2;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.card-head h3{
+  color:#0f5132;
+}
+
+.filters{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.control{
+  padding:10px 12px;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  background:white;
+  outline:none;
+}
+
+.search{
+  min-width:280px;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1200px;
+}
+
+th,
+td{
+  padding:14px 16px;
+  border-bottom:1px solid #edf0f2;
+  text-align:left;
+  font-size:14px;
+  vertical-align:middle;
+}
+
+th{
+  background:#f8faf9;
+  font-size:13px;
+  color:#374151;
+}
+
+tr:hover td{
+  background:#fbfdfc;
+}
+
+.badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.income{
+  background:#d1fae5;
+  color:#065f46;
+}
+
+.expense{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.wallet{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
+
+.refund{
+  background:#ede9fe;
+  color:#5b21b6;
+}
+
+.success{
+  background:#d1fae5;
+  color:#065f46;
+}
+
+.pending{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.failed{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.amount-plus{
+  color:#047857;
+  font-weight:700;
+}
+
+.amount-minus{
+  color:#b91c1c;
+  font-weight:700;
+}
+
+.action-btn{
+  border:1px solid #d1d5db;
+  background:white;
+  padding:7px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.action-btn:hover{
+  background:#f3f4f6;
+}
+
+.empty{
+  display:none;
+  padding:35px;
+  text-align:center;
+  color:#6b7280;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:999;
+  background:rgba(0,0,0,.45);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:100%;
+  max-width:760px;
+  background:white;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 20px 50px rgba(0,0,0,.2);
+}
+
+.modal-head{
+  padding:18px 20px;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.modal-head h3{
+  color:#0f5132;
+}
+
+.close{
+  border:none;
+  background:none;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.modal-body{
+  padding:20px;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.info-box{
+  background:#f8faf9;
+  border:1px solid #e5e7eb;
+  padding:13px;
+  border-radius:10px;
+}
+
+.info-box span{
+  display:block;
+  color:#6b7280;
+  font-size:12px;
+  margin-bottom:5px;
+}
+
+.modal-foot{
+  padding:16px 20px;
+  border-top:1px solid #e5e7eb;
+  display:flex;
+  justify-content:flex-end;
+}
+
+.btn{
+  border:none;
+  border-radius:10px;
+  padding:11px 16px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.btn-light{
+  background:#eef3f0;
+  color:#0f5132;
+}
+
+@media(max-width:1000px){
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:700px){
+  .sidebar{
+    width:100%;
+    position:static;
+  }
+
+  .app{
+    display:block;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+  }
+
+  .content{
+    padding:16px;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .info-grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar">
+
+<div class="logo">
+Viet<span>Truck</span>
+</div>
+
+<div class="menu-title">Hệ thống</div>
+
+<a class="menu-item" href="dashboard.html">🏠 Dashboard</a>
+<a class="menu-item" href="quan-ly-don-hang.html">📦 Quản lý đơn hàng</a>
+<a class="menu-item" href="trung-tam-bao-gia.html">💰 Trung tâm báo giá</a>
+<a class="menu-item" href="hang-chieu-ve.html">🔄 Hàng chiều về</a>
+<a class="menu-item" href="quan-ly-doi-xe.html">🚛 Quản lý đội xe</a>
+
+<div class="menu-title">Tài chính</div>
+
+<a class="menu-item" href="doi-soat-cong-no.html">💵 Đối soát & Công nợ</a>
+<a class="menu-item" href="yeu-cau-thanh-toan.html">💸 Yêu cầu thanh toán</a>
+<a class="menu-item active" href="lich-su-giao-dich.html">📊 Lịch sử giao dịch</a>
+<a class="menu-item" href="vi-viettruck.html">💳 Ví VietTruck</a>
+
+<div class="menu-title">Tài khoản</div>
+
+<a class="menu-item" href="tai-khoan.html">👤 Tài khoản</a>
+<a class="menu-item" href="cai-dat.html">⚙️ Cài đặt</a>
+
+</aside>
+
+<main class="main">
+
+<div class="topbar">
+
+<h1>Lịch sử giao dịch</h1>
+
+<button
+class="btn btn-light"
+onclick="location.href='doi-soat-cong-no.html'">
+← Đối soát công nợ
+</button>
+
+</div>
+
+<div class="content">
+
+<div class="hero">
+
+<h2>📊 Dòng tiền VietTruck</h2>
+
+<p>
+Theo dõi toàn bộ giao dịch thu, chi, nạp ví, rút ví và hoàn tiền
+phát sinh trên hệ thống VietTruck.
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="stat-icon">📥</div>
+<strong>286,4 triệu</strong>
+<span>Tổng tiền vào tháng này</span>
+</div>
+
+<div class="stat">
+<div class="stat-icon">📤</div>
+<strong>192,8 triệu</strong>
+<span>Tổng tiền ra tháng này</span>
+</div>
+
+<div class="stat">
+<div class="stat-icon">💳</div>
+<strong>48,6 triệu</strong>
+<span>Giao dịch qua ví</span>
+</div>
+
+<div class="stat">
+<div class="stat-icon">📋</div>
+<strong>128</strong>
+<span>Tổng giao dịch tháng này</span>
+</div>
+
+</div>
+
+<section class="card">
+
+<div class="card-head">
+
+<h3>Danh sách giao dịch</h3>
+
+<div class="filters">
+
+<input
+id="searchInput"
+class="control search"
+type="text"
+placeholder="Tìm mã giao dịch, đối tác, nội dung..."
+onkeyup="filterTransactions()">
+
+<select
+id="typeFilter"
+class="control"
+onchange="filterTransactions()">
+
+<option value="">Tất cả loại</option>
+<option value="thu cước">Thu cước</option>
+<option value="chi cước">Chi cước</option>
+<option value="nạp ví">Nạp ví</option>
+<option value="rút ví">Rút ví</option>
+<option value="hoàn tiền">Hoàn tiền</option>
+
+</select>
+
+<select
+id="statusFilter"
+class="control"
+onchange="filterTransactions()">
+
+<option value="">Tất cả trạng thái</option>
+<option value="thành công">Thành công</option>
+<option value="đang xử lý">Đang xử lý</option>
+<option value="thất bại">Thất bại</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="transactionTable">
+
+<thead>
+<tr>
+<th>Mã giao dịch</th>
+<th>Thời gian</th>
+<th>Đối tác</th>
+<th>Loại giao dịch</th>
+<th>Nội dung</th>
+<th>Số tiền</th>
+<th>Phương thức</th>
+<th>Trạng thái</th>
+<th>Thao tác</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>GD-20260905-1028</td>
+<td>05/09/2026 13:45</td>
+<td>Công ty ABC Việt Nam</td>
+<td><span class="badge income">Thu cước</span></td>
+<td>Thanh toán đơn VT-20260905-018</td>
+<td class="amount-plus">+5.800.000 đ</td>
+<td>Chuyển khoản</td>
+<td><span class="badge success">Thành công</span></td>
+<td>
+<button class="action-btn" onclick="viewTransaction(this)">Chi tiết</button>
+</td>
+</tr>
+
+<tr>
+<td>GD-20260905-1022</td>
+<td>05/09/2026 11:20</td>
+<td>Nhà xe Thành Công</td>
+<td><span class="badge expense">Chi cước</span></td>
+<td>Thanh toán cước vận tải</td>
+<td class="amount-minus">-6.350.000 đ</td>
+<td>Ví VietTruck</td>
+<td><span class="badge success">Thành công</span></td>
+<td>
+<button class="action-btn" onclick="viewTransaction(this)">Chi tiết</button>
+</td>
+</tr>
+
+<tr>
+<td>GD-20260905-1014</td>
+<td>05/09/2026 09:12</td>
+<td>Công ty Minh Phát</td>
+<td><span class="badge wallet">Nạp ví</span></td>
+<td>Nạp tiền vào Ví VietTruck</td>
+<td class="amount-plus">+20.000.000 đ</td>
+<td>Vietcombank</td>
+<td><span class="badge success">Thành công</span></td>
+<td>
+<button class="action-btn" onclick="viewTransaction(this)">Chi tiết</button>
+</td>
+</tr>
+
+<tr>
+<td>GD-20260904-0992</td>
+<td>04/09/2026 16:32</td>
+<td>Nhà xe Hoàng Gia</td>
+<td><span class="badge wallet">Rút ví</span></td>
+<td>Rút tiền từ Ví VietTruck</td>
+<td class="amount-minus">-4.200.000 đ</td>
+<td>Techcombank</td>
+<td><span class="badge pending">Đang xử lý</span></td>
+<td>
+<button class="action-btn" onclick="viewTransaction(this)">Chi tiết</button>
+</td>
+</tr>
+
+<tr>
+<td>GD-20260903-0968</td>
+<td>03/09/2026 14:08</td>
+<td>Logistics Đông Á</td>
+<td><span class="badge refund">Hoàn tiền</span></td>
+<td>Hoàn phí đơn hàng hủy</td>
+<td class="amount-plus">+1.250.000 đ</td>
+<td>Ví VietTruck</td>
+<td><span class="badge success">Thành công</span></td>
+<td>
+<button class="action-btn" onclick="viewTransaction(this)">Chi tiết</button>
+</td>
+</tr>
+
+<tr>
+<td>GD-20260902-0921</td>
+<td>02/09/2026 10:25</td>
+<td>Nhà xe Minh Long</td>
+<td><span class="badge wallet">Rút ví</span></td>
+<td>Rút tiền về tài khoản ngân hàng</td>
+<td class="amount-minus">-5.600.000 đ</td>
+<td>BIDV</td>
+<td><span class="badge failed">Thất bại</span></td>
+<td>
+<button class="action-btn" onclick="viewTransaction(this)">Chi tiết</button>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<div id="emptyMessage" class="empty">
+Không tìm thấy giao dịch phù hợp.
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+</main>
+
+</div>
+
+<div id="transactionModal" class="modal">
+
+<div class="modal-box">
+
+<div class="modal-head">
+<h3>Chi tiết giao dịch</h3>
+<button class="close" onclick="closeModal()">×</button>
+</div>
+
+<div class="modal-body">
+
+<div class="info-grid">
+
+<div class="info-box">
+<span>Mã giao dịch</span>
+<strong id="modalCode">-</strong>
+</div>
+
+<div class="info-box">
+<span>Thời gian</span>
+<strong id="modalTime">-</strong>
+</div>
+
+<div class="info-box">
+<span>Đối tác</span>
+<strong id="modalPartner">-</strong>
+</div>
+
+<div class="info-box">
+<span>Loại giao dịch</span>
+<strong id="modalType">-</strong>
+</div>
+
+<div class="info-box">
+<span>Nội dung</span>
+<strong id="modalContent">-</strong>
+</div>
+
+<div class="info-box">
+<span>Số tiền</span>
+<strong id="modalAmount">-</strong>
+</div>
+
+<div class="info-box">
+<span>Phương thức</span>
+<strong id="modalMethod">-</strong>
+</div>
+
+<div class="info-box">
+<span>Trạng thái</span>
+<strong id="modalStatus">-</strong>
+</div>
+
+</div>
+
+</div>
+
+<div class="modal-foot">
+
+<button class="btn btn-light" onclick="closeModal()">
+Đóng
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const modal =
+document.getElementById("transactionModal");
+
+function viewTransaction(button){
+
+const row =
+button.closest("tr");
+
+document.getElementById("modalCode").textContent =
+row.cells[0].textContent.trim();
+
+document.getElementById("modalTime").textContent =
+row.cells[1].textContent.trim();
+
+document.getElementById("modalPartner").textContent =
+row.cells[2].textContent.trim();
+
+document.getElementById("modalType").textContent =
+row.cells[3].textContent.trim();
+
+document.getElementById("modalContent").textContent =
+row.cells[4].textContent.trim();
+
+document.getElementById("modalAmount").textContent =
+row.cells[5].textContent.trim();
+
+document.getElementById("modalMethod").textContent =
+row.cells[6].textContent.trim();
+
+document.getElementById("modalStatus").textContent =
+row.cells[7].textContent.trim();
+
+modal.classList.add("show");
+
+}
+
+function closeModal(){
+modal.classList.remove("show");
+}
+
+function filterTransactions(){
+
+const search =
+document.getElementById("searchInput")
+.value.toLowerCase();
+
+const type =
+document.getElementById("typeFilter")
+.value.toLowerCase();
+
+const status =
+document.getElementById("statusFilter")
+.value.toLowerCase();
+
+const rows =
+document.querySelectorAll(
+"#transactionTable tbody tr"
+);
+
+let visible = 0;
+
+rows.forEach(function(row){
+
+const text =
+row.textContent.toLowerCase();
+
+const matchSearch =
+text.includes(search);
+
+const matchType =
+type === "" ||
+text.includes(type);
+
+const matchStatus =
+status === "" ||
+text.includes(status);
+
+if(matchSearch && matchType && matchStatus){
+
+row.style.display = "";
+visible++;
+
+}else{
+
+row.style.display = "none";
+
+}
+
+});
+
+document.getElementById(
+"emptyMessage"
+).style.display =
+visible === 0 ? "block" : "none";
+
+}
+
+window.onclick = function(event){
+
+if(event.target === modal){
+closeModal();
+}
+
+};
+
+</script>
+
+</body>
+</html>
