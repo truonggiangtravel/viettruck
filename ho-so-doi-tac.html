@@ -1002,9 +1002,17 @@ th{
 <script>
 
 function editProfile(){
-  alert(
-    "Chức năng chỉnh sửa hồ sơ đối tác sẽ được kết nối ở bước tiếp theo."
-  );
+
+  const params =
+  new URLSearchParams(window.location.search);
+
+  const partnerName =
+  params.get("name") || "Nhà xe Thành Công";
+
+  window.location.href =
+  "chinh-sua-doi-tac.html?name=" +
+  encodeURIComponent(partnerName);
+
 }
   const partnerData = {
 
