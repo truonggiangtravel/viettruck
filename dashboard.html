@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:"Be Vietnam Pro",sans-serif;
+background:#f4f7f5;
+color:#14231b;
+}
+
+.container{
+max-width:1220px;
+margin:auto;
+padding:0 20px;
+}
+
+.header{
+background:#fff;
+border-bottom:1px solid #e1e8e4;
+position:sticky;
+top:0;
+z-index:20;
+}
+
+.nav{
+height:74px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+text-decoration:none;
+color:#087d43;
+}
+
+.logo-icon{font-size:33px}
+
+.logo strong{
+font-size:24px;
+}
+
+.logo small{
+display:block;
+font-size:11px;
+color:#69766f;
+}
+
+.menu{
+display:flex;
+gap:22px;
+}
+
+.menu a{
+text-decoration:none;
+color:#17231d;
+font-size:13px;
+font-weight:600;
+}
+
+.menu a:hover,
+.menu a.active{
+color:#078c4b;
+}
+
+.page-head{
+padding:28px 0 18px;
+}
+
+.page-head h1{
+margin:0 0 5px;
+font-size:27px;
+}
+
+.page-head p{
+margin:0;
+color:#6c7972;
+font-size:13px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:16px;
+margin-bottom:22px;
+}
+
+.stat{
+background:#fff;
+border:1px solid #e0e7e3;
+border-radius:12px;
+padding:18px;
+}
+
+.stat-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+}
+
+.stat-icon{
+font-size:28px;
+}
+
+.stat-label{
+font-size:12px;
+color:#728078;
+margin-bottom:7px;
+}
+
+.stat-value{
+font-size:27px;
+font-weight:800;
+}
+
+.stat-note{
+font-size:11px;
+color:#7b8781;
+margin-top:6px;
+}
+
+.green{
+color:#078c4b;
+}
+
+.orange{
+color:#d97706;
+}
+
+.blue{
+color:#2563eb;
+}
+
+.layout{
+display:grid;
+grid-template-columns:1fr 340px;
+gap:20px;
+padding-bottom:50px;
+}
+
+.card{
+background:#fff;
+border:1px solid #e0e7e3;
+border-radius:12px;
+padding:20px;
+margin-bottom:18px;
+}
+
+.card-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+margin-bottom:16px;
+}
+
+.card-head h2{
+margin:0;
+font-size:18px;
+}
+
+.card-head a{
+text-decoration:none;
+color:#078c4b;
+font-size:12px;
+font-weight:700;
+}
+
+.quick-actions{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+}
+
+.quick{
+text-decoration:none;
+border:1px solid #e1e8e4;
+border-radius:10px;
+padding:15px 10px;
+text-align:center;
+color:#17231d;
+background:#fafcfb;
+}
+
+.quick:hover{
+border-color:#8bc9a8;
+background:#f2faf5;
+}
+
+.quick-icon{
+font-size:27px;
+margin-bottom:7px;
+}
+
+.quick strong{
+display:block;
+font-size:12px;
+}
+
+.table-wrap{
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:720px;
+}
+
+th{
+text-align:left;
+font-size:11px;
+color:#78847e;
+font-weight:700;
+padding:11px 8px;
+border-bottom:1px solid #e8edea;
+}
+
+td{
+padding:13px 8px;
+border-bottom:1px solid #edf1ef;
+font-size:12px;
+}
+
+td strong{
+font-size:12px;
+}
+
+.route{
+font-weight:700;
+}
+
+.status{
+display:inline-block;
+padding:6px 9px;
+border-radius:20px;
+font-size:10px;
+font-weight:800;
+}
+
+.waiting{
+background:#fff3d6;
+color:#956a05;
+}
+
+.running{
+background:#e8f1ff;
+color:#2461b2;
+}
+
+.completed{
+background:#e7f7ed;
+color:#087d43;
+}
+
+.paid{
+background:#edf7f1;
+color:#087d43;
+}
+
+.view-btn{
+text-decoration:none;
+color:#078c4b;
+font-weight:800;
+font-size:11px;
+}
+
+.progress-item{
+margin-bottom:16px;
+}
+
+.progress-top{
+display:flex;
+justify-content:space-between;
+font-size:12px;
+margin-bottom:7px;
+}
+
+.progress-bar{
+height:8px;
+background:#e7ece9;
+border-radius:10px;
+overflow:hidden;
+}
+
+.progress-fill{
+height:100%;
+background:#078c4b;
+border-radius:10px;
+}
+
+.finance{
+background:linear-gradient(135deg,#087d45,#0aa45a);
+color:white;
+}
+
+.finance small{
+opacity:.85;
+font-size:11px;
+}
+
+.finance h3{
+font-size:29px;
+margin:8px 0 18px;
+}
+
+.finance-row{
+display:flex;
+justify-content:space-between;
+font-size:12px;
+padding:8px 0;
+border-top:1px solid rgba(255,255,255,.18);
+}
+
+.notice{
+background:#edf7f1;
+border:1px solid #cbe6d6;
+border-radius:9px;
+padding:14px;
+font-size:12px;
+line-height:1.7;
+color:#315e46;
+}
+
+.footer{
+background:#073c27;
+color:white;
+text-align:center;
+padding:26px 0;
+}
+
+.footer p{
+font-size:12px;
+opacity:.8;
+}
+
+@media(max-width:950px){
+.stats{grid-template-columns:repeat(2,1fr)}
+.layout{grid-template-columns:1fr}
+}
+
+@media(max-width:700px){
+.menu{display:none}
+.quick-actions{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:500px){
+.stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+<span class="logo-icon">🚚</span>
+<div>
+<strong>VietTruck</strong>
+<small>Kết nối hàng hóa Việt Nam</small>
+</div>
+</a>
+
+<nav class="menu">
+<a href="index.html">Trang chủ</a>
+<a href="tim-hang.html">Tìm hàng</a>
+<a href="tim-xe.html">Tìm xe</a>
+<a href="dashboard.html" class="active">Dashboard</a>
+<a href="tai-khoan.html">Tài khoản</a>
+</nav>
+
+</div>
+</header>
+
+<main class="container">
+
+<section class="page-head">
+<h1>Dashboard quản lý</h1>
+<p>Tổng quan hoạt động vận tải, đơn hàng, chuyến xe và thanh toán</p>
+</section>
+
+<section class="stats">
+
+<div class="stat">
+<div class="stat-top">
+<div>
+<div class="stat-label">ĐƠN ĐANG CHỜ</div>
+<div class="stat-value">12</div>
+</div>
+<div class="stat-icon">📦</div>
+</div>
+<div class="stat-note">3 đơn mới hôm nay</div>
+</div>
+
+<div class="stat">
+<div class="stat-top">
+<div>
+<div class="stat-label">CHUYẾN ĐANG CHẠY</div>
+<div class="stat-value blue">6</div>
+</div>
+<div class="stat-icon">🚚</div>
+</div>
+<div class="stat-note">4 xe đang bật GPS</div>
+</div>
+
+<div class="stat">
+<div class="stat-top">
+<div>
+<div class="stat-label">ĐÃ HOÀN THÀNH</div>
+<div class="stat-value green">28</div>
+</div>
+<div class="stat-icon">✅</div>
+</div>
+<div class="stat-note">Trong tháng này</div>
+</div>
+
+<div class="stat">
+<div class="stat-top">
+<div>
+<div class="stat-label">CHỜ THANH TOÁN</div>
+<div class="stat-value orange">4</div>
+</div>
+<div class="stat-icon">💳</div>
+</div>
+<div class="stat-note">Tổng 14.200.000 đ</div>
+</div>
+
+</section>
+
+<section class="layout">
+
+<div>
+
+<div class="card">
+
+<div class="card-head">
+<h2>Thao tác nhanh</h2>
+</div>
+
+<div class="quick-actions">
+
+<a href="dang-hang.html" class="quick">
+<div class="quick-icon">➕</div>
+<strong>Đăng hàng</strong>
+</a>
+
+<a href="tim-hang.html" class="quick">
+<div class="quick-icon">🔎</div>
+<strong>Tìm hàng</strong>
+</a>
+
+<a href="chuyen-da-nhan.html" class="quick">
+<div class="quick-icon">🚚</div>
+<strong>Chuyến đã nhận</strong>
+</a>
+
+<a href="lich-su-giao-dich.html" class="quick">
+<div class="quick-icon">💰</div>
+<strong>Giao dịch</strong>
+</a>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-head">
+<h2>Đơn & chuyến gần đây</h2>
+<a href="chuyen-da-nhan.html">Xem tất cả →</a>
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>MÃ</th>
+<th>TUYẾN</th>
+<th>CƯỚC</th>
+<th>TRẠNG THÁI</th>
+<th>THỜI GIAN</th>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td><strong>VT-001</strong></td>
+<td class="route">Bắc Ninh → Hải Phòng</td>
+<td>3.500.000 đ</td>
+<td><span class="status running">Đang vận chuyển</span></td>
+<td>Hôm nay</td>
+<td>
+<a href="theo-doi-chuyen.html" class="view-btn">Theo dõi</a>
+</td>
+</tr>
+
+<tr>
+<td><strong>VT-002</strong></td>
+<td class="route">Hà Nội → Bắc Giang</td>
+<td>2.200.000 đ</td>
+<td><span class="status waiting">Chờ nhận</span></td>
+<td>Hôm nay</td>
+<td>
+<a href="chi-tiet-don-hang.html" class="view-btn">Chi tiết</a>
+</td>
+</tr>
+
+<tr>
+<td><strong>VT-003</strong></td>
+<td class="route">Hải Phòng → Hà Nội</td>
+<td>4.100.000 đ</td>
+<td><span class="status completed">Đã giao</span></td>
+<td>04/09/2026</td>
+<td>
+<a href="pod-giao-hang.html" class="view-btn">POD</a>
+</td>
+</tr>
+
+<tr>
+<td><strong>VT-004</strong></td>
+<td class="route">Bắc Ninh → Quảng Ninh</td>
+<td>5.800.000 đ</td>
+<td><span class="status paid">Đã thanh toán</span></td>
+<td>03/09/2026</td>
+<td>
+<a href="danh-gia-chuyen.html" class="view-btn">Đánh giá</a>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-head">
+<h2>Tiến độ vận hành tháng này</h2>
+</div>
+
+<div class="progress-item">
+
+<div class="progress-top">
+<span>Chuyến hoàn thành</span>
+<strong>28 / 40</strong>
+</div>
+
+<div class="progress-bar">
+<div class="progress-fill" style="width:70%"></div>
+</div>
+
+</div>
+
+<div class="progress-item">
+
+<div class="progress-top">
+<span>POD đầy đủ</span>
+<strong>26 / 28</strong>
+</div>
+
+<div class="progress-bar">
+<div class="progress-fill" style="width:93%"></div>
+</div>
+
+</div>
+
+<div class="progress-item">
+
+<div class="progress-top">
+<span>Đã đối soát</span>
+<strong>24 / 28</strong>
+</div>
+
+<div class="progress-bar">
+<div class="progress-fill" style="width:86%"></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<aside>
+
+<div class="card finance">
+
+<small>TỔNG CƯỚC THÁNG 09</small>
+
+<h3>126.500.000 đ</h3>
+
+<div class="finance-row">
+<span>Đã thanh toán</span>
+<strong>108.200.000 đ</strong>
+</div>
+
+<div class="finance-row">
+<span>Chờ đối soát</span>
+<strong>14.200.000 đ</strong>
+</div>
+
+<div class="finance-row">
+<span>Phí nền tảng</span>
+<strong>4.100.000 đ</strong>
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-head">
+<h2>Trạng thái hệ thống</h2>
+</div>
+
+<div class="summary-row">
+<span>GPS đang hoạt động</span>
+<strong class="green">4 xe</strong>
+</div>
+
+<div class="summary-row">
+<span>Đơn chờ tài xế</span>
+<strong>12</strong>
+</div>
+
+<div class="summary-row">
+<span>POD chờ duyệt</span>
+<strong>2</strong>
+</div>
+
+<div class="summary-row">
+<span>Thanh toán chờ xử lý</span>
+<strong>4</strong>
+</div>
+
+</div>
+
+<div class="notice">
+📊 Dashboard hiện đang dùng dữ liệu demo. Khi VietTruck kết nối database, các con số này sẽ tự động thay đổi theo đơn hàng và chuyến thực tế.
+</div>
+
+</aside>
+
+</section>
+
+</main>
+
+<footer class="footer">
+<div class="container">
+<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+<p>© 2026 VietTruck. Dashboard quản lý vận tải.</p>
+</div>
+</footer>
+
+</body>
+</html>
