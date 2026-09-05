@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quản lý đội xe | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:"Be Vietnam Pro",sans-serif;
+background:#f4f7f5;
+color:#14231b;
+}
+.container{
+max-width:1180px;
+margin:auto;
+padding:0 20px;
+}
+.header{
+background:#fff;
+border-bottom:1px solid #e1e8e4;
+}
+.nav{
+height:74px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+}
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+text-decoration:none;
+color:#087d43;
+}
+.logo-icon{font-size:32px}
+.logo strong{font-size:24px}
+.logo small{
+display:block;
+font-size:11px;
+color:#69766f;
+}
+.menu{
+display:flex;
+gap:22px;
+}
+.menu a{
+text-decoration:none;
+color:#17231d;
+font-size:13px;
+font-weight:600;
+}
+.menu a:hover,
+.menu a.active{
+color:#078c4b;
+}
+.page-head{
+padding:28px 0 18px;
+display:flex;
+justify-content:space-between;
+align-items:flex-end;
+gap:20px;
+}
+.page-head h1{
+margin:0 0 5px;
+font-size:27px;
+}
+.page-head p{
+margin:0;
+font-size:13px;
+color:#6c7972;
+}
+.add-btn{
+border:0;
+background:#078c4b;
+color:#fff;
+padding:12px 15px;
+border-radius:8px;
+font-family:inherit;
+font-weight:800;
+font-size:11px;
+cursor:pointer;
+}
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
+margin-bottom:20px;
+}
+.stat{
+background:#fff;
+border:1px solid #e0e7e3;
+border-radius:11px;
+padding:16px;
+}
+.stat span{
+display:block;
+font-size:10px;
+color:#76837c;
+margin-bottom:7px;
+}
+.stat strong{
+font-size:21px;
+}
+.green{color:#078c4b}
+.orange{color:#d97706}
+.red{color:#d35454}
+.filter-bar{
+background:#fff;
+border:1px solid #e0e7e3;
+border-radius:12px;
+padding:15px;
+margin-bottom:18px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+align-items:center;
+}
+.filter-bar input,
+.filter-bar select{
+height:40px;
+border:1px solid #d9e2dd;
+border-radius:8px;
+padding:0 10px;
+font-family:inherit;
+font-size:11px;
+}
+.filter-bar input{
+flex:1;
+min-width:200px;
+}
+.filter-btn{
+border:1px solid #dbe4df;
+background:#fff;
+border-radius:20px;
+padding:8px 12px;
+font-family:inherit;
+font-size:10px;
+font-weight:700;
+cursor:pointer;
+}
+.filter-btn.active{
+background:#078c4b;
+color:#fff;
+border-color:#078c4b;
+}
+.fleet-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:16px;
+padding-bottom:50px;
+}
+.vehicle{
+background:#fff;
+border:1px solid #e0e7e3;
+border-radius:12px;
+padding:18px;
+}
+.vehicle-top{
+display:flex;
+justify-content:space-between;
+gap:15px;
+margin-bottom:15px;
+}
+.vehicle-id{
+display:flex;
+gap:12px;
+align-items:center;
+}
+.vehicle-icon{
+width:48px;
+height:48px;
+border-radius:10px;
+background:#edf7f1;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:25px;
+}
+.vehicle h2{
+font-size:16px;
+margin:0 0 4px;
+}
+.vehicle-sub{
+font-size:10px;
+color:#77847d;
+}
+.status{
+font-size:9px;
+font-weight:800;
+padding:6px 9px;
+border-radius:20px;
+height:max-content;
+}
+.free{
+background:#e6f7ed;
+color:#087d43;
+}
+.running{
+background:#e8f1ff;
+color:#2f65ad;
+}
+.maintenance{
+background:#fff0e5;
+color:#b65d0b;
+}
+.inactive{
+background:#f0f1f1;
+color:#6f7773;
+}
+.info-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:8px 15px;
+margin-bottom:14px;
+}
+.info{
+font-size:10px;
+}
+.info span{
+display:block;
+color:#7b8781;
+margin-bottom:3px;
+}
+.info strong{
+font-size:11px;
+}
+.driver{
+background:#fafcfb;
+border:1px solid #e7ece9;
+border-radius:9px;
+padding:11px;
+margin-bottom:14px;
+display:flex;
+justify-content:space-between;
+gap:10px;
+}
+.driver div{
+font-size:10px;
+}
+.driver strong{
+display:block;
+font-size:11px;
+margin-bottom:3px;
+}
+.docs{
+display:flex;
+gap:7px;
+flex-wrap:wrap;
+margin-bottom:14px;
+}
+.doc{
+font-size:9px;
+font-weight:700;
+padding:5px 7px;
+border-radius:6px;
+background:#edf7f1;
+color:#087d43;
+}
+.doc.warning{
+background:#fff5dd;
+color:#a97408;
+}
+.actions{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+.actions a,
+.actions button{
+text-decoration:none;
+border-radius:7px;
+padding:9px 11px;
+font-family:inherit;
+font-size:10px;
+font-weight:800;
+cursor:pointer;
+}
+.btn-outline{
+border:1px solid #d7e1dc;
+background:#fff;
+color:#24342b;
+}
+.btn-green{
+border:1px solid #078c4b;
+background:#078c4b;
+color:#fff;
+}
+.notice{
+background:#edf7f1;
+border:1px solid #c9e5d4;
+border-radius:9px;
+padding:14px;
+font-size:11px;
+line-height:1.7;
+color:#315e46;
+margin-bottom:45px;
+}
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+align-items:center;
+justify-content:center;
+padding:20px;
+z-index:100;
+}
+.modal-box{
+background:#fff;
+width:100%;
+max-width:520px;
+border-radius:12px;
+padding:22px;
+max-height:90vh;
+overflow:auto;
+}
+.modal-box h2{
+margin:0 0 16px;
+font-size:19px;
+}
+.field{
+margin-bottom:13px;
+}
+.field label{
+display:block;
+font-size:10px;
+font-weight:800;
+margin-bottom:6px;
+color:#68766e;
+}
+.field input,
+.field select{
+width:100%;
+height:42px;
+border:1px solid #d9e2dd;
+border-radius:8px;
+padding:0 10px;
+font-family:inherit;
+}
+.form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+.modal-actions{
+display:flex;
+justify-content:flex-end;
+gap:8px;
+margin-top:16px;
+}
+.modal-actions button{
+border:0;
+border-radius:8px;
+padding:10px 13px;
+font-family:inherit;
+font-size:10px;
+font-weight:800;
+cursor:pointer;
+}
+.cancel{
+background:#edf1ef;
+}
+.confirm{
+background:#078c4b;
+color:#fff;
+}
+.footer{
+background:#073c27;
+color:#fff;
+text-align:center;
+padding:26px 0;
+}
+.footer p{
+font-size:12px;
+opacity:.8;
+}
+@media(max-width:900px){
+.stats{grid-template-columns:repeat(2,1fr)}
+.fleet-grid{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+.menu{display:none}
+.stats{grid-template-columns:1fr}
+.page-head{
+align-items:flex-start;
+flex-direction:column;
+}
+.form-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+<span class="logo-icon">🚚</span>
+<div>
+<strong>VietTruck</strong>
+<small>Kết nối hàng hóa Việt Nam</small>
+</div>
+</a>
+
+<nav class="menu">
+<a href="index.html">Trang chủ</a>
+<a href="tim-hang.html">Tìm hàng</a>
+<a href="hang-chieu-ve.html">Hàng chiều về</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="quan-ly-doi-xe.html" class="active">Đội xe</a>
+<a href="tai-khoan.html">Tài khoản</a>
+</nav>
+
+</div>
+</header>
+
+<main class="container">
+
+<section class="page-head">
+
+<div>
+<h1>Quản lý đội xe</h1>
+<p>Theo dõi xe, tài xế, trạng thái hoạt động và giấy tờ phương tiện.</p>
+</div>
+
+<button class="add-btn" id="addVehicleBtn">
++ Thêm xe mới
+</button>
+
+</section>
+
+<section class="stats">
+
+<div class="stat">
+<span>TỔNG SỐ XE</span>
+<strong>18</strong>
+</div>
+
+<div class="stat">
+<span>ĐANG HOẠT ĐỘNG</span>
+<strong class="green">11</strong>
+</div>
+
+<div class="stat">
+<span>ĐANG RẢNH</span>
+<strong>5</strong>
+</div>
+
+<div class="stat">
+<span>BẢO DƯỠNG / TẠM NGHỈ</span>
+<strong class="orange">2</strong>
+</div>
+
+</section>
+
+<section class="filter-bar">
+
+<input type="text" id="searchInput" placeholder="Tìm biển số, tài xế...">
+
+<button class="filter-btn active" data-filter="all">
+Tất cả
+</button>
+
+<button class="filter-btn" data-filter="free">
+Xe rảnh
+</button>
+
+<button class="filter-btn" data-filter="running">
+Đang chạy
+</button>
+
+<button class="filter-btn" data-filter="maintenance">
+Bảo dưỡng
+</button>
+
+</section>
+
+<section class="fleet-grid" id="fleetGrid">
+
+<div class="vehicle" data-status="running" data-search="99C-123.45 Nguyễn Văn B">
+
+<div class="vehicle-top">
+
+<div class="vehicle-id">
+
+<div class="vehicle-icon">🚛</div>
+
+<div>
+<h2>99C-123.45</h2>
+<div class="vehicle-sub">Xe tải thùng kín · 8 tấn</div>
+</div>
+
+</div>
+
+<div class="status running">
+ĐANG CHẠY
+</div>
+
+</div>
+
+<div class="info-grid">
+
+<div class="info">
+<span>Nhãn hiệu</span>
+<strong>Isuzu</strong>
+</div>
+
+<div class="info">
+<span>Năm sản xuất</span>
+<strong>2023</strong>
+</div>
+
+<div class="info">
+<span>Tải trọng</span>
+<strong>8.000 kg</strong>
+</div>
+
+<div class="info">
+<span>GPS</span>
+<strong class="green">Đang hoạt động</strong>
+</div>
+
+</div>
+
+<div class="driver">
+<div>
+<strong>Nguyễn Văn B</strong>
+Tài xế phụ trách
+</div>
+<div>
+<strong>0988 123 456</strong>
+Liên hệ
+</div>
+</div>
+
+<div class="docs">
+<span class="doc">Đăng ký ✓</span>
+<span class="doc">Đăng kiểm ✓</span>
+<span class="doc">Bảo hiểm ✓</span>
+</div>
+
+<div class="actions">
+<a href="chi-tiet-xe.html" class="btn-outline">Xem chi tiết</a>
+<a href="theo-doi-chuyen.html" class="btn-green">Theo dõi GPS</a>
+</div>
+
+</div>
+
+<div class="vehicle" data-status="free" data-search="99C-456.78 Trần Văn C">
+
+<div class="vehicle-top">
+
+<div class="vehicle-id">
+
+<div class="vehicle-icon">🚚</div>
+
+<div>
+<h2>99C-456.78</h2>
+<div class="vehicle-sub">Xe tải thùng kín · 5 tấn</div>
+</div>
+
+</div>
+
+<div class="status free">
+XE RẢNH
+</div>
+
+</div>
+
+<div class="info-grid">
+
+<div class="info">
+<span>Nhãn hiệu</span>
+<strong>Hino</strong>
+</div>
+
+<div class="info">
+<span>Năm sản xuất</span>
+<strong>2022</strong>
+</div>
+
+<div class="info">
+<span>Tải trọng</span>
+<strong>5.000 kg</strong>
+</div>
+
+<div class="info">
+<span>GPS</span>
+<strong class="green">Đang hoạt động</strong>
+</div>
+
+</div>
+
+<div class="driver">
+<div>
+<strong>Trần Văn C</strong>
+Tài xế phụ trách
+</div>
+<div>
+<strong>0975 222 888</strong>
+Liên hệ
+</div>
+</div>
+
+<div class="docs">
+<span class="doc">Đăng ký ✓</span>
+<span class="doc">Đăng kiểm ✓</span>
+<span class="doc">Bảo hiểm ✓</span>
+</div>
+
+<div class="actions">
+<a href="chi-tiet-xe.html" class="btn-outline">Xem chi tiết</a>
+<a href="tim-hang.html" class="btn-green">Tìm hàng</a>
+</div>
+
+</div>
+
+<div class="vehicle" data-status="running" data-search="99H-688.99 Phạm Văn D">
+
+<div class="vehicle-top">
+
+<div class="vehicle-id">
+
+<div class="vehicle-icon">🚛</div>
+
+<div>
+<h2>99H-688.99</h2>
+<div class="vehicle-sub">Xe tải thùng kín · 15 tấn</div>
+</div>
+
+</div>
+
+<div class="status running">
+ĐANG CHẠY
+</div>
+
+</div>
+
+<div class="info-grid">
+
+<div class="info">
+<span>Nhãn hiệu</span>
+<strong>Hyundai</strong>
+</div>
+
+<div class="info">
+<span>Năm sản xuất</span>
+<strong>2024</strong>
+</div>
+
+<div class="info">
+<span>Tải trọng</span>
+<strong>15.000 kg</strong>
+</div>
+
+<div class="info">
+<span>GPS</span>
+<strong class="green">Đang hoạt động</strong>
+</div>
+
+</div>
+
+<div class="driver">
+<div>
+<strong>Phạm Văn D</strong>
+Tài xế phụ trách
+</div>
+<div>
+<strong>0968 777 345</strong>
+Liên hệ
+</div>
+</div>
+
+<div class="docs">
+<span class="doc">Đăng ký ✓</span>
+<span class="doc">Đăng kiểm ✓</span>
+<span class="doc warning">Bảo hiểm sắp hết hạn</span>
+</div>
+
+<div class="actions">
+<a href="chi-tiet-xe.html" class="btn-outline">Xem chi tiết</a>
+<a href="theo-doi-chuyen.html" class="btn-green">Theo dõi GPS</a>
+</div>
+
+</div>
+
+<div class="vehicle" data-status="maintenance" data-search="98C-345.67 Lê Văn E">
+
+<div class="vehicle-top">
+
+<div class="vehicle-id">
+
+<div class="vehicle-icon">🔧</div>
+
+<div>
+<h2>98C-345.67</h2>
+<div class="vehicle-sub">Xe tải thùng kín · 8 tấn</div>
+</div>
+
+</div>
+
+<div class="status maintenance">
+BẢO DƯỠNG
+</div>
+
+</div>
+
+<div class="info-grid">
+
+<div class="info">
+<span>Nhãn hiệu</span>
+<strong>Thaco</strong>
+</div>
+
+<div class="info">
+<span>Năm sản xuất</span>
+<strong>2021</strong>
+</div>
+
+<div class="info">
+<span>Tải trọng</span>
+<strong>8.000 kg</strong>
+</div>
+
+<div class="info">
+<span>GPS</span>
+<strong>Tạm dừng</strong>
+</div>
+
+</div>
+
+<div class="driver">
+<div>
+<strong>Lê Văn E</strong>
+Tài xế phụ trách
+</div>
+<div>
+<strong>0904 123 999</strong>
+Liên hệ
+</div>
+</div>
+
+<div class="docs">
+<span class="doc">Đăng ký ✓</span>
+<span class="doc warning">Đăng kiểm sắp hết hạn</span>
+<span class="doc">Bảo hiểm ✓</span>
+</div>
+
+<div class="actions">
+<a href="chi-tiet-xe.html" class="btn-outline">Xem chi tiết</a>
+<button class="btn-green maintenanceBtn">Hoàn tất bảo dưỡng</button>
+</div>
+
+</div>
+
+</section>
+
+<div class="notice">
+📌 Trang quản lý đội xe hiện sử dụng dữ liệu minh họa. Các thao tác thêm xe và thay đổi trạng thái chỉ chạy trên trình duyệt, chưa lưu vào hệ thống thật. Khi triển khai chính thức, thông tin xe, tài xế, giấy tờ và GPS cần được lưu bằng backend/database.
+</div>
+
+</main>
+
+<div class="modal" id="vehicleModal">
+
+<div class="modal-box">
+
+<h2>Thêm xe mới</h2>
+
+<div class="form-grid">
+
+<div class="field">
+<label>BIỂN SỐ XE</label>
+<input type="text" id="plateInput" placeholder="Ví dụ: 99C-888.88">
+</div>
+
+<div class="field">
+<label>LOẠI XE</label>
+<select id="typeInput">
+<option>Xe tải thùng kín</option>
+<option>Xe tải mui bạt</option>
+<option>Xe container</option>
+<option>Xe đông lạnh</option>
+</select>
+</div>
+
+<div class="field">
+<label>TẢI TRỌNG</label>
+<select id="weightInput">
+<option>1.25 tấn</option>
+<option>2.5 tấn</option>
+<option>5 tấn</option>
+<option>8 tấn</option>
+<option>15 tấn</option>
+<option>Container</option>
+</select>
+</div>
+
+<div class="field">
+<label>NHÃN HIỆU</label>
+<input type="text" placeholder="Isuzu, Hino, Hyundai...">
+</div>
+
+<div class="field">
+<label>NĂM SẢN XUẤT</label>
+<input type="number" value="2024">
+</div>
+
+<div class="field">
+<label>TÀI XẾ PHỤ TRÁCH</label>
+<input type="text" id="driverInput" placeholder="Tên tài xế">
+</div>
+
+</div>
+
+<div class="field">
+<label>TRẠNG THÁI BAN ĐẦU</label>
+<select>
+<option>Xe rảnh</option>
+<option>Đang chạy</option>
+<option>Bảo dưỡng</option>
+</select>
+</div>
+
+<div class="modal-actions">
+
+<button class="cancel" id="cancelBtn">
+Hủy
+</button>
+
+<button class="confirm" id="saveBtn">
+Lưu xe
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<footer class="footer">
+<div class="container">
+<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+<p>© 2026 VietTruck. Quản lý đội xe vận tải.</p>
+</div>
+</footer>
+
+<script>
+
+const filterButtons =
+document.querySelectorAll(".filter-btn");
+
+const vehicles =
+document.querySelectorAll(".vehicle");
+
+const searchInput =
+document.getElementById("searchInput");
+
+let currentFilter = "all";
+
+function applyFilter(){
+
+const keyword =
+searchInput.value.toLowerCase().trim();
+
+vehicles.forEach(function(vehicle){
+
+const status =
+vehicle.dataset.status;
+
+const searchable =
+vehicle.dataset.search.toLowerCase();
+
+const statusMatch =
+currentFilter === "all" ||
+status === currentFilter;
+
+const searchMatch =
+searchable.includes(keyword);
+
+if(statusMatch && searchMatch){
+vehicle.style.display = "block";
+}else{
+vehicle.style.display = "none";
+}
+
+});
+
+}
+
+filterButtons.forEach(function(button){
+
+button.addEventListener("click",function(){
+
+filterButtons.forEach(function(btn){
+btn.classList.remove("active");
+});
+
+this.classList.add("active");
+
+currentFilter =
+this.dataset.filter;
+
+applyFilter();
+
+});
+
+});
+
+searchInput.addEventListener(
+"input",
+applyFilter
+);
+
+const vehicleModal =
+document.getElementById("vehicleModal");
+
+document.getElementById("addVehicleBtn")
+.addEventListener("click",function(){
+
+vehicleModal.style.display =
+"flex";
+
+});
+
+document.getElementById("cancelBtn")
+.addEventListener("click",function(){
+
+vehicleModal.style.display =
+"none";
+
+});
+
+document.getElementById("saveBtn")
+.addEventListener("click",function(){
+
+const plate =
+document.getElementById("plateInput").value.trim();
+
+const driver =
+document.getElementById("driverInput").value.trim();
+
+if(!plate){
+alert("Vui lòng nhập biển số xe.");
+return;
+}
+
+if(!driver){
+alert("Vui lòng nhập tên tài xế phụ trách.");
+return;
+}
+
+alert(
+"Đã thêm xe " +
+plate +
+" vào đội xe VietTruck."
+);
+
+vehicleModal.style.display =
+"none";
+
+});
+
+document.querySelectorAll(".maintenanceBtn")
+.forEach(function(button){
+
+button.addEventListener("click",function(){
+
+const vehicle =
+this.closest(".vehicle");
+
+const status =
+vehicle.querySelector(".status");
+
+status.textContent =
+"XE RẢNH";
+
+status.className =
+"status free";
+
+vehicle.dataset.status =
+"free";
+
+this.textContent =
+"Tìm hàng";
+
+this.onclick =
+function(){
+window.location.href =
+"tim-hang.html";
+};
+
+});
+
+});
+
+window.addEventListener("click",function(e){
+
+if(e.target === vehicleModal){
+vehicleModal.style.display =
+"none";
+}
+
+});
+
+</script>
+
+</body>
+</html>
