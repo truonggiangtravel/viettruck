@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hồ sơ nhà xe | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:"Be Vietnam Pro",sans-serif;
+background:#f4f7f5;
+color:#14231b;
+}
+
+.container{
+max-width:1180px;
+margin:auto;
+padding:0 20px;
+}
+
+.header{
+background:#fff;
+border-bottom:1px solid #e1e8e4;
+}
+
+.nav{
+height:74px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+text-decoration:none;
+color:#087d43;
+}
+
+.logo-icon{font-size:32px}
+
+.logo strong{font-size:24px}
+
+.logo small{
+display:block;
+font-size:11px;
+color:#69766f;
+}
+
+.menu{
+display:flex;
+gap:22px;
+}
+
+.menu a{
+text-decoration:none;
+color:#17231d;
+font-size:13px;
+font-weight:600;
+}
+
+.menu a:hover{color:#078c4b}
+
+.page-head{
+padding:25px 0 15px;
+}
+
+.back{
+text-decoration:none;
+font-size:12px;
+font-weight:700;
+color:#078c4b;
+}
+
+.layout{
+display:grid;
+grid-template-columns:330px 1fr;
+gap:20px;
+padding-bottom:50px;
+}
+
+.card{
+background:#fff;
+border:1px solid #e0e7e3;
+border-radius:12px;
+padding:20px;
+margin-bottom:18px;
+}
+
+.profile{
+text-align:center;
+}
+
+.avatar{
+width:100px;
+height:100px;
+border-radius:20px;
+background:#e5f5ec;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:48px;
+margin:0 auto 13px;
+}
+
+.profile h1{
+font-size:20px;
+margin:0 0 5px;
+}
+
+.verified{
+display:inline-block;
+background:#e7f7ed;
+color:#078c4b;
+border-radius:20px;
+padding:6px 10px;
+font-size:10px;
+font-weight:800;
+margin:7px 0 12px;
+}
+
+.rating{
+font-size:14px;
+font-weight:700;
+}
+
+.rating strong{
+font-size:23px;
+color:#f2aa00;
+}
+
+.location{
+font-size:11px;
+color:#718078;
+margin-top:9px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:18px;
+}
+
+.stat{
+background:#f8faf9;
+border:1px solid #e7ece9;
+border-radius:9px;
+padding:12px 8px;
+text-align:center;
+}
+
+.stat strong{
+display:block;
+font-size:18px;
+color:#078c4b;
+}
+
+.stat span{
+font-size:9px;
+color:#75817b;
+}
+
+.card h2{
+font-size:18px;
+margin:0 0 16px;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+gap:15px;
+padding:10px 0;
+border-bottom:1px solid #edf1ef;
+font-size:11px;
+}
+
+.row:last-child{border-bottom:0}
+
+.row span{color:#75817b}
+
+.row strong{text-align:right}
+
+.score{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+}
+
+.score-item{
+background:#f8faf9;
+border:1px solid #e5ebe8;
+border-radius:10px;
+padding:15px;
+text-align:center;
+}
+
+.score-item strong{
+display:block;
+font-size:20px;
+color:#078c4b;
+margin-bottom:4px;
+}
+
+.score-item span{
+font-size:9px;
+color:#77847d;
+}
+
+.fleet{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+}
+
+.truck-card{
+border:1px solid #e2e9e5;
+border-radius:10px;
+padding:14px;
+background:#fafcfb;
+}
+
+.truck-icon{
+font-size:36px;
+margin-bottom:8px;
+}
+
+.truck-card h3{
+font-size:13px;
+margin:0 0 7px;
+}
+
+.truck-card p{
+margin:4px 0;
+font-size:10px;
+color:#68766e;
+}
+
+.badges{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.badge{
+background:#edf7f1;
+border:1px solid #d2e9db;
+color:#087d43;
+padding:8px 10px;
+border-radius:20px;
+font-size:10px;
+font-weight:700;
+}
+
+.review{
+border-bottom:1px solid #edf1ef;
+padding:14px 0;
+}
+
+.review:last-child{border-bottom:0}
+
+.review-top{
+display:flex;
+justify-content:space-between;
+gap:15px;
+margin-bottom:7px;
+}
+
+.review-name{
+font-size:12px;
+font-weight:800;
+}
+
+.review-star{
+font-size:11px;
+color:#e8a000;
+}
+
+.review p{
+margin:0;
+font-size:11px;
+color:#65736b;
+line-height:1.7;
+}
+
+.review-date{
+font-size:9px;
+color:#8a958f;
+margin-top:6px;
+}
+
+.contact-btn{
+display:block;
+width:100%;
+text-align:center;
+text-decoration:none;
+background:#078c4b;
+color:#fff;
+padding:12px;
+border-radius:8px;
+font-size:12px;
+font-weight:800;
+margin-top:15px;
+}
+
+.notice{
+background:#edf7f1;
+border:1px solid #c9e5d4;
+border-radius:9px;
+padding:14px;
+font-size:11px;
+line-height:1.7;
+color:#315e46;
+}
+
+.footer{
+background:#073c27;
+color:white;
+text-align:center;
+padding:26px 0;
+}
+
+.footer p{
+font-size:12px;
+opacity:.8;
+}
+
+@media(max-width:850px){
+.layout{grid-template-columns:1fr}
+.score{grid-template-columns:repeat(2,1fr)}
+.fleet{grid-template-columns:1fr 1fr}
+.menu{display:none}
+}
+
+@media(max-width:550px){
+.score{grid-template-columns:1fr 1fr}
+.fleet{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+<span class="logo-icon">🚚</span>
+<div>
+<strong>VietTruck</strong>
+<small>Kết nối hàng hóa Việt Nam</small>
+</div>
+</a>
+
+<nav class="menu">
+<a href="index.html">Trang chủ</a>
+<a href="tim-hang.html">Tìm hàng</a>
+<a href="tim-xe.html">Tìm xe</a>
+<a href="hang-chieu-ve.html">Hàng chiều về</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="tai-khoan.html">Tài khoản</a>
+</nav>
+
+</div>
+</header>
+
+<div class="container">
+
+<div class="page-head">
+<a href="trung-tam-bao-gia.html" class="back">
+← Quay lại Trung tâm báo giá
+</a>
+</div>
+
+<div class="layout">
+
+<aside>
+
+<div class="card profile">
+
+<div class="avatar">🏢</div>
+
+<h1>Công ty Vận tải Minh Phát</h1>
+
+<div class="verified">
+✓ Nhà xe đã xác minh
+</div>
+
+<div class="rating">
+<strong>4.8</strong> ⭐
+</div>
+
+<div class="location">
+📍 Bắc Ninh · Hoạt động từ 2018
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<strong>324</strong>
+<span>CHUYẾN HOÀN THÀNH</span>
+</div>
+
+<div class="stat">
+<strong>96%</strong>
+<span>GIAO ĐÚNG GIỜ</span>
+</div>
+
+<div class="stat">
+<strong>18</strong>
+<span>XE ĐANG HOẠT ĐỘNG</span>
+</div>
+
+<div class="stat">
+<strong>4.8</strong>
+<span>ĐIỂM UY TÍN</span>
+</div>
+
+</div>
+
+<a href="trung-tam-bao-gia.html" class="contact-btn">
+Chọn nhà xe này
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>Xác minh doanh nghiệp</h2>
+
+<div class="row">
+<span>Đăng ký kinh doanh</span>
+<strong style="color:#078c4b">✓ Đã xác minh</strong>
+</div>
+
+<div class="row">
+<span>Mã số thuế</span>
+<strong>2300XXXXXX</strong>
+</div>
+
+<div class="row">
+<span>Giấy phép vận tải</span>
+<strong style="color:#078c4b">✓ Hợp lệ</strong>
+</div>
+
+<div class="row">
+<span>Tài khoản ngân hàng</span>
+<strong style="color:#078c4b">✓ Đã xác minh</strong>
+</div>
+
+<div class="row">
+<span>Hồ sơ phương tiện</span>
+<strong style="color:#078c4b">✓ Đã kiểm tra</strong>
+</div>
+
+</div>
+
+<div class="notice">
+🛡️ Đây là dữ liệu minh họa. Khi triển khai thật, thông tin doanh nghiệp, giấy phép, đăng kiểm và phương tiện cần được lấy từ hồ sơ xác minh thực tế.
+</div>
+
+</aside>
+
+<section>
+
+<div class="card">
+
+<h2>Chất lượng vận chuyển</h2>
+
+<div class="score">
+
+<div class="score-item">
+<strong>4.8</strong>
+<span>ĐÚNG GIỜ</span>
+</div>
+
+<div class="score-item">
+<strong>4.9</strong>
+<span>PHỐI HỢP</span>
+</div>
+
+<div class="score-item">
+<strong>4.8</strong>
+<span>BẢO QUẢN HÀNG</span>
+</div>
+
+<div class="score-item">
+<strong>4.9</strong>
+<span>CHỨNG TỪ POD</span>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Đội xe tiêu biểu</h2>
+
+<div class="fleet">
+
+<div class="truck-card">
+<div class="truck-icon">🚚</div>
+<h3>Xe thùng kín 5 tấn</h3>
+<p>Số lượng: <strong>6 xe</strong></p>
+<p>GPS: <strong style="color:#078c4b">Có</strong></p>
+<p>Phù hợp: hàng điện tử, hàng thùng</p>
+</div>
+
+<div class="truck-card">
+<div class="truck-icon">🚛</div>
+<h3>Xe thùng kín 8 tấn</h3>
+<p>Số lượng: <strong>8 xe</strong></p>
+<p>GPS: <strong style="color:#078c4b">Có</strong></p>
+<p>Phù hợp: hàng công nghiệp</p>
+</div>
+
+<div class="truck-card">
+<div class="truck-icon">🚛</div>
+<h3>Xe tải 15 tấn</h3>
+<p>Số lượng: <strong>4 xe</strong></p>
+<p>GPS: <strong style="color:#078c4b">Có</strong></p>
+<p>Phù hợp: hàng tải trọng lớn</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Thành tích nhà xe</h2>
+
+<div class="badges">
+<span class="badge">🏆 Nhà xe uy tín</span>
+<span class="badge">🚚 300+ chuyến</span>
+<span class="badge">⏱️ Giao hàng đúng giờ</span>
+<span class="badge">📦 POD đầy đủ</span>
+<span class="badge">✓ Doanh nghiệp xác minh</span>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Đánh giá gần đây</h2>
+
+<div class="review">
+
+<div class="review-top">
+<div class="review-name">
+Công ty Điện tử Đông Á
+</div>
+
+<div class="review-star">
+★★★★★ 5.0
+</div>
+</div>
+
+<p>
+Nhà xe điều xe nhanh, tài xế chuyên nghiệp và giao đủ chứng từ POD sau khi hoàn thành.
+</p>
+
+<div class="review-date">
+Bắc Ninh → Hải Phòng · 03/09/2026
+</div>
+
+</div>
+
+<div class="review">
+
+<div class="review-top">
+<div class="review-name">
+Công ty Sản xuất Minh Long
+</div>
+
+<div class="review-star">
+★★★★★ 4.9
+</div>
+</div>
+
+<p>
+Xe đúng loại đã đăng ký, cập nhật GPS tốt và phối hợp kho nhận hàng khá nhanh.
+</p>
+
+<div class="review-date">
+Hà Nội → Bắc Giang · 28/08/2026
+</div>
+
+</div>
+
+<div class="review">
+
+<div class="review-top">
+<div class="review-name">
+Kho vận Thành Công
+</div>
+
+<div class="review-star">
+★★★★☆ 4.7
+</div>
+</div>
+
+<p>
+Đơn vị vận chuyển ổn định, hỗ trợ chứng từ và đối soát đầy đủ.
+</p>
+
+<div class="review-date">
+Hải Phòng → Bắc Ninh · 21/08/2026
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Hoạt động 30 ngày gần nhất</h2>
+
+<div class="row">
+<span>Chuyến đã nhận</span>
+<strong>46 chuyến</strong>
+</div>
+
+<div class="row">
+<span>Chuyến hoàn thành</span>
+<strong>45 chuyến</strong>
+</div>
+
+<div class="row">
+<span>Giao đúng giờ</span>
+<strong>43 chuyến</strong>
+</div>
+
+<div class="row">
+<span>Chuyến hủy</span>
+<strong>1 chuyến</strong>
+</div>
+
+<div class="row">
+<span>Quãng đường vận chuyển</span>
+<strong>8.760 km</strong>
+</div>
+
+</div>
+
+</section>
+
+</div>
+</div>
+
+<footer class="footer">
+<div class="container">
+<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+<p>© 2026 VietTruck. Hồ sơ nhà xe và doanh nghiệp vận tải.</p>
+</div>
+</footer>
+
+</body>
+</html>
