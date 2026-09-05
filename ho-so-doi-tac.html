@@ -1099,7 +1099,16 @@ function editProfile(){
 };
   const params = new URLSearchParams(window.location.search);
 const partnerName = params.get("name");
-  const data = partnerData[partnerName];
+  const savedData = localStorage.getItem(
+  "viettruck_partner_" + partnerName
+);
+
+const data = savedData
+  ? {
+      ...partnerData[partnerName],
+      ...JSON.parse(savedData)
+    }
+  : partnerData[partnerName];
 
 if(data){
 
