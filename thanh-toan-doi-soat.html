@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thanh toán & Đối soát | VietTruck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:"Be Vietnam Pro",sans-serif;
+background:#f5f8f6;
+color:#14231b;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:0 20px;
+}
+
+.header{
+background:#fff;
+border-bottom:1px solid #e2e8e5;
+}
+
+.nav{
+height:76px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+text-decoration:none;
+color:#087d43;
+}
+
+.logo-icon{font-size:34px}
+
+.logo strong{
+font-size:25px;
+}
+
+.logo small{
+display:block;
+font-size:11px;
+color:#69766f;
+}
+
+.menu{
+display:flex;
+gap:24px;
+}
+
+.menu a{
+text-decoration:none;
+color:#17231d;
+font-size:14px;
+font-weight:600;
+}
+
+.menu a:hover{
+color:#078c4b;
+}
+
+.page-head{
+background:linear-gradient(135deg,#087d45,#0aa45a);
+color:#fff;
+padding:28px 0;
+}
+
+.page-head h1{
+margin:0 0 6px;
+font-size:28px;
+}
+
+.page-head p{
+margin:0;
+font-size:13px;
+opacity:.9;
+}
+
+.main{
+display:grid;
+grid-template-columns:1fr 320px;
+gap:22px;
+margin:26px auto 50px;
+}
+
+.card{
+background:#fff;
+border:1px solid #e0e7e3;
+border-radius:12px;
+padding:22px;
+margin-bottom:18px;
+}
+
+.card h2{
+margin:0 0 6px;
+font-size:20px;
+}
+
+.sub{
+font-size:13px;
+color:#6b7771;
+margin-bottom:20px;
+}
+
+.route-box{
+background:#f8faf9;
+border:1px solid #e8eeeb;
+border-radius:10px;
+padding:16px;
+margin-bottom:20px;
+}
+
+.route{
+font-size:21px;
+font-weight:800;
+margin-bottom:10px;
+}
+
+.route span{
+color:#078c4b;
+padding:0 8px;
+}
+
+.meta{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+font-size:12px;
+color:#66736c;
+}
+
+.meta strong{
+color:#1f2d26;
+}
+
+.money-box{
+background:#f8faf9;
+border:1px solid #e4ebe7;
+border-radius:10px;
+padding:18px;
+}
+
+.money-row{
+display:flex;
+justify-content:space-between;
+gap:15px;
+padding:12px 0;
+border-bottom:1px solid #e7ece9;
+font-size:13px;
+}
+
+.money-row:last-child{
+border-bottom:0;
+}
+
+.money-row span{
+color:#65736c;
+}
+
+.money-row strong{
+text-align:right;
+}
+
+.total{
+font-size:18px;
+font-weight:800;
+color:#078c4b;
+}
+
+.fee{
+color:#d97706;
+}
+
+.status-box{
+display:inline-block;
+background:#fff6df;
+color:#8a6411;
+font-size:12px;
+font-weight:800;
+padding:8px 12px;
+border-radius:20px;
+margin-bottom:16px;
+}
+
+.status-box.paid{
+background:#e6f7ed;
+color:#078c4b;
+}
+
+.payment-method{
+margin-top:20px;
+}
+
+.payment-method label{
+display:block;
+font-size:13px;
+font-weight:700;
+margin-bottom:7px;
+}
+
+.payment-method select{
+width:100%;
+height:48px;
+border:1px solid #d5dfda;
+border-radius:8px;
+padding:0 12px;
+font-family:inherit;
+font-size:14px;
+background:#fff;
+}
+
+.check-row{
+display:flex;
+gap:9px;
+align-items:flex-start;
+font-size:12px;
+color:#59675f;
+line-height:1.6;
+margin-top:18px;
+}
+
+.check-row input{
+margin-top:3px;
+}
+
+.pay-btn{
+width:100%;
+border:0;
+border-radius:9px;
+background:#078c4b;
+color:white;
+padding:14px 18px;
+font-family:inherit;
+font-size:14px;
+font-weight:800;
+cursor:pointer;
+margin-top:20px;
+}
+
+.pay-btn:disabled{
+background:#c4d0ca;
+cursor:not-allowed;
+}
+
+.back-link{
+display:block;
+text-align:center;
+text-decoration:none;
+color:#078c4b;
+font-weight:700;
+font-size:13px;
+margin-top:14px;
+}
+
+.summary-row{
+display:flex;
+justify-content:space-between;
+gap:15px;
+padding:10px 0;
+border-bottom:1px solid #edf0ee;
+font-size:12px;
+}
+
+.summary-row:last-child{
+border-bottom:0;
+}
+
+.summary-row span{
+color:#6c7972;
+}
+
+.summary-row strong{
+text-align:right;
+}
+
+.notice{
+background:#edf7f1;
+border:1px solid #cae5d5;
+color:#315f47;
+border-radius:9px;
+padding:14px;
+font-size:12px;
+line-height:1.7;
+}
+
+.success{
+display:none;
+text-align:center;
+background:#fff;
+border:1px solid #bee2cc;
+border-radius:12px;
+padding:35px 22px;
+}
+
+.success-icon{
+font-size:50px;
+}
+
+.success h2{
+color:#078c4b;
+margin-bottom:9px;
+}
+
+.success p{
+font-size:13px;
+color:#66736c;
+line-height:1.7;
+}
+
+.success a{
+display:inline-block;
+margin-top:12px;
+background:#078c4b;
+color:#fff;
+text-decoration:none;
+padding:12px 18px;
+border-radius:8px;
+font-size:13px;
+font-weight:800;
+}
+
+.footer{
+background:#073c27;
+color:white;
+text-align:center;
+padding:28px 0;
+}
+
+.footer p{
+font-size:13px;
+opacity:.8;
+}
+
+@media(max-width:850px){
+.menu{display:none}
+.main{grid-template-columns:1fr}
+}
+
+@media(max-width:600px){
+.meta{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="container nav">
+
+<a href="index.html" class="logo">
+<span class="logo-icon">🚚</span>
+<div>
+<strong>VietTruck</strong>
+<small>Kết nối hàng hóa Việt Nam</small>
+</div>
+</a>
+
+<nav class="menu">
+<a href="index.html">Trang chủ</a>
+<a href="tim-hang.html">Tìm hàng</a>
+<a href="tim-xe.html">Tìm xe</a>
+<a href="chuyen-da-nhan.html">Chuyến đã nhận</a>
+<a href="tai-khoan.html">Tài khoản</a>
+</nav>
+
+</div>
+</header>
+
+<section class="page-head">
+<div class="container">
+<h1>Thanh toán & đối soát</h1>
+<p>Kiểm tra cước vận chuyển và hoàn tất quyết toán chuyến hàng</p>
+</div>
+</section>
+
+<main class="container main">
+
+<section>
+
+<div class="card" id="paymentCard">
+
+<h2>Thông tin quyết toán</h2>
+<div class="sub">Đối soát cước sau khi chuyến hàng đã hoàn thành và có POD.</div>
+
+<div class="route-box">
+
+<div class="route">
+Bắc Ninh <span>→</span> Hải Phòng
+</div>
+
+<div class="meta">
+<div>📦 Mã chuyến: <strong>VT-TRIP-090526-001</strong></div>
+<div>🚚 Xe: <strong>99C-123.45</strong></div>
+<div>👤 Tài xế: <strong>Nguyễn Văn B</strong></div>
+<div>✅ POD: <strong>Đã xác nhận</strong></div>
+</div>
+
+</div>
+
+<div class="status-box" id="paymentStatus">
+Chờ thanh toán
+</div>
+
+<div class="money-box">
+
+<div class="money-row">
+<span>Cước vận chuyển</span>
+<strong>3.500.000 đ</strong>
+</div>
+
+<div class="money-row">
+<span>Phí nền tảng VietTruck</span>
+<strong class="fee">- 175.000 đ</strong>
+</div>
+
+<div class="money-row">
+<span>Thuế / phí khác</span>
+<strong>0 đ</strong>
+</div>
+
+<div class="money-row">
+<span>Tài xế thực nhận</span>
+<strong class="total">3.325.000 đ</strong>
+</div>
+
+</div>
+
+<div class="payment-method">
+
+<label>Phương thức thanh toán *</label>
+
+<select id="paymentMethod" required>
+<option value="">Chọn phương thức</option>
+<option>Chuyển khoản ngân hàng</option>
+<option>Ví VietTruck</option>
+<option>Thanh toán trực tiếp</option>
+</select>
+
+</div>
+
+<label class="check-row">
+<input type="checkbox" id="confirmCheck">
+<span>
+Tôi xác nhận số tiền đối soát trên là chính xác và đồng ý hoàn tất thanh toán chuyến hàng.
+</span>
+</label>
+
+<button class="pay-btn" id="payBtn">
+Xác nhận thanh toán
+</button>
+
+<a href="pod-giao-hang.html" class="back-link">
+← Quay lại POD giao hàng
+</a>
+
+</div>
+
+<div class="success" id="successBox">
+
+<div class="success-icon">✅</div>
+
+<h2>Thanh toán hoàn tất</h2>
+
+<p>
+Chuyến VT-TRIP-090526-001 đã được đối soát thành công.<br>
+Số tiền tài xế thực nhận: <strong>3.325.000 đ</strong>.
+</p>
+
+<a href="lich-su-giao-dich.html">
+Xem lịch sử giao dịch
+</a>
+
+</div>
+
+</section>
+
+<aside>
+
+<div class="card">
+
+<h2>Thông tin chuyến</h2>
+
+<div class="summary-row">
+<span>Chủ hàng</span>
+<strong>Công ty ABC</strong>
+</div>
+
+<div class="summary-row">
+<span>Tài xế</span>
+<strong>Nguyễn Văn B</strong>
+</div>
+
+<div class="summary-row">
+<span>Biển số</span>
+<strong>99C-123.45</strong>
+</div>
+
+<div class="summary-row">
+<span>Điểm lấy</span>
+<strong>Yên Phong, Bắc Ninh</strong>
+</div>
+
+<div class="summary-row">
+<span>Điểm giao</span>
+<strong>Hải An, Hải Phòng</strong>
+</div>
+
+<div class="summary-row">
+<span>Trạng thái</span>
+<strong style="color:#078c4b">Đã hoàn thành</strong>
+</div>
+
+</div>
+
+<div class="notice">
+💳 Bản demo này chỉ mô phỏng bước thanh toán. Khi triển khai thật, VietTruck có thể tích hợp ngân hàng, ví điện tử hoặc cổng thanh toán để tự động đối soát.
+</div>
+
+</aside>
+
+</main>
+
+<footer class="footer">
+<div class="container">
+<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+<p>© 2026 VietTruck. Nền tảng kết nối chủ hàng, tài xế và nhà xe.</p>
+</div>
+</footer>
+
+<script>
+
+const payBtn =
+document.getElementById("payBtn");
+
+const confirmCheck =
+document.getElementById("confirmCheck");
+
+const paymentMethod =
+document.getElementById("paymentMethod");
+
+const paymentCard =
+document.getElementById("paymentCard");
+
+const successBox =
+document.getElementById("successBox");
+
+payBtn.addEventListener("click",function(){
+
+if(paymentMethod.value === ""){
+
+alert("Vui lòng chọn phương thức thanh toán.");
+
+return;
+
+}
+
+if(!confirmCheck.checked){
+
+alert("Vui lòng xác nhận thông tin đối soát.");
+
+return;
+
+}
+
+paymentCard.style.display = "none";
+
+successBox.style.display = "block";
+
+window.scrollTo({
+top:150,
+behavior:"smooth"
+});
+
+});
+
+</script>
+
+</body>
+</html>
