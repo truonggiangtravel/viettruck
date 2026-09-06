@@ -350,6 +350,51 @@ font-size:35px;
 <p>Nền tảng kết nối chủ hàng và tài xế trên toàn quốc</p>
 </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+const SUPABASE_URL = "https://ksyakrcgqzsupuqyusyo.supabase.co";
+const SUPABASE_KEY = "sb_publishable_0LGPlepJQoFBoEoL7jyvSA_9GC5hSgD";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function updateLoginButtons() {
+  const {
+    data: { session }
+  } = await supabaseClient.auth.getSession();
+
+  const navButtons = document.querySelector(".nav-buttons");
+
+  if (!navButtons) return;
+
+  if (session) {
+    navButtons.innerHTML = `
+      <button
+        type="button"
+        class="btn btn-outline"
+        onclick="window.location.href='dashboard.html'">
+        Tài khoản
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-green"
+        id="logoutBtn">
+        Đăng xuất
+      </button>
+    `;
+
+    document.getElementById("logoutBtn").addEventListener("click", async function () {
+      await supabaseClient.auth.signOut();
+      window.location.href = "dang-nhap.html";
+    });
+  }
+}
+
+updateLoginButtons();
+</script>
 </body>
 </html>
