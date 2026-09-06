@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Liên hệ | VietTruck</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7f6;
+      color: #1f2937;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .nav {
+      max-width: 1180px;
+      margin: auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      text-decoration: none;
+      color: #08783e;
+      font-size: 28px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .logo small {
+      display: block;
+      font-size: 11px;
+      color: #667085;
+      font-weight: normal;
+    }
+
+    .menu {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: #111827;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .menu a:hover {
+      color: #078747;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #057a3d, #0b9a55);
+      color: white;
+      padding: 55px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: auto;
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    }
+
+    .card h2 {
+      color: #087f45;
+      font-size: 23px;
+      margin-bottom: 16px;
+    }
+
+    .info {
+      margin-bottom: 18px;
+    }
+
+    .info strong {
+      display: block;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+
+    .info p {
+      color: #475467;
+    }
+
+    .hotline {
+      display: inline-block;
+      color: #078747;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #087f45;
+      color: white;
+      text-decoration: none;
+      padding: 11px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background: #066b3b;
+    }
+
+    .support {
+      background: #ecfdf3;
+      border-left: 4px solid #078747;
+    }
+
+    .support p {
+      color: #475467;
+      margin-bottom: 12px;
+    }
+
+    .company {
+      background: white;
+      border-radius: 14px;
+      padding: 28px;
+      margin-top: 24px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    }
+
+    .company h2 {
+      color: #087f45;
+      margin-bottom: 12px;
+    }
+
+    .company p {
+      color: #475467;
+      margin-bottom: 8px;
+    }
+
+    footer {
+      background: #12372a;
+      color: #d1d5db;
+      text-align: center;
+      padding: 24px 20px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 800px) {
+      .menu {
+        display: none;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 29px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+
+    <a href="index.html" class="logo">
+      🚚 VietTruck
+      <small>Kết nối hàng hóa Việt Nam</small>
+    </a>
+
+    <nav class="menu">
+      <a href="index.html">Trang chủ</a>
+      <a href="tim-hang.html">Tìm hàng</a>
+      <a href="tim-xe.html">Tìm xe</a>
+      <a href="dang-hang.html">Đăng hàng</a>
+      <a href="bang-gia.html">Bảng giá</a>
+      <a href="gioi-thieu.html">Giới thiệu</a>
+      <a href="lien-he.html">Liên hệ</a>
+    </nav>
+
+  </div>
+</header>
+
+
+<section class="hero">
+  <h1>Liên hệ VietTruck</h1>
+  <p>
+    Liên hệ với VietTruck khi bạn cần hỗ trợ về tài khoản,
+    đăng hàng, tìm xe, vận chuyển hoặc hợp tác kinh doanh.
+  </p>
+</section>
+
+
+<main class="container">
+
+  <div class="contact-grid">
+
+    <section class="card">
+
+      <h2>Thông tin liên hệ</h2>
+
+      <div class="info">
+        <strong>Hotline VietTruck</strong>
+
+        <a href="tel:0388134999" class="hotline">
+          0388 134 999
+        </a>
+      </div>
+
+      <div class="info">
+        <strong>Văn phòng miền Bắc</strong>
+        <p>
+          Tầng 5, 776 Cầu Ngà, phường Nam Sơn,
+          thành phố Bắc Ninh
+        </p>
+      </div>
+
+      <div class="info">
+        <strong>Văn phòng miền Nam</strong>
+        <p>
+          Số 28 đường 05, Cư Xá Bình Phú,
+          phường Bình Phú, thành phố Hồ Chí Minh
+        </p>
+      </div>
+
+    </section>
+
+
+    <section class="card support">
+
+      <h2>Hỗ trợ khách hàng</h2>
+
+      <p>
+        Nếu bạn gặp vấn đề trong quá trình sử dụng VietTruck,
+        hãy gửi yêu cầu để bộ phận hỗ trợ tiếp nhận.
+      </p>
+
+      <p>
+        Các nội dung hỗ trợ gồm tài khoản, đơn hàng,
+        chuyến vận chuyển, thanh toán và khiếu nại.
+      </p>
+
+      <a href="ho-tro-khieu-nai.html" class="btn">
+        Gửi yêu cầu hỗ trợ
+      </a>
+
+    </section>
+
+  </div>
+
+
+  <section class="company">
+
+    <h2>Đơn vị vận hành VietTruck</h2>
+
+    <p>
+      <strong>
+        CÔNG TY TNHH ĐẦU TƯ THƯƠNG MẠI DỊCH VỤ TRƯỜNG GIANG
+      </strong>
+    </p>
+
+    <p>
+      <strong>Mã số thuế:</strong> 2301210607
+    </p>
+
+    <p>
+      <strong>Hotline:</strong> 0388 134 999
+    </p>
+
+    <p>
+      VietTruck là nền tảng công nghệ hướng tới kết nối
+      chủ hàng, tài xế và nhà xe trong lĩnh vực vận tải hàng hóa.
+    </p>
+
+  </section>
+
+</main>
+
+
+<footer>
+  © 2026 VietTruck – Kết nối hàng hóa Việt Nam
+</footer>
+
+</body>
+</html>
