@@ -278,9 +278,9 @@ body{margin:0;font-family:"Be Vietnam Pro",sans-serif;background:#f6f8f7;color:#
 <a href="#">Liên hệ</a>
 </nav>
 
-<div class="nav-buttons">
-<a href="dang-nhap.html" class="btn btn-outline">Đăng nhập</a>
-<a href="dang-ky.html" class="btn btn-green">Đăng ký</a>
+<div class="nav-buttons" id="navUserButtons">
+  <a href="dang-nhap.html" class="btn btn-outline">Đăng nhập</a>
+  <a href="dang-ky.html" class="btn btn-green">Đăng ký</a>
 </div>
 
 </div>
@@ -412,6 +412,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (!session) {
         console.log("Người dùng chưa đăng nhập VietTruck");
     }
+ const navUserButtons = document.getElementById("navUserButtons");
+
+if (session && navUserButtons) {
+    navUserButtons.innerHTML = `
+        <a href="dashboard.html" class="btn btn-outline">Dashboard</a>
+        <a href="tai-khoan.html" class="btn btn-green">Tài khoản</a>
+    `;
+}
 
 
     /* =========================================
