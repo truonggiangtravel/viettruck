@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Báo cáo tài chính VietTruck</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #f4f7f9;
+      color: #1f2937;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: #0f7a3d;
+      color: #fff;
+      padding: 22px 16px;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      overflow-y: auto;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 28px;
+    }
+
+    .logo span {
+      color: #ffd43b;
+    }
+
+    .sidebar a {
+      display: block;
+      text-decoration: none;
+      color: #fff;
+      padding: 12px 14px;
+      margin: 5px 0;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: rgba(255,255,255,.18);
+    }
+
+    .main {
+      margin-left: 250px;
+      width: calc(100% - 250px);
+      padding: 24px;
+    }
+
+    .topbar {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 14px rgba(0,0,0,.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .topbar h1 {
+      font-size: 26px;
+      color: #0f7a3d;
+      margin-bottom: 5px;
+    }
+
+    .topbar p {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      border-radius: 8px;
+      padding: 10px 15px;
+      font-weight: 700;
+    }
+
+    .btn-primary {
+      background: #0f7a3d;
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #e9f5ee;
+      color: #0f7a3d;
+    }
+
+    .filter-box {
+      background: #fff;
+      padding: 18px;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 14px rgba(0,0,0,.05);
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 3px 14px rgba(0,0,0,.05);
+      border-left: 5px solid #0f7a3d;
+    }
+
+    .card .title {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 10px;
+    }
+
+    .card .value {
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .card .sub {
+      font-size: 12px;
+      margin-top: 8px;
+      color: #16a34a;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .panel {
+      background: #fff;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 3px 14px rgba(0,0,0,.05);
+    }
+
+    .panel h2 {
+      font-size: 18px;
+      margin-bottom: 18px;
+      color: #111827;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #edf0f2;
+      font-size: 14px;
+    }
+
+    .summary-row strong {
+      font-size: 14px;
+    }
+
+    .positive {
+      color: #0f9d58;
+    }
+
+    .negative {
+      color: #dc2626;
+    }
+
+    .warning {
+      color: #d97706;
+    }
+
+    .chart-wrap {
+      height: 320px;
+    }
+
+    .table-panel {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 3px 14px rgba(0,0,0,.05);
+      overflow: hidden;
+    }
+
+    .table-head {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .table-head h2 {
+      font-size: 18px;
+    }
+
+    .search {
+      padding: 9px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      width: 250px;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 1200px;
+    }
+
+    th,
+    td {
+      padding: 13px 12px;
+      border-top: 1px solid #eceff1;
+      text-align: left;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    th {
+      background: #f9fafb;
+      color: #4b5563;
+    }
+
+    .status {
+      display: inline-block;
+      border-radius: 20px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .paid {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .pending {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .overdue {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 12px;
+      padding: 25px 0;
+    }
+
+    @media (max-width: 1100px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .filter-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .section-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+        padding: 12px;
+      }
+
+      .cards,
+      .filter-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">Viet<span>Truck</span></div>
+
+    <a href="dashboard.html">🏠 Dashboard</a>
+    <a href="quan-ly-don-hang.html">📦 Quản lý đơn hàng</a>
+    <a href="chi-phi-van-tai.html">🚛 Chi phí vận tải</a>
+    <a href="doi-soat-cong-no.html">🧾 Đối soát công nợ</a>
+    <a href="yeu-cau-thanh-toan.html">💳 Yêu cầu thanh toán</a>
+    <a href="lich-su-giao-dich.html">🔄 Lịch sử giao dịch</a>
+    <a href="phieu-thu-chi.html">💰 Phiếu thu chi</a>
+    <a href="bao-cao-tai-chinh.html" class="active">📊 Báo cáo tài chính</a>
+  </aside>
+
+  <main class="main">
+
+    <section class="topbar">
+      <div>
+        <h1>Báo cáo tài chính</h1>
+        <p>Tổng hợp doanh thu, chi phí vận tải, công nợ và dòng tiền VietTruck</p>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn-secondary" onclick="window.print()">🖨 In báo cáo</button>
+        <button class="btn-primary" onclick="exportCSV()">⬇ Xuất Excel</button>
+      </div>
+    </section>
+
+    <section class="filter-box">
+      <div class="filter-grid">
+
+        <div class="field">
+          <label>Kỳ báo cáo</label>
+          <select id="period">
+            <option>Tháng này</option>
+            <option>Hôm nay</option>
+            <option>7 ngày gần nhất</option>
+            <option>Quý này</option>
+            <option>Năm nay</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Từ ngày</label>
+          <input type="date" value="2026-09-01">
+        </div>
+
+        <div class="field">
+          <label>Đến ngày</label>
+          <input type="date" value="2026-09-30">
+        </div>
+
+        <div class="field">
+          <label>Đối tượng</label>
+          <select>
+            <option>Tất cả</option>
+            <option>Khách hàng</option>
+            <option>Nhà xe</option>
+            <option>Tài xế</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Trạng thái</label>
+          <select>
+            <option>Tất cả</option>
+            <option>Đã thanh toán</option>
+            <option>Chờ thanh toán</option>
+            <option>Quá hạn</option>
+          </select>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="cards">
+
+      <div class="card">
+        <div class="title">TỔNG DOANH THU</div>
+        <div class="value">1,285 tỷ</div>
+        <div class="sub">▲ 12,8% so với kỳ trước</div>
+      </div>
+
+      <div class="card">
+        <div class="title">CHI PHÍ VẬN TẢI</div>
+        <div class="value">930 triệu</div>
+        <div class="sub">72,4% doanh thu</div>
+      </div>
+
+      <div class="card">
+        <div class="title">LỢI NHUẬN GỘP</div>
+        <div class="value">355 triệu</div>
+        <div class="sub">Biên lợi nhuận 27,6%</div>
+      </div>
+
+      <div class="card">
+        <div class="title">DÒNG TIỀN THUẦN</div>
+        <div class="value">+145 triệu</div>
+        <div class="sub">Dòng tiền đang dương</div>
+      </div>
+
+    </section>
+
+    <section class="section-grid">
+
+      <div class="panel">
+        <h2>Công nợ hệ thống</h2>
+
+        <div class="summary-row">
+          <span>Phải thu khách hàng</span>
+          <strong>420.000.000 đ</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Đã thu khách hàng</span>
+          <strong class="positive">865.000.000 đ</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Phải trả nhà xe</span>
+          <strong>310.000.000 đ</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Đã trả nhà xe</span>
+          <strong class="positive">620.000.000 đ</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Công nợ quá hạn</span>
+          <strong class="negative">85.000.000 đ</strong>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Dòng tiền VietTruck</h2>
+
+        <div class="summary-row">
+          <span>Số dư đầu kỳ</span>
+          <strong>275.000.000 đ</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Tổng tiền vào</span>
+          <strong class="positive">1.065.000.000 đ</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Tổng tiền ra</span>
+          <strong class="negative">920.000.000 đ</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Dòng tiền thuần</span>
+          <strong class="positive">+145.000.000 đ</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Số dư cuối kỳ</span>
+          <strong>420.000.000 đ</strong>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="section-grid">
+
+      <div class="panel">
+        <h2>Doanh thu & chi phí</h2>
+        <div class="chart-wrap">
+          <canvas id="financeChart"></canvas>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Dòng tiền vào / ra</h2>
+        <div class="chart-wrap">
+          <canvas id="cashflowChart"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="table-panel">
+
+      <div class="table-head">
+        <h2>Chi tiết tài chính</h2>
+        <input
+          id="searchInput"
+          class="search"
+          placeholder="Tìm mã đơn, khách hàng..."
+          onkeyup="searchTable()"
+        >
+      </div>
+
+      <div class="table-scroll">
+
+        <table id="financeTable">
+          <thead>
+            <tr>
+              <th>Ngày</th>
+              <th>Mã đơn</th>
+              <th>Khách hàng</th>
+              <th>Nhà xe</th>
+              <th>Doanh thu</th>
+              <th>Chi phí</th>
+              <th>Lợi nhuận</th>
+              <th>Phải thu</th>
+              <th>Phải trả</th>
+              <th>Trạng thái</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td>06/09/2026</td>
+              <td>VT26090601</td>
+              <td>Samsung Bắc Ninh</td>
+              <td>Nhà xe Minh Long</td>
+              <td>28.500.000</td>
+              <td>21.000.000</td>
+              <td>7.500.000</td>
+              <td>0</td>
+              <td>0</td>
+              <td><span class="status paid">Đã thanh toán</span></td>
+            </tr>
+
+            <tr>
+              <td>05/09/2026</td>
+              <td>VT26090508</td>
+              <td>Foxconn Việt Nam</td>
+              <td>Vận tải Hoàng Gia</td>
+              <td>36.000.000</td>
+              <td>27.500.000</td>
+              <td>8.500.000</td>
+              <td>36.000.000</td>
+              <td>27.500.000</td>
+              <td><span class="status pending">Chờ thanh toán</span></td>
+            </tr>
+
+            <tr>
+              <td>04/09/2026</td>
+              <td>VT26090413</td>
+              <td>Canon Việt Nam</td>
+              <td>Nhà xe Đông Bắc</td>
+              <td>19.800.000</td>
+              <td>14.200.000</td>
+              <td>5.600.000</td>
+              <td>19.800.000</td>
+              <td>0</td>
+              <td><span class="status overdue">Quá hạn</span></td>
+            </tr>
+
+            <tr>
+              <td>03/09/2026</td>
+              <td>VT26090306</td>
+              <td>Goertek Vina</td>
+              <td>Logistics Thành Công</td>
+              <td>42.000.000</td>
+              <td>32.500.000</td>
+              <td>9.500.000</td>
+              <td>0</td>
+              <td>32.500.000</td>
+              <td><span class="status pending">Chờ thanh toán</span></td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+
+    </section>
+
+    <div class="footer-note">
+      VietTruck Financial Center © 2026
+    </div>
+
+  </main>
+
+</div>
+
+<script>
+
+const financeCtx = document
+  .getElementById("financeChart")
+  .getContext("2d");
+
+new Chart(financeCtx, {
+  type: "bar",
+  data: {
+    labels: ["T4", "T5", "T6", "T7", "T8", "T9"],
+    datasets: [
+      {
+        label: "Doanh thu",
+        data: [760, 850, 920, 1050, 1120, 1285],
+        backgroundColor: "#159447"
+      },
+      {
+        label: "Chi phí",
+        data: [580, 620, 690, 790, 835, 930],
+        backgroundColor: "#f59e0b"
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "bottom"
+      }
+    }
+  }
+});
+
+const cashCtx = document
+  .getElementById("cashflowChart")
+  .getContext("2d");
+
+new Chart(cashCtx, {
+  type: "line",
+  data: {
+    labels: ["T4", "T5", "T6", "T7", "T8", "T9"],
+    datasets: [
+      {
+        label: "Tiền vào",
+        data: [670, 720, 810, 880, 950, 1065],
+        borderColor: "#0f7a3d",
+        tension: .35,
+        fill: false
+      },
+      {
+        label: "Tiền ra",
+        data: [610, 665, 735, 790, 850, 920],
+        borderColor: "#dc2626",
+        tension: .35,
+        fill: false
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "bottom"
+      }
+    }
+  }
+});
+
+function searchTable() {
+
+  const input = document
+    .getElementById("searchInput")
+    .value
+    .toLowerCase();
+
+  const rows = document.querySelectorAll(
+    "#financeTable tbody tr"
+  );
+
+  rows.forEach(row => {
+
+    const text = row.innerText.toLowerCase();
+
+    row.style.display =
+      text.includes(input)
+        ? ""
+        : "none";
+
+  });
+
+}
+
+function exportCSV() {
+
+  const table = document.getElementById("financeTable");
+
+  let csv = [];
+
+  for (let row of table.rows) {
+
+    let cols = [];
+
+    for (let cell of row.cells) {
+      cols.push(
+        '"' +
+        cell.innerText.replace(/"/g, '""') +
+        '"'
+      );
+    }
+
+    csv.push(cols.join(","));
+  }
+
+  const blob = new Blob(
+    ["\ufeff" + csv.join("\n")],
+    {
+      type: "text/csv;charset=utf-8;"
+    }
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download =
+    "bao-cao-tai-chinh-viettruck.csv";
+
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+
+</script>
+
+</body>
+</html>
