@@ -314,7 +314,7 @@ body{
 
 </div>
 
-<form>
+<form id="registerForm">
 
 <div class="form-grid">
 
@@ -322,45 +322,45 @@ body{
 
 <div class="field">
   <label>Họ và tên *</label>
-  <input type="text" placeholder="Nguyễn Văn A" required>
+  <input id="fullName" type="text" placeholder="Nguyễn Văn A" required>
 </div>
 
 <div class="field">
   <label>Số điện thoại *</label>
-  <input type="tel" placeholder="09xxxxxxxx" required>
+  <input id="phone" type="tel" placeholder="09xxxxxxxx" required>
 </div>
 
 <div class="field">
   <label>Email</label>
-  <input type="email" placeholder="example@email.com">
+  <input id="email" type="email" placeholder="example@email.com" required>
 </div>
 
 <div class="field">
   <label>Tỉnh / Thành phố</label>
-  <input type="text" placeholder="Ví dụ: Bắc Ninh">
+  <input id="city" type="text" placeholder="Ví dụ: Bắc Ninh">
 </div>
 
 <div class="section-title">Thông tin tài khoản</div>
 
 <div class="field">
   <label>Mật khẩu *</label>
-  <input type="password" placeholder="Tối thiểu 8 ký tự" required>
+  <input id="password" type="password" placeholder="Tối thiểu 8 ký tự" required>
 </div>
 
 <div class="field">
   <label>Nhập lại mật khẩu *</label>
-  <input type="password" placeholder="Nhập lại mật khẩu" required>
+  <input id="confirmPassword" type="password" placeholder="Nhập lại mật khẩu" required>
 </div>
 
 <div class="field full" id="companyField">
   <label>Tên công ty / Nhà xe</label>
-  <input type="text" placeholder="Không bắt buộc">
+  <input id="companyName" type="text" placeholder="Không bắt buộc">
 </div>
 
 </div>
 
 <label class="checkbox-line">
-  <input type="checkbox" required>
+  <input id="agreeTerms" type="checkbox" required>
   <span>
     Tôi đồng ý với Điều khoản sử dụng và Chính sách bảo mật của VietTruck.
   </span>
@@ -393,19 +393,109 @@ body{
 </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+const SUPABASE_URL = "https://ksyakrcgqzsupqyuusyo.supabase.co";
+const SUPABASE_KEY = "DAN_PUBLISHABLE_KEY_VAO_DAY";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
 const shipperBox = document.getElementById("shipperBox");
 const driverBox = document.getElementById("driverBox");
 
+let selectedRole = "customer";
+
 shipperBox.addEventListener("click", function(){
+  selectedRole = "customer";
+
   shipperBox.classList.add("active");
   driverBox.classList.remove("active");
 });
 
 driverBox.addEventListener("click", function(){
+  selectedRole = "driver";
+
   driverBox.classList.add("active");
   shipperBox.classList.remove("active");
 });
+
+document
+  .getElementById("registerForm")
+  .addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const fullName =
+      document.getElementById("fullName").value.trim();
+
+    const phone =
+      document.getElementById("phone").value.trim();
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const city =
+      document.getElementById("city").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+    const confirmPassword =
+      document.getElementById("confirmPassword").value;
+
+    const companyName =
+      document.getElementById("companyName").value.trim();
+
+    if(password.length < 8){
+      alert("Mật khẩu phải có ít nhất 8 ký tự.");
+      return;
+    }
+
+    if(password !== confirmPassword){
+      alert("Hai mật khẩu không giống nhau.");
+      return;
+    }
+
+    const button =
+      document.querySelector(".register-btn");
+
+    button.disabled = true;
+    button.textContent = "Đang tạo tài khoản...";
+
+    const { data, error } =
+      await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+
+        options: {
+          data: {
+            full_name: fullName,
+            phone: phone,
+            role: selectedRole,
+            city: city,
+            company_name: companyName
+          }
+        }
+      });
+
+    if(error){
+      alert("Đăng ký thất bại: " + error.message);
+
+      button.disabled = false;
+      button.textContent = "Đăng ký tài khoản";
+      return;
+    }
+
+    alert(
+      "Đăng ký thành công. Nếu Supabase yêu cầu xác nhận email, hãy mở email để xác nhận tài khoản."
+    );
+
+    window.location.href = "dang-nhap.html";
+  });
 </script>
 
 </body>
