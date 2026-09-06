@@ -1567,6 +1567,93 @@ if (currentUser.role && currentUser.role !== "admin") {
   }
 
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+const SUPABASE_URL = "https://ksyakrcgqzsupqyuusyo.supabase.co";
+const SUPABASE_KEY = "DAN_PUBLISHABLE_KEY_VAO_DAY";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function protectAdminPage() {
+
+  const { data, error } =
+    await supabaseClient.auth.getSession();
+
+  const session = data.session;
+
+  if (error || !session) {
+    localStorage.removeItem("viettruck_logged_in");
+    localStorage.removeItem("viettruck_current_user");
+
+    window.location.replace("dang-nhap.html");
+    return;
+  }
+
+  const { data: profile, error: profileError } =
+    await supabaseClient
+      .from("profiles")
+      .select("role, status, full_name")
+      .eq("id", session.user.id)
+      .single();
+
+  if (
+    profileError ||
+    !profile ||
+    profile.status !== "active"
+  ) {
+    await supabaseClient.auth.signOut();
+
+    localStorage.removeItem("viettruck_logged_in");
+    localStorage.removeItem("viettruck_current_user");
+
+    window.location.replace("dang-nhap.html");
+    return;
+  }
+
+  if (profile.role !== "admin") {
+    window.location.replace("dashboard.html");
+    return;
+  }
+
+  localStorage.setItem(
+    "viettruck_logged_in",
+    "true"
+  );
+
+  localStorage.setItem(
+    "viettruck_current_user",
+    JSON.stringify({
+      id: session.user.id,
+      email: session.user.email,
+      name: profile.full_name || session.user.email,
+      role: profile.role
+    })
+  );
+}
+
+protectAdminPage();
+
+/* ĐĂNG XUẤT THẬT KHỎI SUPABASE */
+async function logout() {
+
+  await supabaseClient.auth.signOut();
+
+  localStorage.removeItem(
+    "viettruck_current_user"
+  );
+
+  localStorage.removeItem(
+    "viettruck_logged_in"
+  );
+
+  window.location.replace(
+    "dang-nhap.html"
+  );
+}
+</script>
 </body>
 </html>
