@@ -302,36 +302,73 @@ body{
   <p>Nền tảng kết nối chủ hàng và tài xế trên toàn quốc</p>
 </div>
 </footer>
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-document.getElementById("loginForm").addEventListener("submit", function(e){
+const SUPABASE_URL = "https://ksyakrcgqzsupqyuusyo.supabase.co/rest/v1/";
+const SUPABASE_KEY = "sb_publishable_OLGPIepJQoFBoEoL7jyvSA_9GC5hSgD";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+document.getElementById("loginForm").addEventListener("submit", async function(e){
   e.preventDefault();
 
   const inputs = this.querySelectorAll("input");
-  const username = inputs[0].value.trim();
+  const email = inputs[0].value.trim();
   const password = inputs[1].value.trim();
 
-  if(!username || !password){
-    alert("Vui lòng nhập đầy đủ tài khoản và mật khẩu.");
+  if (!email || !password) {
+    alert("Vui lòng nhập đầy đủ email và mật khẩu.");
     return;
   }
 
-  const isAdmin =
-    username.toLowerCase() === "admin" ||
-    username.toLowerCase() === "admin@viettruck.vn";
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+
+  if (error) {
+    alert("Đăng nhập thất bại: " + error.message);
+    return;
+  }
+
+  const user = data.user;
+
+  const { data: profile, error: profileError } = await supabaseClient
+    .from("profiles")
+    .select("role, status, full_name")
+    .eq("id", user.id)
+    .single();
+
+  if (profileError) {
+    alert("Không đọc được hồ sơ người dùng.");
+    await supabaseClient.auth.signOut();
+    return;
+  }
+
+  if (profile.status !== "active") {
+    alert("Tài khoản hiện không hoạt động.");
+    await supabaseClient.auth.signOut();
+    return;
+  }
 
   localStorage.setItem("viettruck_logged_in", "true");
-
   localStorage.setItem(
     "viettruck_current_user",
     JSON.stringify({
-      name: isAdmin ? "Admin VietTruck" : username,
-      role: isAdmin ? "admin" : "user"
+      id: user.id,
+      email: user.email,
+      name: profile.full_name || user.email,
+      role: profile.role
     })
   );
 
-  if(isAdmin){
+  if (profile.role === "admin") {
     window.location.href = "admin.html";
-  }else{
+  } else {
     window.location.href = "dashboard.html";
   }
 });
