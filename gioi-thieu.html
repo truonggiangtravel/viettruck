@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Giới thiệu VietTruck</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7f6;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .nav {
+      max-width: 1180px;
+      margin: auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      text-decoration: none;
+      color: #08783e;
+      font-size: 28px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .logo small {
+      display: block;
+      font-size: 11px;
+      color: #667085;
+      font-weight: normal;
+    }
+
+    .menu {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: #111827;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .menu a:hover {
+      color: #078747;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #057a3d, #0b9a55);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 38px;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 17px;
+      max-width: 760px;
+      margin: auto;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 45px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    }
+
+    .card h2 {
+      color: #087f45;
+      margin-bottom: 14px;
+      font-size: 26px;
+    }
+
+    .card p {
+      margin-bottom: 12px;
+      color: #475467;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .item {
+      background: #f8faf9;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .item h3 {
+      color: #087f45;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .company {
+      background: #ecfdf3;
+      border-left: 4px solid #078747;
+      padding: 22px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .company strong {
+      color: #111827;
+    }
+
+    .cta {
+      background: #087f45;
+      color: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .cta a {
+      background: white;
+      color: #087f45;
+      text-decoration: none;
+      padding: 13px 22px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    footer {
+      background: #12372a;
+      color: #d1d5db;
+      text-align: center;
+      padding: 24px 20px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 800px) {
+      .menu {
+        display: none;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero h1 {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+
+    <a href="index.html" class="logo">
+      🚚 VietTruck
+      <small>Kết nối hàng hóa Việt Nam</small>
+    </a>
+
+    <nav class="menu">
+      <a href="index.html">Trang chủ</a>
+      <a href="tim-hang.html">Tìm hàng</a>
+      <a href="tim-xe.html">Tìm xe</a>
+      <a href="dang-hang.html">Đăng hàng</a>
+      <a href="bang-gia.html">Bảng giá</a>
+      <a href="gioi-thieu.html">Giới thiệu</a>
+      <a href="lien-he.html">Liên hệ</a>
+    </nav>
+
+  </div>
+</header>
+
+
+<section class="hero">
+  <h1>Giới thiệu VietTruck</h1>
+  <p>
+    Nền tảng kết nối chủ hàng, tài xế và nhà xe, hướng tới việc
+    số hóa vận tải hàng hóa tại Việt Nam.
+  </p>
+</section>
+
+
+<main class="container">
+
+  <section class="card">
+
+    <h2>VietTruck là gì?</h2>
+
+    <p>
+      VietTruck là nền tảng công nghệ được xây dựng nhằm kết nối
+      nhu cầu vận chuyển hàng hóa với tài xế và nhà xe phù hợp.
+    </p>
+
+    <p>
+      Hệ thống hướng tới việc giúp chủ hàng tìm xe nhanh hơn,
+      nhà xe giảm chiều xe chạy rỗng, minh bạch thông tin chuyến hàng
+      và từng bước số hóa quy trình vận tải.
+    </p>
+
+  </section>
+
+
+  <section class="card">
+
+    <h2>Sứ mệnh của VietTruck</h2>
+
+    <div class="grid">
+
+      <div class="item">
+        <h3>🚚 Kết nối vận tải</h3>
+        <p>
+          Kết nối chủ hàng với tài xế và nhà xe trên nhiều tuyến đường
+          và loại phương tiện khác nhau.
+        </p>
+      </div>
+
+      <div class="item">
+        <h3>📉 Giảm xe chạy rỗng</h3>
+        <p>
+          Tăng khả năng tìm hàng chiều về và tối ưu hiệu suất khai thác
+          phương tiện vận tải.
+        </p>
+      </div>
+
+      <div class="item">
+        <h3>🔎 Minh bạch thông tin</h3>
+        <p>
+          Hướng tới minh bạch giá cước, thông tin đơn hàng,
+          trạng thái vận chuyển và lịch sử giao dịch.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="card">
+
+    <h2>Hệ sinh thái VietTruck</h2>
+
+    <p>
+      VietTruck đang được phát triển theo mô hình nền tảng vận tải tích hợp,
+      gồm các chức năng như tìm hàng, tìm xe, đăng hàng, đấu giá cước,
+      hàng chiều về, quản lý hành trình, ví và thanh toán, hồ sơ tài xế,
+      hồ sơ nhà xe, đối soát công nợ và hỗ trợ khiếu nại.
+    </p>
+
+    <p>
+      Mục tiêu dài hạn là xây dựng một hệ thống vận tải số có khả năng
+      kết nối nhiều đối tượng trong chuỗi logistics trên cùng một nền tảng.
+    </p>
+
+  </section>
+
+
+  <section class="card">
+
+    <h2>Đơn vị vận hành</h2>
+
+    <div class="company">
+
+      <p>
+        <strong>CÔNG TY TNHH ĐẦU TƯ THƯƠNG MẠI DỊCH VỤ TRƯỜNG GIANG</strong>
+      </p>
+
+      <p>
+        <strong>MST:</strong> 2301210607
+      </p>
+
+      <p>
+        <strong>Hotline:</strong> 0388 134 999
+      </p>
+
+      <p>
+        <strong>Văn phòng miền Bắc:</strong><br>
+        Tầng 5, 776 Cầu Ngà, phường Nam Sơn, thành phố Bắc Ninh
+      </p>
+
+      <p>
+        <strong>Văn phòng miền Nam:</strong><br>
+        Số 28 đường 05, Cư Xá Bình Phú, phường Bình Phú,
+        thành phố Hồ Chí Minh
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <div class="cta">
+
+    <div>
+      <h2>Bạn cần vận chuyển hàng hóa?</h2>
+      <p>Đăng hàng để kết nối với tài xế và nhà xe phù hợp.</p>
+    </div>
+
+    <a href="dang-hang.html">Đăng hàng ngay</a>
+
+  </div>
+
+</main>
+
+
+<footer>
+  © 2026 VietTruck – Kết nối hàng hóa Việt Nam
+</footer>
+
+</body>
+</html>
