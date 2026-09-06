@@ -452,11 +452,21 @@ Viet<span>Truck</span>
 
 <h1>Lịch sử giao dịch</h1>
 
-<button
-class="btn btn-light"
-onclick="location.href='doi-soat-cong-no.html'">
-← Đối soát công nợ
-</button>
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+
+  <button
+  class="btn btn-light"
+  onclick="location.href='doi-soat-cong-no.html'">
+  ← Đối soát công nợ
+  </button>
+
+  <button
+  class="btn btn-light"
+  onclick="location.href='phieu-thu-chi.html'">
+  🧾 Phiếu thu / chi
+  </button>
+
+</div>
 
 </div>
 
