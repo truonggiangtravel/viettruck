@@ -806,11 +806,45 @@ const supabaseClient = supabase.createClient(
 );
 
 async function checkLogin() {
-  const { data: { session } } = await supabaseClient.auth.getSession();
+    const {
+        data: { session },
+        error
+    } = await supabaseClient.auth.getSession();
 
-  if (!session) {
-    window.location.href = "dang-nhap.html";
-  }
+    if (error) {
+        console.error("Lỗi kiểm tra phiên đăng nhập:", error);
+        return;
+    }
+
+    if (session) {
+        console.log("Đã đăng nhập:", session.user.email);
+        return;
+    }
+
+    const {
+        data: { subscription }
+    } = supabaseClient.auth.onAuthStateChange((event, newSession) => {
+
+        if (newSession) {
+            console.log("Phiên đăng nhập đã được khôi phục:", newSession.user.email);
+            subscription.unsubscribe();
+            return;
+        }
+
+        if (event === "SIGNED_OUT") {
+            window.location.href = "dang-nhap.html";
+        }
+    });
+
+    setTimeout(async function () {
+        const {
+            data: { session: retrySession }
+        } = await supabaseClient.auth.getSession();
+
+        if (!retrySession) {
+            window.location.href = "dang-nhap.html";
+        }
+    }, 1500);
 }
 
 checkLogin();
