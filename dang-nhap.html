@@ -355,16 +355,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
     return;
   }
 
-  localStorage.setItem("viettruck_logged_in", "true");
-  localStorage.setItem(
-    "viettruck_current_user",
-    JSON.stringify({
-      id: user.id,
-      email: user.email,
-      name: profile.full_name || user.email,
-      role: profile.role
-    })
-  );
+  
 
   if (profile.role === "admin") {
     window.location.href = "admin.html";
