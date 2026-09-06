@@ -716,20 +716,21 @@ function updateUserMenu(session){
 
         navUserButtons.innerHTML = `
 
-        <a
-        href="dang-nhap.html"
+    <button
+        type="button"
         class="btn btn-outline"
-        >
+        onclick="window.location.href='dang-nhap.html'">
         Đăng nhập
-        </a>
+    </button>
 
-        <a
-        href="dang-ky.html"
+    <button
+        type="button"
         class="btn btn-green"
-        >
+        onclick="window.location.href='dang-ky.html'">
         Đăng ký
-        </a>
+    </button>
 
+`;
         `;
     }
 }
