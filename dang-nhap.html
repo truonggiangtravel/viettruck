@@ -254,7 +254,7 @@ body{
 <h2>Chào mừng trở lại</h2>
 <p class="sub">Đăng nhập bằng số điện thoại hoặc email của bạn</p>
 
-<form action="dashboard.html">
+<form id="loginForm">
 
 <div class="field">
   <label>Số điện thoại hoặc Email</label>
@@ -302,6 +302,39 @@ body{
   <p>Nền tảng kết nối chủ hàng và tài xế trên toàn quốc</p>
 </div>
 </footer>
+<script>
+document.getElementById("loginForm").addEventListener("submit", function(e){
+  e.preventDefault();
 
+  const inputs = this.querySelectorAll("input");
+  const username = inputs[0].value.trim();
+  const password = inputs[1].value.trim();
+
+  if(!username || !password){
+    alert("Vui lòng nhập đầy đủ tài khoản và mật khẩu.");
+    return;
+  }
+
+  const isAdmin =
+    username.toLowerCase() === "admin" ||
+    username.toLowerCase() === "admin@viettruck.vn";
+
+  localStorage.setItem("viettruck_logged_in", "true");
+
+  localStorage.setItem(
+    "viettruck_current_user",
+    JSON.stringify({
+      name: isAdmin ? "Admin VietTruck" : username,
+      role: isAdmin ? "admin" : "user"
+    })
+  );
+
+  if(isAdmin){
+    window.location.href = "admin.html";
+  }else{
+    window.location.href = "dashboard.html";
+  }
+});
+</script>
 </body>
 </html>
