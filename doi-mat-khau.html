@@ -378,48 +378,69 @@ function togglePassword(id){
 }
 
 
-function changePassword(event){
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  event.preventDefault();
+<script>
+const SUPABASE_URL = "https://ksyakrcgqzsupqyusyo.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_OLGPIepJQ0FBoEoL7jvySA_9GC5hSgD";
 
-  const current =
-    document.getElementById("currentPassword").value;
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
 
-  const newPassword =
-    document.getElementById("newPassword").value;
+async function changePassword(event) {
+    event.preventDefault();
 
-  const confirm =
-    document.getElementById("confirmPassword").value;
+    const current = document.getElementById("currentPassword")?.value || "";
+    const newPassword = document.getElementById("newPassword")?.value || "";
+    const confirmPassword = document.getElementById("confirmPassword")?.value || "";
+    const successBox = document.getElementById("successBox");
 
+    if (newPassword.length < 8) {
+        alert("Mật khẩu mới phải có ít nhất 8 ký tự.");
+        return;
+    }
 
-  if(newPassword.length < 8){
+    if (newPassword !== confirmPassword) {
+        alert("Mật khẩu mới nhập lại chưa khớp.");
+        return;
+    }
 
-    alert("Mật khẩu mới phải có ít nhất 8 ký tự.");
-    return;
+    if (current && current === newPassword) {
+        alert("Mật khẩu mới không nên giống mật khẩu hiện tại.");
+        return;
+    }
 
-  }
+    const {
+        data: { session }
+    } = await supabaseClient.auth.getSession();
 
+    if (!session) {
+        alert("Phiên đổi mật khẩu không hợp lệ hoặc đã hết hạn. Vui lòng thực hiện lại yêu cầu quên mật khẩu.");
+        window.location.href = "quen-mat-khau.html";
+        return;
+    }
 
-  if(newPassword !== confirm){
+    const { error } = await supabaseClient.auth.updateUser({
+        password: newPassword
+    });
 
-    alert("Mật khẩu mới nhập lại chưa khớp.");
-    return;
+    if (error) {
+        console.error(error);
+        alert("Không thể đổi mật khẩu: " + error.message);
+        return;
+    }
 
-  }
+    if (successBox) {
+        successBox.style.display = "block";
+        successBox.innerHTML = "✅ Đổi mật khẩu thành công.";
+    }
 
-
-  if(current === newPassword){
-
-    alert("Mật khẩu mới không nên giống mật khẩu hiện tại.");
-    return;
-
-  }
-
-
-  document.getElementById("successBox").style.display="block";
-
+    setTimeout(function () {
+        window.location.href = "dang-nhap.html";
+    }, 1500);
 }
-
 </script>
 
 </body>
