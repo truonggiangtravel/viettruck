@@ -383,9 +383,8 @@ async function updateLoginButtons() {
     `;
 
     document.getElementById("logoutBtn").addEventListener("click", async function () {
-      await supabaseClient.auth.signOut();
-      window.location.href = "dang-nhap.html";
-    });
+    await logout();
+});
   }
 }
 
