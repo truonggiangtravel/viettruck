@@ -157,26 +157,55 @@ button:hover{
     <a href="dang-nhap.html">← Quay lại đăng nhập</a>
   </div>
 
-  <div class="notice">
-    ⚠️ Đây là giao diện mô phỏng. Chức năng gửi mã OTP hoặc email
-    đặt lại mật khẩu chỉ hoạt động thật khi VietTruck có backend,
-    hệ thống tài khoản và dịch vụ gửi email/SMS.
-  </div>
+  
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-function sendReset(event){
-  event.preventDefault();
+const SUPABASE_URL = "https://ksyakrcgqzsupqyusyo.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_OLGPIepJQ0FBoEoL7jvySA_9GC5hSgD";
 
-  const account = document.getElementById("account").value.trim();
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
 
-  if(!account){
-    alert("Vui lòng nhập email hoặc số điện thoại.");
-    return;
-  }
+async function sendReset(event) {
+    event.preventDefault();
 
-  document.getElementById("successBox").style.display = "block";
+    const account = document.getElementById("account").value.trim();
+    const successBox = document.getElementById("successBox");
+
+    if (!account) {
+        alert("Vui lòng nhập email đã đăng ký.");
+        return;
+    }
+
+    if (!account.includes("@")) {
+        alert("Hiện tại VietTruck đặt lại mật khẩu qua email. Vui lòng nhập email.");
+        return;
+    }
+
+    const { error } = await supabaseClient.auth.resetPasswordForEmail(
+        account,
+        {
+            redirectTo: "https://viettruck-vn.netlify.app/doi-mat-khau.html"
+        }
+    );
+
+    if (error) {
+        console.error(error);
+        alert("Không thể gửi yêu cầu đặt lại mật khẩu: " + error.message);
+        return;
+    }
+
+    if (successBox) {
+        successBox.style.display = "block";
+        successBox.innerHTML =
+            "✅ Yêu cầu đặt lại mật khẩu đã được gửi. Vui lòng kiểm tra email của bạn.";
+    }
 }
 </script>
 
