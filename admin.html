@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard Admin - VietTruck</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial,Helvetica,sans-serif;
+    }
+
+    :root{
+      --primary:#0f766e;
+      --primary-dark:#115e59;
+      --primary-light:#ccfbf1;
+      --blue:#2563eb;
+      --orange:#ea580c;
+      --red:#dc2626;
+      --green:#16a34a;
+      --purple:#7c3aed;
+      --yellow:#ca8a04;
+      --bg:#f3f6f9;
+      --white:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --sidebar:#0f172a;
+    }
+
+    body{
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+
+    .app{
+      display:flex;
+      min-height:100vh;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar{
+      width:270px;
+      background:var(--sidebar);
+      color:#fff;
+      position:fixed;
+      top:0;
+      left:0;
+      bottom:0;
+      overflow-y:auto;
+      z-index:1000;
+      transition:.3s;
+    }
+
+    .brand{
+      height:76px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:0 22px;
+      border-bottom:1px solid rgba(255,255,255,.1);
+    }
+
+    .brand-logo{
+      width:44px;
+      height:44px;
+      background:linear-gradient(135deg,#14b8a6,#22c55e);
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      font-weight:bold;
+    }
+
+    .brand h1{
+      font-size:21px;
+    }
+
+    .brand span{
+      display:block;
+      color:#94a3b8;
+      font-size:12px;
+      margin-top:3px;
+    }
+
+    .menu{
+      padding:16px 12px 40px;
+    }
+
+    .menu-title{
+      padding:14px 12px 8px;
+      font-size:11px;
+      text-transform:uppercase;
+      color:#64748b;
+      font-weight:bold;
+      letter-spacing:.7px;
+    }
+
+    .menu a{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px 14px;
+      margin-bottom:5px;
+      text-decoration:none;
+      color:#cbd5e1;
+      border-radius:9px;
+      font-size:14px;
+      transition:.2s;
+    }
+
+    .menu a:hover,
+    .menu a.active{
+      background:#1e293b;
+      color:#fff;
+    }
+
+    .menu-icon{
+      width:24px;
+      font-size:18px;
+      text-align:center;
+    }
+
+    /* MAIN */
+
+    .main{
+      margin-left:270px;
+      width:calc(100% - 270px);
+      min-height:100vh;
+    }
+
+    .topbar{
+      height:76px;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 28px;
+      border-bottom:1px solid var(--border);
+      position:sticky;
+      top:0;
+      z-index:900;
+    }
+
+    .top-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .menu-btn{
+      display:none;
+      border:none;
+      background:#f1f5f9;
+      width:42px;
+      height:42px;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:20px;
+    }
+
+    .topbar h2{
+      font-size:20px;
+    }
+
+    .topbar p{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:3px;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .top-btn{
+      width:42px;
+      height:42px;
+      border:none;
+      border-radius:50%;
+      background:#f1f5f9;
+      cursor:pointer;
+      font-size:18px;
+      position:relative;
+    }
+
+    .badge-dot{
+      position:absolute;
+      right:2px;
+      top:2px;
+      min-width:18px;
+      height:18px;
+      padding:0 4px;
+      background:red;
+      border-radius:10px;
+      color:white;
+      font-size:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .admin-box{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding-left:8px;
+    }
+
+    .avatar{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#0f766e,#2563eb);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:bold;
+    }
+
+    .admin-name strong{
+      font-size:13px;
+      display:block;
+    }
+
+    .admin-name span{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .content{
+      padding:28px;
+    }
+
+    /* WELCOME */
+
+    .welcome{
+      background:linear-gradient(120deg,#0f766e,#0d9488,#2563eb);
+      color:white;
+      padding:26px;
+      border-radius:16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:24px;
+      box-shadow:0 6px 20px rgba(15,118,110,.18);
+    }
+
+    .welcome h3{
+      font-size:24px;
+      margin-bottom:7px;
+    }
+
+    .welcome p{
+      color:#dbeafe;
+      max-width:700px;
+      line-height:1.5;
+    }
+
+    .welcome-time{
+      text-align:right;
+      white-space:nowrap;
+      margin-left:20px;
+    }
+
+    .welcome-time strong{
+      display:block;
+      font-size:22px;
+      margin-bottom:5px;
+    }
+
+    /* STATS */
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:18px;
+      margin-bottom:24px;
+    }
+
+    .stat-card{
+      background:white;
+      border-radius:14px;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,.04);
+      border:1px solid #edf0f4;
+    }
+
+    .stat-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:15px;
+    }
+
+    .stat-icon{
+      width:48px;
+      height:48px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:23px;
+    }
+
+    .stat-icon.blue{background:#dbeafe;color:#1d4ed8}
+    .stat-icon.green{background:#dcfce7;color:#15803d}
+    .stat-icon.orange{background:#ffedd5;color:#c2410c}
+    .stat-icon.purple{background:#ede9fe;color:#6d28d9}
+    .stat-icon.red{background:#fee2e2;color:#b91c1c}
+    .stat-icon.yellow{background:#fef9c3;color:#a16207}
+    .stat-icon.teal{background:#ccfbf1;color:#0f766e}
+
+    .stat-change{
+      font-size:11px;
+      color:#16a34a;
+      background:#dcfce7;
+      padding:5px 7px;
+      border-radius:20px;
+    }
+
+    .stat-card h4{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:8px;
+      font-weight:normal;
+    }
+
+    .stat-value{
+      font-size:26px;
+      font-weight:bold;
+      margin-bottom:5px;
+    }
+
+    .stat-note{
+      font-size:12px;
+      color:#9ca3af;
+    }
+
+    /* GRID */
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:2fr 1fr;
+      gap:20px;
+      margin-bottom:24px;
+    }
+
+    .grid-equal{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+      margin-bottom:24px;
+    }
+
+    .panel{
+      background:#fff;
+      border-radius:14px;
+      padding:20px;
+      border:1px solid #edf0f4;
+      box-shadow:0 2px 10px rgba(0,0,0,.04);
+    }
+
+    .panel-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:18px;
+    }
+
+    .panel-head h3{
+      font-size:16px;
+    }
+
+    .panel-head a{
+      color:var(--primary);
+      font-size:12px;
+      text-decoration:none;
+      font-weight:bold;
+    }
+
+    /* CHART */
+
+    .chart{
+      display:flex;
+      height:250px;
+      gap:12px;
+      align-items:flex-end;
+      padding:15px 5px 30px;
+      border-bottom:1px solid var(--border);
+      position:relative;
+    }
+
+    .bar-wrap{
+      flex:1;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      align-items:center;
+      gap:7px;
+    }
+
+    .bar{
+      width:65%;
+      background:linear-gradient(180deg,#14b8a6,#0f766e);
+      border-radius:7px 7px 0 0;
+      min-height:10px;
+      position:relative;
+      cursor:pointer;
+    }
+
+    .bar:hover{
+      opacity:.85;
+    }
+
+    .bar-label{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .chart-title{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:12px;
+      text-align:center;
+    }
+
+    /* QUICK */
+
+    .quick-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .quick{
+      padding:16px 10px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      text-align:center;
+      text-decoration:none;
+      color:var(--text);
+      transition:.2s;
+    }
+
+    .quick:hover{
+      border-color:var(--primary);
+      transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(0,0,0,.06);
+    }
+
+    .quick div{
+      font-size:26px;
+      margin-bottom:8px;
+    }
+
+    .quick strong{
+      font-size:12px;
+    }
+
+    /* TABLE */
+
+    .table-wrap{
+      overflow-x:auto;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:750px;
+    }
+
+    th{
+      text-align:left;
+      color:var(--muted);
+      font-size:12px;
+      padding:11px;
+      background:#f8fafc;
+      border-bottom:1px solid var(--border);
+    }
+
+    td{
+      padding:13px 11px;
+      font-size:12px;
+      border-bottom:1px solid #f0f2f5;
+    }
+
+    .status{
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:20px;
+      font-size:10px;
+      font-weight:bold;
+    }
+
+    .status.green{
+      background:#dcfce7;
+      color:#15803d;
+    }
+
+    .status.yellow{
+      background:#fef9c3;
+      color:#a16207;
+    }
+
+    .status.red{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .status.blue{
+      background:#dbeafe;
+      color:#1d4ed8;
+    }
+
+    .status.gray{
+      background:#e5e7eb;
+      color:#4b5563;
+    }
+
+    /* ACTIVITY */
+
+    .activity{
+      display:flex;
+      gap:12px;
+      padding:12px 0;
+      border-bottom:1px solid #f0f2f5;
+    }
+
+    .activity:last-child{
+      border-bottom:none;
+    }
+
+    .activity-icon{
+      width:38px;
+      height:38px;
+      flex:0 0 38px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#ecfeff;
+    }
+
+    .activity-body strong{
+      display:block;
+      font-size:12px;
+      margin-bottom:4px;
+    }
+
+    .activity-body p{
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.4;
+    }
+
+    .activity-body span{
+      font-size:10px;
+      color:#9ca3af;
+      display:block;
+      margin-top:4px;
+    }
+
+    /* ALERT */
+
+    .alert{
+      padding:13px;
+      border-radius:10px;
+      margin-bottom:10px;
+      display:flex;
+      gap:11px;
+      align-items:flex-start;
+    }
+
+    .alert.warning{
+      background:#fff7ed;
+      border:1px solid #fed7aa;
+    }
+
+    .alert.danger{
+      background:#fef2f2;
+      border:1px solid #fecaca;
+    }
+
+    .alert.info{
+      background:#eff6ff;
+      border:1px solid #bfdbfe;
+    }
+
+    .alert strong{
+      display:block;
+      font-size:12px;
+      margin-bottom:4px;
+    }
+
+    .alert p{
+      font-size:11px;
+      color:#64748b;
+      line-height:1.4;
+    }
+
+    /* FOOTER */
+
+    .footer{
+      text-align:center;
+      color:#94a3b8;
+      font-size:11px;
+      padding:10px 0 25px;
+    }
+
+    /* RESPONSIVE */
+
+    @media(max-width:1200px){
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .grid-2,
+      .grid-equal{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:800px){
+      .sidebar{
+        transform:translateX(-100%);
+      }
+
+      .sidebar.open{
+        transform:translateX(0);
+      }
+
+      .main{
+        margin-left:0;
+        width:100%;
+      }
+
+      .menu-btn{
+        display:block;
+      }
+
+      .content{
+        padding:16px;
+      }
+
+      .topbar{
+        padding:0 14px;
+      }
+
+      .admin-name{
+        display:none;
+      }
+
+      .welcome{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:15px;
+      }
+
+      .welcome-time{
+        text-align:left;
+        margin-left:0;
+      }
+    }
+
+    @media(max-width:550px){
+      .stats{
+        grid-template-columns:1fr;
+      }
+
+      .quick-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .topbar h2{
+        font-size:16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+      <div class="brand-logo">V</div>
+
+      <div>
+        <h1>VietTruck</h1>
+        <span>Admin Control Center</span>
+      </div>
+    </div>
+
+    <nav class="menu">
+
+      <div class="menu-title">Tổng quan</div>
+
+      <a href="admin.html" class="active">
+        <span class="menu-icon">📊</span>
+        Dashboard Admin
+      </a>
+
+      <a href="dashboard.html">
+        <span class="menu-icon">🏠</span>
+        Dashboard chính
+      </a>
+
+      <div class="menu-title">Vận hành</div>
+
+      <a href="quan-ly-don-hang.html">
+        <span class="menu-icon">📦</span>
+        Quản lý đơn hàng
+      </a>
+
+      <a href="trung-tam-bao-gia.html">
+        <span class="menu-icon">💬</span>
+        Trung tâm báo giá
+      </a>
+
+      <a href="hang-chieu-ve.html">
+        <span class="menu-icon">🔄</span>
+        Hàng chiều về
+      </a>
+
+      <a href="quan-ly-doi-xe.html">
+        <span class="menu-icon">🚚</span>
+        Quản lý đội xe
+      </a>
+
+      <a href="ho-so-tai-xe.html">
+        <span class="menu-icon">👨‍✈️</span>
+        Hồ sơ tài xế
+      </a>
+
+      <a href="ho-so-nha-xe.html">
+        <span class="menu-icon">🏢</span>
+        Hồ sơ nhà xe
+      </a>
+
+      <div class="menu-title">Khách hàng & Đối tác</div>
+
+      <a href="quan-ly-khach-hang.html">
+        <span class="menu-icon">👥</span>
+        Khách hàng
+      </a>
+
+      <a href="thong-tin-doanh-nghiep.html">
+        <span class="menu-icon">🏬</span>
+        Thông tin doanh nghiệp
+      </a>
+
+      <a href="trung-tam-duyet-doi-tac.html">
+        <span class="menu-icon">✅</span>
+        Duyệt đối tác
+      </a>
+
+      <a href="xac-minh-doi-tac.html">
+        <span class="menu-icon">🛡️</span>
+        Xác minh KYC
+      </a>
+
+      <div class="menu-title">Tài chính</div>
+
+      <a href="vi-viettruck.html">
+        <span class="menu-icon">💳</span>
+        Ví VietTruck
+      </a>
+
+      <a href="lich-su-giao-dich.html">
+        <span class="menu-icon">📑</span>
+        Lịch sử giao dịch
+      </a>
+
+      <a href="phieu-thu-chi.html">
+        <span class="menu-icon">🧾</span>
+        Phiếu thu chi
+      </a>
+
+      <a href="doi-soat-cong-no.html">
+        <span class="menu-icon">⚖️</span>
+        Đối soát công nợ
+      </a>
+
+      <a href="yeu-cau-thanh-toan.html">
+        <span class="menu-icon">💰</span>
+        Yêu cầu thanh toán
+      </a>
+
+      <a href="bao-cao-tai-chinh.html">
+        <span class="menu-icon">📈</span>
+        Báo cáo tài chính
+      </a>
+
+      <div class="menu-title">Hệ thống</div>
+
+      <a href="trung-tam-thong-bao.html">
+        <span class="menu-icon">🔔</span>
+        Trung tâm thông báo
+      </a>
+
+      <a href="ho-tro-khieu-nai.html">
+        <span class="menu-icon">🎧</span>
+        Hỗ trợ & khiếu nại
+      </a>
+
+      <a href="quan-ly-tai-khoan.html">
+        <span class="menu-icon">👤</span>
+        Quản lý tài khoản
+      </a>
+
+      <a href="cai-dat.html">
+        <span class="menu-icon">⚙️</span>
+        Cài đặt
+      </a>
+
+      <a href="dang-nhap.html" onclick="logout()">
+        <span class="menu-icon">🚪</span>
+        Đăng xuất
+      </a>
+
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <header class="topbar">
+
+      <div class="top-left">
+
+        <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+
+        <div>
+          <h2>Dashboard quản trị</h2>
+          <p>Trung tâm điều hành hệ thống VietTruck</p>
+        </div>
+
+      </div>
+
+      <div class="top-actions">
+
+        <button class="top-btn" onclick="location.href='trung-tam-thong-bao.html'">
+          🔔
+          <span class="badge-dot" id="notificationCount">5</span>
+        </button>
+
+        <div class="admin-box">
+
+          <div class="avatar">AD</div>
+
+          <div class="admin-name">
+            <strong>Quản trị viên</strong>
+            <span>Super Admin</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </header>
+
+    <section class="content">
+
+      <!-- WELCOME -->
+
+      <div class="welcome">
+
+        <div>
+          <h3>Xin chào, Admin VietTruck 👋</h3>
+
+          <p>
+            Theo dõi hoạt động vận tải, đơn hàng, tài xế, nhà xe,
+            doanh thu, công nợ và tình trạng vận hành toàn hệ thống.
+          </p>
+        </div>
+
+        <div class="welcome-time">
+          <strong id="clock">--:--</strong>
+          <span id="today">--/--/----</span>
+        </div>
+
+      </div>
+
+      <!-- STATS -->
+
+      <div class="stats">
+
+        <div class="stat-card">
+
+          <div class="stat-head">
+
+            <div class="stat-icon blue">📦</div>
+
+            <div class="stat-change">+12.5%</div>
+
+          </div>
+
+          <h4>Tổng đơn vận chuyển</h4>
+
+          <div class="stat-value" id="totalOrders">1,268</div>
+
+          <div class="stat-note">Tháng hiện tại</div>
+
+        </div>
+
+        <div class="stat-card">
+
+          <div class="stat-head">
+
+            <div class="stat-icon green">🚚</div>
+
+            <div class="stat-change">+8.2%</div>
+
+          </div>
+
+          <h4>Xe đang hoạt động</h4>
+
+          <div class="stat-value" id="activeVehicles">428</div>
+
+          <div class="stat-note">Trên toàn hệ thống</div>
+
+        </div>
+
+        <div class="stat-card">
+
+          <div class="stat-head">
+
+            <div class="stat-icon orange">👨‍✈️</div>
+
+            <div class="stat-change">+5.4%</div>
+
+          </div>
+
+          <h4>Tài xế hoạt động</h4>
+
+          <div class="stat-value" id="drivers">586</div>
+
+          <div class="stat-note">Đã xác minh</div>
+
+        </div>
+
+        <div class="stat-card">
+
+          <div class="stat-head">
+
+            <div class="stat-icon purple">💰</div>
+
+            <div class="stat-change">+18.7%</div>
+
+          </div>
+
+          <h4>Doanh thu tháng</h4>
+
+          <div class="stat-value" id="revenue">2.84 tỷ</div>
+
+          <div class="stat-note">Doanh thu ghi nhận</div>
+
+        </div>
+
+        <div class="stat-card">
+
+          <div class="stat-head">
+
+            <div class="stat-icon yellow">🏢</div>
+
+          </div>
+
+          <h4>Nhà xe / Đối tác</h4>
+
+          <div class="stat-value">214</div>
+
+          <div class="stat-note">19 hồ sơ chờ duyệt</div>
+
+        </div>
+
+        <div class="stat-card">
+
+          <div class="stat-head">
+
+            <div class="stat-icon teal">👥</div>
+
+          </div>
+
+          <h4>Khách hàng</h4>
+
+          <div class="stat-value">846</div>
+
+          <div class="stat-note">Doanh nghiệp và cá nhân</div>
+
+        </div>
+
+        <div class="stat-card">
+
+          <div class="stat-head">
+
+            <div class="stat-icon red">⚖️</div>
+
+          </div>
+
+          <h4>Công nợ phải thu</h4>
+
+          <div class="stat-value">486 tr</div>
+
+          <div class="stat-note">38 khoản chưa đối soát</div>
+
+        </div>
+
+        <div class="stat-card">
+
+          <div class="stat-head">
+
+            <div class="stat-icon blue">💳</div>
+
+          </div>
+
+          <h4>Giao dịch hôm nay</h4>
+
+          <div class="stat-value">326</div>
+
+          <div class="stat-note">Tổng giá trị 784 triệu</div>
+
+        </div>
+
+      </div>
+
+      <!-- CHART + QUICK -->
+
+      <div class="grid-2">
+
+        <div class="panel">
+
+          <div class="panel-head">
+            <h3>Doanh thu 7 ngày gần nhất</h3>
+
+            <a href="bao-cao-tai-chinh.html">
+              Xem báo cáo →
+            </a>
+          </div>
+
+          <div class="chart">
+
+            <div class="bar-wrap">
+              <div class="bar" style="height:42%"></div>
+              <div class="bar-label">T2</div>
+            </div>
+
+            <div class="bar-wrap">
+              <div class="bar" style="height:58%"></div>
+              <div class="bar-label">T3</div>
+            </div>
+
+            <div class="bar-wrap">
+              <div class="bar" style="height:49%"></div>
+              <div class="bar-label">T4</div>
+            </div>
+
+            <div class="bar-wrap">
+              <div class="bar" style="height:72%"></div>
+              <div class="bar-label">T5</div>
+            </div>
+
+            <div class="bar-wrap">
+              <div class="bar" style="height:64%"></div>
+              <div class="bar-label">T6</div>
+            </div>
+
+            <div class="bar-wrap">
+              <div class="bar" style="height:88%"></div>
+              <div class="bar-label">T7</div>
+            </div>
+
+            <div class="bar-wrap">
+              <div class="bar" style="height:78%"></div>
+              <div class="bar-label">CN</div>
+            </div>
+
+          </div>
+
+          <div class="chart-title">
+            Dữ liệu minh họa • Có thể kết nối database VietTruck sau
+          </div>
+
+        </div>
+
+        <div class="panel">
+
+          <div class="panel-head">
+            <h3>Truy cập nhanh</h3>
+          </div>
+
+          <div class="quick-grid">
+
+            <a class="quick" href="quan-ly-don-hang.html">
+              <div>📦</div>
+              <strong>Đơn hàng</strong>
+            </a>
+
+            <a class="quick" href="trung-tam-duyet-doi-tac.html">
+              <div>✅</div>
+              <strong>Duyệt đối tác</strong>
+            </a>
+
+            <a class="quick" href="doi-soat-cong-no.html">
+              <div>⚖️</div>
+              <strong>Đối soát</strong>
+            </a>
+
+            <a class="quick" href="yeu-cau-thanh-toan.html">
+              <div>💸</div>
+              <strong>Thanh toán</strong>
+            </a>
+
+            <a class="quick" href="quan-ly-doi-xe.html">
+              <div>🚚</div>
+              <strong>Đội xe</strong>
+            </a>
+
+            <a class="quick" href="ho-tro-khieu-nai.html">
+              <div>🎧</div>
+              <strong>Khiếu nại</strong>
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ORDERS -->
+
+      <div class="panel" style="margin-bottom:24px">
+
+        <div class="panel-head">
+
+          <h3>Đơn vận chuyển mới nhất</h3>
+
+          <a href="quan-ly-don-hang.html">
+            Xem tất cả →
+          </a>
+
+        </div>
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+
+            <tr>
+              <th>Mã đơn</th>
+              <th>Khách hàng</th>
+              <th>Tuyến vận chuyển</th>
+              <th>Loại hàng</th>
+              <th>Giá trị</th>
+              <th>Trạng thái</th>
+            </tr>
+
+            </thead>
+
+            <tbody id="orderTable">
+
+            <tr>
+              <td><strong>VT260901</strong></td>
+              <td>Công ty Minh Phát</td>
+              <td>Bắc Ninh → Hải Phòng</td>
+              <td>Điện tử</td>
+              <td>6.800.000đ</td>
+              <td><span class="status blue">Đang vận chuyển</span></td>
+            </tr>
+
+            <tr>
+              <td><strong>VT260902</strong></td>
+              <td>Trường Giang</td>
+              <td>Hà Nội → Đà Nẵng</td>
+              <td>Hàng tiêu dùng</td>
+              <td>18.500.000đ</td>
+              <td><span class="status yellow">Chờ tài xế</span></td>
+            </tr>
+
+            <tr>
+              <td><strong>VT260903</strong></td>
+              <td>Hưng Thịnh Logistics</td>
+              <td>Bắc Giang → TP.HCM</td>
+              <td>Máy móc</td>
+              <td>32.000.000đ</td>
+              <td><span class="status green">Đã nhận hàng</span></td>
+            </tr>
+
+            <tr>
+              <td><strong>VT260904</strong></td>
+              <td>Thanh Bình</td>
+              <td>Hải Phòng → Bắc Ninh</td>
+              <td>Nguyên vật liệu</td>
+              <td>7.200.000đ</td>
+              <td><span class="status green">Hoàn thành</span></td>
+            </tr>
+
+            <tr>
+              <td><strong>VT260905</strong></td>
+              <td>Đại Việt</td>
+              <td>Hà Nam → Hà Nội</td>
+              <td>Thực phẩm</td>
+              <td>4.600.000đ</td>
+              <td><span class="status red">Cần xử lý</span></td>
+            </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+      <!-- ACTIVITY + ALERT -->
+
+      <div class="grid-equal">
+
+        <div class="panel">
+
+          <div class="panel-head">
+            <h3>Hoạt động gần đây</h3>
+          </div>
+
+          <div class="activity">
+
+            <div class="activity-icon">📦</div>
+
+            <div class="activity-body">
+              <strong>Đơn hàng mới được tạo</strong>
+              <p>Đơn VT260905 tuyến Hà Nam → Hà Nội.</p>
+              <span>5 phút trước</span>
+            </div>
+
+          </div>
+
+          <div class="activity">
+
+            <div class="activity-icon">✅</div>
+
+            <div class="activity-body">
+              <strong>Đối tác gửi hồ sơ KYC</strong>
+              <p>Công ty Vận tải Thành Công đang chờ xác minh.</p>
+              <span>18 phút trước</span>
+            </div>
+
+          </div>
+
+          <div class="activity">
+
+            <div class="activity-icon">💰</div>
+
+            <div class="activity-body">
+              <strong>Thanh toán thành công</strong>
+              <p>Giao dịch 18.500.000đ đã hoàn tất.</p>
+              <span>32 phút trước</span>
+            </div>
+
+          </div>
+
+          <div class="activity">
+
+            <div class="activity-icon">🚚</div>
+
+            <div class="activity-body">
+              <strong>Tài xế nhận chuyến</strong>
+              <p>Xe 99C-123.45 đã nhận đơn VT260901.</p>
+              <span>45 phút trước</span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="panel">
+
+          <div class="panel-head">
+
+            <h3>Cảnh báo hệ thống</h3>
+
+            <a href="trung-tam-thong-bao.html">
+              Xem tất cả →
+            </a>
+
+          </div>
+
+          <div class="alert danger">
+
+            <div>⚠️</div>
+
+            <div>
+              <strong>8 khoản công nợ quá hạn</strong>
+              <p>Cần kiểm tra và thực hiện đối soát công nợ.</p>
+            </div>
+
+          </div>
+
+          <div class="alert warning">
+
+            <div>🪪</div>
+
+            <div>
+              <strong>19 hồ sơ đối tác chờ duyệt</strong>
+              <p>Hồ sơ KYC chưa được quản trị viên xử lý.</p>
+            </div>
+
+          </div>
+
+          <div class="alert warning">
+
+            <div>🚛</div>
+
+            <div>
+              <strong>6 xe sắp hết hạn đăng kiểm</strong>
+              <p>Cần thông báo nhà xe cập nhật giấy tờ.</p>
+            </div>
+
+          </div>
+
+          <div class="alert info">
+
+            <div>💳</div>
+
+            <div>
+              <strong>12 yêu cầu thanh toán mới</strong>
+              <p>Đang chờ kiểm tra và phê duyệt.</p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="footer">
+
+        © 2026 VietTruck • Hệ thống quản trị vận tải & logistics
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+<script>
+
+  /* =============================
+     THỜI GIAN
+  ============================== */
+
+  function updateClock(){
+
+    const now = new Date();
+
+    const time = now.toLocaleTimeString(
+      "vi-VN",
+      {
+        hour:"2-digit",
+        minute:"2-digit"
+      }
+    );
+
+    const date = now.toLocaleDateString(
+      "vi-VN",
+      {
+        weekday:"long",
+        day:"2-digit",
+        month:"2-digit",
+        year:"numeric"
+      }
+    );
+
+    document.getElementById("clock").textContent = time;
+
+    document.getElementById("today").textContent = date;
+
+  }
+
+  updateClock();
+
+  setInterval(updateClock,30000);
+
+
+  /* =============================
+     MOBILE MENU
+  ============================== */
+
+  function toggleSidebar(){
+
+    document
+      .getElementById("sidebar")
+      .classList.toggle("open");
+
+  }
+
+
+  /* =============================
+     ĐÓNG MENU KHI BẤM RA NGOÀI
+  ============================== */
+
+  document.addEventListener("click",function(e){
+
+    const sidebar =
+      document.getElementById("sidebar");
+
+    const button =
+      document.querySelector(".menu-btn");
+
+    if(
+      window.innerWidth <= 800 &&
+      sidebar.classList.contains("open") &&
+      !sidebar.contains(e.target) &&
+      !button.contains(e.target)
+    ){
+
+      sidebar.classList.remove("open");
+
+    }
+
+  });
+
+
+  /* =============================
+     LẤY DỮ LIỆU LOCALSTORAGE
+  ============================== */
+
+  function loadDashboardData(){
+
+    try{
+
+      const orders =
+        JSON.parse(
+          localStorage.getItem("viettruck_orders") || "[]"
+        );
+
+      const drivers =
+        JSON.parse(
+          localStorage.getItem("viettruck_drivers") || "[]"
+        );
+
+      const vehicles =
+        JSON.parse(
+          localStorage.getItem("viettruck_vehicles") || "[]"
+        );
+
+      if(orders.length){
+
+        document.getElementById(
+          "totalOrders"
+        ).textContent =
+          orders.length.toLocaleString("vi-VN");
+
+      }
+
+      if(drivers.length){
+
+        document.getElementById(
+          "drivers"
+        ).textContent =
+          drivers.length.toLocaleString("vi-VN");
+
+      }
+
+      if(vehicles.length){
+
+        document.getElementById(
+          "activeVehicles"
+        ).textContent =
+          vehicles.length.toLocaleString("vi-VN");
+
+      }
+
+    }
+    catch(error){
+
+      console.log(
+        "Không đọc được dữ liệu VietTruck:",
+        error
+      );
+
+    }
+
+  }
+
+  loadDashboardData();
+
+
+  /* =============================
+     THÔNG BÁO
+  ============================== */
+
+  function loadNotifications(){
+
+    try{
+
+      const notifications =
+        JSON.parse(
+          localStorage.getItem(
+            "viettruck_notifications"
+          ) || "[]"
+        );
+
+      if(notifications.length){
+
+        document.getElementById(
+          "notificationCount"
+        ).textContent =
+          notifications.length > 99
+          ? "99+"
+          : notifications.length;
+
+      }
+
+    }
+    catch(error){}
+
+  }
+
+  loadNotifications();
+
+
+  /* =============================
+     ĐĂNG XUẤT
+  ============================== */
+
+  function logout(){
+
+    localStorage.removeItem(
+      "viettruck_current_user"
+    );
+
+    localStorage.removeItem(
+      "viettruck_logged_in"
+    );
+
+  }
+
+</script>
+
+</body>
+</html>
