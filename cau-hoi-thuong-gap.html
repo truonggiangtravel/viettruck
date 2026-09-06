@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Câu hỏi thường gặp | VietTruck</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7f6;
+      color: #1f2937;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .nav {
+      max-width: 1180px;
+      margin: auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      text-decoration: none;
+      color: #08783e;
+      font-size: 28px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .logo small {
+      display: block;
+      font-size: 11px;
+      color: #667085;
+      font-weight: normal;
+    }
+
+    .menu {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: #111827;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .menu a:hover {
+      color: #078747;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #057a3d, #0b9a55);
+      color: white;
+      padding: 55px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: auto;
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    .faq {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    }
+
+    details {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 18px 0;
+    }
+
+    details:last-child {
+      border-bottom: none;
+    }
+
+    summary {
+      cursor: pointer;
+      font-size: 17px;
+      font-weight: 700;
+      color: #1f2937;
+      list-style: none;
+      padding-right: 30px;
+      position: relative;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "+";
+      position: absolute;
+      right: 0;
+      top: -3px;
+      color: #078747;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    details[open] summary::after {
+      content: "−";
+    }
+
+    details p {
+      margin-top: 12px;
+      color: #475467;
+    }
+
+    details ul {
+      margin-top: 10px;
+      padding-left: 22px;
+      color: #475467;
+    }
+
+    details li {
+      margin-bottom: 6px;
+    }
+
+    .help {
+      background: #ecfdf3;
+      border-left: 4px solid #078747;
+      padding: 22px;
+      border-radius: 10px;
+      margin-top: 25px;
+    }
+
+    .help h2 {
+      color: #087f45;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 12px;
+      background: #087f45;
+      color: white;
+      text-decoration: none;
+      padding: 11px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .btn:hover {
+      background: #066b3b;
+    }
+
+    footer {
+      background: #12372a;
+      color: #d1d5db;
+      text-align: center;
+      padding: 24px 20px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 800px) {
+      .menu {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 29px;
+      }
+
+      .faq {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+
+    <a href="index.html" class="logo">
+      🚚 VietTruck
+      <small>Kết nối hàng hóa Việt Nam</small>
+    </a>
+
+    <nav class="menu">
+      <a href="index.html">Trang chủ</a>
+      <a href="tim-hang.html">Tìm hàng</a>
+      <a href="tim-xe.html">Tìm xe</a>
+      <a href="dang-hang.html">Đăng hàng</a>
+      <a href="bang-gia.html">Bảng giá</a>
+      <a href="gioi-thieu.html">Giới thiệu</a>
+      <a href="lien-he.html">Liên hệ</a>
+    </nav>
+
+  </div>
+</header>
+
+
+<section class="hero">
+  <h1>Câu hỏi thường gặp</h1>
+  <p>
+    Giải đáp các vấn đề thường gặp khi sử dụng nền tảng vận tải VietTruck.
+  </p>
+</section>
+
+
+<main class="container">
+
+  <section class="faq">
+
+    <details open>
+      <summary>1. VietTruck là gì?</summary>
+      <p>
+        VietTruck là nền tảng kết nối chủ hàng với tài xế và nhà xe,
+        hỗ trợ tìm hàng, tìm xe, đăng nhu cầu vận chuyển và quản lý
+        các hoạt động liên quan đến vận tải hàng hóa.
+      </p>
+    </details>
+
+    <details>
+      <summary>2. Tôi có cần đăng ký tài khoản không?</summary>
+      <p>
+        Một số nội dung có thể xem mà không cần tài khoản. Tuy nhiên,
+        để sử dụng đầy đủ các chức năng như đăng hàng, nhận chuyến,
+        quản lý đơn và giao dịch, bạn cần đăng ký và đăng nhập VietTruck.
+      </p>
+    </details>
+
+    <details>
+      <summary>3. Làm thế nào để đăng hàng cần vận chuyển?</summary>
+      <p>
+        Bạn vào mục <strong>Đăng hàng</strong>, nhập điểm lấy hàng,
+        điểm giao hàng, loại hàng, tải trọng, loại xe, ngày lấy hàng
+        và các thông tin cần thiết rồi gửi yêu cầu lên hệ thống.
+      </p>
+    </details>
+
+    <details>
+      <summary>4. Tôi là tài xế hoặc nhà xe, làm sao tìm hàng?</summary>
+      <p>
+        Vào mục <strong>Tìm hàng</strong> để xem các đơn vận chuyển.
+        Bạn có thể lựa chọn chuyến phù hợp với vị trí, loại phương tiện,
+        tải trọng và lịch trình của mình.
+      </p>
+    </details>
+
+    <details>
+      <summary>5. Chủ hàng có thể chủ động tìm xe không?</summary>
+      <p>
+        Có. Chủ hàng có thể vào mục <strong>Tìm xe</strong> để tìm
+        phương tiện hoặc nhà xe phù hợp với nhu cầu vận chuyển.
+      </p>
+    </details>
+
+    <details>
+      <summary>6. Giá cước trên VietTruck được xác định thế nào?</summary>
+      <p>
+        Giá cước có thể do chủ hàng đưa ra, do tài xế hoặc nhà xe báo giá,
+        hoặc được các bên thỏa thuận tùy theo từng chuyến vận chuyển.
+      </p>
+      <p>
+        Giá có thể phụ thuộc vào quãng đường, loại xe, tải trọng,
+        loại hàng, thời gian vận chuyển và điều kiện thực tế.
+      </p>
+    </details>
+
+    <details>
+      <summary>7. VietTruck có chức năng hàng chiều về không?</summary>
+      <p>
+        Có. Chức năng <strong>Hàng chiều về</strong> giúp tài xế và nhà xe
+        tìm thêm đơn hàng trên tuyến quay về, góp phần hạn chế xe chạy rỗng
+        và tối ưu chi phí vận hành.
+      </p>
+    </details>
+
+    <details>
+      <summary>8. Làm sao để nhận một chuyến hàng?</summary>
+      <p>
+        Khi tìm thấy chuyến phù hợp, tài xế hoặc nhà xe cần kiểm tra kỹ
+        thông tin hàng hóa, tuyến đường, giá cước và thời gian nhận hàng
+        trước khi xác nhận nhận chuyến.
+      </p>
+    </details>
+
+    <details>
+      <summary>9. Tôi có thể hủy chuyến không?</summary>
+      <p>
+        Việc hủy chuyến phụ thuộc vào trạng thái đơn hàng và thỏa thuận
+        giữa các bên. Nếu cần hủy, bạn nên thực hiện càng sớm càng tốt
+        và thông báo cho bên còn lại.
+      </p>
+    </details>
+
+    <details>
+      <summary>10. Nếu xảy ra tranh chấp thì làm thế nào?</summary>
+      <p>
+        Bạn nên lưu giữ thông tin đơn hàng, trao đổi, hình ảnh, chứng từ
+        và các bằng chứng liên quan. Sau đó có thể gửi yêu cầu tại mục
+        <strong>Hỗ trợ & Khiếu nại</strong> để VietTruck tiếp nhận.
+      </p>
+    </details>
+
+    <details>
+      <summary>11. VietTruck có quản lý thanh toán không?</summary>
+      <p>
+        Hệ thống đang được xây dựng với các chức năng hỗ trợ lịch sử giao dịch,
+        yêu cầu thanh toán, đối soát công nợ, phiếu thu chi và báo cáo tài chính.
+      </p>
+    </details>
+
+    <details>
+      <summary>12. Thông tin cá nhân của tôi có được bảo mật không?</summary>
+      <p>
+        VietTruck áp dụng các biện pháp phù hợp để bảo vệ thông tin người dùng.
+        Chi tiết về việc thu thập và sử dụng dữ liệu được trình bày trong
+        Chính sách bảo mật.
+      </p>
+
+      <a href="chinh-sach-bao-mat.html" class="btn">
+        Xem Chính sách bảo mật
+      </a>
+    </details>
+
+    <details>
+      <summary>13. Tôi quên mật khẩu thì phải làm gì?</summary>
+      <p>
+        Tại trang đăng nhập, chọn chức năng <strong>Quên mật khẩu</strong>
+        và thực hiện theo hướng dẫn để đặt lại mật khẩu tài khoản.
+      </p>
+
+      <a href="quen-mat-khau.html" class="btn">
+        Quên mật khẩu
+      </a>
+    </details>
+
+    <details>
+      <summary>14. Tôi cần hỗ trợ trực tiếp thì liên hệ ở đâu?</summary>
+      <p>
+        Bạn có thể gọi Hotline VietTruck hoặc gửi yêu cầu thông qua
+        trang Liên hệ và Hỗ trợ & Khiếu nại.
+      </p>
+    </details>
+
+  </section>
+
+
+  <section class="help">
+
+    <h2>Bạn vẫn cần hỗ trợ?</h2>
+
+    <p>
+      Hotline VietTruck:
+      <strong>0388 134 999</strong>
+    </p>
+
+    <p>
+      Đơn vị vận hành:
+      <strong>
+        CÔNG TY TNHH ĐẦU TƯ THƯƠNG MẠI DỊCH VỤ TRƯỜNG GIANG
+      </strong>
+    </p>
+
+    <a href="ho-tro-khieu-nai.html" class="btn">
+      Gửi yêu cầu hỗ trợ
+    </a>
+
+  </section>
+
+</main>
+
+
+<footer>
+  © 2026 VietTruck – Kết nối hàng hóa Việt Nam
+</footer>
+
+</body>
+</html>
