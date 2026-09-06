@@ -620,7 +620,11 @@ onchange="filterVoucher()">
 </div>
 
 </div>
-
+<div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+  <button class="btn btn-primary" onclick="openCreateVoucherModal()">
+    ➕ Tạo phiếu thu/chi
+  </button>
+</div>
 <div class="table-wrap">
 
 <table id="voucherTable">
@@ -738,7 +742,68 @@ Không tìm thấy chứng từ phù hợp.
 </main>
 
 </div>
+<!-- MODAL TẠO PHIẾU THU CHI -->
+<div id="createVoucherModal" class="modal">
+  <div class="modal-box">
 
+    <div class="modal-head">
+      <h3>➕ Tạo phiếu thu/chi</h3>
+      <button class="close" type="button" onclick="closeCreateVoucherModal()">×</button>
+    </div>
+
+    <div style="padding:20px;">
+
+      <div style="margin-bottom:15px;">
+        <label><strong>Loại phiếu</strong></label>
+        <select id="newVoucherType" class="control" style="width:100%;margin-top:6px;">
+          <option value="Phiếu thu">Phiếu thu</option>
+          <option value="Phiếu chi">Phiếu chi</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:15px;">
+        <label><strong>Ngày chứng từ</strong></label>
+        <input id="newVoucherDate" type="date" class="control"
+               style="width:100%;margin-top:6px;">
+      </div>
+
+      <div style="margin-bottom:15px;">
+        <label><strong>Đối tác / Người nộp nhận</strong></label>
+        <input id="newVoucherPartner" type="text" class="control"
+               placeholder="Nhập tên đối tác"
+               style="width:100%;margin-top:6px;">
+      </div>
+
+      <div style="margin-bottom:15px;">
+        <label><strong>Nội dung</strong></label>
+        <input id="newVoucherContent" type="text" class="control"
+               placeholder="Ví dụ: Thu tiền vận chuyển"
+               style="width:100%;margin-top:6px;">
+      </div>
+
+      <div style="margin-bottom:15px;">
+        <label><strong>Số tiền (VNĐ)</strong></label>
+        <input id="newVoucherAmount" type="number" min="0" class="control"
+               placeholder="Ví dụ: 5000000"
+               style="width:100%;margin-top:6px;">
+      </div>
+
+    </div>
+
+    <div class="modal-foot">
+      <button type="button" class="btn btn-light"
+              onclick="closeCreateVoucherModal()">
+        Hủy
+      </button>
+
+      <button type="button" class="btn btn-primary"
+              onclick="saveNewVoucher()">
+        💾 Lưu phiếu
+      </button>
+    </div>
+
+  </div>
+</div>
 <!-- MODAL -->
 
 <div id="voucherModal" class="modal">
@@ -989,7 +1054,141 @@ closeModal();
 }
 
 };
+function openCreateVoucherModal() {
+  const modal = document.getElementById("createVoucherModal");
+  if (!modal) return;
 
+  modal.style.display = "flex";
+
+  const dateInput = document.getElementById("newVoucherDate");
+  if (dateInput && !dateInput.value) {
+    const today = new Date();
+    dateInput.value =
+      today.getFullYear() +
+      "-" +
+      String(today.getMonth() + 1).padStart(2, "0") +
+      "-" +
+      String(today.getDate()).padStart(2, "0");
+  }
+}
+
+function closeCreateVoucherModal() {
+  const modal = document.getElementById("createVoucherModal");
+  if (modal) {
+    modal.style.display = "none";
+  }
+}
+
+function saveNewVoucher() {
+  const type = document.getElementById("newVoucherType").value;
+  const date = document.getElementById("newVoucherDate").value;
+  const partner = document.getElementById("newVoucherPartner").value.trim();
+  const content = document.getElementById("newVoucherContent").value.trim();
+  const amount = Number(document.getElementById("newVoucherAmount").value);
+
+  if (!date) {
+    alert("Vui lòng chọn ngày chứng từ.");
+    return;
+  }
+
+  if (!partner) {
+    alert("Vui lòng nhập đối tác hoặc người nộp/nhận.");
+    return;
+  }
+
+  if (!content) {
+    alert("Vui lòng nhập nội dung.");
+    return;
+  }
+
+  if (!amount || amount <= 0) {
+    alert("Vui lòng nhập số tiền hợp lệ.");
+    return;
+  }
+
+  const vouchers = JSON.parse(
+    localStorage.getItem("viettruck_vouchers") || "[]"
+  );
+
+  const voucher = {
+    id: "VT-" + Date.now(),
+    type: type,
+    date: date,
+    partner: partner,
+    content: content,
+    amount: amount,
+    status: "Hoàn tất",
+    createdAt: new Date().toISOString()
+  };
+
+  vouchers.push(voucher);
+
+  localStorage.setItem(
+    "viettruck_vouchers",
+    JSON.stringify(vouchers)
+  );
+
+  addVoucherToTable(voucher);
+
+  document.getElementById("newVoucherPartner").value = "";
+  document.getElementById("newVoucherContent").value = "";
+  document.getElementById("newVoucherAmount").value = "";
+
+  closeCreateVoucherModal();
+
+  alert("Đã lưu phiếu thành công.");
+}
+
+function addVoucherToTable(voucher) {
+  const table = document.getElementById("voucherTable");
+  if (!table) return;
+
+  const tbody = table.querySelector("tbody");
+  if (!tbody) return;
+
+  const row = document.createElement("tr");
+
+  const dateParts = voucher.date.split("-");
+  const displayDate =
+    dateParts.length === 3
+      ? dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0]
+      : voucher.date;
+
+  const badgeClass =
+    voucher.type === "Phiếu thu" ? "receipt" : "payment";
+
+  row.innerHTML = `
+    <td>${voucher.id}</td>
+    <td>${displayDate}</td>
+    <td><span class="badge ${badgeClass}">${voucher.type}</span></td>
+    <td>${voucher.partner}</td>
+    <td>${voucher.content}</td>
+    <td class="amount-in">${voucher.amount.toLocaleString("vi-VN")} đ</td>
+    <td>Ví VietTruck</td>
+    <td><span class="badge completed">Hoàn tất</span></td>
+    <td>
+      <div class="actions">
+        <button class="action-btn" onclick="viewVoucher(this)">
+          Chi tiết
+        </button>
+      </div>
+    </td>
+  `;
+
+  tbody.prepend(row);
+}
+
+function loadSavedVouchers() {
+  const vouchers = JSON.parse(
+    localStorage.getItem("viettruck_vouchers") || "[]"
+  );
+
+  vouchers.forEach(function(voucher) {
+    addVoucherToTable(voucher);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", loadSavedVouchers);
 </script>
 
 </body>
