@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Bảng giá vận chuyển | VietTruck</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7f6;
+      color: #1f2937;
+    }
+
+    /* HEADER */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav {
+      max-width: 1180px;
+      margin: auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      text-decoration: none;
+      color: #08783e;
+      font-size: 28px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .logo small {
+      display: block;
+      font-size: 11px;
+      color: #667085;
+      font-weight: normal;
+    }
+
+    .menu {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: #111827;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .menu a:hover,
+    .menu a.active {
+      color: #078747;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #057a3d, #0b9a55);
+      color: white;
+      text-align: center;
+      padding: 65px 20px;
+    }
+
+    .hero h1 {
+      font-size: 38px;
+      margin-bottom: 14px;
+    }
+
+    .hero p {
+      font-size: 17px;
+      opacity: 0.95;
+    }
+
+    /* CONTENT */
+    .container {
+      max-width: 1180px;
+      margin: auto;
+      padding: 45px 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .section-title h2 {
+      font-size: 28px;
+      color: #0b6b3a;
+      margin-bottom: 8px;
+    }
+
+    .section-title p {
+      color: #667085;
+    }
+
+    /* PRICE TABLE */
+    .price-box {
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 5px 22px rgba(0,0,0,0.07);
+      margin-bottom: 40px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: #087f45;
+      color: white;
+      padding: 16px 12px;
+      text-align: left;
+    }
+
+    td {
+      padding: 16px 12px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    tr:hover td {
+      background: #f3faf6;
+    }
+
+    .price {
+      color: #087f45;
+      font-weight: 700;
+    }
+
+    /* CALCULATOR */
+    .calculator {
+      background: white;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 5px 22px rgba(0,0,0,0.07);
+      margin-bottom: 40px;
+    }
+
+    .calculator h2 {
+      color: #087f45;
+      margin-bottom: 22px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 7px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d0d5dd;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      background: #078747;
+      color: white;
+      border: none;
+      padding: 14px 25px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #066d3a;
+    }
+
+    .result {
+      display: none;
+      margin-top: 22px;
+      padding: 18px;
+      background: #ecfdf3;
+      border: 1px solid #a6f4c5;
+      border-radius: 8px;
+      font-size: 17px;
+    }
+
+    .result strong {
+      color: #087f45;
+      font-size: 22px;
+    }
+
+    /* NOTICE */
+    .notice {
+      background: #fff8e7;
+      border-left: 4px solid #f59e0b;
+      padding: 20px;
+      border-radius: 8px;
+      line-height: 1.7;
+    }
+
+    /* CTA */
+    .cta {
+      margin-top: 45px;
+      background: #087f45;
+      color: white;
+      padding: 35px;
+      border-radius: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .cta h2 {
+      margin-bottom: 7px;
+    }
+
+    .cta a {
+      background: white;
+      color: #087f45;
+      text-decoration: none;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    footer {
+      margin-top: 50px;
+      background: #12372a;
+      color: #d1d5db;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    @media (max-width: 800px) {
+      .menu {
+        display: none;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .price-box {
+        overflow-x: auto;
+      }
+
+      table {
+        min-width: 700px;
+      }
+
+      .cta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero h1 {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+
+    <a href="index.html" class="logo">
+      🚚 VietTruck
+      <small>Kết nối hàng hóa Việt Nam</small>
+    </a>
+
+    <nav class="menu">
+      <a href="index.html">Trang chủ</a>
+      <a href="tim-hang.html">Tìm hàng</a>
+      <a href="tim-xe.html">Tìm xe</a>
+      <a href="dang-hang.html">Đăng hàng</a>
+      <a href="bang-gia.html" class="active">Bảng giá</a>
+      <a href="index.html#dich-vu">Dịch vụ</a>
+      <a href="index.html#tin-tuc">Tin tức</a>
+      <a href="index.html#lien-he">Liên hệ</a>
+    </nav>
+
+  </div>
+</header>
+
+
+<section class="hero">
+  <h1>Bảng giá vận chuyển VietTruck</h1>
+  <p>Tham khảo chi phí vận tải đường bộ theo loại xe và quãng đường</p>
+</section>
+
+
+<main class="container">
+
+  <div class="section-title">
+    <h2>Giá vận chuyển tham khảo</h2>
+    <p>Giá thực tế phụ thuộc tuyến đường, loại hàng, tải trọng và thời điểm vận chuyển.</p>
+  </div>
+
+
+  <div class="price-box">
+
+    <table>
+      <thead>
+        <tr>
+          <th>Loại xe</th>
+          <th>Tải trọng</th>
+          <th>Dưới 50 km</th>
+          <th>50–200 km</th>
+          <th>Trên 200 km</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>Xe tải nhỏ</td>
+          <td>500 kg – 1 tấn</td>
+          <td class="price">Từ 350.000đ/chuyến</td>
+          <td class="price">Từ 9.000đ/km</td>
+          <td class="price">Từ 8.000đ/km</td>
+        </tr>
+
+        <tr>
+          <td>Xe tải 1,5 – 2,5 tấn</td>
+          <td>1,5 – 2,5 tấn</td>
+          <td class="price">Từ 500.000đ/chuyến</td>
+          <td class="price">Từ 11.000đ/km</td>
+          <td class="price">Từ 9.500đ/km</td>
+        </tr>
+
+        <tr>
+          <td>Xe tải 5 tấn</td>
+          <td>3,5 – 5 tấn</td>
+          <td class="price">Từ 750.000đ/chuyến</td>
+          <td class="price">Từ 14.000đ/km</td>
+          <td class="price">Từ 12.000đ/km</td>
+        </tr>
+
+        <tr>
+          <td>Xe tải 8 tấn</td>
+          <td>6 – 8 tấn</td>
+          <td class="price">Từ 1.000.000đ/chuyến</td>
+          <td class="price">Từ 17.000đ/km</td>
+          <td class="price">Từ 14.000đ/km</td>
+        </tr>
+
+        <tr>
+          <td>Xe tải 15 tấn</td>
+          <td>10 – 15 tấn</td>
+          <td class="price">Liên hệ</td>
+          <td class="price">Từ 21.000đ/km</td>
+          <td class="price">Từ 17.000đ/km</td>
+        </tr>
+
+        <tr>
+          <td>Container</td>
+          <td>20 / 40 feet</td>
+          <td class="price">Liên hệ</td>
+          <td class="price">Báo giá theo tuyến</td>
+          <td class="price">Báo giá theo tuyến</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+
+
+  <div class="calculator">
+
+    <h2>🧮 Ước tính cước vận chuyển</h2>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Loại xe</label>
+
+        <select id="vehicle">
+          <option value="8000">Xe tải nhỏ 500kg – 1 tấn</option>
+          <option value="9500">Xe tải 1,5 – 2,5 tấn</option>
+          <option value="12000">Xe tải 5 tấn</option>
+          <option value="14000">Xe tải 8 tấn</option>
+          <option value="17000">Xe tải 15 tấn</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Quãng đường dự kiến (km)</label>
+        <input
+          type="number"
+          id="distance"
+          min="1"
+          placeholder="Ví dụ: 120"
+        >
+      </div>
+
+    </div>
+
+    <button class="btn" type="button" onclick="calculatePrice()">
+      Ước tính cước
+    </button>
+
+    <div class="result" id="result"></div>
+
+  </div>
+
+
+  <div class="notice">
+    <strong>Lưu ý:</strong>
+    Bảng giá trên chỉ mang tính chất tham khảo. Cước vận chuyển thực tế
+    có thể thay đổi theo điểm lấy hàng, điểm giao hàng, loại hàng hóa,
+    thời gian chờ, phí cầu đường, bốc xếp và nhu cầu xe tại từng thời điểm.
+    VietTruck sẽ hướng tới cơ chế nhận báo giá trực tiếp từ tài xế và nhà xe
+    để khách hàng lựa chọn phương án phù hợp.
+  </div>
+
+
+  <div class="cta">
+
+    <div>
+      <h2>Bạn đang cần vận chuyển hàng?</h2>
+      <p>Đăng chuyến để kết nối với tài xế và nhà xe phù hợp.</p>
+    </div>
+
+    <a href="dang-hang.html">Đăng hàng ngay</a>
+
+  </div>
+
+</main>
+
+
+<footer>
+  © 2026 VietTruck – Nền tảng kết nối vận tải hàng hóa Việt Nam
+</footer>
+
+
+<script>
+function calculatePrice() {
+
+  const vehicle = Number(document.getElementById("vehicle").value);
+  const distance = Number(document.getElementById("distance").value);
+  const result = document.getElementById("result");
+
+  if (!distance || distance <= 0) {
+    alert("Vui lòng nhập quãng đường hợp lệ.");
+    return;
+  }
+
+  let total = vehicle * distance;
+
+  if (distance < 50) {
+    total = Math.max(total, 350000);
+  }
+
+  result.style.display = "block";
+
+  result.innerHTML =
+    "Cước vận chuyển dự kiến: <strong>" +
+    total.toLocaleString("vi-VN") +
+    "đ</strong><br>" +
+    "<small>Đây là mức ước tính, chưa phải báo giá chính thức.</small>";
+}
+</script>
+
+</body>
+</html>
