@@ -476,6 +476,372 @@ body{margin:0;font-family:"Be Vietnam Pro",sans-serif;background:#f6f8f7;color:#
 <p>Nền tảng kết nối chủ hàng và tài xế trên toàn quốc</p>
 </div>
 </footer>
+<!-- ===== VIETTRUCK - KẾT NỐI SUPABASE CHO TRANG TÌM HÀNG ===== -->
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+
+    /* =========================================
+       1. KẾT NỐI SUPABASE
+    ========================================= */
+
+    const SUPABASE_URL =
+        "https://ksyakrcgqzsupqyuuysyo.supabase.co";
+
+    const SUPABASE_ANON_KEY =
+        "DAN_PUBLISHABLE_KEY_CUA_BAN_VAO_DAY";
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+    /* =========================================
+       2. KIỂM TRA ĐĂNG NHẬP
+    ========================================= */
+
+    const {
+        data: { session }
+    } = await supabaseClient.auth.getSession();
+
+    if (!session) {
+        console.log("Người dùng chưa đăng nhập VietTruck");
+    }
+
+
+    /* =========================================
+       3. TÌM VỊ TRÍ HIỂN THỊ DANH SÁCH
+    ========================================= */
+
+    let orderContainer =
+        document.getElementById("orders") ||
+        document.getElementById("orderList") ||
+        document.querySelector(".orders") ||
+        document.querySelector(".order-list");
+
+    /*
+       Nếu giao diện cũ chưa có vùng chứa đơn hàng
+       thì tự động tạo một vùng mới.
+    */
+
+    if (!orderContainer) {
+
+        orderContainer = document.createElement("div");
+
+        orderContainer.id = "viettruck-real-orders";
+
+        orderContainer.style.maxWidth = "1180px";
+        orderContainer.style.margin = "30px auto";
+        orderContainer.style.padding = "0 20px";
+
+        const title = document.createElement("h2");
+
+        title.textContent = "Hàng đang chờ xe";
+        title.style.marginBottom = "20px";
+
+        orderContainer.appendChild(title);
+
+        document.body.insertBefore(
+            orderContainer,
+            document.body.lastElementChild
+        );
+    }
+
+
+    /* =========================================
+       4. HIỂN THỊ TRẠNG THÁI ĐANG TẢI
+    ========================================= */
+
+    const loading = document.createElement("div");
+
+    loading.innerHTML =
+        "Đang tải danh sách hàng từ VietTruck...";
+
+    loading.style.padding = "20px";
+    loading.style.background = "#ffffff";
+    loading.style.borderRadius = "12px";
+    loading.style.margin = "15px 0";
+
+    orderContainer.appendChild(loading);
+
+
+    /* =========================================
+       5. HÀM CHỐNG CHÈN HTML
+    ========================================= */
+
+    function escapeHTML(value) {
+
+        return String(value ?? "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+
+
+    /* =========================================
+       6. ĐỊNH DẠNG GIÁ
+    ========================================= */
+
+    function formatPrice(value) {
+
+        const number = Number(value);
+
+        if (!Number.isFinite(number)) {
+            return "Thỏa thuận";
+        }
+
+        return new Intl.NumberFormat("vi-VN").format(number) + " đ";
+    }
+
+
+    /* =========================================
+       7. ĐỊNH DẠNG NGÀY
+    ========================================= */
+
+    function formatDate(value) {
+
+        if (!value) {
+            return "Chưa xác định";
+        }
+
+        const date = new Date(value);
+
+        if (Number.isNaN(date.getTime())) {
+            return escapeHTML(value);
+        }
+
+        return date.toLocaleDateString("vi-VN");
+    }
+
+
+    /* =========================================
+       8. LẤY ĐƠN HÀNG TỪ SUPABASE
+    ========================================= */
+
+    const { data: orders, error } =
+        await supabaseClient
+            .from("orders")
+            .select("*")
+            .order("created_at", {
+                ascending: false
+            });
+
+
+    loading.remove();
+
+
+    /* =========================================
+       9. XỬ LÝ LỖI
+    ========================================= */
+
+    if (error) {
+
+        console.error(
+            "Lỗi tải đơn hàng:",
+            error
+        );
+
+        const errorBox =
+            document.createElement("div");
+
+        errorBox.style.padding = "20px";
+        errorBox.style.background = "#fff";
+        errorBox.style.border = "1px solid #ddd";
+        errorBox.style.borderRadius = "12px";
+
+        errorBox.innerHTML =
+            "<strong>Không thể tải danh sách hàng.</strong><br>" +
+            "Vui lòng đăng nhập hoặc thử lại sau.";
+
+        orderContainer.appendChild(errorBox);
+
+        return;
+    }
+
+
+    /* =========================================
+       10. KHÔNG CÓ ĐƠN
+    ========================================= */
+
+    if (!orders || orders.length === 0) {
+
+        const empty =
+            document.createElement("div");
+
+        empty.style.padding = "30px";
+        empty.style.background = "#fff";
+        empty.style.borderRadius = "12px";
+        empty.style.textAlign = "center";
+
+        empty.innerHTML =
+            "<strong>Hiện chưa có đơn hàng.</strong><br>" +
+            "Các đơn mới đăng sẽ xuất hiện tại đây.";
+
+        orderContainer.appendChild(empty);
+
+        return;
+    }
+
+
+    /* =========================================
+       11. HIỂN THỊ TỪNG ĐƠN
+    ========================================= */
+
+    orders.forEach(function (order) {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "viettruck-supabase-order";
+
+        card.style.background = "#ffffff";
+        card.style.border = "1px solid #e5e7eb";
+        card.style.borderRadius = "14px";
+        card.style.padding = "20px";
+        card.style.marginBottom = "16px";
+        card.style.boxShadow =
+            "0 3px 12px rgba(0,0,0,0.05)";
+
+
+        const pickup =
+            escapeHTML(
+                order.pickup_location ||
+                "Chưa xác định"
+            );
+
+        const delivery =
+            escapeHTML(
+                order.delivery_location ||
+                "Chưa xác định"
+            );
+
+        const cargo =
+            escapeHTML(
+                order.cargo_type ||
+                "Hàng hóa"
+            );
+
+        const weight =
+            escapeHTML(
+                order.weight ??
+                "Chưa xác định"
+            );
+
+        const vehicle =
+            escapeHTML(
+                order.vehicle_type ||
+                "Không yêu cầu"
+            );
+
+
+        card.innerHTML = `
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                gap:15px;
+                flex-wrap:wrap;
+            ">
+
+                <div>
+
+                    <div style="
+                        font-size:20px;
+                        font-weight:700;
+                        margin-bottom:10px;
+                    ">
+                        ${pickup}
+                        →
+                        ${delivery}
+                    </div>
+
+                    <div style="
+                        color:#64748b;
+                        margin-bottom:6px;
+                    ">
+                        📦 ${cargo}
+                        &nbsp; • &nbsp;
+                        ⚖️ ${weight}
+                    </div>
+
+                    <div style="
+                        color:#64748b;
+                        margin-bottom:6px;
+                    ">
+                        🚚 ${vehicle}
+                    </div>
+
+                    <div style="
+                        color:#64748b;
+                    ">
+                        📅 Ngày lấy:
+                        ${formatDate(order.pickup_date)}
+                    </div>
+
+                </div>
+
+
+                <div style="
+                    text-align:right;
+                    min-width:180px;
+                ">
+
+                    <div style="
+                        font-size:20px;
+                        font-weight:700;
+                        color:#079447;
+                        margin-bottom:12px;
+                    ">
+                        ${formatPrice(order.price)}
+                    </div>
+
+                    <button
+                        type="button"
+                        data-order-id="${escapeHTML(order.id)}"
+                        style="
+                            border:0;
+                            background:#079447;
+                            color:white;
+                            padding:11px 20px;
+                            border-radius:8px;
+                            font-weight:600;
+                            cursor:pointer;
+                        "
+                        onclick="
+                            alert(
+                                'Chức năng nhận chuyến sẽ được kết nối ở bước tiếp theo.'
+                            )
+                        "
+                    >
+                        Nhận chuyến
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+        orderContainer.appendChild(card);
+
+    });
+
+
+    console.log(
+        "VietTruck đã tải",
+        orders.length,
+        "đơn hàng"
+    );
+
+});
+</script>
+
+<!-- ===== HẾT KẾT NỐI SUPABASE TÌM HÀNG ===== -->
 </body>
 </html>
