@@ -692,23 +692,25 @@ function updateUserMenu(session){
 
     if(session){
 
-        navUserButtons.innerHTML = `
+    navUserButtons.innerHTML = `
 
-        <a
-        href="dashboard.html"
-        class="btn btn-outline"
-        >
-        Dashboard
-        </a>
+        <button
+            type="button"
+            class="btn btn-outline"
+            onclick="window.location.href='dashboard.html'">
+            Dashboard
+        </button>
 
-        <a
-        href="tai-khoan.html"
-        class="btn btn-green"
-        >
-        Tài khoản
-        </a>
+        <button
+            type="button"
+            class="btn btn-green"
+            onclick="window.location.href='tai-khoan.html'">
+            Tài khoản
+        </button>
 
-        `;
+    `;
+
+}
 
     }else{
 
