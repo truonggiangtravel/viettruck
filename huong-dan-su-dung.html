@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Hướng dẫn sử dụng | VietTruck</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7f6;
+      color: #1f2937;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .nav {
+      max-width: 1180px;
+      margin: auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      text-decoration: none;
+      color: #08783e;
+      font-size: 28px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .logo small {
+      display: block;
+      font-size: 11px;
+      color: #667085;
+      font-weight: normal;
+    }
+
+    .menu {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: #111827;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .menu a:hover {
+      color: #078747;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #057a3d, #0b9a55);
+      color: white;
+      padding: 55px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: auto;
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 1050px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    .intro {
+      background: white;
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    }
+
+    .intro h2 {
+      color: #087f45;
+      margin-bottom: 10px;
+    }
+
+    .guide {
+      display: grid;
+      gap: 20px;
+    }
+
+    .step {
+      background: white;
+      border-radius: 14px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      border-left: 5px solid #078747;
+    }
+
+    .step h2 {
+      color: #087f45;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .step p {
+      color: #475467;
+      margin-bottom: 10px;
+    }
+
+    .step ul,
+    .step ol {
+      padding-left: 22px;
+      color: #475467;
+    }
+
+    .step li {
+      margin-bottom: 8px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 12px;
+      background: #087f45;
+      color: white;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      background: #066b3b;
+    }
+
+    .note {
+      background: #ecfdf3;
+      border: 1px solid #bbf7d0;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 25px;
+    }
+
+    .note h3 {
+      color: #087f45;
+      margin-bottom: 8px;
+    }
+
+    footer {
+      background: #12372a;
+      color: #d1d5db;
+      text-align: center;
+      padding: 24px 20px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 800px) {
+      .menu {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 29px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+
+    <a href="index.html" class="logo">
+      🚚 VietTruck
+      <small>Kết nối hàng hóa Việt Nam</small>
+    </a>
+
+    <nav class="menu">
+      <a href="index.html">Trang chủ</a>
+      <a href="tim-hang.html">Tìm hàng</a>
+      <a href="tim-xe.html">Tìm xe</a>
+      <a href="dang-hang.html">Đăng hàng</a>
+      <a href="bang-gia.html">Bảng giá</a>
+      <a href="gioi-thieu.html">Giới thiệu</a>
+      <a href="lien-he.html">Liên hệ</a>
+    </nav>
+
+  </div>
+</header>
+
+
+<section class="hero">
+  <h1>Hướng dẫn sử dụng VietTruck</h1>
+  <p>
+    Hướng dẫn nhanh dành cho chủ hàng, tài xế và nhà xe khi sử dụng
+    nền tảng vận tải VietTruck.
+  </p>
+</section>
+
+
+<main class="container">
+
+  <section class="intro">
+    <h2>Bắt đầu với VietTruck</h2>
+
+    <p>
+      VietTruck được xây dựng để giúp chủ hàng tìm phương tiện vận chuyển
+      và giúp tài xế, nhà xe tìm chuyến hàng phù hợp.
+    </p>
+
+    <p>
+      Bạn có thể sử dụng các chức năng Tìm hàng, Tìm xe, Đăng hàng,
+      quản lý chuyến và các tiện ích khác trực tiếp trên website.
+    </p>
+  </section>
+
+
+  <div class="guide">
+
+    <section class="step">
+      <h2>1. Đăng ký và đăng nhập tài khoản</h2>
+
+      <ol>
+        <li>Mở trang đăng nhập VietTruck.</li>
+        <li>Chọn đăng ký nếu bạn chưa có tài khoản.</li>
+        <li>Nhập thông tin theo yêu cầu.</li>
+        <li>Đăng nhập bằng tài khoản đã đăng ký.</li>
+        <li>Sau khi đăng nhập, bạn có thể truy cập Dashboard VietTruck.</li>
+      </ol>
+
+      <a href="dang-nhap.html" class="btn">Đăng nhập</a>
+    </section>
+
+
+    <section class="step">
+      <h2>2. Chủ hàng đăng nhu cầu vận chuyển</h2>
+
+      <p>
+        Nếu bạn cần thuê xe vận chuyển hàng hóa, sử dụng chức năng
+        <strong>Đăng hàng</strong>.
+      </p>
+
+      <ol>
+        <li>Nhập điểm lấy hàng.</li>
+        <li>Nhập điểm giao hàng.</li>
+        <li>Chọn loại hàng hóa.</li>
+        <li>Nhập trọng lượng hoặc tải trọng hàng.</li>
+        <li>Chọn loại xe phù hợp.</li>
+        <li>Nhập thời gian dự kiến lấy hàng.</li>
+        <li>Nhập giá cước hoặc yêu cầu báo giá nếu có.</li>
+        <li>Kiểm tra thông tin và đăng đơn.</li>
+      </ol>
+
+      <a href="dang-hang.html" class="btn">Đăng hàng ngay</a>
+    </section>
+
+
+    <section class="step">
+      <h2>3. Tài xế và nhà xe tìm hàng</h2>
+
+      <p>
+        Mục <strong>Tìm hàng</strong> cho phép tài xế và nhà xe xem
+        các nhu cầu vận chuyển đang được đăng trên hệ thống.
+      </p>
+
+      <ol>
+        <li>Mở trang Tìm hàng.</li>
+        <li>Chọn tuyến đường hoặc khu vực phù hợp.</li>
+        <li>Kiểm tra loại hàng, tải trọng và loại xe yêu cầu.</li>
+        <li>Xem thời gian lấy hàng và mức giá.</li>
+        <li>Chọn chuyến phù hợp để tiếp tục trao đổi hoặc nhận chuyến.</li>
+      </ol>
+
+      <a href="tim-hang.html" class="btn">Tìm hàng</a>
+    </section>
+
+
+    <section class="step">
+      <h2>4. Chủ hàng tìm xe</h2>
+
+      <p>
+        Chủ hàng có thể sử dụng chức năng <strong>Tìm xe</strong>
+        để tìm tài xế hoặc phương tiện đang sẵn sàng vận chuyển.
+      </p>
+
+      <ol>
+        <li>Mở trang Tìm xe.</li>
+        <li>Chọn khu vực lấy hàng.</li>
+        <li>Chọn loại xe cần thuê.</li>
+        <li>Xem các phương tiện phù hợp.</li>
+        <li>Liên hệ hoặc gửi yêu cầu vận chuyển.</li>
+      </ol>
+
+      <a href="tim-xe.html" class="btn">Tìm xe</a>
+    </section>
+
+
+    <section class="step">
+      <h2>5. Nhận chuyến vận chuyển</h2>
+
+      <p>
+        Khi tìm được đơn hàng phù hợp, tài xế hoặc nhà xe có thể
+        tiến hành nhận chuyến.
+      </p>
+
+      <ul>
+        <li>Kiểm tra kỹ điểm lấy và giao hàng.</li>
+        <li>Kiểm tra loại hàng và tải trọng.</li>
+        <li>Xác nhận giá cước.</li>
+        <li>Xác nhận thời gian nhận hàng.</li>
+        <li>Thực hiện vận chuyển theo thông tin đã thống nhất.</li>
+      </ul>
+
+      <a href="nhan-chuyen.html" class="btn">Quản lý nhận chuyến</a>
+    </section>
+
+
+    <section class="step">
+      <h2>6. Hàng chiều về</h2>
+
+      <p>
+        Tính năng Hàng chiều về giúp tài xế và nhà xe tìm thêm hàng
+        trên tuyến quay về, hạn chế xe chạy rỗng.
+      </p>
+
+      <ul>
+        <li>Chọn điểm xe đang ở hoặc điểm trả hàng.</li>
+        <li>Chọn hướng xe quay về.</li>
+        <li>Xem các đơn hàng phù hợp trên tuyến.</li>
+        <li>Chọn chuyến phù hợp với thời gian và tải trọng xe.</li>
+      </ul>
+
+      <a href="hang-chieu-ve.html" class="btn">Tìm hàng chiều về</a>
+    </section>
+
+
+    <section class="step">
+      <h2>7. Quản lý chuyến và hành trình</h2>
+
+      <p>
+        Sau khi nhận chuyến, người dùng có thể theo dõi và quản lý
+        thông tin vận chuyển trên hệ thống VietTruck.
+      </p>
+
+      <ul>
+        <li>Thông tin đơn vận chuyển.</li>
+        <li>Tình trạng chuyến.</li>
+        <li>Phân công tài xế hoặc phương tiện.</li>
+        <li>Lịch sử hành trình.</li>
+        <li>Thông tin hoàn thành giao hàng.</li>
+      </ul>
+
+      <a href="dashboard.html" class="btn">Vào Dashboard</a>
+    </section>
+
+
+    <section class="step">
+      <h2>8. Thanh toán và giao dịch</h2>
+
+      <p>
+        Các chức năng tài chính của VietTruck được xây dựng để hỗ trợ
+        quản lý thanh toán, công nợ và lịch sử giao dịch.
+      </p>
+
+      <ul>
+        <li>Kiểm tra lịch sử giao dịch.</li>
+        <li>Quản lý yêu cầu thanh toán.</li>
+        <li>Đối soát công nợ.</li>
+        <li>Theo dõi phiếu thu chi.</li>
+        <li>Xem báo cáo tài chính liên quan.</li>
+      </ul>
+
+      <a href="lich-su-giao-dich.html" class="btn">Lịch sử giao dịch</a>
+    </section>
+
+
+    <section class="step">
+      <h2>9. Khi cần hỗ trợ</h2>
+
+      <p>
+        Nếu gặp vấn đề trong quá trình sử dụng VietTruck, bạn có thể
+        gửi yêu cầu hỗ trợ hoặc khiếu nại để bộ phận phụ trách tiếp nhận.
+      </p>
+
+      <a href="ho-tro-khieu-nai.html" class="btn">Hỗ trợ & Khiếu nại</a>
+    </section>
+
+  </div>
+
+
+  <div class="note">
+    <h3>Hỗ trợ VietTruck</h3>
+
+    <p>
+      Hotline: <strong>0388 134 999</strong>
+    </p>
+
+    <p>
+      Đơn vị vận hành:
+      <strong>
+        CÔNG TY TNHH ĐẦU TƯ THƯƠNG MẠI DỊCH VỤ TRƯỜNG GIANG
+      </strong>
+    </p>
+  </div>
+
+</main>
+
+
+<footer>
+  © 2026 VietTruck – Kết nối hàng hóa Việt Nam
+</footer>
+
+</body>
+</html>
