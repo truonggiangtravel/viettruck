@@ -434,6 +434,116 @@ body{
     <p>Nền tảng kết nối chủ hàng và tài xế trên toàn quốc</p>
   </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+const SUPABASE_URL = "https://ksyakrcgqzsupqyusyo.supabase.co";
+const SUPABASE_KEY = "DAN_PUBLISHABLE_KEY_CUA_BAN_VAO_DAY";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const orderForm = document.querySelector(".form-card");
+
+orderForm.addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  const submitButton = orderForm.querySelector('button[type="submit"]');
+
+  submitButton.disabled = true;
+  submitButton.textContent = "Đang đăng hàng...";
+
+  try {
+    const {
+      data: { user },
+      error: userError
+    } = await supabaseClient.auth.getUser();
+
+    if (userError || !user) {
+      alert("Bạn cần đăng nhập trước khi đăng hàng.");
+      window.location.href = "dang-nhap.html";
+      return;
+    }
+
+    const pickupLocation =
+      document.getElementById("pickup_location").value.trim();
+
+    const deliveryLocation =
+      document.getElementById("delivery_location").value.trim();
+
+    const pickupDate =
+      document.getElementById("pickup_date").value;
+
+    const cargoType =
+      document.getElementById("cargo_type").value;
+
+    const weightText =
+      document.getElementById("weight").value.trim();
+
+    const vehicleType =
+      document.getElementById("vehicle_type").value;
+
+    const priceValue =
+      document.getElementById("price").value;
+
+    const notes =
+      document.getElementById("notes").value.trim();
+
+    const weight = parseFloat(
+      weightText.replace(",", ".")
+    );
+
+    if (!pickupLocation || !deliveryLocation || !pickupDate || !cargoType) {
+      alert("Vui lòng nhập đầy đủ các thông tin bắt buộc.");
+      return;
+    }
+
+    if (Number.isNaN(weight)) {
+      alert("Trọng lượng không hợp lệ. Ví dụ: 5 hoặc 5.5");
+      return;
+    }
+
+    const orderData = {
+      user_id: user.id,
+      pickup_location: pickupLocation,
+      delivery_location: deliveryLocation,
+      cargo_type: cargoType,
+      weight: weight,
+      vehicle_type: vehicleType || null,
+      price: priceValue ? Number(priceValue) : null,
+      pickup_date: pickupDate,
+      notes: notes || null,
+      status: "pending"
+    };
+
+    const { data, error } = await supabaseClient
+      .from("orders")
+      .insert([orderData])
+      .select()
+      .single();
+
+    if (error) {
+      console.error(error);
+      alert("Đăng hàng thất bại: " + error.message);
+      return;
+    }
+
+    alert("Đăng hàng thành công!");
+
+    orderForm.reset();
+
+    window.location.href = "dashboard.html";
+
+  } catch (error) {
+    console.error(error);
+    alert("Có lỗi xảy ra: " + error.message);
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "Đăng hàng ngay";
+  }
+});
+</script>
 </body>
 </html>
