@@ -351,15 +351,10 @@ font-size:35px;
 </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="auth.js"></script>
 
 <script>
-const SUPABASE_URL = "https://ksyakrcgqzsupuqyusyo.supabase.co";
-const SUPABASE_KEY = "sb_publishable_0LGPlepJQoFBoEoL7jyvSA_9GC5hSgD";
-
-const supabaseClient = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
 
 async function updateLoginButtons() {
   const {
