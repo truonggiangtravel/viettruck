@@ -32,4 +32,18 @@ if (modal) {
       modal.classList.remove('open');
     }
   });
-}document.getElementById('postCargoBtn').addEventListener('click',()=>alert('Form Đăng hàng sẽ được xây ở bước tiếp theo.'));document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('menu').classList.toggle('open'));
+}const postCargoBtn = document.getElementById('postCargoBtn');
+if (postCargoBtn) {
+  postCargoBtn.addEventListener('click', () => {
+    window.location.href = 'dang-hang.html';
+  });
+}
+
+const menuBtn = document.getElementById('menuBtn');
+const menu = document.getElementById('menu');
+
+if (menuBtn && menu) {
+  menuBtn.addEventListener('click', () => {
+    menu.classList.toggle('open');
+  });
+}
