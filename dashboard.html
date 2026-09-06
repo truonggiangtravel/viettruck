@@ -836,15 +836,7 @@ async function checkLogin() {
         }
     });
 
-    setTimeout(async function () {
-        const {
-            data: { session: retrySession }
-        } = await supabaseClient.auth.getSession();
-
-        if (!retrySession) {
-            window.location.href = "dang-nhap.html";
-        }
-    }, 1500);
+    
 }
 
 checkLogin();
