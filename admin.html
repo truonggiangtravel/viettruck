@@ -1581,25 +1581,21 @@ async function protectAdminPage() {
   }
 
   const { data: profile, error: profileError } =
-    await supabaseClient
-      .from("profiles")
-      .select("role, status, full_name")
-      .eq("id", session.user.id)
-      .single();
+  await supabaseClient
+    .from("profiles")
+    .select("role, full_name")
+    .eq("id", session.user.id)
+    .single();
 
-  if (
-    profileError ||
-    !profile ||
-    profile.status !== "active"
-  ) {
-    await supabaseClient.auth.signOut();
+  if (profileError || !profile) {
+  await supabaseClient.auth.signOut();
 
-    localStorage.removeItem("viettruck_logged_in");
-    localStorage.removeItem("viettruck_current_user");
+  localStorage.removeItem("viettruck_logged_in");
+  localStorage.removeItem("viettruck_current_user");
 
-    window.location.replace("dang-nhap.html");
-    return;
-  }
+  window.location.replace("dang-nhap.html");
+  return;
+}
 
   if (profile.role !== "admin") {
     window.location.replace("dashboard.html");
