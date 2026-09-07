@@ -284,5 +284,69 @@ async function updateLoginButtons() {
 
 updateLoginButtons();
 </script>
+    <script>
+async function loadAvailableVehicles() {
+  const vehicleList = document.getElementById("vehicleList");
+  const vehicleCount = document.getElementById("vehicleCount");
+
+  const { data, error } = await supabaseClient
+    .from("vehicles")
+    .select("id, plate_number, vehicle_type, capacity, current_location, destination, status, created_at")
+    .eq("status", "available")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Không tải được danh sách xe:", error);
+    vehicleList.innerHTML = "<p>Không tải được danh sách xe.</p>";
+    vehicleCount.textContent = "0";
+    return;
+  }
+
+  vehicleCount.textContent = data.length;
+
+  if (!data.length) {
+    vehicleList.innerHTML = "<p>Hiện chưa có xe sẵn sàng.</p>";
+    return;
+  }
+
+  vehicleList.innerHTML = data.map(vehicle => `
+    <div class="truck-card">
+      <div class="truck-icon">🚚</div>
+
+      <div>
+        <div class="truck-name">
+          ${vehicle.vehicle_type || "Xe tải"}
+          ${vehicle.capacity ? vehicle.capacity + " tấn" : ""}
+        </div>
+
+        <div class="route">
+          ${vehicle.current_location || "Chưa cập nhật"}
+          →
+          ${vehicle.destination || "Chưa cập nhật"}
+        </div>
+
+        <div class="tags">
+          ${vehicle.capacity ? `<span class="tag">${vehicle.capacity} tấn</span>` : ""}
+          ${vehicle.vehicle_type ? `<span class="tag">${vehicle.vehicle_type}</span>` : ""}
+          ${vehicle.plate_number ? `<span class="tag">${vehicle.plate_number}</span>` : ""}
+        </div>
+
+        <div class="details">
+          📍 Hiện tại: ${vehicle.current_location || "Chưa cập nhật"}<br>
+          🚛 Biển số: ${vehicle.plate_number || "Chưa cập nhật"}
+        </div>
+      </div>
+
+      <div class="status-box">
+        <div class="status">● Sẵn sàng</div>
+        <div class="available">Có thể nhận hàng ngay</div>
+        <a href="chi-tiet-xe.html?id=${vehicle.id}" class="view-btn">Xem xe</a>
+      </div>
+    </div>
+  `).join("");
+}
+
+loadAvailableVehicles();
+</script>
 </body>
 </html>
