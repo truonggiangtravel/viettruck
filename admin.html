@@ -1360,20 +1360,7 @@
 </div>
 
 <script>
-  const loggedIn = localStorage.getItem("viettruck_logged_in");
-const currentUser = JSON.parse(
-  localStorage.getItem("viettruck_current_user") || "{}"
-);
-
-if (loggedIn !== "true") {
-  alert("Bạn chưa đăng nhập.");
-  window.location.href = "dang-nhap.html";
-}
-
-if (currentUser.role && currentUser.role !== "admin") {
-  alert("Bạn không có quyền truy cập trang quản trị.");
-  window.location.href = "dashboard.html";
-}
+  
 
   /* =============================
      THỜI GIAN
