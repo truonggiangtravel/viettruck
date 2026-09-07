@@ -333,7 +333,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
   const { data: profile, error: profileError } = await supabaseClient
     .from("profiles")
-    .select("role, status, full_name")
+    .select("role, full_name")
     .eq("id", user.id)
     .single();
 
@@ -343,11 +343,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
     return;
   }
 
-  if (profile.status !== "active") {
-    alert("Tài khoản hiện không hoạt động.");
-    await supabaseClient.auth.signOut();
-    return;
-  }
+  
 
   
 
