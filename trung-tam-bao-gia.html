@@ -660,7 +660,7 @@ document.getElementById("orderPickup").textContent =
     currentOrder.pickup_location || "Chưa cập nhật";
 
 document.getElementById("orderDelivery").textContent =
-    currentOrder.delivery_location || "Chưa cập nhật";
+    
 
 document.getElementById("orderCargo").textContent =
     currentOrder.cargo_type || "Chưa cập nhật";
@@ -681,20 +681,7 @@ document.getElementById("orderPickupDate").textContent =
         : "Chưa cập nhật";
     const { data: quotes, error: quoteError } =
     await supabaseClient
-        .from("quotes")
-        .select("id, order_id, user_id, price, message, status, created_at")
-        .eq("order_id", currentOrder.id)
         
-            .order("price", { ascending: true });
-
-    if (quoteError) {
-        console.error("Lỗi tải báo giá:", quoteError);
-        quotesContainer.innerHTML =
-            '<div class="empty">Không tải được báo giá.</div>';
-        return;
-    }
-if (!quotes || quotes.length === 0) {
-
     document.getElementById("minQuotePrice").textContent = "0 đ";
     document.getElementById("avgQuotePrice").textContent = "0 đ";
     document.getElementById("summaryQuoteCount").textContent = "0";
