@@ -1036,54 +1036,7 @@ async function loadOrders(){
     </div>
   `;
 
-  const fallbackOrders = [
-    {
-      pickup_location: "Hà Nội",
-      delivery_location: "TP. Hồ Chí Minh",
-      cargo_type: "Hàng điện tử",
-      weight: "5 tấn",
-      vehicle_type: "Xe tải thùng",
-      pickup_date: "2026-09-08",
-      price: 15000000
-    },
-    {
-      pickup_location: "Bắc Ninh",
-      delivery_location: "Đà Nẵng",
-      cargo_type: "Máy móc",
-      weight: "10 tấn",
-      vehicle_type: "Xe tải 15 tấn",
-      pickup_date: "2026-09-09",
-      price: 12000000
-    },
-    {
-      pickup_location: "Hải Phòng",
-      delivery_location: "Hà Nội",
-      cargo_type: "Hàng tiêu dùng",
-      weight: "3 tấn",
-      vehicle_type: "Xe tải 5 tấn",
-      pickup_date: "2026-09-10",
-      price: 3500000
-    },
-    {
-      pickup_location: "Đồng Nai",
-      delivery_location: "Cần Thơ",
-      cargo_type: "Nông sản",
-      weight: "15 tấn",
-      vehicle_type: "Xe tải 15 tấn",
-      pickup_date: "2026-09-11",
-      price: 28000000
-    },
-    {
-      pickup_location: "TP. Hồ Chí Minh",
-      delivery_location: "Bình Dương",
-      cargo_type: "Vật liệu xây dựng",
-      weight: "8 tấn",
-      vehicle_type: "Xe tải 8 tấn",
-      pickup_date: "2026-09-12",
-      price: 5000000
-    }
-  ];
-
+  
   try {
 
     const {
@@ -1097,39 +1050,24 @@ async function loadOrders(){
       });
 
     if (error) {
-      console.warn(
-        "Supabase chưa tải được, dùng dữ liệu dự phòng:",
-        error
-      );
-
-      renderOrders(fallbackOrders);
-      orderCount.textContent =
-        fallbackOrders.length + " đơn hàng";
-      return;
-    }
+    console.error("Lỗi tải đơn hàng:", error);
+    renderOrders([]);
+    orderCount.textContent = "0 đơn hàng";
+    return;
+}
 
     if (data && data.length > 0) {
-      renderOrders(data);
-      orderCount.textContent =
-        data.length + " đơn hàng";
-    } else {
-      renderOrders(fallbackOrders);
-      orderCount.textContent =
-        fallbackOrders.length + " đơn hàng";
-    }
-
+    renderOrders(data);
+    orderCount.textContent = data.length + " đơn hàng";
+} else {
+    renderOrders([]);
+    orderCount.textContent = "0 đơn hàng";
+}
   } catch(error) {
-
-    console.warn(
-      "Không kết nối được Supabase, dùng dữ liệu dự phòng:",
-      error
-    );
-
-    renderOrders(fallbackOrders);
-
-    orderCount.textContent =
-      fallbackOrders.length + " đơn hàng";
-  }
+    console.error("Không kết nối được Supabase:", error);
+    renderOrders([]);
+    orderCount.textContent = "0 đơn hàng";
+}
 }
 
 /* ====================================
