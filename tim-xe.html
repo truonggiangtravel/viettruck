@@ -290,10 +290,29 @@ async function loadAvailableVehicles() {
   const vehicleCount = document.getElementById("vehicleCount");
 
   const { data, error } = await supabaseClient
-    .from("vehicles")
-    .select("id, plate_number, vehicle_type, capacity, current_location, destination, status, created_at")
-    .eq("status", "available")
-    .order("created_at", { ascending: false });
+  .from("vehicles")
+  .select(`
+    id,
+    plate_number,
+    vehicle_type,
+    capacity,
+    current_location,
+    destination,
+    available_date,
+    current_province,
+    current_district,
+    destination_province,
+    destination_district,
+    available_from,
+    available_to,
+    driver_name,
+    driver_phone,
+    description,
+    status,
+    created_at
+  `)
+  .eq("status", "available")
+  .order("created_at", { ascending: false });
 
   if (error) {
     console.error("Không tải được danh sách xe:", error);
@@ -316,11 +335,11 @@ async function loadAvailableVehicles() {
       <div>
         <div class="truck-name">
           ${vehicle.vehicle_type || "Xe tải"}
-          ${vehicle.capacity ? vehicle.capacity + " tấn" : ""}
-        </div>
-
-        <div class="route">
-          ${vehicle.current_location || "Chưa cập nhật"}
+          ${vehicle.current_province || vehicle.current_location || "Chưa cập nhật"}
+${vehicle.current_district ? " - " + vehicle.current_district : ""}
+→
+${vehicle.destination_province || vehicle.destination || "Chưa cập nhật"}
+${vehicle.destination_district ? " - " + vehicle.destination_district : ""}
           →
           ${vehicle.destination || "Chưa cập nhật"}
         </div>
@@ -328,9 +347,17 @@ async function loadAvailableVehicles() {
         <div class="tags">
           ${vehicle.capacity ? `<span class="tag">${vehicle.capacity} tấn</span>` : ""}
           ${vehicle.vehicle_type ? `<span class="tag">${vehicle.vehicle_type}</span>` : ""}
-          ${vehicle.plate_number ? `<span class="tag">${vehicle.plate_number}</span>` : ""}
-        </div>
+          📍 Hiện tại:
+${vehicle.current_province || vehicle.current_location || "Chưa cập nhật"}
+${vehicle.current_district ? " - " + vehicle.current_district : ""}
+<br>
 
+🏁 Đi đến:
+${vehicle.destination_province || vehicle.destination || "Chưa cập nhật"}
+${vehicle.destination_district ? " - " + vehicle.destination_district : ""}
+<br>
+
+🚚 Biển số: ${vehicle.plate_number || "Chưa cập nhật"}
         <div class="details">
           📍 Hiện tại: ${vehicle.current_location || "Chưa cập nhật"}<br>
           🚛 Biển số: ${vehicle.plate_number || "Chưa cập nhật"}
