@@ -680,9 +680,20 @@ document.getElementById("orderPickupDate").textContent =
             currentOrder.pickup_date + "T00:00:00"
           ).toLocaleDateString("vi-VN")
         : "Chưa cập nhật";
-    const { data: quotes, error: quoteError } =
-    await supabaseClient
-        
+    const { data: quotes, error: quoteError } = await supabaseClient
+    .from("quotes")
+    .select("id, order_id, user_id, price, message, status, created_at")
+    .eq("order_id", currentOrder.id)
+    .order("price", { ascending: true });
+
+if (quoteError) {
+    console.error("Lỗi tải báo giá:", quoteError);
+    quotesContainer.innerHTML =
+        '<div class="empty">Không tải được báo giá.</div>';
+    return;
+}
+
+if (!quotes || quotes.length === 0) {
     document.getElementById("minQuotePrice").textContent = "0 đ";
     document.getElementById("avgQuotePrice").textContent = "0 đ";
     document.getElementById("summaryQuoteCount").textContent = "0";
@@ -695,6 +706,7 @@ document.getElementById("orderPickupDate").textContent =
         '<div class="empty">Chưa có nhà xe gửi báo giá.</div>';
 
     return;
+}
 
   
 
