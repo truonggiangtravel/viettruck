@@ -1003,16 +1003,51 @@ function renderOrders(orders){
         );
 
 
-        receiveButton.addEventListener(
-            "click",
-            function(){
+        receiveButton.addEventListener("click", async function () {
 
-                alert(
-                    "Chức năng nhận chuyến sẽ được kết nối ở bước tiếp theo."
-                );
+    const ok = confirm("Bạn xác nhận nhận chuyến hàng này?");
+    if (!ok) return;
 
+    receiveButton.disabled = true;
+    receiveButton.textContent = "Đang nhận chuyến...";
+
+    try {
+        const { data, error } = await supabaseClient.rpc(
+            "accept_order",
+            {
+                p_order_id: order.id
             }
         );
+
+        if (error) {
+            console.error("Lỗi nhận chuyến:", error);
+            alert("Không thể nhận chuyến: " + error.message);
+            receiveButton.disabled = false;
+            receiveButton.textContent = "Nhận chuyến";
+            return;
+        }
+
+        if (data !== true) {
+            alert(
+                "Đơn hàng này đã được người khác nhận hoặc không còn khả dụng."
+            );
+
+            await loadOrders();
+            return;
+        }
+
+        alert("Nhận chuyến thành công!");
+
+        await loadOrders();
+
+    } catch (error) {
+        console.error(error);
+        alert("Có lỗi xảy ra khi nhận chuyến.");
+
+        receiveButton.disabled = false;
+        receiveButton.textContent = "Nhận chuyến";
+    }
+});
 
 
         orderContainer.appendChild(
