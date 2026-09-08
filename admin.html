@@ -1557,13 +1557,12 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const SUPABASE_URL = "https://kqypidctajadqwmdcash.supabase.co";
-const SUPABASE_KEY = "sb_publishable_fXOBoK_Udnl4yOuswW0xlQ_YwIFil0g";
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="auth.js"></script>
 
-const supabaseClient = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+<script>
+const supabaseClient = window.supabaseClient;
 
 async function protectAdminPage() {
 
