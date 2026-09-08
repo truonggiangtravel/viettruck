@@ -479,11 +479,13 @@ flex-direction:column;
 
 <div>
 <div class="order-code">
-Mã đơn: VT-ORDER-001
+Mã đơn: <span id="orderCode">Đang tải...</span>
 </div>
 
 <div class="route">
-Bắc Ninh <span>→</span> Hải Phòng
+<span id="orderPickup">...</span>
+<span>→</span>
+<span id="orderDelivery">...</span>
 </div>
 </div>
 
@@ -495,22 +497,22 @@ Bắc Ninh <span>→</span> Hải Phòng
 
 <div class="order-info">
 
-<div class="info">
+<strong id="orderCargo">Đang tải...</strong>
 <span>LOẠI HÀNG</span>
 <strong>Linh kiện điện tử</strong>
 </div>
 
-<div class="info">
+<strong id="orderWeight">Đang tải...</strong>
 <span>TRỌNG LƯỢNG</span>
 <strong>5 tấn</strong>
 </div>
 
-<div class="info">
+<strong id="orderVehicle">Đang tải...</strong>
 <span>LOẠI XE</span>
 <strong>Xe tải 5–8 tấn</strong>
 </div>
 
-<div class="info">
+<strong id="orderPickupDate">Đang tải...</strong>
 <span>NGÀY LẤY</span>
 <strong>05/09/2026</strong>
 </div>
