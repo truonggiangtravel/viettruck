@@ -340,8 +340,7 @@ ${vehicle.current_district ? " - " + vehicle.current_district : ""}
 →
 ${vehicle.destination_province || vehicle.destination || "Chưa cập nhật"}
 ${vehicle.destination_district ? " - " + vehicle.destination_district : ""}
-          →
-          ${vehicle.destination || "Chưa cập nhật"}
+          
         </div>
 
         <div class="tags">
@@ -358,10 +357,7 @@ ${vehicle.destination_district ? " - " + vehicle.destination_district : ""}
 <br>
 
 🚚 Biển số: ${vehicle.plate_number || "Chưa cập nhật"}
-        <div class="details">
-          📍 Hiện tại: ${vehicle.current_location || "Chưa cập nhật"}<br>
-          🚛 Biển số: ${vehicle.plate_number || "Chưa cập nhật"}
-        </div>
+       
       </div>
 
       <div class="status-box">
