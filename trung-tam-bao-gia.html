@@ -634,7 +634,7 @@ async function loadQuotes() {
     const { data: orders, error: orderError } =
         await supabaseClient
             .from("orders")
-            .select("id, pickup_location, delivery_location, cargo_type, status")
+            .select("id, pickup_location, delivery_location, cargo_type, weight, vehicle_type, pickup_date, status, created_at")
             .eq("user_id", userId)
             .order("created_at", { ascending: false });
 
