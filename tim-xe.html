@@ -330,44 +330,57 @@ async function loadAvailableVehicles() {
   }
 
   vehicleList.innerHTML = data.map(vehicle => `
-    <div class="truck-card">
-      <div class="truck-icon">🚚</div>
+  <div class="truck-card">
 
-      <div>
-        <div class="truck-name">
-          ${vehicle.vehicle_type || "Xe tải"}
-          ${vehicle.current_province || vehicle.current_location || "Chưa cập nhật"}
-${vehicle.current_district ? " - " + vehicle.current_district : ""}
-→
-${vehicle.destination_province || vehicle.destination || "Chưa cập nhật"}
-${vehicle.destination_district ? " - " + vehicle.destination_district : ""}
-          
-        </div>
+    <div class="truck-icon">🚚</div>
 
-        <div class="tags">
-          ${vehicle.capacity ? `<span class="tag">${vehicle.capacity} tấn</span>` : ""}
-          ${vehicle.vehicle_type ? `<span class="tag">${vehicle.vehicle_type}</span>` : ""}
-          📍 Hiện tại:
-${vehicle.current_province || vehicle.current_location || "Chưa cập nhật"}
-${vehicle.current_district ? " - " + vehicle.current_district : ""}
-<br>
+    <div class="truck-info">
 
-🏁 Đi đến:
-${vehicle.destination_province || vehicle.destination || "Chưa cập nhật"}
-${vehicle.destination_district ? " - " + vehicle.destination_district : ""}
-<br>
-
-🚚 Biển số: ${vehicle.plate_number || "Chưa cập nhật"}
-       
+      <div class="truck-name">
+        ${vehicle.vehicle_type || "Xe tải"}
       </div>
 
-      <div class="status-box">
-        <div class="status">● Sẵn sàng</div>
-        <div class="available">Có thể nhận hàng ngay</div>
-        <a href="chi-tiet-xe.html?id=${vehicle.id}" class="view-btn">Xem xe</a>
+      <div class="route">
+        ${vehicle.current_province || vehicle.current_location || "Chưa cập nhật"}
+        ${vehicle.current_district ? " - " + vehicle.current_district : ""}
+        →
+        ${vehicle.destination_province || vehicle.destination || "Chưa cập nhật"}
+        ${vehicle.destination_district ? " - " + vehicle.destination_district : ""}
       </div>
+
+      <div class="tags">
+        ${vehicle.capacity ? `<span class="tag">${vehicle.capacity} tấn</span>` : ""}
+        ${vehicle.vehicle_type ? `<span class="tag">${vehicle.vehicle_type}</span>` : ""}
+        ${vehicle.plate_number ? `<span class="tag">${vehicle.plate_number}</span>` : ""}
+      </div>
+
+      <div class="details">
+        📍 Hiện tại:
+        ${vehicle.current_province || vehicle.current_location || "Chưa cập nhật"}
+        ${vehicle.current_district ? " - " + vehicle.current_district : ""}
+        <br>
+
+        🏁 Đi đến:
+        ${vehicle.destination_province || vehicle.destination || "Chưa cập nhật"}
+        ${vehicle.destination_district ? " - " + vehicle.destination_district : ""}
+        <br>
+
+        🚚 Biển số:
+        ${vehicle.plate_number || "Chưa cập nhật"}
+      </div>
+
     </div>
-  `).join("");
+
+    <div class="status-box">
+      <div class="status">● Sẵn sàng</div>
+      <div class="available">Có thể nhận hàng ngay</div>
+      <a href="chi-tiet-xe.html?id=${vehicle.id}" class="view-btn">
+        Xem xe
+      </a>
+    </div>
+
+  </div>
+`).join("");
 }
 
 loadAvailableVehicles();
