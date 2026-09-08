@@ -696,21 +696,7 @@ document.getElementById("orderPickupDate").textContent =
 
     return;
 
-  if (!quotes || quotes.length === 0) {
-
-    document.getElementById("minQuotePrice").textContent = "0 đ";
-    document.getElementById("avgQuotePrice").textContent = "0 đ";
-    document.getElementById("summaryQuoteCount").textContent = "0";
-    document.getElementById("quoteSummaryStatus").textContent =
-        "Đang chờ báo giá";
-
-    quoteCount.textContent = "0 báo giá";
-
-    quotesContainer.innerHTML =
-        '<div class="empty">Chưa có nhà xe gửi báo giá.</div>';
-
-    return;
-}
+  
 
     quoteCount.textContent = quotes.length + " báo giá";
   const prices = quotes
