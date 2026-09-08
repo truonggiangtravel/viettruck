@@ -436,14 +436,10 @@ body{
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-const SUPABASE_URL = "https://ksyakrcgqzsupqyusyo.supabase.co";
-const SUPABASE_KEY = "sb_publishable_OLGPIepJQoFBoEoL7jyvSA_9GC5hSgD";
+<script src="supabase-config.js"></script>
 
-const supabaseClient = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+<script>
+const supabaseClient = window.supabaseClient;
 
 const orderForm = document.querySelector(".form-card");
 
