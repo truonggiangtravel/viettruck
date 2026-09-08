@@ -674,6 +674,33 @@ async function loadQuotes() {
     }
 
     quoteCount.textContent = quotes.length + " báo giá";
+  const prices = quotes
+    .map(q => Number(q.price))
+    .filter(p => Number.isFinite(p) && p > 0);
+
+const minPrice =
+    prices.length > 0
+        ? Math.min(...prices)
+        : 0;
+
+const avgPrice =
+    prices.length > 0
+        ? prices.reduce((sum, p) => sum + p, 0) / prices.length
+        : 0;
+
+document.getElementById("minQuotePrice").textContent =
+    formatMoney(minPrice);
+
+document.getElementById("avgQuotePrice").textContent =
+    formatMoney(Math.round(avgPrice));
+
+document.getElementById("summaryQuoteCount").textContent =
+    quotes.length;
+
+document.getElementById("quoteSummaryStatus").textContent =
+    quotes.some(q => q.status === "accepted")
+        ? "Đã chọn nhà xe"
+        : "Đang nhận báo giá";
 
     quotesContainer.innerHTML = "";
 
