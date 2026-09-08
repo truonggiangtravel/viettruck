@@ -998,7 +998,10 @@ function renderOrders(orders){
 
         `;
 
-
+const quoteButton =
+card.querySelector(
+    ".quote-btn"
+);
         const receiveButton =
         card.querySelector(
             ".receive-btn"
@@ -1006,7 +1009,89 @@ function renderOrders(orders){
 
 
         receiveButton.addEventListener("click", async function () {
+quoteButton.addEventListener("click", async function () {
 
+    const priceInput = prompt(
+        "Nhập giá vận chuyển bạn muốn báo (VNĐ):"
+    );
+
+    if (priceInput === null) return;
+
+    const price = Number(
+        priceInput.replace(/[^\d]/g, "")
+    );
+
+    if (!price || price <= 0) {
+        alert("Giá báo không hợp lệ.");
+        return;
+    }
+
+    const message =
+        prompt("Ghi chú cho chủ hàng (không bắt buộc):") || null;
+
+    quoteButton.disabled = true;
+    quoteButton.textContent = "Đang gửi...";
+
+    try {
+
+        const {
+            data: { session },
+            error: sessionError
+        } = await supabaseClient.auth.getSession();
+
+        if (sessionError || !session) {
+            alert("Bạn cần đăng nhập để báo giá.");
+            window.location.href = "dang-nhap.html";
+            return;
+        }
+
+        if (session.user.id === order.user_id) {
+            alert("Bạn không thể tự báo giá cho đơn hàng của mình.");
+            quoteButton.disabled = false;
+            quoteButton.textContent = "Báo giá";
+            return;
+        }
+
+        const { error } = await supabaseClient
+            .from("quotes")
+            .insert({
+                order_id: order.id,
+                user_id: session.user.id,
+                price: price,
+                message: message,
+                status: "pending"
+            });
+
+        if (error) {
+
+            console.error("Lỗi gửi báo giá:", error);
+
+            if (error.code === "23505") {
+                alert("Bạn đã gửi báo giá cho đơn hàng này rồi.");
+            } else {
+                alert("Không thể gửi báo giá: " + error.message);
+            }
+
+            quoteButton.disabled = false;
+            quoteButton.textContent = "Báo giá";
+            return;
+        }
+
+        alert("Gửi báo giá thành công!");
+
+        quoteButton.textContent = "Đã báo giá";
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Có lỗi khi gửi báo giá.");
+
+        quoteButton.disabled = false;
+        quoteButton.textContent = "Báo giá";
+    }
+
+});
     const ok = confirm("Bạn xác nhận nhận chuyến hàng này?");
     if (!ok) return;
 
