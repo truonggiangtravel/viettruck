@@ -55,15 +55,43 @@ body{margin:0;font-family:"Be Vietnam Pro",sans-serif;background:#f6f8f7;color:#
 
 /* TRUCK CARDS */
 .truck-card{
-background:#fff;
-border:1px solid #e1e6e4;
-border-radius:10px;
-padding:20px;
-margin-bottom:12px;
-display:grid;
-grid-template-columns:75px 1fr 180px;
-gap:16px;
-align-items:center;
+  width:100%;
+  box-sizing:border-box;
+  background:#fff;
+  border:1px solid #e1e6e4;
+  border-radius:10px;
+  padding:20px;
+  margin-bottom:16px;
+
+  display:grid;
+  grid-template-columns:75px minmax(0,1fr) 180px;
+  gap:16px;
+  align-items:center;
+}
+
+.truck-info{
+  min-width:0;
+}
+
+.truck-name{
+  font-size:18px;
+  font-weight:800;
+  margin-bottom:6px;
+  line-height:1.4;
+}
+
+.route{
+  font-size:15px;
+  color:#53635b;
+  margin-bottom:10px;
+  line-height:1.5;
+  word-break:normal;
+  overflow-wrap:break-word;
+}
+
+.status-box{
+  width:180px;
+  text-align:right;
 }
 .truck-card:hover{box-shadow:0 5px 18px rgba(0,0,0,.07);border-color:#b9dccc}
 .truck-icon{
@@ -97,8 +125,15 @@ font-size:35px;
 }
 @media(max-width:600px){
 .search-grid{grid-template-columns:1fr}
-.truck-card{grid-template-columns:65px 1fr}
-.status-box{grid-column:1/-1;text-align:left}
+.truck-card{
+  grid-template-columns:60px minmax(0,1fr);
+}
+
+.status-box{
+  grid-column:1 / -1;
+  width:100%;
+  text-align:left;
+}
 }
 </style>
 </head>
