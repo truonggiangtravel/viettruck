@@ -686,7 +686,7 @@ document.getElementById("orderPickupDate").textContent =
         .from("quotes")
         .select("id, order_id, user_id, price, message, status, created_at")
         .eq("order_id", currentOrder.id)
-        .order("price", { ascending: true });
+        
             .order("price", { ascending: true });
 
     if (quoteError) {
