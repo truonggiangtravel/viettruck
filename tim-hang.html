@@ -859,292 +859,297 @@ function renderOrders(orders){
     orderContainer.innerHTML = "";
 
     orderCount.textContent =
-    orders.length
-    + " đơn hàng";
+        orders.length + " đơn hàng";
 
-
-    if(!orders.length){
+    if (!orders.length) {
 
         orderContainer.innerHTML = `
-
-        <div class="message-box">
-
-        <strong>
-        Hiện chưa có đơn hàng.
-        </strong>
-
-        <br><br>
-
-        Các đơn mới đăng sẽ xuất hiện tại đây.
-
-        </div>
-
+            <div class="message-box">
+                <strong>Hiện chưa có đơn hàng.</strong>
+                <br><br>
+                Các đơn mới đăng sẽ xuất hiện tại đây.
+            </div>
         `;
 
         return;
     }
-
 
     orders.forEach(function(order){
 
-        const card =
-        document.createElement("div");
+        const card = document.createElement("div");
+        card.className = "order-card";
 
-        card.className =
-        "order-card";
-
-
-        const pickup =
-        escapeHTML(
-            order.pickup_location ||
-            "Chưa xác định"
+        const pickup = escapeHTML(
+            order.pickup_location || "Chưa xác định"
         );
 
-
-        const delivery =
-        escapeHTML(
-            order.delivery_location ||
-            "Chưa xác định"
+        const delivery = escapeHTML(
+            order.delivery_location || "Chưa xác định"
         );
 
-
-        const cargo =
-        escapeHTML(
-            order.cargo_type ||
-            "Hàng hóa"
+        const cargo = escapeHTML(
+            order.cargo_type || "Hàng hóa"
         );
 
-
-        const weight =
-        escapeHTML(
-            order.weight ??
-            "Chưa xác định"
+        const weight = escapeHTML(
+            order.weight ?? "Chưa xác định"
         );
 
-
-        const vehicle =
-        escapeHTML(
-            order.vehicle_type ||
-            "Không yêu cầu"
+        const vehicle = escapeHTML(
+            order.vehicle_type || "Không yêu cầu"
         );
-
 
         card.innerHTML = `
+            <div>
+                <div class="order-route">
+                    ${pickup}
+                    <span style="color:#078c4b">→</span>
+                    ${delivery}
+                </div>
 
-        <div>
-
-            <div class="order-route">
-
-            ${pickup}
-
-            <span style="color:#078c4b">
-            →
-            </span>
-
-            ${delivery}
-
+                <div class="order-info">
+                    📦 ${cargo}<br>
+                    ⚖️ Trọng lượng: ${weight}<br>
+                    🚚 Loại xe: ${vehicle}<br>
+                    📅 Ngày lấy: ${formatDate(order.pickup_date)}
+                </div>
             </div>
 
+            <div class="order-price">
 
-            <div class="order-info">
+                <div class="price">
+                    ${formatPrice(order.price)}
+                </div>
 
-            📦 ${cargo}
+                <button
+                    type="button"
+                    class="quote-btn"
+                >
+                    Báo giá
+                </button>
 
-            <br>
-
-            ⚖️ Trọng lượng:
-            ${weight}
-
-            <br>
-
-            🚚 Loại xe:
-            ${vehicle}
-
-            <br>
-
-            📅 Ngày lấy:
-            ${formatDate(
-                order.pickup_date
-            )}
+                <button
+                    type="button"
+                    class="receive-btn"
+                >
+                    Nhận chuyến
+                </button>
 
             </div>
-
-        </div>
-
-
-        <div class="order-price">
-
-            <div class="price">
-
-            ${formatPrice(
-                order.price
-            )}
-
-            </div>
-
-
-           <button
-    type="button"
-    class="quote-btn"
->
-    Báo giá
-</button>
-
-            Nhận chuyến
-
-            </button>
-
-        </div>
-
         `;
 
-const quoteButton =
-card.querySelector(
-    ".quote-btn"
-);
+        const quoteButton =
+            card.querySelector(".quote-btn");
+
         const receiveButton =
-        card.querySelector(
-            ".receive-btn"
-        );
+            card.querySelector(".receive-btn");
 
 
-        receiveButton.addEventListener("click", async function () {
-quoteButton.addEventListener("click", async function () {
+        /* =========================
+           BÁO GIÁ
+        ========================= */
 
-    const priceInput = prompt(
-        "Nhập giá vận chuyển bạn muốn báo (VNĐ):"
-    );
+        quoteButton.addEventListener(
+            "click",
+            async function(){
 
-    if (priceInput === null) return;
+                const priceInput = prompt(
+                    "Nhập giá vận chuyển bạn muốn báo (VNĐ):"
+                );
 
-    const price = Number(
-        priceInput.replace(/[^\d]/g, "")
-    );
+                if (priceInput === null) return;
 
-    if (!price || price <= 0) {
-        alert("Giá báo không hợp lệ.");
-        return;
-    }
+                const price = Number(
+                    priceInput.replace(/[^\d]/g, "")
+                );
 
-    const message =
-        prompt("Ghi chú cho chủ hàng (không bắt buộc):") || null;
+                if (!price || price <= 0) {
+                    alert("Giá báo không hợp lệ.");
+                    return;
+                }
 
-    quoteButton.disabled = true;
-    quoteButton.textContent = "Đang gửi...";
+                const message =
+                    prompt(
+                        "Ghi chú cho chủ hàng (không bắt buộc):"
+                    ) || null;
 
-    try {
+                quoteButton.disabled = true;
+                quoteButton.textContent = "Đang gửi...";
 
-        const {
-            data: { session },
-            error: sessionError
-        } = await supabaseClient.auth.getSession();
+                try {
 
-        if (sessionError || !session) {
-            alert("Bạn cần đăng nhập để báo giá.");
-            window.location.href = "dang-nhap.html";
-            return;
-        }
+                    const {
+                        data: { session },
+                        error: sessionError
+                    } =
+                    await supabaseClient.auth.getSession();
 
-        if (session.user.id === order.user_id) {
-            alert("Bạn không thể tự báo giá cho đơn hàng của mình.");
-            quoteButton.disabled = false;
-            quoteButton.textContent = "Báo giá";
-            return;
-        }
+                    if (sessionError || !session) {
 
-        const { error } = await supabaseClient
-            .from("quotes")
-            .insert({
-                order_id: order.id,
-                user_id: session.user.id,
-                price: price,
-                message: message,
-                status: "pending"
-            });
+                        alert(
+                            "Bạn cần đăng nhập để báo giá."
+                        );
 
-        if (error) {
+                        window.location.href =
+                            "dang-nhap.html";
 
-            console.error("Lỗi gửi báo giá:", error);
+                        return;
+                    }
 
-            if (error.code === "23505") {
-                alert("Bạn đã gửi báo giá cho đơn hàng này rồi.");
-            } else {
-                alert("Không thể gửi báo giá: " + error.message);
+                    if (
+                        session.user.id ===
+                        order.user_id
+                    ) {
+
+                        alert(
+                            "Bạn không thể tự báo giá cho đơn hàng của mình."
+                        );
+
+                        quoteButton.disabled = false;
+                        quoteButton.textContent = "Báo giá";
+
+                        return;
+                    }
+
+                    const { error } =
+                        await supabaseClient
+                            .from("quotes")
+                            .insert({
+                                order_id: order.id,
+                                user_id: session.user.id,
+                                price: price,
+                                message: message,
+                                status: "pending"
+                            });
+
+                    if (error) {
+
+                        console.error(
+                            "Lỗi gửi báo giá:",
+                            error
+                        );
+
+                        if (error.code === "23505") {
+                            alert(
+                                "Bạn đã gửi báo giá cho đơn hàng này rồi."
+                            );
+                        } else {
+                            alert(
+                                "Không thể gửi báo giá: " +
+                                error.message
+                            );
+                        }
+
+                        quoteButton.disabled = false;
+                        quoteButton.textContent = "Báo giá";
+
+                        return;
+                    }
+
+                    alert("Gửi báo giá thành công!");
+
+                    quoteButton.textContent =
+                        "Đã báo giá";
+
+                } catch(error) {
+
+                    console.error(error);
+
+                    alert(
+                        "Có lỗi khi gửi báo giá."
+                    );
+
+                    quoteButton.disabled = false;
+                    quoteButton.textContent = "Báo giá";
+                }
             }
+        );
 
-            quoteButton.disabled = false;
-            quoteButton.textContent = "Báo giá";
-            return;
-        }
 
-        alert("Gửi báo giá thành công!");
+        /* =========================
+           NHẬN CHUYẾN
+        ========================= */
 
-        quoteButton.textContent = "Đã báo giá";
+        receiveButton.addEventListener(
+            "click",
+            async function(){
 
-    } catch (error) {
+                const ok = confirm(
+                    "Bạn xác nhận nhận chuyến hàng này?"
+                );
 
-        console.error(error);
+                if (!ok) return;
 
-        alert("Có lỗi khi gửi báo giá.");
+                receiveButton.disabled = true;
+                receiveButton.textContent =
+                    "Đang nhận chuyến...";
 
-        quoteButton.disabled = false;
-        quoteButton.textContent = "Báo giá";
-    }
+                try {
 
-});
-    const ok = confirm("Bạn xác nhận nhận chuyến hàng này?");
-    if (!ok) return;
+                    const { data, error } =
+                        await supabaseClient.rpc(
+                            "accept_order",
+                            {
+                                p_order_id: order.id
+                            }
+                        );
 
-    receiveButton.disabled = true;
-    receiveButton.textContent = "Đang nhận chuyến...";
+                    if (error) {
 
-    try {
-        const { data, error } = await supabaseClient.rpc(
-            "accept_order",
-            {
-                p_order_id: order.id
+                        console.error(
+                            "Lỗi nhận chuyến:",
+                            error
+                        );
+
+                        alert(
+                            "Không thể nhận chuyến: " +
+                            error.message
+                        );
+
+                        receiveButton.disabled = false;
+                        receiveButton.textContent =
+                            "Nhận chuyến";
+
+                        return;
+                    }
+
+                    if (data !== true) {
+
+                        alert(
+                            "Đơn hàng này đã được người khác nhận hoặc không còn khả dụng."
+                        );
+
+                        await loadOrders();
+
+                        return;
+                    }
+
+                    alert(
+                        "Nhận chuyến thành công!"
+                    );
+
+                    await loadOrders();
+
+                } catch(error) {
+
+                    console.error(error);
+
+                    alert(
+                        "Có lỗi xảy ra khi nhận chuyến."
+                    );
+
+                    receiveButton.disabled = false;
+                    receiveButton.textContent =
+                        "Nhận chuyến";
+                }
             }
         );
 
-        if (error) {
-            console.error("Lỗi nhận chuyến:", error);
-            alert("Không thể nhận chuyến: " + error.message);
-            receiveButton.disabled = false;
-            receiveButton.textContent = "Nhận chuyến";
-            return;
-        }
 
-        if (data !== true) {
-            alert(
-                "Đơn hàng này đã được người khác nhận hoặc không còn khả dụng."
-            );
-
-            await loadOrders();
-            return;
-        }
-
-        alert("Nhận chuyến thành công!");
-
-        await loadOrders();
-
-    } catch (error) {
-        console.error(error);
-        alert("Có lỗi xảy ra khi nhận chuyến.");
-
-        receiveButton.disabled = false;
-        receiveButton.textContent = "Nhận chuyến";
-    }
-});
-
-
-        orderContainer.appendChild(
-            card
-        );
+        orderContainer.appendChild(card);
 
     });
-
 }
-
 
 /* ====================================
    TẢI ĐƠN HÀNG
