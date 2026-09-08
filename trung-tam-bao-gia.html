@@ -651,7 +651,36 @@ async function loadQuotes() {
             '<div class="empty">Bạn chưa có đơn hàng nào.</div>';
         return;
     }
+const currentOrder = orders[0];
 
+document.getElementById("orderCode").textContent =
+    currentOrder.id
+        ? currentOrder.id.substring(0, 8).toUpperCase()
+        : "Chưa có";
+
+document.getElementById("orderPickup").textContent =
+    currentOrder.pickup_location || "Chưa cập nhật";
+
+document.getElementById("orderDelivery").textContent =
+    currentOrder.delivery_location || "Chưa cập nhật";
+
+document.getElementById("orderCargo").textContent =
+    currentOrder.cargo_type || "Chưa cập nhật";
+
+document.getElementById("orderWeight").textContent =
+    currentOrder.weight
+        ? currentOrder.weight + " tấn"
+        : "Chưa cập nhật";
+
+document.getElementById("orderVehicle").textContent =
+    currentOrder.vehicle_type || "Không yêu cầu";
+
+document.getElementById("orderPickupDate").textContent =
+    currentOrder.pickup_date
+        ? new Date(
+            currentOrder.pickup_date + "T00:00:00"
+          ).toLocaleDateString("vi-VN")
+        : "Chưa cập nhật";
     const orderIds = orders.map(order => order.id);
 
     const { data: quotes, error: quoteError } =
