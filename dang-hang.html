@@ -437,7 +437,7 @@ body{
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="supabase-config.js"></script>
-
+<script src="auth.js"></script>
 <script>
 const supabaseClient = window.supabaseClient;
 
@@ -453,15 +453,17 @@ orderForm.addEventListener("submit", async function(event) {
 
   try {
     const {
-      data: { user },
-      error: userError
-    } = await supabaseClient.auth.getUser();
+  data: { session },
+  error: sessionError
+} = await supabaseClient.auth.getSession();
 
-    if (userError || !user) {
-      alert("Bạn cần đăng nhập trước khi đăng hàng.");
-      window.location.href = "dang-nhap.html";
-      return;
-    }
+if (sessionError || !session) {
+  alert("Phiên đăng nhập không tồn tại. Vui lòng đăng nhập lại.");
+  window.location.href = "dang-nhap.html";
+  return;
+}
+
+const user = session.user;
 
     const pickupLocation =
       document.getElementById("pickup_location").value.trim();
