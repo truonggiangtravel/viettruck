@@ -828,6 +828,22 @@ if (sideUserRole) {
 
     location.reload();
   };
+  window.startTrip = async function(tripId) {
+  if (!confirm("Xác nhận bắt đầu chuyến?")) return;
+
+  const { error } = await client.rpc("start_trip", {
+    p_trip_id: tripId
+  });
+
+  if (error) {
+    console.error("Lỗi bắt đầu chuyến:", error);
+    alert("Không thể bắt đầu chuyến: " + error.message);
+    return;
+  }
+
+  alert("Đã bắt đầu chuyến.");
+  location.reload();
+};
 
   tabs.forEach(tab => {
     tab.addEventListener("click", function() {
