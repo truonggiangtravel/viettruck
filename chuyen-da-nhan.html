@@ -523,32 +523,282 @@ body{
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
 <script>
-const tabs = document.querySelectorAll(".tab");
-const trips = document.querySelectorAll(".trip-card");
-const empty = document.getElementById("empty");
+document.addEventListener("DOMContentLoaded", async () => {
+  const client = window.supabaseClient;
 
-tabs.forEach(tab => {
-  tab.addEventListener("click", function(){
+  if (!client) {
+    console.error("Supabase client chưa được khởi tạo");
+    return;
+  }
 
-    tabs.forEach(t => t.classList.remove("active"));
-    this.classList.add("active");
+  const tripList = document.getElementById("tripList");
+  const statWaiting = document.getElementById("statWaiting");
+  const statMoving = document.getElementById("statMoving");
+  const statCompleted = document.getElementById("statCompleted");
+  const statRevenue = document.getElementById("statRevenue");
+  const empty = document.getElementById("empty");
+  const tabs = document.querySelectorAll(".tab");
 
-    const filter = this.dataset.filter;
-    let visible = 0;
+  const {
+    data: { session }
+  } = await client.auth.getSession();
 
-    trips.forEach(trip => {
-      if(filter === "all" || trip.dataset.status === filter){
-        trip.style.display = "block";
-        visible++;
-      } else {
-        trip.style.display = "none";
-      }
+  if (!session) {
+    window.location.href = "dang-nhap.html";
+    return;
+  }
+
+  const { data: trips, error } = await client
+    .from("trips")
+    .select(`
+      id,
+      order_id,
+      quote_id,
+      shipper_id,
+      driver_id,
+      agreed_price,
+      status,
+      created_at,
+      orders (
+        pickup_location,
+        delivery_location,
+        cargo_type,
+        weight,
+        vehicle_type,
+        pickup_date
+      )
+    `)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Lỗi tải chuyến:", error);
+    tripList.innerHTML = `
+      <div class="empty-state" style="text-align:center;padding:30px;color:#c00;">
+        Không tải được danh sách chuyến.
+      </div>
+    `;
+    return;
+  }
+
+  const allTrips = trips || [];
+
+  const waitingCount = allTrips.filter(
+    t => t.status === "waiting_pickup"
+  ).length;
+
+  const movingCount = allTrips.filter(
+    t => t.status === "in_transit"
+  ).length;
+
+  const completedTrips = allTrips.filter(
+    t => t.status === "completed"
+  );
+
+  const completedCount = completedTrips.length;
+
+  const revenue = completedTrips.reduce(
+    (sum, t) => sum + Number(t.agreed_price || 0),
+    0
+  );
+
+  statWaiting.textContent = waitingCount;
+  statMoving.textContent = movingCount;
+  statCompleted.textContent = completedCount;
+
+  statRevenue.textContent =
+    new Intl.NumberFormat("vi-VN").format(revenue) + " đ";
+
+  function statusInfo(status) {
+    if (status === "waiting_pickup") {
+      return {
+        filter: "wait",
+        label: "Chờ lấy hàng",
+        css: "wait"
+      };
+    }
+
+    if (status === "in_transit") {
+      return {
+        filter: "moving",
+        label: "Đang vận chuyển",
+        css: "moving"
+      };
+    }
+
+    if (status === "completed") {
+      return {
+        filter: "done",
+        label: "Đã giao",
+        css: "done"
+      };
+    }
+
+    return {
+      filter: "cancel",
+      label: "Đã hủy",
+      css: "cancel"
+    };
+  }
+
+  function formatPrice(value) {
+    return new Intl.NumberFormat("vi-VN").format(
+      Number(value || 0)
+    ) + " đ";
+  }
+
+  function renderTrips(filter = "all") {
+    const filtered = allTrips.filter(trip => {
+      const info = statusInfo(trip.status);
+      return filter === "all" || info.filter === filter;
     });
 
-    empty.style.display = visible === 0 ? "block" : "none";
+    if (!filtered.length) {
+      tripList.innerHTML = `
+        <div class="empty-state" style="text-align:center;padding:30px;color:#777;">
+          Không có chuyến nào trong trạng thái này.
+        </div>
+      `;
+      return;
+    }
+
+    tripList.innerHTML = filtered.map(trip => {
+      const order = trip.orders || {};
+      const info = statusInfo(trip.status);
+
+      let actionButton = "";
+
+      if (
+        trip.status === "waiting_pickup" &&
+        trip.driver_id === session.user.id
+      ) {
+        actionButton = `
+          <button class="action-btn btn-green"
+                  onclick="startTrip('${trip.id}')">
+            Bắt đầu chuyến
+          </button>
+        `;
+      }
+
+      if (
+        trip.status === "in_transit" &&
+        trip.driver_id === session.user.id
+      ) {
+        actionButton = `
+          <button class="action-btn btn-green"
+                  onclick="completeTrip('${trip.id}')">
+            Hoàn thành chuyến
+          </button>
+        `;
+      }
+
+      return `
+        <div class="trip-card" data-status="${info.filter}">
+          <div class="trip-head">
+            <div class="trip-code">
+              Mã chuyến: ${trip.id.substring(0, 8).toUpperCase()}
+            </div>
+
+            <div class="status ${info.css}">
+              ${info.label}
+            </div>
+          </div>
+
+          <div class="trip-body">
+            <div>
+              <div class="route">
+                ${order.pickup_location || "Chưa cập nhật"}
+                <span class="arrow">→</span>
+                ${order.delivery_location || "Chưa cập nhật"}
+              </div>
+
+              <div class="tags">
+                ${
+                  order.cargo_type
+                    ? `<span class="tag">${order.cargo_type}</span>`
+                    : ""
+                }
+
+                ${
+                  order.weight
+                    ? `<span class="tag">${order.weight} tấn</span>`
+                    : ""
+                }
+
+                ${
+                  order.vehicle_type
+                    ? `<span class="tag">${order.vehicle_type}</span>`
+                    : ""
+                }
+              </div>
+
+              <div class="details">
+                📍 Lấy hàng: ${order.pickup_location || "Chưa cập nhật"}<br>
+                📍 Giao hàng: ${order.delivery_location || "Chưa cập nhật"}<br>
+                🕒 Ngày lấy: ${order.pickup_date || "Chưa cập nhật"}
+              </div>
+            </div>
+
+            <div class="trip-side">
+              <div class="price">
+                ${formatPrice(trip.agreed_price)}
+              </div>
+
+              <div class="price-note">
+                Giá cước đã chốt
+              </div>
+
+              <div class="actions">
+                ${actionButton}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  window.startTrip = async function(tripId) {
+    if (!confirm("Xác nhận bắt đầu chuyến?")) return;
+
+    const { error } = await client.rpc("start_trip", {
+      p_trip_id: tripId
+    });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    location.reload();
+  };
+
+  window.completeTrip = async function(tripId) {
+    if (!confirm("Xác nhận hoàn thành chuyến?")) return;
+
+    const { error } = await client.rpc("complete_trip", {
+      p_trip_id: tripId
+    });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    location.reload();
+  };
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", function() {
+      tabs.forEach(t => t.classList.remove("active"));
+      this.classList.add("active");
+      renderTrips(this.dataset.filter);
+    });
   });
+
+  renderTrips("all");
 });
 </script>
+
 
 </body>
 </html>
