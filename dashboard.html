@@ -770,10 +770,10 @@ opacity:.8;
       );
     });
 
-    const totalRevenue = orders.reduce(
-      (sum, order) => sum + Number(order.price || 0),
-      0
-    );
+    const totalRevenue = completedOrders.reduce(
+  (sum, order) => sum + Number(order.price || 0),
+  0
+);
 
     const money = value =>
       Number(value || 0).toLocaleString("vi-VN") + " đ";
