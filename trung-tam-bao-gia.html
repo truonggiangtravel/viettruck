@@ -848,73 +848,30 @@ document.getElementById("quoteSummaryStatus").textContent =
                     this.disabled = true;
                     this.textContent = "Đang xử lý...";
 
-                    const { error: orderUpdateError } =
-                        await supabaseClient
-                            .from("orders")
-                            .update({
-                                status: "accepted",
-                                accepted_by: driverId,
-                                accepted_at:
-                                    new Date().toISOString()
-                            })
-                            .eq("id", orderId)
-                            .eq("user_id", userId)
-                            .eq("status", "pending");
+                    const { data: tripId, error: acceptError } =
+  await supabaseClient.rpc("accept_quote", {
+    p_quote_id: quoteId
+  });
 
-                    if (orderUpdateError) {
-                        console.error(
-                            "Lỗi cập nhật đơn:",
-                            orderUpdateError
-                        );
+if (acceptError) {
+  console.error("Lỗi chấp nhận báo giá:", acceptError);
 
-                        alert(
-                            "Không thể chọn báo giá: " +
-                            orderUpdateError.message
-                        );
+  alert(
+    "Không thể chọn báo giá: " +
+    acceptError.message
+  );
 
-                        this.disabled = false;
-                        this.textContent = "Chọn báo giá";
-                        return;
-                    }
+  this.disabled = false;
+  this.textContent = "Chọn báo giá";
+  return;
+}
 
-                    const { error: quoteUpdateError } =
-                        await supabaseClient
-                            .from("quotes")
-                            .update({
-                                status: "accepted",
-                                updated_at:
-                                    new Date().toISOString()
-                            })
-                            .eq("id", quoteId);
+alert("Chọn báo giá thành công! Chuyến vận chuyển đã được tạo.");
 
-                    if (quoteUpdateError) {
-                        console.error(
-                            "Lỗi cập nhật báo giá:",
-                            quoteUpdateError
-                        );
+this.disabled = true;
+this.textContent = "Đã chọn";
 
-                        alert(
-                            "Đơn đã cập nhật nhưng báo giá chưa cập nhật: " +
-                            quoteUpdateError.message
-                        );
-
-                        return;
-                    }
-
-                    await supabaseClient
-                        .from("quotes")
-                        .update({
-                            status: "rejected",
-                            updated_at:
-                                new Date().toISOString()
-                        })
-                        .eq("order_id", orderId)
-                        .neq("id", quoteId)
-                        .eq("status", "pending");
-
-                    alert("Chọn báo giá thành công!");
-
-                    await loadQuotes();
+await loadQuotes();
                 }
             );
         });
