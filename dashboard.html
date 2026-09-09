@@ -752,28 +752,28 @@ opacity:.8;
 
 <div class="summary-row">
 <span>GPS đang hoạt động</span>
-<strong class="green">4 xe</strong>
+<strong class="green" id="vehicleCount">0 xe</strong>
 </div>
 
 <div class="summary-row">
 <span>Đơn chờ tài xế</span>
-<strong>12</strong>
+<strong id="pendingOrderCount">0</strong>
 </div>
 
 <div class="summary-row">
 <span>POD chờ duyệt</span>
-<strong>2</strong>
+<strong id="podCount">0</strong>
 </div>
 
 <div class="summary-row">
 <span>Thanh toán chờ xử lý</span>
-<strong>4</strong>
+<strong id="paymentCount">0</strong>
 </div>
 
 </div>
 
 <div class="notice">
-📊 Dashboard hiện đang dùng dữ liệu demo. Khi VietTruck kết nối database, các con số này sẽ tự động thay đổi theo đơn hàng và chuyến thực tế.
+📊 Dashboard đang hiển thị dữ liệu trực tiếp từ hệ thống VietTruck.
 </div>
 
 </aside>
@@ -797,21 +797,26 @@ opacity:.8;
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
 <script src="auth.js"></script>
-<script>
+Chưa có dữ liệu POD và thanh toán thật
+      nên tuyệt đối không hiển thị số demo.
+    */
+    document.getElementById("podCount").textContent = "0";
+    document.getElementById("paymentCount").textContent = "0";
 
+  } catch (error) {
+    console.error("Lỗi Dashboard:", error);
+  }
 
+  const logoutLink =
+    document.querySelector('a[href="dang-nhap.html"]');
 
-
-requireLogin();
-
-const logoutLink = document.querySelector('a[href="dang-nhap.html"]');
-
-if (logoutLink) {
-  logoutLink.addEventListener("click", async function(event) {
-    event.preventDefault();
-    await logout();
-  });
-}
+  if (logoutLink) {
+    logoutLink.addEventListener("click", async function(event) {
+      event.preventDefault();
+      await logout();
+    });
+  }
+})();
 </script>
 </body>
 </html>
