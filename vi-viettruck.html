@@ -907,7 +907,78 @@ const withdrawModal = document.getElementById("withdrawModal");
 const cancelBtn = document.getElementById("cancelBtn");
 const confirmBtn = document.getElementById("confirmBtn");
 
-withdrawBtn.addEventListener("click", function () {
+const transactionSelect = document.getElementById("transactionSelect");
+const amountInput = document.getElementById("amountInput");
+
+const bankNameInput = document.getElementById("bankNameInput");
+const bankAccountInput = document.getElementById("bankAccountInput");
+const bankAccountNameInput = document.getElementById("bankAccountNameInput");
+const withdrawNote = document.getElementById("withdrawNote");
+
+let paymentTransactions = [];
+
+async function loadPendingTransactions() {
+  transactionSelect.innerHTML =
+    '<option value="">Đang tải chuyến...</option>';
+
+  const { data, error } = await window.supabaseClient
+    .from("transactions")
+    .select("id,trip_id,order_id,amount,status,type,created_at")
+    .eq("type", "trip_income")
+    .eq("status", "pending")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Lỗi tải giao dịch:", error);
+    transactionSelect.innerHTML =
+      '<option value="">Không tải được giao dịch</option>';
+    return;
+  }
+
+  paymentTransactions = data || [];
+
+  transactionSelect.innerHTML =
+    '<option value="">-- Chọn chuyến cần thanh toán --</option>';
+
+  if (paymentTransactions.length === 0) {
+    transactionSelect.innerHTML =
+      '<option value="">Không có khoản chờ thanh toán</option>';
+    amountInput.value = "0 đ";
+    return;
+  }
+
+  paymentTransactions.forEach(item => {
+    const option = document.createElement("option");
+
+    option.value = item.id;
+
+    option.textContent =
+      "Chuyến " +
+      String(item.trip_id || "").slice(0, 8).toUpperCase() +
+      " - " +
+      Number(item.amount || 0).toLocaleString("vi-VN") +
+      " đ";
+
+    transactionSelect.appendChild(option);
+  });
+}
+
+transactionSelect.addEventListener("change", function () {
+  const transaction = paymentTransactions.find(
+    item => item.id === transactionSelect.value
+  );
+
+  if (!transaction) {
+    amountInput.value = "0 đ";
+    return;
+  }
+
+  amountInput.value =
+    Number(transaction.amount || 0).toLocaleString("vi-VN") + " đ";
+});
+
+withdrawBtn.addEventListener("click", async function () {
+  await loadPendingTransactions();
   withdrawModal.style.display = "flex";
 });
 
@@ -916,41 +987,49 @@ cancelBtn.addEventListener("click", function () {
 });
 
 confirmBtn.addEventListener("click", async function () {
-  const amount = Number(
-    document.getElementById("amountInput").value
-  );
+  const transactionId = transactionSelect.value;
+  const bankName = bankNameInput.value.trim();
+  const bankAccount = bankAccountInput.value.trim();
+  const bankAccountName = bankAccountNameInput.value.trim();
+  const note = withdrawNote.value.trim();
 
-  if (!amount || amount <= 0) {
-    alert("Vui lòng nhập số tiền muốn rút.");
+  if (!transactionId) {
+    alert("Vui lòng chọn chuyến cần thanh toán.");
+    return;
+  }
+
+  if (!bankName || !bankAccount || !bankAccountName) {
+    alert("Vui lòng nhập đầy đủ thông tin ngân hàng.");
     return;
   }
 
   confirmBtn.disabled = true;
   confirmBtn.textContent = "Đang gửi...";
 
-  try {
-    const { data, error } = await window.supabaseClient.rpc(
-      "create_withdrawal_request",
-      {
-        p_amount: amount
-      }
-    );
+  const { data, error } = await window.supabaseClient.rpc(
+    "create_payment_request",
+    {
+      p_transaction_id: transactionId,
+      p_bank_name: bankName,
+      p_bank_account_number: bankAccount,
+      p_bank_account_name: bankAccountName,
+      p_note: note
+    }
+  );
 
-    if (error) throw error;
+  confirmBtn.disabled = false;
+  confirmBtn.textContent = "Gửi yêu cầu";
 
-    alert("Đã gửi yêu cầu rút tiền thành công.");
-
-    document.getElementById("amountInput").value = "";
-    withdrawModal.style.display = "none";
-
-  } catch (error) {
-    console.error("Lỗi tạo yêu cầu rút tiền:", error);
-    alert("Không thể tạo yêu cầu rút tiền: " + error.message);
-
-  } finally {
-    confirmBtn.disabled = false;
-    confirmBtn.textContent = "Xác nhận rút";
+  if (error) {
+    console.error(error);
+    alert("Không gửi được yêu cầu: " + error.message);
+    return;
   }
+
+  alert("Đã gửi yêu cầu thanh toán.");
+
+  withdrawModal.style.display = "none";
+  await loadPendingTransactions();
 });
 
 window.addEventListener("click", function (e) {
