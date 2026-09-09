@@ -704,7 +704,7 @@ opacity:.8;
     const [ordersResult, vehiclesResult] = await Promise.all([
       window.supabaseClient
         .from("orders")
-        .select("price,status"),
+.select("price,status,updated_at"),
 
       window.supabaseClient
         .from("vehicles")
@@ -770,7 +770,20 @@ opacity:.8;
       );
     });
 
-    const totalRevenue = completedOrders.reduce(
+    const now = new Date();
+
+const monthlyCompletedOrders = completedOrders.filter(order => {
+  if (!order.updated_at) return false;
+
+  const completedDate = new Date(order.updated_at);
+
+  return (
+    completedDate.getFullYear() === now.getFullYear() &&
+    completedDate.getMonth() === now.getMonth()
+  );
+});
+
+const totalRevenue = monthlyCompletedOrders.reduce(
   (sum, order) => sum + Number(order.price || 0),
   0
 );
