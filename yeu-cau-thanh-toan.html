@@ -878,41 +878,40 @@ async function approvePayment() {
   }
 }
 
-function rejectPayment(){
+async function rejectPayment() {
+  if (!selectedRow) return;
 
-if(!selectedRow){
-return;
+  const requestId = selectedRow.dataset.id;
+
+  if (!requestId) {
+    alert("Không tìm thấy mã yêu cầu thanh toán.");
+    return;
+  }
+
+  const ok = confirm("Bạn có chắc muốn từ chối yêu cầu này?");
+  if (!ok) return;
+
+  const { error } = await window.supabaseClient.rpc(
+    "reject_payment_request",
+    {
+      p_request_id: requestId
+    }
+  );
+
+  if (error) {
+    console.error(error);
+    alert("Không thể từ chối yêu cầu: " + error.message);
+    return;
+  }
+
+  alert("Đã từ chối yêu cầu thanh toán.");
+
+  closeModal();
+
+  if (typeof loadPaymentRequests === "function") {
+    await loadPaymentRequests();
+  }
 }
-
-const status =
-selectedRow.cells[7].textContent.trim();
-
-if(status === "Đã thanh toán"){
-alert("Không thể từ chối yêu cầu đã thanh toán.");
-return;
-}
-
-const ok =
-confirm(
-"Bạn có chắc muốn từ chối yêu cầu này?"
-);
-
-if(!ok){
-return;
-}
-
-selectedRow.cells[7].innerHTML =
-'<span class="badge rejected">Từ chối</span>';
-
-document.getElementById(
-"modalStatus"
-).textContent =
-"Từ chối";
-
-updateStats();
-
-}
-
 function markPaid(){
 
 if(!selectedRow){
