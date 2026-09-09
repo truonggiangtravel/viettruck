@@ -710,7 +710,15 @@ opacity:.8;
       window.supabaseClient
         .from("orders")
 .select("price,status,updated_at"),
+,
 
+supabaseClient
+  .from("transactions")
+  .select("amount,type,status,created_at"),
+
+supabaseClient
+  .from("payment_requests")
+  .select("amount,status,created_at")
       window.supabaseClient
         .from("vehicles")
         .select("*")
