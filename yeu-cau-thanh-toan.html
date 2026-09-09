@@ -843,37 +843,39 @@ function closeModal(){
 modal.classList.remove("show");
 }
 
-function approvePayment(){
+async function approvePayment() {
+  if (!selectedRow) return;
 
-if(!selectedRow){
-return;
-}
+  const requestId = selectedRow.dataset.id;
 
-const status =
-selectedRow.cells[7].textContent.trim();
+  if (!requestId) {
+    alert("Không tìm thấy mã yêu cầu thanh toán.");
+    return;
+  }
 
-if(status === "Đã thanh toán"){
-alert("Yêu cầu này đã được thanh toán.");
-return;
-}
+  const ok = confirm("Bạn có chắc muốn duyệt yêu cầu này?");
+  if (!ok) return;
 
-if(status === "Từ chối"){
-alert("Yêu cầu đã bị từ chối.");
-return;
-}
+  const { error } = await window.supabaseClient.rpc(
+    "approve_payment_request",
+    {
+      p_request_id: requestId
+    }
+  );
 
-selectedRow.cells[7].innerHTML =
-'<span class="badge approved">Đã duyệt</span>';
+  if (error) {
+    console.error(error);
+    alert("Không thể duyệt yêu cầu: " + error.message);
+    return;
+  }
 
-document.getElementById(
-"modalStatus"
-).textContent =
-"Đã duyệt";
+  alert("Đã duyệt yêu cầu thanh toán.");
 
-updateStats();
+  closeModal();
 
-alert("Đã duyệt yêu cầu thanh toán.");
-
+  if (typeof loadPaymentRequests === "function") {
+    await loadPaymentRequests();
+  }
 }
 
 function rejectPayment(){
