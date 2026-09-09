@@ -701,7 +701,12 @@ opacity:.8;
   if (!loggedIn) return;
 
   try {
-    const [ordersResult, vehiclesResult] = await Promise.all([
+    const [
+  ordersResult,
+  vehiclesResult,
+  transactionsResult,
+  paymentRequestsResult
+] = await Promise.all([
       window.supabaseClient
         .from("orders")
 .select("price,status,updated_at"),
