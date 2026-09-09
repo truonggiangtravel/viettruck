@@ -783,36 +783,75 @@ Vietcombank
 
 <div class="modal" id="withdrawModal">
 
-<div class="modal-box">
+  <div class="modal-box">
 
-<h2>Rút tiền</h2>
+    <h2>Yêu cầu thanh toán</h2>
 
-<div class="field">
-<label>SỐ TIỀN MUỐN RÚT</label>
-<input type="number" id="amountInput" placeholder="Ví dụ: 5000000">
-</div>
+    <div class="field">
+      <label>CHUYẾN CẦN THANH TOÁN</label>
+      <select id="transactionSelect">
+        <option value="">Đang tải chuyến...</option>
+      </select>
+    </div>
 
-<div class="field">
-<label>TÀI KHOẢN NHẬN</label>
-<select>
-<option>Vietcombank •••• 6789</option>
-</select>
-</div>
+    <div class="field">
+      <label>SỐ TIỀN</label>
+      <input
+        type="text"
+        id="amountInput"
+        readonly
+        placeholder="0 đ">
+    </div>
 
-<div class="field">
-<label>NỘI DUNG</label>
-<input type="text" value="Rut tien VietTruck">
-</div>
+    <div class="field">
+      <label>NGÂN HÀNG</label>
+      <input
+        type="text"
+        id="bankNameInput"
+        placeholder="Ví dụ: Vietcombank">
+    </div>
 
-<div class="modal-actions">
-<button class="cancel" id="cancelBtn">
-Hủy
-</button>
+    <div class="field">
+      <label>SỐ TÀI KHOẢN</label>
+      <input
+        type="text"
+        id="bankAccountInput"
+        placeholder="Nhập số tài khoản">
+    </div>
 
-<button class="confirm" id="confirmBtn">
-Xác nhận rút
-</button>
-</div>
+    <div class="field">
+      <label>CHỦ TÀI KHOẢN</label>
+      <input
+        type="text"
+        id="bankAccountNameInput"
+        placeholder="NGUYEN VAN A">
+    </div>
+
+    <div class="field">
+      <label>NỘI DUNG</label>
+      <input
+        type="text"
+        id="withdrawNote"
+        value="Thanh toán cước vận chuyển">
+    </div>
+
+    <div class="modal-actions">
+
+      <button
+        class="cancel"
+        id="cancelBtn">
+        Hủy
+      </button>
+
+      <button
+        class="confirm"
+        id="confirmBtn">
+        Gửi yêu cầu
+      </button>
+
+    </div>
+
+  </div>
 
 </div>
 
