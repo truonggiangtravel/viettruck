@@ -547,6 +547,49 @@ body{
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
 <script src="auth.js"></script>
+<script>
+(async function loadRealAccount() {
+  const loggedIn = await requireLogin();
+  if (!loggedIn) return;
 
+  const { data: { session } } =
+    await window.supabaseClient.auth.getSession();
+
+  if (!session) {
+    window.location.replace("dang-nhap.html");
+    return;
+  }
+
+  const { data: profile, error } =
+    await window.supabaseClient
+      .from("profiles")
+      .select("full_name,email,role")
+      .eq("id", session.user.id)
+      .single();
+
+  if (error) {
+    console.error("Lỗi tải hồ sơ:", error);
+    return;
+  }
+
+  const displayName =
+    profile?.full_name ||
+    profile?.email ||
+    session.user.email ||
+    "Tài khoản VietTruck";
+
+  const headerName = document.getElementById("headerUserName");
+  const sidebarName = document.getElementById("sidebarUserName");
+  const welcomeName = document.getElementById("welcomeUserName");
+
+  if (headerName) headerName.textContent = displayName;
+  if (sidebarName) sidebarName.textContent = displayName;
+  if (welcomeName) welcomeName.textContent = displayName;
+
+  document.querySelectorAll(".avatar, .profile-avatar").forEach(el => {
+    el.textContent = displayName.charAt(0).toUpperCase();
+  });
+})();
+</script>
 </body>
 </html>
