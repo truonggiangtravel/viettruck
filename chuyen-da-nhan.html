@@ -547,6 +547,47 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = "dang-nhap.html";
     return;
   }
+  const { data: profile, error: profileError } = await client
+  .from("profiles")
+  .select("full_name, role, email")
+  .eq("id", session.user.id)
+  .maybeSingle();
+
+if (profileError) {
+  console.error("Lỗi tải hồ sơ:", profileError);
+}
+
+const displayName =
+  profile?.full_name?.trim() ||
+  session.user.email ||
+  "Tài khoản VietTruck";
+
+const avatarLetter =
+  displayName.charAt(0).toUpperCase();
+
+const topUserName = document.getElementById("topUserName");
+const sideUserName = document.getElementById("sideUserName");
+const topAvatar = document.getElementById("topAvatar");
+const sideAvatar = document.getElementById("sideAvatar");
+const sideUserRole = document.getElementById("sideUserRole");
+
+if (topUserName) topUserName.textContent = displayName;
+if (sideUserName) sideUserName.textContent = displayName;
+if (topAvatar) topAvatar.textContent = avatarLetter;
+if (sideAvatar) sideAvatar.textContent = avatarLetter;
+
+if (sideUserRole) {
+  const roleMap = {
+    driver: "Tài xế",
+    carrier: "Nhà xe",
+    shipper: "Chủ hàng",
+    customer: "Khách hàng",
+    admin: "Quản trị viên"
+  };
+
+  sideUserRole.textContent =
+    roleMap[profile?.role] || "Tài khoản VietTruck";
+}
 
   const { data: trips, error } = await client
     .from("trips")
