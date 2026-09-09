@@ -823,9 +823,35 @@ const totalRevenue = monthlyCompletedOrders.reduce(
       Chưa có bảng thanh toán/đối soát thật.
       Vì vậy không hiển thị số giả.
     */
-    document.getElementById("paidAmount").textContent = "0 đ";
-    document.getElementById("pendingAmount").textContent = "0 đ";
-    document.getElementById("platformFee").textContent = "0 đ";
+    const transactions = transactionsResult.data || [];
+const paymentRequests = paymentRequestsResult.data || [];
+
+const paidAmount = transactions
+  .filter(item => item.status === "paid")
+  .reduce((sum, item) => sum + Number(item.amount || 0), 0);
+
+const pendingAmount = paymentRequests
+  .filter(item =>
+    item.status === "pending" ||
+    item.status === "approved"
+  )
+  .reduce((sum, item) => sum + Number(item.amount || 0), 0);
+
+const platformFee = transactions
+  .filter(item =>
+    item.type === "platform_fee" &&
+    item.status === "paid"
+  )
+  .reduce((sum, item) => sum + Number(item.amount || 0), 0);
+
+document.getElementById("paidAmount").textContent =
+  money(paidAmount);
+
+document.getElementById("pendingAmount").textContent =
+  money(pendingAmount);
+
+document.getElementById("platformFee").textContent =
+  money(platformFee);
 
     document.getElementById("vehicleCount").textContent =
       vehicles.length + " xe";
