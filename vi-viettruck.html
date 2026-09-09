@@ -888,6 +888,7 @@ confirmBtn.addEventListener("click", async function () {
 
   withdrawModal.style.display = "none";
   await loadPendingTransactions();
+  await loadRealWallet();
 });
 
 window.addEventListener("click", function (e) {
