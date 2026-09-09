@@ -902,71 +902,61 @@ item.style.display = "none";
 
 });
 
-const withdrawBtn =
-document.getElementById("withdrawBtn");
+const withdrawBtn = document.getElementById("withdrawBtn");
+const withdrawModal = document.getElementById("withdrawModal");
+const cancelBtn = document.getElementById("cancelBtn");
+const confirmBtn = document.getElementById("confirmBtn");
 
-const withdrawModal =
-document.getElementById("withdrawModal");
-
-const cancelBtn =
-document.getElementById("cancelBtn");
-
-const confirmBtn =
-document.getElementById("confirmBtn");
-
-withdrawBtn.addEventListener("click",function(){
-withdrawModal.style.display = "flex";
+withdrawBtn.addEventListener("click", function () {
+  withdrawModal.style.display = "flex";
 });
 
-cancelBtn.addEventListener("click",function(){
-withdrawModal.style.display = "none";
+cancelBtn.addEventListener("click", function () {
+  withdrawModal.style.display = "none";
 });
 
-confirmBtn.addEventListener("click",function(){
+confirmBtn.addEventListener("click", async function () {
+  const amount = Number(
+    document.getElementById("amountInput").value
+  );
 
-const amount =
-Number(
-document.getElementById("amountInput").value
-);
+  if (!amount || amount <= 0) {
+    alert("Vui lòng nhập số tiền muốn rút.");
+    return;
+  }
 
-if(!amount || amount <= 0){
-alert("Vui lòng nhập số tiền muốn rút.");
-return;
-}
+  confirmBtn.disabled = true;
+  confirmBtn.textContent = "Đang gửi...";
 
-if(amount > 18650000){
-alert("Số tiền vượt quá số dư khả dụng.");
-return;
-}
+  try {
+    const { data, error } = await window.supabaseClient.rpc(
+      "create_withdrawal_request",
+      {
+        p_amount: amount
+      }
+    );
 
-alert(
-"Đã tạo yêu cầu rút " +
-amount.toLocaleString("vi-VN") +
-" đ."
-);
+    if (error) throw error;
 
-withdrawModal.style.display =
-"none";
+    alert("Đã gửi yêu cầu rút tiền thành công.");
 
+    document.getElementById("amountInput").value = "";
+    withdrawModal.style.display = "none";
+
+  } catch (error) {
+    console.error("Lỗi tạo yêu cầu rút tiền:", error);
+    alert("Không thể tạo yêu cầu rút tiền: " + error.message);
+
+  } finally {
+    confirmBtn.disabled = false;
+    confirmBtn.textContent = "Xác nhận rút";
+  }
 });
 
-const bankBtn =
-document.getElementById("bankBtn");
-
-bankBtn.addEventListener("click",function(){
-
-alert(
-"Tài khoản Vietcombank •••• 6789 đang được dùng để nhận tiền."
-);
-
-});
-
-window.addEventListener("click",function(e){
-
-if(e.target === withdrawModal){
-withdrawModal.style.display = "none";
-}
-
+window.addEventListener("click", function (e) {
+  if (e.target === withdrawModal) {
+    withdrawModal.style.display = "none";
+  }
 });
 
 </script>
