@@ -609,7 +609,8 @@ if (sideUserRole) {
         pickup_date
       )
     `)
-    .order("created_at", { ascending: false });
+.eq("driver_id", session.user.id)
+.order("created_at", { ascending: false });
 
   if (error) {
     console.error("Lỗi tải chuyến:", error);
