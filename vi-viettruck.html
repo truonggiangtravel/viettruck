@@ -907,7 +907,263 @@ window.addEventListener("click", function (e) {
     withdrawModal.style.display = "none";
   }
 });
+function formatWalletMoney(value) {
+  return Number(value || 0).toLocaleString("vi-VN") + " đ";
+}
 
+async function loadRealWallet() {
+  if (!window.supabaseClient) return;
+
+  const { data: transactions, error: transactionError } =
+    await window.supabaseClient
+      .from("transactions")
+      .select("id,trip_id,order_id,type,amount,status,description,created_at")
+      .order("created_at", { ascending: false });
+
+  if (transactionError) {
+    console.error("Lỗi tải transactions:", transactionError);
+    return;
+  }
+
+  const { data: paymentRequests, error: paymentError } =
+    await window.supabaseClient
+      .from("payment_requests")
+      .select("id,transaction_id,amount,status,created_at,paid_at")
+      .order("created_at", { ascending: false });
+
+  if (paymentError) {
+    console.error("Lỗi tải payment_requests:", paymentError);
+    return;
+  }
+
+  const txs = transactions || [];
+  const requests = paymentRequests || [];
+
+  const now = new Date();
+
+  const currentMonthTransactions = txs.filter(item => {
+    if (!item.created_at) return false;
+
+    const date = new Date(item.created_at);
+
+    return (
+      date.getFullYear() === now.getFullYear() &&
+      date.getMonth() === now.getMonth()
+    );
+  });
+
+  const currentMonthRequests = requests.filter(item => {
+    const dateValue = item.paid_at || item.created_at;
+
+    if (!dateValue) return false;
+
+    const date = new Date(dateValue);
+
+    return (
+      date.getFullYear() === now.getFullYear() &&
+      date.getMonth() === now.getMonth()
+    );
+  });
+
+  const activeRequestTransactionIds = new Set(
+    requests
+      .filter(item =>
+        item.status === "pending" ||
+        item.status === "approved"
+      )
+      .map(item => item.transaction_id)
+      .filter(Boolean)
+  );
+
+  const availableBalance = txs
+    .filter(item =>
+      item.type === "trip_income" &&
+      item.status === "pending" &&
+      !activeRequestTransactionIds.has(item.id)
+    )
+    .reduce(
+      (sum, item) => sum + Number(item.amount || 0),
+      0
+    );
+
+  const pendingBalance = requests
+    .filter(item =>
+      item.status === "pending" ||
+      item.status === "approved"
+    )
+    .reduce(
+      (sum, item) => sum + Number(item.amount || 0),
+      0
+    );
+
+  const withdrawnThisMonth = currentMonthRequests
+    .filter(item => item.status === "paid")
+    .reduce(
+      (sum, item) => sum + Number(item.amount || 0),
+      0
+    );
+
+  const monthlyRevenue = currentMonthTransactions
+    .filter(item => item.type === "trip_income")
+    .reduce(
+      (sum, item) => sum + Number(item.amount || 0),
+      0
+    );
+
+  const receivedRevenue = txs
+    .filter(item =>
+      item.type === "trip_income" &&
+      item.status === "paid"
+    )
+    .reduce(
+      (sum, item) => sum + Number(item.amount || 0),
+      0
+    );
+
+  const monthlyPlatformFee = currentMonthTransactions
+    .filter(item => item.type === "platform_fee")
+    .reduce(
+      (sum, item) => sum + Number(item.amount || 0),
+      0
+    );
+
+  document.getElementById("walletBalance").textContent =
+    formatWalletMoney(availableBalance);
+
+  document.getElementById("availableBalance").textContent =
+    formatWalletMoney(availableBalance);
+
+  document.getElementById("pendingBalance").textContent =
+    formatWalletMoney(pendingBalance);
+
+  document.getElementById("withdrawnThisMonth").textContent =
+    formatWalletMoney(withdrawnThisMonth);
+
+  document.getElementById("platformFeeThisMonth").textContent =
+    formatWalletMoney(monthlyPlatformFee);
+
+  document.getElementById("monthlyRevenue").textContent =
+    formatWalletMoney(monthlyRevenue);
+
+  document.getElementById("receivedRevenue").textContent =
+    formatWalletMoney(receivedRevenue);
+
+  document.getElementById("pendingReconciliation").textContent =
+    formatWalletMoney(pendingBalance);
+
+  document.getElementById("monthlyPlatformFee").textContent =
+    formatWalletMoney(monthlyPlatformFee);
+
+  const monthLabel =
+    document.getElementById("revenueMonthLabel");
+
+  if (monthLabel) {
+    monthLabel.textContent =
+      "DOANH THU THÁNG " +
+      String(now.getMonth() + 1).padStart(2, "0");
+  }
+
+  renderRealTransactions(txs);
+}
+
+function renderRealTransactions(transactions) {
+  const container =
+    document.getElementById("transactionList");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  if (!transactions || transactions.length === 0) {
+    container.innerHTML =
+      '<div style="padding:20px 0;color:#777;">Chưa có giao dịch.</div>';
+    return;
+  }
+
+  transactions.forEach(item => {
+    const div = document.createElement("div");
+
+    let dataType = "income";
+    let icon = "💰";
+    let title = "Giao dịch";
+    let amountClass = "plus";
+    let prefix = "+";
+
+    if (item.type === "trip_income") {
+      title =
+        "Cước chuyến " +
+        String(item.trip_id || "").slice(0, 8).toUpperCase();
+    }
+
+    if (item.type === "platform_fee") {
+      dataType = "fee";
+      icon = "🧾";
+      title = "Phí nền tảng VietTruck";
+      amountClass = "minus";
+      prefix = "-";
+    }
+
+    if (item.type === "withdrawal") {
+      dataType = "withdraw";
+      icon = "🏦";
+      title = "Thanh toán về ngân hàng";
+      amountClass = "minus";
+      prefix = "-";
+    }
+
+    const statusMap = {
+      pending: "Chờ xử lý",
+      approved: "Đã duyệt",
+      paid: "Đã thanh toán",
+      rejected: "Từ chối"
+    };
+
+    const date = item.created_at
+      ? new Date(item.created_at).toLocaleDateString("vi-VN")
+      : "";
+
+    div.className = "transaction";
+    div.dataset.type = dataType;
+
+    div.innerHTML = `
+      <div class="trans-left">
+        <div class="trans-icon">${icon}</div>
+
+        <div>
+          <div class="trans-title">
+            ${title}
+          </div>
+
+          <div class="trans-sub">
+            ${item.description || date}
+          </div>
+        </div>
+      </div>
+
+      <div class="trans-money">
+        <strong class="${amountClass}">
+          ${prefix}${formatWalletMoney(item.amount)}
+        </strong>
+
+        <small>
+          ${statusMap[item.status] || item.status || ""}
+        </small>
+      </div>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", async function () {
+  if (typeof requireLogin === "function") {
+    const loggedIn = await requireLogin();
+
+    if (!loggedIn) return;
+  }
+
+  await loadRealWallet();
+});
 </script>
 
 </body>
