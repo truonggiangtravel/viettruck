@@ -548,8 +548,26 @@ body{
 <script src="supabase-config.js"></script>
 <script src="auth.js"></script>
 
-<script>
-requireLogin();
+await window.supabaseClient
+      .from("profiles")
+      .select("full_name, email, role")
+      .eq("id", session.user.id)
+      .single();
+
+  if (profileError) {
+    console.error("Không tải được hồ sơ:", profileError);
+  }
+
+  const displayName =
+    profile?.full_name ||
+    profile?.email ||
+    session.user.email ||
+    "Tài khoản VietTruck";
+
+  document.getElementById("headerUserName").textContent = displayName;
+  document.getElementById("sidebarUserName").textContent = displayName;
+  document.getElementById("welcomeUserName").textContent = displayName;
+})();
 </script>
 </body>
 </html>
