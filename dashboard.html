@@ -907,26 +907,7 @@ opacity:.8;
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
 <script src="auth.js"></script>
-Chưa có dữ liệu POD và thanh toán thật
-      nên tuyệt đối không hiển thị số demo.
-    */
-    document.getElementById("podCount").textContent = "0";
-    document.getElementById("paymentCount").textContent = "0";
 
-  } catch (error) {
-    console.error("Lỗi Dashboard:", error);
-  }
-
-  const logoutLink =
-    document.querySelector('a[href="dang-nhap.html"]');
-
-  if (logoutLink) {
-    logoutLink.addEventListener("click", async function(event) {
-      event.preventDefault();
-      await logout();
-    });
-  }
-})();
 </script>
 </body>
 </html>
