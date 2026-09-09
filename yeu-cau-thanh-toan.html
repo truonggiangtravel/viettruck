@@ -698,7 +698,9 @@ onclick="markPaid()">
 </div>
 
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="auth.js"></script>
 <script>
 
 const modal =
@@ -983,7 +985,16 @@ async function loadPaymentRequests() {
   const tbody = document.getElementById("paymentTableBody");
   const emptyMessage = document.getElementById("emptyMessage");
 
-  if (!tbody || !window.supabaseClient) return;
+  if (!tbody) return;
+
+if (!window.supabaseClient) {
+  console.error("Supabase client chưa được khởi tạo");
+
+  tbody.innerHTML =
+    '<tr><td colspan="9">Không kết nối được máy chủ.</td></tr>';
+
+  return;
+}
 
   tbody.innerHTML =
     '<tr><td colspan="9">Đang tải dữ liệu...</td></tr>';
