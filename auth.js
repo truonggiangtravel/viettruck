@@ -1,34 +1,31 @@
-async function getCurrentSession() {
-  const {
-    data: { session },
-    error
-  } = await window.supabaseClient.auth.getSession();
-
-  if (error) {
-    console.error("Lỗi lấy phiên đăng nhập:", error);
-    return null;
-  }
-
-  return session;
-}
-
 async function requireLogin() {
-  const session = await getCurrentSession();
+  try {
+    const { data, error } = await window.supabaseClient.auth.getSession();
 
-  if (!session) {
+    if (error) {
+      console.error("Lỗi kiểm tra đăng nhập:", error);
+      window.location.replace("dang-nhap.html");
+      return false;
+    }
+
+    if (!data.session) {
+      window.location.replace("dang-nhap.html");
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    console.error("Lỗi requireLogin:", err);
     window.location.replace("dang-nhap.html");
-    return null;
+    return false;
   }
-
-  return session;
 }
 
 async function logout() {
-  const { error } = await window.supabaseClient.auth.signOut();
-
-  if (error) {
-    console.error("Lỗi đăng xuất:", error);
-    return;
+  try {
+    await window.supabaseClient.auth.signOut();
+  } catch (err) {
+    console.error("Lỗi đăng xuất:", err);
   }
 
   window.location.replace("dang-nhap.html");
