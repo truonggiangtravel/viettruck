@@ -549,10 +549,7 @@ body{
 <script src="auth.js"></script>
 
 <script>
-(async () => {
-  const session = await requireLogin();
-  if (!session) return;
-})();
+requireLogin();
 </script>
 </body>
 </html>
