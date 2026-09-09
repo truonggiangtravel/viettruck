@@ -580,90 +580,6 @@ onchange="filterRequests()">
 
 <tbody>
 
-<tr>
-<td>PAY-20260905-001</td>
-<td>Nhà xe Thành Công</td>
-<td>Thanh toán cước</td>
-<td>Vietcombank</td>
-<td>0123456789</td>
-<td class="amount">6.350.000 đ</td>
-<td>05/09/2026</td>
-<td><span class="badge pending">Chờ duyệt</span></td>
-<td>
-<button class="action-btn"
-onclick="viewPayment(this)">
-Chi tiết
-</button>
-</td>
-</tr>
-
-<tr>
-<td>PAY-20260905-002</td>
-<td>Nguyễn Văn Hùng</td>
-<td>Thanh toán tài xế</td>
-<td>MB Bank</td>
-<td>0988777666</td>
-<td class="amount">2.800.000 đ</td>
-<td>05/09/2026</td>
-<td><span class="badge pending">Chờ duyệt</span></td>
-<td>
-<button class="action-btn"
-onclick="viewPayment(this)">
-Chi tiết
-</button>
-</td>
-</tr>
-
-<tr>
-<td>PAY-20260904-018</td>
-<td>Nhà xe Hoàng Gia</td>
-<td>Thanh toán cước</td>
-<td>Techcombank</td>
-<td>190344455566</td>
-<td class="amount">4.200.000 đ</td>
-<td>04/09/2026</td>
-<td><span class="badge approved">Đã duyệt</span></td>
-<td>
-<button class="action-btn"
-onclick="viewPayment(this)">
-Chi tiết
-</button>
-</td>
-</tr>
-
-<tr>
-<td>PAY-20260903-011</td>
-<td>Logistics Đông Á</td>
-<td>Đối soát vận tải</td>
-<td>VietinBank</td>
-<td>1028899777</td>
-<td class="amount">11.800.000 đ</td>
-<td>03/09/2026</td>
-<td><span class="badge paid">Đã thanh toán</span></td>
-<td>
-<button class="action-btn"
-onclick="viewPayment(this)">
-Chi tiết
-</button>
-</td>
-</tr>
-
-<tr>
-<td>PAY-20260902-006</td>
-<td>Nhà xe Minh Long</td>
-<td>Thanh toán cước</td>
-<td>BIDV</td>
-<td>2151000888999</td>
-<td class="amount">5.600.000 đ</td>
-<td>02/09/2026</td>
-<td><span class="badge rejected">Từ chối</span></td>
-<td>
-<button class="action-btn"
-onclick="viewPayment(this)">
-Chi tiết
-</button>
-</td>
-</tr>
 
 </tbody>
 
@@ -1063,7 +979,129 @@ closeModal();
 };
 
 updateStats();
+async function loadPaymentRequests() {
+  const tbody = document.getElementById("paymentTableBody");
+  const emptyMessage = document.getElementById("emptyMessage");
 
+  if (!tbody || !window.supabaseClient) return;
+
+  tbody.innerHTML =
+    '<tr><td colspan="9">Đang tải dữ liệu...</td></tr>';
+
+  const { data, error } = await window.supabaseClient
+    .from("payment_requests")
+    .select(`
+      id,
+      user_id,
+      transaction_id,
+      trip_id,
+      order_id,
+      amount,
+      request_type,
+      status,
+      bank_name,
+      bank_account_number,
+      bank_account_name,
+      note,
+      created_at,
+      approved_at,
+      paid_at
+    `)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Lỗi tải payment_requests:", error);
+
+    tbody.innerHTML =
+      '<tr><td colspan="9">Không tải được yêu cầu thanh toán.</td></tr>';
+
+    return;
+  }
+
+  tbody.innerHTML = "";
+
+  if (!data || data.length === 0) {
+    if (emptyMessage) {
+      emptyMessage.style.display = "block";
+    }
+    return;
+  }
+
+  if (emptyMessage) {
+    emptyMessage.style.display = "none";
+  }
+
+  const statusMap = {
+    pending: ["pending", "Chờ duyệt"],
+    approved: ["approved", "Đã duyệt"],
+    paid: ["paid", "Đã thanh toán"],
+    rejected: ["rejected", "Từ chối"]
+  };
+
+  data.forEach(item => {
+    const tr = document.createElement("tr");
+
+    tr.dataset.id = item.id;
+
+    const statusInfo =
+      statusMap[item.status] || ["pending", item.status || "Chờ duyệt"];
+
+    const createdDate = item.created_at
+      ? new Date(item.created_at).toLocaleDateString("vi-VN")
+      : "";
+
+    const code =
+      "PAY-" + String(item.id).slice(0, 8).toUpperCase();
+
+    tr.innerHTML = `
+      <td>${code}</td>
+
+      <td>${item.bank_account_name || "Chưa cập nhật"}</td>
+
+      <td>${item.request_type === "withdrawal"
+        ? "Thanh toán cước"
+        : item.request_type || "Thanh toán"}</td>
+
+      <td>${item.bank_name || "Chưa cập nhật"}</td>
+
+      <td>${item.bank_account_number || "Chưa cập nhật"}</td>
+
+      <td class="amount">
+        ${Number(item.amount || 0).toLocaleString("vi-VN")} đ
+      </td>
+
+      <td>${createdDate}</td>
+
+      <td>
+        <span class="badge ${statusInfo[0]}">
+          ${statusInfo[1]}
+        </span>
+      </td>
+
+      <td>
+        <button
+          class="action-btn"
+          onclick="viewPayment(this)">
+          Chi tiết
+        </button>
+      </td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+
+  if (typeof updateStats === "function") {
+    updateStats();
+  }
+}
+  document.addEventListener("DOMContentLoaded", async () => {
+  if (typeof requireLogin === "function") {
+    const loggedIn = await requireLogin();
+    if (!loggedIn) return;
+  }
+
+  await loadPaymentRequests();
+});
 </script>
 
 </body>
