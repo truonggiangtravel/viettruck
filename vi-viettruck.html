@@ -714,7 +714,9 @@ Rút tiền
 <p>© 2026 VietTruck. Ví và đối soát vận tải.</p>
 </div>
 </footer>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="auth.js"></script>
 <script>
 
 const filterButtons =
@@ -769,6 +771,11 @@ const withdrawNote = document.getElementById("withdrawNote");
 let paymentTransactions = [];
 
 async function loadPendingTransactions() {
+  if (!window.supabaseClient) {
+  console.error("Supabase client chưa được khởi tạo");
+  alert("Không kết nối được máy chủ. Vui lòng tải lại trang.");
+  return;
+}
   transactionSelect.innerHTML =
     '<option value="">Đang tải chuyến...</option>';
 
