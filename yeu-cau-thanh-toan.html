@@ -912,51 +912,42 @@ async function rejectPayment() {
     await loadPaymentRequests();
   }
 }
-function markPaid(){
+async function markPaid() {
+  if (!selectedRow) return;
 
-if(!selectedRow){
-return;
-}
+  const requestId = selectedRow.dataset.id;
 
-const status =
-selectedRow.cells[7].textContent.trim();
+  if (!requestId) {
+    alert("Không tìm thấy mã yêu cầu thanh toán.");
+    return;
+  }
 
-if(status === "Từ chối"){
-alert("Yêu cầu này đã bị từ chối.");
-return;
-}
+  const ok = confirm(
+    "Xác nhận khoản này đã được thanh toán thực tế?"
+  );
 
-if(status === "Chờ duyệt"){
-alert("Cần duyệt yêu cầu trước khi xác nhận thanh toán.");
-return;
-}
+  if (!ok) return;
 
-if(status === "Đã thanh toán"){
-alert("Yêu cầu này đã được thanh toán.");
-return;
-}
+  const { error } = await window.supabaseClient.rpc(
+    "mark_payment_request_paid",
+    {
+      p_request_id: requestId
+    }
+  );
 
-const ok =
-confirm(
-"Xác nhận khoản này đã được thanh toán?"
-);
+  if (error) {
+    console.error(error);
+    alert("Không thể xác nhận thanh toán: " + error.message);
+    return;
+  }
 
-if(!ok){
-return;
-}
+  alert("Đã xác nhận thanh toán.");
 
-selectedRow.cells[7].innerHTML =
-'<span class="badge paid">Đã thanh toán</span>';
+  closeModal();
 
-document.getElementById(
-"modalStatus"
-).textContent =
-"Đã thanh toán";
-
-updateStats();
-
-alert("Đã xác nhận thanh toán.");
-
+  if (typeof loadPaymentRequests === "function") {
+    await loadPaymentRequests();
+  }
 }
 
 function updateStats(){
