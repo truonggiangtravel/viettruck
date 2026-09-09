@@ -770,26 +770,136 @@ opacity:.8;
 <strong id="paymentCount">0</strong>
 </div>
 
-</div>
+<script>
+(async function loadRealDashboard() {
+  const loggedIn = await requireLogin();
+  if (!loggedIn) return;
 
-<div class="notice">
-📊 Dashboard đang hiển thị dữ liệu trực tiếp từ hệ thống VietTruck.
-</div>
+  try {
+    const [ordersResult, vehiclesResult] = await Promise.all([
+      window.supabaseClient
+        .from("orders")
+        .select("price,status"),
 
-</aside>
+      window.supabaseClient
+        .from("vehicles")
+        .select("*")
+    ]);
 
-</section>
+    if (ordersResult.error) {
+      console.error("Lỗi tải orders:", ordersResult.error);
+    }
 
-</main>
+    if (vehiclesResult.error) {
+      console.error("Lỗi tải vehicles:", vehiclesResult.error);
+    }
 
-<footer class="footer">
-<div class="container">
-<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
-<p>© 2026 VietTruck. Dashboard quản lý vận tải.</p>
-  <p style="margin-top:12px;">
-  <a href="dang-nhap.html"
-     style="color:#16a34a;text-decoration:none;font-weight:700;">
-    🚪 Đăng xuất
+    const orders = ordersResult.data || [];
+    const vehicles = vehiclesResult.data || [];
+
+    const statusOf = value =>
+      String(value || "").trim().toLowerCase();
+
+    const completedStatuses = [
+      "completed",
+      "done",
+      "delivered",
+      "hoàn thành",
+      "đã hoàn thành",
+      "da hoan thanh"
+    ];
+
+    const runningStatuses = [
+      "accepted",
+      "in_progress",
+      "running",
+      "shipping",
+      "đang vận chuyển",
+      "đang chạy",
+      "dang van chuyen",
+      "dang chay"
+    ];
+
+    const cancelledStatuses = [
+      "cancelled",
+      "canceled",
+      "đã hủy",
+      "da huy"
+    ];
+
+    const completedOrders = orders.filter(order =>
+      completedStatuses.includes(statusOf(order.status))
+    );
+
+    const runningOrders = orders.filter(order =>
+      runningStatuses.includes(statusOf(order.status))
+    );
+
+    const pendingOrders = orders.filter(order => {
+      const status = statusOf(order.status);
+
+      return (
+        !completedStatuses.includes(status) &&
+        !runningStatuses.includes(status) &&
+        !cancelledStatuses.includes(status)
+      );
+    });
+
+    const totalRevenue = orders.reduce(
+      (sum, order) => sum + Number(order.price || 0),
+      0
+    );
+
+    const money = value =>
+      Number(value || 0).toLocaleString("vi-VN") + " đ";
+
+    document.getElementById("pendingTopCount").textContent =
+      pendingOrders.length;
+
+    document.getElementById("runningTopCount").textContent =
+      runningOrders.length;
+
+    document.getElementById("completedTopCount").textContent =
+      completedOrders.length;
+
+    document.getElementById("paymentTopCount").textContent = "0";
+    document.getElementById("paymentTopNote").textContent = "0 đ";
+
+    document.getElementById("totalRevenue").textContent =
+      money(totalRevenue);
+
+    /*
+      Chưa có bảng thanh toán/đối soát thật.
+      Vì vậy không hiển thị số giả.
+    */
+    document.getElementById("paidAmount").textContent = "0 đ";
+    document.getElementById("pendingAmount").textContent = "0 đ";
+    document.getElementById("platformFee").textContent = "0 đ";
+
+    document.getElementById("vehicleCount").textContent =
+      vehicles.length + " xe";
+
+    document.getElementById("pendingOrderCount").textContent =
+      pendingOrders.length;
+
+    document.getElementById("podCount").textContent = "0";
+    document.getElementById("paymentCount").textContent = "0";
+
+  } catch (error) {
+    console.error("Lỗi Dashboard:", error);
+  }
+
+  const logoutLink =
+    document.querySelector('a[href="dang-nhap.html"]');
+
+  if (logoutLink) {
+    logoutLink.addEventListener("click", async function(event) {
+      event.preventDefault();
+      await logout();
+    });
+  }
+})();
+</script>
   </a>
 </p>
 </div>
