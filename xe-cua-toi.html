@@ -418,12 +418,12 @@ body{
 
 <div class="summary-box">
   <span>Tổng số xe</span>
-  <strong>4</strong>
+  <strong id="totalVehicleCount">0</strong>
 </div>
 
 <div class="summary-box">
   <span>Đang sẵn sàng</span>
-  <strong>3</strong>
+  <strong id="readyVehicleCount">0</strong>
 </div>
 
 <div class="summary-box">
@@ -456,6 +456,176 @@ body{
   <p>Nền tảng kết nối chủ hàng và tài xế trên toàn quốc</p>
 </div>
 </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="auth.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const client = window.supabaseClient;
+
+  if (!client) {
+    console.error("Supabase client chưa được khởi tạo");
+    return;
+  }
+
+  const {
+    data: { session },
+    error: sessionError
+  } = await client.auth.getSession();
+
+  if (sessionError || !session) {
+    window.location.href = "dang-nhap.html";
+    return;
+  }
+
+  const userId = session.user.id;
+
+  const vehicleList = document.getElementById("vehicleList");
+  const totalVehicleCount = document.getElementById("totalVehicleCount");
+  const readyVehicleCount = document.getElementById("readyVehicleCount");
+  const movingVehicleCount = document.getElementById("movingVehicleCount");
+  const verifiedVehicleCount = document.getElementById("verifiedVehicleCount");
+
+  const { data: vehicles, error } = await client
+    .from("vehicles")
+    .select("*")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Lỗi tải xe:", error);
+
+    vehicleList.innerHTML = `
+      <div class="empty-note">
+        Không tải được danh sách xe.
+      </div>
+    `;
+    return;
+  }
+
+  const allVehicles = vehicles || [];
+
+  const statusOf = value =>
+    String(value || "")
+      .trim()
+      .toLowerCase();
+
+  const readyStatuses = [
+    "available",
+    "ready",
+    "active",
+    "sẵn sàng",
+    "san sang"
+  ];
+
+  const movingStatuses = [
+    "running",
+    "in_transit",
+    "moving",
+    "đang vận chuyển",
+    "dang van chuyen"
+  ];
+
+  const verifiedStatuses = [
+    "verified",
+    "approved",
+    "active"
+  ];
+
+  const readyVehicles = allVehicles.filter(vehicle =>
+    readyStatuses.includes(statusOf(vehicle.status))
+  );
+
+  const movingVehicles = allVehicles.filter(vehicle =>
+    movingStatuses.includes(statusOf(vehicle.status))
+  );
+
+  const verifiedVehicles = allVehicles.filter(vehicle =>
+    verifiedStatuses.includes(statusOf(vehicle.verification_status)) ||
+    vehicle.verified === true
+  );
+
+  if (totalVehicleCount) {
+    totalVehicleCount.textContent = allVehicles.length;
+  }
+
+  if (readyVehicleCount) {
+    readyVehicleCount.textContent = readyVehicles.length;
+  }
+
+  if (movingVehicleCount) {
+    movingVehicleCount.textContent = movingVehicles.length;
+  }
+
+  if (verifiedVehicleCount) {
+    verifiedVehicleCount.textContent = verifiedVehicles.length;
+  }
+
+  if (!allVehicles.length) {
+    vehicleList.innerHTML = `
+      <div class="empty-note">
+        Bạn chưa đăng xe nào.
+        <br>
+        <a href="dang-xe.html">Đăng xe mới</a>
+      </div>
+    `;
+    return;
+  }
+
+  vehicleList.innerHTML = allVehicles.map(vehicle => {
+    const plate =
+      vehicle.plate_number ||
+      vehicle.license_plate ||
+      vehicle.plate ||
+      "Chưa có biển số";
+
+    const type =
+      vehicle.vehicle_type ||
+      vehicle.type ||
+      "Xe tải";
+
+    const capacity =
+      vehicle.capacity ||
+      vehicle.weight ||
+      vehicle.tonnage ||
+      "";
+
+    const status = statusOf(vehicle.status);
+
+    const statusLabel =
+      readyStatuses.includes(status)
+        ? "Sẵn sàng"
+        : movingStatuses.includes(status)
+        ? "Đang vận chuyển"
+        : vehicle.status || "Chưa cập nhật";
+
+    return `
+      <div class="truck-card">
+        <div class="truck-head">
+          <div class="plate">Biển số: ${plate}</div>
+        </div>
+
+        <div class="truck-body">
+          <div class="truck-icon">🚚</div>
+
+          <div>
+            <div class="truck-name">${type}</div>
+
+            <div class="tags">
+              ${capacity ? `<span class="tag">${capacity}</span>` : ""}
+            </div>
+          </div>
+
+          <div class="status-side">
+            <div class="status">${statusLabel}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+});
+</script>
 
 </body>
 </html>
