@@ -705,9 +705,10 @@ opacity:.8;
   try {
     const [
   ordersResult,
-  vehiclesResult,
   transactionsResult,
-  paymentRequestsResult
+  paymentRequestsResult,
+  vehiclesResult
+] = await Promise.all([
 ] = await Promise.all([
       window.supabaseClient
         .from("orders")
