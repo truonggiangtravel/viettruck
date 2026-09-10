@@ -694,7 +694,9 @@ opacity:.8;
 <span>Thanh toán chờ xử lý</span>
 <strong id="paymentCount">0</strong>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="auth.js"></script>
 <script>
 (async function loadRealDashboard() {
   const loggedIn = await requireLogin();
@@ -908,9 +910,6 @@ document.getElementById("paymentCount").textContent =
 </p>
 </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
-<script src="auth.js"></script>
 
 
 </body>
