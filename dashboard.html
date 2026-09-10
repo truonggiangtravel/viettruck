@@ -860,7 +860,7 @@ document.getElementById("platformFee").textContent =
     document.getElementById("pendingOrderCount").textContent =
       pendingOrders.length;
 
-    const paymentRequests = paymentRequestsResult?.data || [];
+    
 
 
   
@@ -876,6 +876,18 @@ const pendingPayments = paymentRequests.filter(item => {
     "cho xu ly"
   ].includes(status);
 });
+    document.getElementById("paymentTopCount").textContent =
+  pendingPayments.length;
+
+document.getElementById("paymentTopNote").textContent =
+  money(
+    pendingPayments.reduce(
+      (sum, item) => sum + Number(item.amount || 0),
+      0
+    )
+  );
+
+const pendingPods = orders.filter(order => {
   const status = statusOf(order.status);
 
   return (
