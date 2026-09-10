@@ -859,8 +859,35 @@ document.getElementById("platformFee").textContent =
     document.getElementById("pendingOrderCount").textContent =
       pendingOrders.length;
 
-    document.getElementById("podCount").textContent = "0";
-    document.getElementById("paymentCount").textContent = "0";
+    const paymentRequests = paymentRequestsResult?.data || [];
+
+const pendingPayments = paymentRequests.filter(item => {
+  const status = statusOf(item.status);
+
+  return [
+    "pending",
+    "requested",
+    "processing",
+    "chờ xử lý",
+    "cho xu ly"
+  ].includes(status);
+});
+
+const pendingPods = orders.filter(order => {
+  const status = statusOf(order.status);
+
+  return (
+    status.includes("pod") &&
+    !status.includes("approved") &&
+    !status.includes("completed")
+  );
+});
+
+document.getElementById("podCount").textContent =
+  pendingPods.length;
+
+document.getElementById("paymentCount").textContent =
+  pendingPayments.length;
 
   } catch (error) {
     console.error("Lỗi Dashboard:", error);
