@@ -434,7 +434,7 @@ body{
 <div class="top-row">
   <div>
     <h2>Quản lý đơn hàng</h2>
-    <p>Bạn đang có 5 đơn hàng trong tài khoản demo.</p>
+    <p>Bạn đang có <strong id="orderCount">0</strong> đơn hàng.</p>
   </div>
 
   <a href="dang-hang.html" class="new-btn">+ Đăng hàng mới</a>
@@ -503,16 +503,7 @@ tabs.forEach(tab => {
 <script>
 document.addEventListener("DOMContentLoaded", async function () {
 
-    const SUPABASE_URL = "https://ksyakrcgqzsupqyuusyo.supabase.co";
-
-    // DÁN ĐÚNG SUPABASE ANON/PUBLISHABLE KEY CỦA BẠN VÀO ĐÂY
-    const SUPABASE_ANON_KEY = "sb_publishable_OLGPIepJQoFBoEoL7jyvSA_9GC5hSgD";
-
-    const db = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-    );
-
+    const db = window.supabaseClient;
     const ordersContainer = document.getElementById("orders");
     const emptyNote = document.getElementById("emptyNote");
 
