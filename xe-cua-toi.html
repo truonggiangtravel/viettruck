@@ -492,9 +492,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     .select("*")
     .eq("user_id", userId)
     .order("created_at", { ascending: false });
-  console.log("PROJECT URL:", client.supabaseUrl);
-console.log("VEHICLES FROM SUPABASE:", vehicles);
-
+  
   if (error) {
     console.error("Lỗi tải xe:", error);
 
