@@ -509,62 +509,7 @@ Xem chuyến đã nhận
 </div>
 </footer>
 
-<script>
 
-const acceptButtons =
-document.querySelectorAll(".accept-btn");
-
-const successBox =
-document.getElementById("successBox");
-
-const resultBox =
-document.getElementById("resultBox");
-
-acceptButtons.forEach(function(button){
-
-button.addEventListener("click",function(){
-
-const order =
-this.dataset.order;
-
-const confirmAccept =
-confirm(
-"Bạn muốn nhận đơn hàng chiều về " +
-order +
-"?"
-);
-
-if(!confirmAccept){
-return;
-}
-
-resultBox.style.display =
-"none";
-
-successBox.style.display =
-"block";
-
-window.scrollTo({
-top:170,
-behavior:"smooth"
-});
-
-});
-
-});
-
-const searchBtn =
-document.getElementById("searchBtn");
-
-searchBtn.addEventListener("click",function(){
-
-alert(
-"Đã tìm thấy 4 đơn hàng phù hợp với tuyến xe quay về."
-);
-
-});
-
-</script>
 
 </body>
 </html>
