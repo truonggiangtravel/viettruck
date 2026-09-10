@@ -567,6 +567,87 @@ body{
   if (headerName) headerName.textContent = displayName;
   if (sidebarName) sidebarName.textContent = displayName;
   if (welcomeName) welcomeName.textContent = displayName;
+ // Hiển thị loại tài khoản thật
+const roleEl = document.getElementById("sidebarUserRole");
+
+const roleLabels = {
+  shipper: "Chủ hàng",
+  driver: "Tài xế / Nhà xe",
+  carrier: "Nhà xe",
+  admin: "Quản trị viên"
+};
+
+if (roleEl) {
+  roleEl.textContent =
+    roleLabels[profile?.role] ||
+    profile?.role ||
+    "Tài khoản VietTruck";
+}
+
+// Lấy dữ liệu thật của tài khoản đang đăng nhập
+const userId = session.user.id;
+
+const [ordersResult, vehiclesResult] = await Promise.all([
+  window.supabaseClient
+    .from("orders")
+    .select("*")
+    .eq("user_id", userId),
+
+  window.supabaseClient
+    .from("vehicles")
+    .select("*")
+    .eq("user_id", userId)
+]);
+
+const userOrders = ordersResult.data || [];
+const userVehicles = vehiclesResult.data || [];
+
+// Đơn hàng
+const orderCountEl = document.getElementById("orderCount");
+if (orderCountEl) {
+  orderCountEl.textContent = userOrders.length;
+}
+
+// Xe đang quản lý
+const vehicleCountEl = document.getElementById("vehicleCount");
+if (vehicleCountEl) {
+  vehicleCountEl.textContent = userVehicles.length;
+}
+
+// Chuyến hoàn thành
+const completedStatuses = [
+  "completed",
+  "done",
+  "delivered",
+  "hoàn thành",
+  "hoan thanh",
+  "đã giao",
+  "da giao"
+];
+
+const completedTrips = userOrders.filter(order => {
+  const status = String(order.status || "")
+    .trim()
+    .toLowerCase();
+
+  return completedStatuses.includes(status);
+});
+
+const completedTripCountEl =
+  document.getElementById("completedTripCount");
+
+if (completedTripCountEl) {
+  completedTripCountEl.textContent = completedTrips.length;
+}
+
+// Điểm đánh giá - lấy từ profile nếu đã có
+const ratingValueEl = document.getElementById("ratingValue");
+
+if (ratingValueEl) {
+  const rating = Number(profile?.rating || 0);
+  ratingValueEl.textContent =
+    rating > 0 ? rating.toFixed(1) : "0";
+}
 
   document.querySelectorAll(".avatar, .profile-avatar").forEach(el => {
     el.textContent = displayName.charAt(0).toUpperCase();
