@@ -197,6 +197,59 @@
         font-size: 29px;
       }
     }
+    /* ===== LIÊN HỆ NỔI VIETTRUCK ===== */
+.floating-contact {
+    position: fixed;
+    right: 18px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    z-index: 9999;
+}
+
+.floating-contact a {
+    display: flex;
+    align-items: center;
+    min-width: 190px;
+    padding: 11px 16px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    background: #ffffff;
+    box-shadow: 0 4px 15px rgba(0,0,0,.18);
+}
+
+.floating-contact .phone {
+    color: #087f45;
+}
+
+.floating-contact .zalo {
+    color: #0068ff;
+}
+
+.floating-contact .facebook {
+    color: #1877f2;
+}
+
+.floating-contact a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,.22);
+}
+
+@media (max-width: 600px) {
+    .floating-contact {
+        right: 10px;
+        bottom: 12px;
+    }
+
+    .floating-contact a {
+        min-width: auto;
+        padding: 10px 13px;
+        font-size: 13px;
+    }
+}
   </style>
 </head>
 
