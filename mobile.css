@@ -419,3 +419,58 @@ nav {
     scroll-behavior: auto !important;
   }
 }
+/* =========================================================
+   FIX MOBILE CLICK / OVERLAY - VIETTRUCKS
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  /* Header luôn nổi đúng lớp */
+  .site-header {
+    position: relative;
+    z-index: 10000;
+  }
+
+  /* Menu chỉ nhận click khi thực sự mở */
+  .menu,
+  #menu {
+    z-index: 10001;
+  }
+
+  /* Không để hero overlay chặn nút */
+  .hero-overlay {
+    pointer-events: none !important;
+  }
+
+  /* Nội dung hero phải bấm được */
+  .hero-inner,
+  .hero-copy,
+  .search-card,
+  .search-tabs,
+  .search-grid {
+    position: relative;
+    z-index: 5;
+  }
+
+  /* Tất cả nút/link chính phải nhận thao tác */
+  a,
+  button,
+  .btn,
+  .tab {
+    pointer-events: auto !important;
+    touch-action: manipulation;
+    position: relative;
+  }
+
+  /* Menu đóng thì không được phủ trang */
+  .menu:not(.active):not(.open):not(.show) {
+    pointer-events: none;
+  }
+
+  /* Nhưng các link menu khi menu mở phải bấm được */
+  .menu.active,
+  .menu.open,
+  .menu.show {
+    pointer-events: auto !important;
+  }
+}
