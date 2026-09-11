@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Thanh toán | VietTrucks</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7f8;
+      color: #1f2937;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .payment-box {
+      width: 100%;
+      max-width: 520px;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px 26px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: 800;
+      color: #16803a;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 10px 0;
+      font-size: 24px;
+    }
+
+    .description {
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .loader {
+      width: 46px;
+      height: 46px;
+      border: 5px solid #e5e7eb;
+      border-top-color: #16803a;
+      border-radius: 50%;
+      margin: 22px auto;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    #status {
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+
+    .error {
+      color: #b91c1c;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .success {
+      color: #166534;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .btn {
+      display: none;
+      width: 100%;
+      margin-top: 20px;
+      border: 0;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      background: #16803a;
+      color: #ffffff;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 22px;
+      color: #4b5563;
+      text-decoration: none;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+  <div class="payment-box">
+
+    <div class="logo">VietTrucks</div>
+
+    <h1>Thanh toán</h1>
+
+    <div class="description">
+      Hệ thống đang tạo phiên thanh toán an toàn qua SePay.
+      Vui lòng không đóng trình duyệt.
+    </div>
+
+    <div id="loader" class="loader"></div>
+
+    <div id="status">
+      Đang kết nối cổng thanh toán...
+    </div>
+
+    <button
+      id="retryButton"
+      class="btn"
+      type="button"
+      onclick="startPayment()"
+    >
+      Thử lại
+    </button>
+
+    <a href="/" class="back-link">
+      ← Quay về trang chủ
+    </a>
+
+  </div>
+</div>
+
+
+<script>
+const SEPAY_CHECKOUT_FUNCTION =
+  "https://ksyakrcgqzsupqyuusyo.supabase.co/functions/v1/sepay-checkout";
+
+
+function showError(message) {
+  const loader = document.getElementById("loader");
+  const status = document.getElementById("status");
+  const retryButton = document.getElementById("retryButton");
+
+  loader.style.display = "none";
+
+  status.className = "error";
+  status.textContent = message;
+
+  retryButton.style.display = "block";
+}
+
+
+function showSuccess(message) {
+  const status = document.getElementById("status");
+
+  status.className = "success";
+  status.textContent = message;
+}
+
+
+function submitToSePay(checkoutUrl, fields) {
+
+  const form = document.createElement("form");
+
+  form.method = "POST";
+  form.action = checkoutUrl;
+  form.style.display = "none";
+
+
+  Object.entries(fields).forEach(([name, value]) => {
+
+    if (
+      value === undefined ||
+      value === null
+    ) {
+      return;
+    }
+
+    const input =
+      document.createElement("input");
+
+    input.type = "hidden";
+    input.name = name;
+    input.value = String(value);
+
+    form.appendChild(input);
+  });
+
+
+  document.body.appendChild(form);
+
+  showSuccess(
+    "Đã tạo phiên thanh toán. Đang chuyển tới SePay..."
+  );
+
+
+  setTimeout(() => {
+    form.submit();
+  }, 500);
+}
+
+
+async function startPayment() {
+
+  const loader =
+    document.getElementById("loader");
+
+  const status =
+    document.getElementById("status");
+
+  const retryButton =
+    document.getElementById("retryButton");
+
+
+  loader.style.display = "block";
+  retryButton.style.display = "none";
+
+  status.className = "";
+  status.textContent =
+    "Đang kết nối cổng thanh toán...";
+
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+
+  const paymentCode =
+    params.get("payment_code");
+
+
+  if (!paymentCode) {
+
+    showError(
+      "Thiếu mã yêu cầu thanh toán."
+    );
+
+    return;
+  }
+
+
+  try {
+
+    const url =
+      SEPAY_CHECKOUT_FUNCTION +
+      "?payment_code=" +
+      encodeURIComponent(paymentCode);
+
+
+    const response =
+      await fetch(url, {
+        method: "GET",
+        headers: {
+          "Accept": "application/json"
+        }
+      });
+
+
+    const text =
+      await response.text();
+
+
+    let data;
+
+    try {
+      data = JSON.parse(text);
+    } catch {
+      throw new Error(
+        text ||
+        "Máy chủ trả về dữ liệu không hợp lệ."
+      );
+    }
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.message ||
+        data.error ||
+        "Không thể tạo phiên thanh toán."
+      );
+    }
+
+
+    if (
+      !data.success ||
+      !data.checkout_url ||
+      !data.fields
+    ) {
+
+      throw new Error(
+        "Thông tin thanh toán không đầy đủ."
+      );
+    }
+
+
+    submitToSePay(
+      data.checkout_url,
+      data.fields
+    );
+
+  } catch (error) {
+
+    console.error(
+      "PAYMENT_ERROR",
+      error
+    );
+
+
+    showError(
+      error.message ||
+      "Không thể kết nối cổng thanh toán."
+    );
+  }
+}
+
+
+document.addEventListener(
+  "DOMContentLoaded",
+  startPayment
+);
+</script>
+
+</body>
+</html>
