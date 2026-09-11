@@ -192,24 +192,42 @@ function submitToSePay(checkoutUrl, fields) {
   form.style.display = "none";
 
 
-  Object.entries(fields).forEach(([name, value]) => {
+ const fieldOrder = [
+  "order_amount",
+  "merchant",
+  "currency",
+  "operation",
+  "order_description",
+  "order_invoice_number",
+  "customer_id",
+  "payment_method",
+  "success_url",
+  "error_url",
+  "cancel_url",
+  "signature"
+];
 
-    if (
-      value === undefined ||
-      value === null
-    ) {
-      return;
-    }
+fieldOrder.forEach((name) => {
 
-    const input =
-      document.createElement("input");
+  const value = fields[name];
 
-    input.type = "hidden";
-    input.name = name;
-    input.value = String(value);
+  if (
+    value === undefined ||
+    value === null ||
+    value === ""
+  ) {
+    return;
+  }
 
-    form.appendChild(input);
-  });
+  const input =
+    document.createElement("input");
+
+  input.type = "hidden";
+  input.name = name;
+  input.value = String(value);
+
+  form.appendChild(input);
+});
 
 
   document.body.appendChild(form);
