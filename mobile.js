@@ -145,3 +145,53 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("VietTruck mobile.js loaded");
+
+  const menuToggle =
+    document.querySelector(".menu-toggle") ||
+    document.querySelector(".mobile-menu-toggle") ||
+    document.getElementById("menuToggle");
+
+  const navMenu =
+    document.querySelector(".nav-menu") ||
+    document.querySelector(".mobile-menu") ||
+    document.querySelector("header nav");
+
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener("click", function (event) {
+      event.stopPropagation();
+
+      navMenu.classList.toggle("active");
+      menuToggle.classList.toggle("active");
+    });
+  }
+
+  /* Quan trọng:
+     Không preventDefault() trên link hoặc button của website.
+  */
+  document.querySelectorAll("a[href]").forEach(function (link) {
+    link.style.pointerEvents = "auto";
+    link.style.touchAction = "manipulation";
+  });
+
+  document.querySelectorAll("button").forEach(function (button) {
+    button.style.pointerEvents = "auto";
+    button.style.touchAction = "manipulation";
+  });
+
+  /* Đóng menu sau khi bấm link */
+  if (navMenu) {
+    navMenu.querySelectorAll("a[href]").forEach(function (link) {
+      link.addEventListener("click", function () {
+        navMenu.classList.remove("active");
+
+        if (menuToggle) {
+          menuToggle.classList.remove("active");
+        }
+      });
+    });
+  }
+});
