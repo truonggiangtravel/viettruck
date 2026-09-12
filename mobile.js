@@ -109,42 +109,7 @@
     "VietTrucks mobile compatibility loaded"
   );
 })();
-/* =========================================================
-   FIX MOBILE MENU CLICK
-   ========================================================= */
 
-document.addEventListener("DOMContentLoaded", function () {
-
-  const menuBtn = document.getElementById("menuBtn");
-  const menu = document.getElementById("menu");
-
-  if (menuBtn && menu) {
-
-    menuBtn.addEventListener("click", function (e) {
-      e.stopPropagation();
-    });
-
-    menu.querySelectorAll("a").forEach(function (link) {
-      link.addEventListener("click", function () {
-        menu.classList.remove("active");
-        menu.classList.remove("open");
-        menu.classList.remove("show");
-      });
-    });
-
-    document.addEventListener("click", function (e) {
-      if (
-        !menu.contains(e.target) &&
-        !menuBtn.contains(e.target)
-      ) {
-        menu.classList.remove("active");
-        menu.classList.remove("open");
-        menu.classList.remove("show");
-      }
-    });
-  }
-
-});
 
 
 document.addEventListener("DOMContentLoaded", function () {
