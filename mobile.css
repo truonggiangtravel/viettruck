@@ -679,3 +679,42 @@ header nav {
 .menu.active {
   pointer-events: auto !important;
 }
+
+/* =========================================================
+   HIỆN ĐĂNG NHẬP / ĐĂNG KÝ TRÊN MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .header-actions {
+    display: flex !important;
+    gap: 8px !important;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 8px;
+    position: relative;
+    z-index: 10002 !important;
+  }
+
+  .header-actions .btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+  }
+
+  .header-actions .btn-outline {
+    background: #fff;
+  }
+
+  .header-actions .btn-primary {
+    color: #fff;
+  }
+}
