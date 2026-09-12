@@ -652,3 +652,30 @@ header nav {
     line-height: 1.2;
   }
 }
+
+/* FIX NÚT MENU MOBILE */
+#menuBtn,
+.menu-btn {
+  position: relative !important;
+  z-index: 10002 !important;
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+  cursor: pointer;
+}
+
+#menu,
+.menu {
+  z-index: 10001 !important;
+}
+
+/* menu đóng */
+#menu:not(.active),
+.menu:not(.active) {
+  pointer-events: none;
+}
+
+/* menu mở */
+#menu.active,
+.menu.active {
+  pointer-events: auto !important;
+}
