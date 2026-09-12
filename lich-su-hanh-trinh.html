@@ -334,6 +334,353 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 });
 </script>
+  <script>
+let allTrips = [];
+
+function normalizeStatus(status) {
+    return String(status || "").trim().toLowerCase();
+}
+
+function formatMoney(value) {
+    return Number(value || 0).toLocaleString("vi-VN") + " đ";
+}
+
+function formatDateTime(value) {
+    if (!value) return "-";
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) return "-";
+
+    return date.toLocaleString("vi-VN");
+}
+
+function getTripStatusLabel(status) {
+    const s = normalizeStatus(status);
+
+    if (["completed", "done", "delivered", "hoàn thành", "đã hoàn thành"].includes(s)) {
+        return "Đã hoàn thành";
+    }
+
+    if (["running", "in_progress", "shipping", "accepted", "đang vận chuyển", "đang chạy"].includes(s)) {
+        return "Đang vận chuyển";
+    }
+
+    if (["cancelled", "canceled", "đã hủy", "da huy"].includes(s)) {
+        return "Đã hủy";
+    }
+
+    return status || "Đang xử lý";
+}
+
+function getTripStatusClass(status) {
+    const s = normalizeStatus(status);
+
+    if (["completed", "done", "delivered", "hoàn thành", "đã hoàn thành"].includes(s)) {
+        return "done";
+    }
+
+    if (["running", "in_progress", "shipping", "accepted", "đang vận chuyển", "đang chạy"].includes(s)) {
+        return "running";
+    }
+
+    if (["cancelled", "canceled", "đã hủy", "da huy"].includes(s)) {
+        return "cancel";
+    }
+
+    return "";
+}
+
+function renderTrips(trips) {
+    const tbody = document.getElementById("tripTableBody");
+
+    if (!tbody) return;
+
+    if (!trips || trips.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" style="text-align:center; padding:30px 15px; color:#6b7280;">
+                    Chưa có chuyến vận chuyển thực tế.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = trips.map(trip => {
+
+        const vehicle =
+            trip.plate_number ||
+            trip.vehicle_plate ||
+            trip.license_plate ||
+            "-";
+
+        const driver =
+            trip.driver_name ||
+            trip.driver_full_name ||
+            "-";
+
+        const pickup =
+            trip.pickup_location ||
+            trip.pickup ||
+            "";
+
+        const dropoff =
+            trip.dropoff_location ||
+            trip.dropoff ||
+            "";
+
+        const route =
+            pickup && dropoff
+                ? `${pickup} → ${dropoff}`
+                : trip.route || "-";
+
+        const startTime =
+            trip.started_at ||
+            trip.start_time ||
+            trip.created_at;
+
+        const endTime =
+            trip.completed_at ||
+            trip.end_time ||
+            "-";
+
+        const distance =
+            trip.distance_km ??
+            trip.distance ??
+            0;
+
+        const revenue =
+            trip.price ??
+            trip.amount ??
+            trip.total_amount ??
+            0;
+
+        const statusText = getTripStatusLabel(trip.status);
+        const statusClass = getTripStatusClass(trip.status);
+
+        return `
+            <tr>
+                <td class="plate">${vehicle}</td>
+                <td>${driver}</td>
+                <td class="route">${route}</td>
+                <td>${formatDateTime(startTime)}</td>
+                <td>${endTime === "-" ? "-" : formatDateTime(endTime)}</td>
+                <td>${Number(distance || 0).toLocaleString("vi-VN")} km</td>
+                <td>${formatMoney(revenue)}</td>
+                <td>
+                    <span class="status ${statusClass}">
+                        ${statusText}
+                    </span>
+                    <br>
+                    <a
+                      href="theo-doi-hanh-trinh.html?trip=${encodeURIComponent(trip.id)}"
+                      class="btn"
+                    >
+                      Xem hành trình
+                    </a>
+                </td>
+            </tr>
+        `;
+    }).join("");
+}
+
+async function loadTrips() {
+    try {
+        const { data, error } = await window.supabaseClient
+            .from("trips")
+            .select("*")
+            .order("created_at", { ascending: false });
+
+        if (error) {
+            console.error("Lỗi tải trips:", error);
+            renderTrips([]);
+            return;
+        }
+
+        allTrips = data || [];
+
+        renderTrips(allTrips);
+        updateTripSummary(allTrips);
+
+    } catch (error) {
+        console.error("Lỗi loadTrips:", error);
+        renderTrips([]);
+    }
+}
+
+function updateTripSummary(trips) {
+    const completed = trips.filter(trip =>
+        ["completed", "done", "delivered", "hoàn thành", "đã hoàn thành"]
+            .includes(normalizeStatus(trip.status))
+    );
+
+    const totalDistance = completed.reduce(
+        (sum, trip) =>
+            sum + Number(trip.distance_km || trip.distance || 0),
+        0
+    );
+
+    const totalRevenue = completed.reduce(
+        (sum, trip) =>
+            sum + Number(
+                trip.price ||
+                trip.amount ||
+                trip.total_amount ||
+                0
+            ),
+        0
+    );
+
+    const totalTripsEl = document.getElementById("totalTrips");
+    const completedTripsEl = document.getElementById("completedTrips");
+    const totalDistanceEl = document.getElementById("totalDistance");
+    const totalRevenueEl = document.getElementById("totalRevenue");
+
+    if (totalTripsEl) {
+        totalTripsEl.textContent = trips.length;
+    }
+
+    if (completedTripsEl) {
+        completedTripsEl.textContent = completed.length;
+    }
+
+    if (totalDistanceEl) {
+        totalDistanceEl.textContent =
+            totalDistance.toLocaleString("vi-VN") + " km";
+    }
+
+    if (totalRevenueEl) {
+        totalRevenueEl.textContent =
+            totalRevenue.toLocaleString("vi-VN") + " đ";
+    }
+}
+
+function filterTrips() {
+    const keyword =
+        document.getElementById("tripKeyword")
+            ?.value
+            .trim()
+            .toLowerCase() || "";
+
+    const status =
+        document.getElementById("tripStatus")
+            ?.value || "";
+
+    const fromDate =
+        document.getElementById("tripFromDate")
+            ?.value || "";
+
+    const toDate =
+        document.getElementById("tripToDate")
+            ?.value || "";
+
+    const filtered = allTrips.filter(trip => {
+
+        const vehicle = String(
+            trip.plate_number ||
+            trip.vehicle_plate ||
+            trip.license_plate ||
+            ""
+        ).toLowerCase();
+
+        const driver = String(
+            trip.driver_name ||
+            trip.driver_full_name ||
+            ""
+        ).toLowerCase();
+
+        const tripStatus = normalizeStatus(trip.status);
+
+        if (
+            keyword &&
+            !vehicle.includes(keyword) &&
+            !driver.includes(keyword)
+        ) {
+            return false;
+        }
+
+        if (status === "completed") {
+            if (
+                ![
+                    "completed",
+                    "done",
+                    "delivered",
+                    "hoàn thành",
+                    "đã hoàn thành"
+                ].includes(tripStatus)
+            ) {
+                return false;
+            }
+        }
+
+        if (status === "running") {
+            if (
+                ![
+                    "running",
+                    "in_progress",
+                    "shipping",
+                    "accepted",
+                    "đang vận chuyển",
+                    "đang chạy"
+                ].includes(tripStatus)
+            ) {
+                return false;
+            }
+        }
+
+        if (status === "cancelled") {
+            if (
+                ![
+                    "cancelled",
+                    "canceled",
+                    "đã hủy",
+                    "da huy"
+                ].includes(tripStatus)
+            ) {
+                return false;
+            }
+        }
+
+        const tripDate =
+            trip.started_at ||
+            trip.created_at;
+
+        if (fromDate && tripDate) {
+            if (new Date(tripDate) < new Date(fromDate + "T00:00:00")) {
+                return false;
+            }
+        }
+
+        if (toDate && tripDate) {
+            if (new Date(tripDate) > new Date(toDate + "T23:59:59")) {
+                return false;
+            }
+        }
+
+        return true;
+    });
+
+    renderTrips(filtered);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    document
+        .getElementById("tripSearchBtn")
+        ?.addEventListener("click", filterTrips);
+
+    document
+        .getElementById("tripKeyword")
+        ?.addEventListener("input", filterTrips);
+
+    document
+        .getElementById("tripStatus")
+        ?.addEventListener("change", filterTrips);
+
+    loadTrips();
+});
+</script>
 
 </body>
 </html>
