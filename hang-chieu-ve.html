@@ -431,73 +431,109 @@ text-align:left;
 
 <div class="container">
 
-<div class="search-box">
+  <div class="search-box">
 
-<div class="field">
-<label>XE ĐANG Ở</label>
-<input type="text" value="Hải Phòng">
-</div>
+    <div class="field">
+      <label>XE ĐANG Ở</label>
+      <input
+        type="text"
+        id="currentLocation"
+        placeholder="Nhập tỉnh/thành xe đang ở"
+      >
+    </div>
 
-<div class="field">
-<label>ĐIỂM XE MUỐN VỀ</label>
-<input type="text" value="Bắc Ninh">
-</div>
+    <div class="field">
+      <label>ĐIỂM XE MUỐN VỀ</label>
+      <input
+        type="text"
+        id="returnLocation"
+        placeholder="Nhập tỉnh/thành xe muốn về"
+      >
+    </div>
 
-<div class="field">
-<label>BÁN KÍNH LẤY HÀNG</label>
-<select>
-<option>Dưới 10 km</option>
-<option>Dưới 20 km</option>
-<option>Dưới 30 km</option>
-<option>Dưới 50 km</option>
-</select>
-</div>
+    <div class="field">
+      <label>BÁN KÍNH LẤY HÀNG</label>
+      <select id="searchRadius">
+        <option value="10">Dưới 10 km</option>
+        <option value="20">Dưới 20 km</option>
+        <option value="30">Dưới 30 km</option>
+        <option value="50">Dưới 50 km</option>
+      </select>
+    </div>
 
-<button class="search-btn" id="searchBtn">
-Tìm hàng chiều về
-</button>
+    <button class="search-btn" id="searchBtn">
+      Tìm hàng chiều về
+    </button>
 
-</div>
-
-<section class="main">
-
-<div>
-
-<div class="success" id="successBox">
-<div class="success-icon">✅</div>
-<h2>Đã nhận hàng chiều về</h2>
-<p>
-Đơn hàng đã được thêm vào danh sách chuyến của bạn.
-</p>
-<a href="chuyen-da-nhan.html">
-Xem chuyến đã nhận
-</a>
-</div>
-
-<div class="card" id="resultBox">
-
-<div class="card-head">
-<h2>Đơn phù hợp với tuyến về</h2>
-<div class="count">4 kết quả</div>
-</div>
+  </div>
 
 
+  <section class="main">
 
-</div>
+    <div>
 
-</div>
+      <div class="success" id="successBox" style="display:none;">
+        <div class="success-icon">✅</div>
 
-<aside>
+        <h2>Đã nhận hàng chiều về</h2>
+
+        <p>
+          Đơn hàng đã được thêm vào danh sách chuyến của bạn.
+        </p>
+
+        <a href="chuyen-da-nhan.html">
+          Xem chuyến đã nhận
+        </a>
+      </div>
 
 
+      <div class="card" id="resultBox">
+
+        <div class="card-head">
+          <h2>Đơn phù hợp với tuyến về</h2>
+          <div class="count" id="resultCount">0 kết quả</div>
+        </div>
+
+        <div id="freightList" style="
+          padding:32px 16px;
+          text-align:center;
+          color:#6b7280;
+          line-height:1.7;
+        ">
+
+          <div style="font-size:40px;margin-bottom:10px;">
+            🚚
+          </div>
+
+          <strong style="
+            display:block;
+            color:#17231d;
+            font-size:16px;
+            margin-bottom:6px;
+          ">
+            Chưa có đơn hàng chiều về phù hợp
+          </strong>
+
+          <div>
+            Nhập vị trí xe và điểm xe muốn về để tìm
+            các đơn hàng thực tế trên hệ thống.
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
 
 
-<div class="notice">
-🚚 Hệ thống thực tế có thể dùng GPS, vị trí xe, tải trọng trống và tuyến quay về để tự động xếp hạng các đơn phù hợp nhất.
-</div>
+    <aside>
 
-</aside>
+      <div class="notice">
+        🚚 Hệ thống sẽ đối chiếu vị trí xe, tải trọng trống
+        và tuyến quay về để tìm các đơn hàng phù hợp.
+      </div>
 
+    </aside>
 </section>
 
 </div>
