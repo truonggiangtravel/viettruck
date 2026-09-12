@@ -549,45 +549,6 @@ const user = session.user;
   }
 });
 </script>
-  <script>
-document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    const {
-      data: { session },
-      error
-    } = await supabaseClient.auth.getSession();
-
-    if (error || !session) {
-      window.location.replace("dang-nhap.html");
-      return;
-    }
-  } catch (err) {
-    console.error("Lỗi kiểm tra đăng nhập:", err);
-    window.location.replace("dang-nhap.html");
-  }
-});
-    async function checkDangHangLogin() {
-  try {
-    const { data, error } = await window.supabaseClient.auth.getSession();
-
-    if (error) {
-      console.error("Lỗi kiểm tra session:", error);
-      return;
-    }
-
-    if (!data.session) {
-      window.location.replace("dang-nhap.html");
-      return;
-    }
-
-    console.log("Đăng hàng - session OK:", data.session.user.id);
-
-  } catch (err) {
-    console.error("Lỗi checkDangHangLogin:", err);
-  }
-}
-
-checkDangHangLogin();
-</script>
+  
 </body>
 </html>
