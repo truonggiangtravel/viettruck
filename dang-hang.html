@@ -438,6 +438,12 @@ body{
 
 <script src="supabase-config.js"></script>
 <script src="auth.js"></script>
+  <script>
+(async function () {
+  const loggedIn = await requireLogin();
+  if (!loggedIn) return;
+})();
+</script>
 <script>
 const supabaseClient = window.supabaseClient;
 
