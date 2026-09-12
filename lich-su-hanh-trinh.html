@@ -257,22 +257,27 @@
 
   <div class="filters">
 
-    <input type="text" placeholder="Tìm biển số xe hoặc tài xế">
+<input
+  type="text"
+  id="tripKeyword"
+  placeholder="Tìm biển số xe hoặc tài xế"
+  autocomplete="off"
+/>
 
-    <select>
-      <option>Tất cả trạng thái</option>
-      <option>Đã hoàn thành</option>
-      <option>Đang vận chuyển</option>
-      <option>Đã hủy</option>
-    </select>
+<select id="tripStatus">
+  <option value="">Tất cả trạng thái</option>
+  <option value="completed">Đã hoàn thành</option>
+  <option value="running">Đang vận chuyển</option>
+  <option value="cancelled">Đã hủy</option>
+</select>
 
-    <input type="date">
+<input type="date" id="tripFromDate">
 
-    <input type="date">
+<input type="date" id="tripToDate">
 
-    <button>Tìm kiếm</button>
+<button type="button" id="tripSearchBtn">Tìm kiếm</button>
 
-  </div>
+</div>
 
   <div class="table-wrap">
 
