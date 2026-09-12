@@ -195,3 +195,33 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+/* =========================================================
+   VIETTRUCK SEARCH TAB FIX - IOS + ANDROID
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+  const tabs = document.querySelectorAll(".search-tabs .tab, .tab[data-tab]");
+
+  if (!tabs.length) return;
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      const target = tab.getAttribute("data-tab");
+
+      tabs.forEach(function (item) {
+        item.classList.remove("active");
+      });
+
+      tab.classList.add("active");
+
+      if (target === "find-truck") {
+        window.location.href = "tim-xe.html";
+      }
+
+      if (target === "find-cargo") {
+        window.location.href = "tim-hang.html";
+      }
+    });
+  });
+});
