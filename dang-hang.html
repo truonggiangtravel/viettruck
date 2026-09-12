@@ -549,5 +549,23 @@ const user = session.user;
   }
 });
 </script>
+  <script>
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const {
+      data: { session },
+      error
+    } = await supabaseClient.auth.getSession();
+
+    if (error || !session) {
+      window.location.replace("dang-nhap.html");
+      return;
+    }
+  } catch (err) {
+    console.error("Lỗi kiểm tra đăng nhập:", err);
+    window.location.replace("dang-nhap.html");
+  }
+});
+</script>
 </body>
 </html>
