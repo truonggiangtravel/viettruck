@@ -160,14 +160,17 @@ document.addEventListener("DOMContentLoaded", function () {
   /* Đóng menu sau khi bấm link */
   if (navMenu) {
     navMenu.querySelectorAll("a[href]").forEach(function (link) {
-      link.addEventListener("click", function () {
-        navMenu.classList.remove("active");
+  link.addEventListener("click", function () {
+    navMenu.classList.remove("open");
+    navMenu.classList.remove("active");
+    navMenu.classList.remove("show");
 
-        if (menuToggle) {
-          menuToggle.classList.remove("active");
-        }
-      });
-    });
+    if (menuToggle) {
+      menuToggle.classList.remove("active");
+      menuToggle.setAttribute("aria-expanded", "false");
+    }
+  });
+});
   }
 });
 
