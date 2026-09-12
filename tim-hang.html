@@ -358,22 +358,47 @@ a{
    MOBILE
 ========================= */
 
-@media(max-width:900px){
+@media (max-width: 900px) {
 
-    .menu{
-        display:none;
+    .menu {
+        display: none;
     }
 
-    .search-grid{
-        grid-template-columns:1fr 1fr;
+    .search-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        width: 100% !important;
+        max-width: 100% !important;
     }
 
-    .content-layout{
-        grid-template-columns:1fr;
+    .content-layout {
+        display: block !important;
+        grid-template-columns: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
     }
 
-    .filter{
-        display:none;
+    .content-layout > * {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .filter {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 20px !important;
+    }
+
+    .orders,
+    .order-list,
+    .results,
+    .latest-orders,
+    aside {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
     }
 }
 
