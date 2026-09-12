@@ -615,3 +615,40 @@ header nav {
     min-height: 44px;
   }
 }
+
+/* =========================================================
+   VIETTRUCK 4 MOBILE ACTION BUTTONS
+   ========================================================= */
+
+.mobile-action-tabs {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+  position: relative;
+  z-index: 50 !important;
+}
+
+.mobile-action-tabs .tab {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 8px;
+  text-decoration: none !important;
+  text-align: center;
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+  position: relative;
+  z-index: 51 !important;
+}
+
+@media (max-width: 768px) {
+  .mobile-action-tabs {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .mobile-action-tabs .tab {
+    font-size: 16px;
+    line-height: 1.2;
+  }
+}
