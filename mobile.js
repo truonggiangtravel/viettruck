@@ -128,14 +128,21 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelector(".nav-menu") ||
   document.querySelector(".mobile-menu") ||
   document.querySelector("header nav");
-  if (menuToggle && navMenu) {
-    menuToggle.addEventListener("click", function (event) {
-      event.stopPropagation();
+ if (menuToggle && navMenu) {
+  menuToggle.addEventListener("click", function (event) {
+    event.stopPropagation();
 
-      navMenu.classList.toggle("active");
-      menuToggle.classList.toggle("active");
-    });
-  }
+    const isOpen = navMenu.classList.toggle("open");
+
+    navMenu.classList.toggle("active", isOpen);
+    menuToggle.classList.toggle("active", isOpen);
+
+    menuToggle.setAttribute(
+      "aria-expanded",
+      isOpen ? "true" : "false"
+    );
+  });
+}
 
   /* Quan trọng:
      Không preventDefault() trên link hoặc button của website.
