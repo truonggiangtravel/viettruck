@@ -151,15 +151,18 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("VietTruck mobile.js loaded");
 
   const menuToggle =
-    document.querySelector(".menu-toggle") ||
-    document.querySelector(".mobile-menu-toggle") ||
-    document.getElementById("menuToggle");
+  document.getElementById("menuBtn") ||
+  document.querySelector(".menu-btn") ||
+  document.querySelector(".menu-toggle") ||
+  document.querySelector(".mobile-menu-toggle") ||
+  document.getElementById("menuToggle");
 
   const navMenu =
-    document.querySelector(".nav-menu") ||
-    document.querySelector(".mobile-menu") ||
-    document.querySelector("header nav");
-
+  document.getElementById("menu") ||
+  document.querySelector(".menu") ||
+  document.querySelector(".nav-menu") ||
+  document.querySelector(".mobile-menu") ||
+  document.querySelector("header nav");
   if (menuToggle && navMenu) {
     menuToggle.addEventListener("click", function (event) {
       event.stopPropagation();
