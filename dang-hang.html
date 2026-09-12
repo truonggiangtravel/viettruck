@@ -566,6 +566,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.replace("dang-nhap.html");
   }
 });
+    async function checkDangHangLogin() {
+  try {
+    const { data, error } = await window.supabaseClient.auth.getSession();
+
+    if (error) {
+      console.error("Lỗi kiểm tra session:", error);
+      return;
+    }
+
+    if (!data.session) {
+      window.location.replace("dang-nhap.html");
+      return;
+    }
+
+    console.log("Đăng hàng - session OK:", data.session.user.id);
+
+  } catch (err) {
+    console.error("Lỗi checkDangHangLogin:", err);
+  }
+}
+
+checkDangHangLogin();
 </script>
 </body>
 </html>
