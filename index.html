@@ -221,6 +221,56 @@
 
 <script src="supabase-config.js"></script>
 <script src="auth.js"></script>
+  <script>
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const { data, error } =
+      await window.supabaseClient.auth.getSession();
+
+    if (error) {
+      console.error("Lỗi kiểm tra phiên đăng nhập:", error);
+      return;
+    }
+
+    const session = data?.session;
+
+    if (!session) {
+      console.log("Trang chủ: chưa đăng nhập");
+      return;
+    }
+
+    console.log("Trang chủ: đang đăng nhập", session.user.id);
+
+    /* Đổi nút Đăng nhập thành Tài khoản */
+    const loginLink =
+      document.querySelector('a[href="dang-nhap.html"]');
+
+    if (loginLink) {
+      loginLink.href = "tai-khoan.html";
+      loginLink.textContent = "Tài khoản";
+    }
+
+    /* Đổi nút Đăng ký thành Đăng xuất */
+    const signupLink =
+      document.querySelector('a[href="dang-ky.html"]');
+
+    if (signupLink) {
+      signupLink.href = "#";
+      signupLink.textContent = "Đăng xuất";
+
+      signupLink.addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        await window.supabaseClient.auth.signOut();
+        window.location.replace("dang-nhap.html");
+      });
+    }
+
+  } catch (err) {
+    console.error("Lỗi trạng thái đăng nhập trang chủ:", err);
+  }
+});
+</script>
 
 <script>
 const supabaseClient = window.supabaseClient;
