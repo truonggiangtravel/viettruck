@@ -319,103 +319,124 @@
   </div>
 
   <div class="stats">
-    <div class="stat">
-      <small>Tổng phương tiện</small>
-      <strong>12</strong>
-    </div>
 
-    <div class="stat">
-      <small>Đang vận chuyển</small>
-      <strong>5</strong>
-    </div>
-
-    <div class="stat">
-      <small>Đang chờ hàng</small>
-      <strong>4</strong>
-    </div>
-
-    <div class="stat">
-      <small>Ngoại tuyến</small>
-      <strong>3</strong>
-    </div>
+  <div class="stat">
+    <small>Tổng phương tiện</small>
+    <strong id="totalVehicles">0</strong>
   </div>
 
-  <div class="main">
+  <div class="stat">
+    <small>Đang vận chuyển</small>
+    <strong id="runningVehicles">0</strong>
+  </div>
 
-    <div class="panel">
+  <div class="stat">
+    <small>Đang chờ hàng</small>
+    <strong id="waitingVehicles">0</strong>
+  </div>
 
-      <div class="panel-title">Danh sách xe</div>
+  <div class="stat">
+    <small>Ngoại tuyến</small>
+    <strong id="offlineVehicles">0</strong>
+  </div>
 
-      <div class="search">
-        <input type="text" placeholder="Tìm biển số xe...">
-      </div>
+</div>
 
-      <div class="vehicle active">
-        <div class="plate">99C-123.45</div>
-        <div class="route">Bắc Ninh → Hà Nội</div>
-        <span class="status running">Đang vận chuyển</span>
-      </div>
+<div class="main">
 
-      <div class="vehicle">
-        <div class="plate">99H-456.78</div>
-        <div class="route">Bắc Ninh → Hải Phòng</div>
-        <span class="status running">Đang vận chuyển</span>
-      </div>
+  <div class="panel">
 
-      <div class="vehicle">
-        <div class="plate">30H-678.90</div>
-        <div class="route">Hà Nội</div>
-        <span class="status waiting">Đang chờ hàng</span>
-      </div>
-
-      <div class="vehicle">
-        <div class="plate">98C-333.66</div>
-        <div class="route">Bắc Giang</div>
-        <span class="status offline">Ngoại tuyến</span>
-      </div>
-
+    <div class="panel-title">
+      Danh sách xe
     </div>
 
-    <div class="panel map">
+    <div class="search">
+      <input
+        type="text"
+        id="vehicleSearch"
+        placeholder="Tìm biển số xe..."
+        disabled
+      >
+    </div>
 
-      <div class="map-label">
-        Bản đồ hành trình VietTruck
+    <div style="
+      padding:40px 20px;
+      text-align:center;
+      color:#6b7280;
+      line-height:1.7;
+    ">
+
+      <div style="font-size:42px;margin-bottom:12px;">
+        🚚
       </div>
 
-      <div class="road r1"></div>
-      <div class="road r2"></div>
+      <strong style="
+        display:block;
+        color:#1f2937;
+        font-size:18px;
+        margin-bottom:8px;
+      ">
+        Chưa có hành trình đang hoạt động
+      </strong>
 
-      <div class="truck truck1">🚚</div>
-      <div class="truck truck2">🚛</div>
-      <div class="truck truck3">🚚</div>
-
-      <div class="detail">
-
-        <div>
-          <small>Phương tiện</small>
-          <strong>99C-123.45</strong>
-        </div>
-
-        <div>
-          <small>Tài xế</small>
-          <strong>Nguyễn Văn Nam</strong>
-        </div>
-
-        <div>
-          <small>Tốc độ</small>
-          <strong>62 km/h</strong>
-        </div>
-
-        <div>
-          <small>Cập nhật</small>
-          <strong>Vừa xong</strong>
-        </div>
-
+      <div>
+        Khi tài xế nhận chuyến và bắt đầu vận chuyển,
+        phương tiện sẽ xuất hiện tại đây.
       </div>
 
     </div>
 
   </div>
+
+
+  <div class="panel map">
+
+    <div class="map-label">
+      Theo dõi hành trình VietTruck
+    </div>
+
+    <div style="
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:30px;
+      text-align:center;
+      color:#6b7280;
+      line-height:1.7;
+    ">
+
+      <div>
+
+        <div style="
+          font-size:48px;
+          margin-bottom:12px;
+        ">
+          📍
+        </div>
+
+        <strong style="
+          display:block;
+          color:#1f2937;
+          font-size:18px;
+          margin-bottom:8px;
+        ">
+          Chưa có dữ liệu vị trí
+        </strong>
+
+        <div>
+          Vị trí GPS thật sẽ hiển thị khi có chuyến
+          đang thực hiện.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
 </div>
 
