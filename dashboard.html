@@ -908,14 +908,28 @@ document.getElementById("paymentCount").textContent =
   }
 
   const logoutLink =
-    document.querySelector('a[href="dang-nhap.html"]');
+  document.querySelector('a[href="dang-nhap.html"]');
 
-  if (logoutLink) {
-    logoutLink.addEventListener("click", async function(event) {
-      event.preventDefault();
-      await logout();
-    });
-  }
+if (logoutLink) {
+  logoutLink.addEventListener("click", async function(event) {
+    event.preventDefault();
+
+    try {
+      const { error } = await window.supabaseClient.auth.signOut();
+
+      if (error) {
+        console.error("Lỗi đăng xuất:", error);
+        alert("Đăng xuất thất bại: " + error.message);
+        return;
+      }
+
+      window.location.replace("dang-nhap.html");
+    } catch (err) {
+      console.error("Lỗi đăng xuất:", err);
+      alert("Không thể đăng xuất.");
+    }
+  });
+}
 })();
 </script>
   >
