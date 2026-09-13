@@ -314,11 +314,17 @@ a{
     text-align:right;
 }
 
-.price{
-    color:#078c4b;
-    font-weight:800;
-    font-size:19px;
-    margin-bottom:15px;
+.order-actions{
+    display:flex;
+    gap:10px;
+    justify-content:flex-end;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.quote-btn,
+.receive-btn{
+    white-space:nowrap;
 }
 
 .receive-btn{
@@ -516,6 +522,15 @@ body{
     .order-price{
         text-align:left;
     }
+  .order-actions{
+    justify-content:flex-start;
+    margin-top:10px;
+}
+
+.quote-btn,
+.receive-btn{
+    flex:0 0 auto;
+}
   /* FIX PHẦN NỘI DUNG DƯỚI TRÊN ĐIỆN THOẠI */
 .content-layout{
     display:block !important;
