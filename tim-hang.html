@@ -668,6 +668,86 @@ body{
         box-sizing: border-box !important;
     }
 }
+  /* ===== FIX BỐ CỤC CARD TÌM HÀNG ===== */
+
+.order-card{
+    display:grid !important;
+    grid-template-columns:minmax(0, 1fr) 240px !important;
+    align-items:start !important;
+    gap:24px !important;
+    width:100% !important;
+}
+
+.order-info{
+    width:100% !important;
+    min-width:0 !important;
+}
+
+.order-price{
+    width:240px !important;
+    min-width:240px !important;
+    margin-left:auto !important;
+    text-align:right !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-end !important;
+}
+
+.order-price .price{
+    width:100% !important;
+    margin:0 0 12px 0 !important;
+    text-align:right !important;
+    color:#078c4b !important;
+    font-size:20px !important;
+    font-weight:800 !important;
+}
+
+.order-actions{
+    width:100% !important;
+    display:flex !important;
+    justify-content:flex-end !important;
+    align-items:center !important;
+    gap:10px !important;
+    flex-wrap:nowrap !important;
+}
+
+.quote-btn,
+.receive-btn{
+    position:static !important;
+    float:none !important;
+    margin:0 !important;
+    white-space:nowrap !important;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+    .order-card{
+        display:block !important;
+        width:100% !important;
+    }
+
+    .order-info{
+        width:100% !important;
+    }
+
+    .order-price{
+        width:100% !important;
+        min-width:0 !important;
+        margin:16px 0 0 0 !important;
+        align-items:flex-start !important;
+        text-align:left !important;
+    }
+
+    .order-price .price{
+        text-align:left !important;
+    }
+
+    .order-actions{
+        justify-content:flex-start !important;
+        flex-wrap:wrap !important;
+    }
+}
 </style>
 </head>
 
