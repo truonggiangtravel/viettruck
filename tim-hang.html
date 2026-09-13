@@ -1166,25 +1166,27 @@ function renderOrders(orders){
 
             <div class="order-price">
 
-                <div class="price">
-                    ${formatPrice(order.price)}
-                </div>
+    <div class="price">
+        ${formatPrice(order.price)}
+    </div>
 
-                <button
-                    type="button"
-                    class="quote-btn"
-                >
-                    Báo giá
-                </button>
+    <div class="order-actions">
+        <button
+            type="button"
+            class="quote-btn"
+        >
+            Báo giá
+        </button>
 
-                <button
-                    type="button"
-                    class="receive-btn"
-                >
-                    Nhận chuyến
-                </button>
+        <button
+            type="button"
+            class="receive-btn"
+        >
+            Nhận chuyến
+        </button>
+    </div>
 
-            </div>
+</div>
         `;
 
         const quoteButton =
