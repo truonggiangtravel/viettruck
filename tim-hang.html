@@ -668,25 +668,26 @@ body{
         box-sizing: border-box !important;
     }
 }
-  /* ===== FIX BỐ CỤC CARD TÌM HÀNG ===== */
+  /* ===== ORDER CARD FINAL FIX ===== */
 
 .order-card{
-    display:grid !important;
-    grid-template-columns:minmax(0, 1fr) 240px !important;
-    align-items:start !important;
+    display:flex !important;
+    justify-content:space-between !important;
+    align-items:flex-start !important;
     gap:24px !important;
     width:100% !important;
 }
 
 .order-info{
-    width:100% !important;
+    flex:1 1 auto !important;
     min-width:0 !important;
 }
 
 .order-price{
-    width:240px !important;
-    min-width:240px !important;
-    margin-left:auto !important;
+    flex:0 0 220px !important;
+    width:220px !important;
+    min-width:220px !important;
+    margin:0 !important;
     text-align:right !important;
     display:flex !important;
     flex-direction:column !important;
@@ -694,21 +695,21 @@ body{
 }
 
 .order-price .price{
-    width:100% !important;
     margin:0 0 12px 0 !important;
-    text-align:right !important;
+    padding:0 !important;
     color:#078c4b !important;
     font-size:20px !important;
     font-weight:800 !important;
+    line-height:1.2 !important;
 }
 
 .order-actions{
-    width:100% !important;
     display:flex !important;
     justify-content:flex-end !important;
     align-items:center !important;
     gap:10px !important;
-    flex-wrap:nowrap !important;
+    width:auto !important;
+    margin:0 !important;
 }
 
 .quote-btn,
@@ -716,11 +717,50 @@ body{
     position:static !important;
     float:none !important;
     margin:0 !important;
+    height:44px !important;
+    padding:0 16px !important;
+    border-radius:7px !important;
+    font-weight:700 !important;
     white-space:nowrap !important;
+    cursor:pointer !important;
 }
 
-/* MOBILE */
+.quote-btn{
+    border:1px solid #078c4b !important;
+    background:#fff !important;
+    color:#078c4b !important;
+}
+
+.receive-btn{
+    border:1px solid #078c4b !important;
+    background:#078c4b !important;
+    color:#fff !important;
+}
+
 @media(max-width:600px){
+
+    .order-card{
+        display:block !important;
+    }
+
+    .order-price{
+        width:100% !important;
+        min-width:0 !important;
+        margin-top:16px !important;
+        align-items:flex-start !important;
+        text-align:left !important;
+    }
+
+    .order-price .price{
+        text-align:left !important;
+    }
+
+    .order-actions{
+        width:100% !important;
+        justify-content:flex-start !important;
+        flex-wrap:wrap !important;
+    }
+}
 
     .order-card{
         display:block !important;
