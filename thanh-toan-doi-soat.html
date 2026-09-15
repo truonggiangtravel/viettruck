@@ -540,53 +540,164 @@ Số tiền tài xế thực nhận: <strong>3.325.000 đ</strong>.
 </div>
 </footer>
 
-<script>
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const payBtn =
-document.getElementById("payBtn");
+const SUPABASE_URL =
+  "https://kqypidctajadqwmdcash.supabase.co";
 
-const confirmCheck =
-document.getElementById("confirmCheck");
+/*
+  Dùng anon/publishable key hiện đang dùng trên VietTrucks.
+  KHÔNG dùng service_role key trong file HTML.
+*/
+const SUPABASE_ANON_KEY =
+  "DAN_KEY_ANON_HIEN_TAI_CUA_VIETTRUCKS";
 
-const paymentMethod =
-document.getElementById("paymentMethod");
+const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
 
-const paymentCard =
-document.getElementById("paymentCard");
+const params = new URLSearchParams(window.location.search);
+const paymentCode = params.get("payment_code");
 
-const successBox =
-document.getElementById("successBox");
+const payBtn = document.getElementById("payBtn");
+const confirmCheck = document.getElementById("confirmCheck");
+const paymentMethod = document.getElementById("paymentMethod");
+const paymentCard = document.getElementById("paymentCard");
+const successBox = document.getElementById("successBox");
+const paymentStatus = document.getElementById("paymentStatus");
 
-payBtn.addEventListener("click",function(){
-
-if(paymentMethod.value === ""){
-
-alert("Vui lòng chọn phương thức thanh toán.");
-
-return;
-
+function formatMoney(value) {
+  return new Intl.NumberFormat("vi-VN").format(
+    Number(value || 0)
+  ) + " đ";
 }
 
-if(!confirmCheck.checked){
+async function loadPayment() {
 
-alert("Vui lòng xác nhận thông tin đối soát.");
+  if (!paymentCode) {
+    paymentStatus.textContent =
+      "Không tìm thấy mã thanh toán";
 
-return;
+    payBtn.disabled = true;
+    return;
+  }
 
+  paymentStatus.textContent =
+    "Đang kiểm tra thanh toán...";
+
+  const {
+    data: payment,
+    error
+  } = await supabase
+    .from("payment_requests")
+    .select(`
+      id,
+      payment_code,
+      amount,
+      status,
+      paid_at,
+      sepay_reference_code
+    `)
+    .eq("payment_code", paymentCode)
+    .maybeSingle();
+
+  if (error) {
+    console.error("PAYMENT_ERROR", error);
+
+    paymentStatus.textContent =
+      "Không kiểm tra được thanh toán";
+
+    payBtn.disabled = true;
+    return;
+  }
+
+  if (!payment) {
+    paymentStatus.textContent =
+      "Không tìm thấy giao dịch";
+
+    payBtn.disabled = true;
+    return;
+  }
+
+  /*
+    Nếu Supabase xác nhận PAID,
+    đây mới là căn cứ hiển thị thanh toán thành công.
+  */
+  if (payment.status === "paid") {
+
+    paymentStatus.textContent =
+      "Đã thanh toán";
+
+    paymentStatus.classList.add("paid");
+
+    paymentCard.style.display = "none";
+    successBox.style.display = "block";
+
+    successBox.innerHTML = `
+      <div class="success-icon">✅</div>
+
+      <h2>Thanh toán thành công</h2>
+
+      <p>
+        Mã thanh toán:
+        <strong>${payment.payment_code}</strong>
+        <br>
+
+        Số tiền:
+        <strong>${formatMoney(payment.amount)}</strong>
+        <br>
+
+        Trạng thái:
+        <strong style="color:#078c4b">
+          Đã thanh toán
+        </strong>
+        ${
+          payment.sepay_reference_code
+            ? `<br>Mã giao dịch SePay:
+               <strong>${payment.sepay_reference_code}</strong>`
+            : ""
+        }
+      </p>
+
+      <a href="dashboard.html">
+        Về Dashboard
+      </a>
+    `;
+
+    return;
+  }
+
+  paymentStatus.textContent =
+    "Chờ thanh toán";
+
+  paymentStatus.classList.remove("paid");
 }
 
-paymentCard.style.display = "none";
+/*
+  Không cho nút cũ tự giả lập thanh toán thành công.
+  Thanh toán chỉ được xác nhận từ database.
+*/
+payBtn.addEventListener("click", function () {
 
-successBox.style.display = "block";
+  if (paymentMethod.value === "") {
+    alert("Vui lòng chọn phương thức thanh toán.");
+    return;
+  }
 
-window.scrollTo({
-top:150,
-behavior:"smooth"
+  if (!confirmCheck.checked) {
+    alert("Vui lòng xác nhận thông tin đối soát.");
+    return;
+  }
+
+  alert(
+    "Trạng thái thanh toán sẽ được xác nhận tự động từ SePay."
+  );
+
 });
 
-});
-
+loadPayment();
 </script>
-
 </body>
 </html>
