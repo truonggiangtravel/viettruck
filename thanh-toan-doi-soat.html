@@ -540,23 +540,11 @@ Số tiền tài xế thực nhận: <strong>3.325.000 đ</strong>.
 </div>
 </footer>
 
-<script type="module">
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 
-const SUPABASE_URL =
-  "https://kqypidctajadqwmdcash.supabase.co";
-
-/*
-  Dùng anon/publishable key hiện đang dùng trên VietTrucks.
-  KHÔNG dùng service_role key trong file HTML.
-*/
-const SUPABASE_ANON_KEY =
-  "DAN_KEY_ANON_HIEN_TAI_CUA_VIETTRUCKS";
-
-const supabase = createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
+<script>
+const supabase = window.supabaseClient;
 
 const params = new URLSearchParams(window.location.search);
 const paymentCode = params.get("payment_code");
