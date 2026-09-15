@@ -440,6 +440,40 @@ body{
 <script src="auth.js"></script>
 
   <script>
+    async function updateAuthButtons() {
+    const authButtons = document.getElementById("authButtons");
+    if (!authButtons || !window.supabaseClient) return;
+
+    const {
+        data: { session },
+        error
+    } = await window.supabaseClient.auth.getSession();
+
+    if (error) {
+        console.error("Lỗi kiểm tra đăng nhập:", error);
+        return;
+    }
+
+    if (session) {
+        authButtons.innerHTML = `
+            <a href="dashboard.html" class="btn btn-outline">Dashboard</a>
+            <a href="tai-khoan.html" class="btn btn-green">Tài khoản</a>
+            <button type="button" class="btn btn-outline" id="logoutButton">Đăng xuất</button>
+        `;
+
+        document.getElementById("logoutButton")?.addEventListener("click", async () => {
+            await window.supabaseClient.auth.signOut();
+            window.location.href = "dang-nhap.html";
+        });
+    } else {
+        authButtons.innerHTML = `
+            <a href="dang-nhap.html" class="btn btn-outline">Đăng nhập</a>
+            <a href="dang-ky.html" class="btn btn-green">Đăng ký</a>
+        `;
+    }
+}
+
+updateAuthButtons();
 
 const orderForm = document.querySelector(".form-card");
 
