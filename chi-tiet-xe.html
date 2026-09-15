@@ -127,8 +127,8 @@ display:block;width:100%;text-align:center;text-decoration:none;border-radius:8p
 
 
 
-<a href="dang-nhap.html" class="primary-btn">Gửi yêu cầu vận chuyển</a>
-<a href="dang-nhap.html" class="secondary-btn">Liên hệ tài xế</a>
+<a href="#" id="sendTransportRequest" class="primary-btn">Gửi yêu cầu vận chuyển</a>
+<a href="#" id="contactDriver" class="secondary-btn">Liên hệ tài xế</a>
 
 </div>
 
@@ -149,5 +149,79 @@ display:block;width:100%;text-align:center;text-decoration:none;border-radius:8p
 </div>
 </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+    const supabaseClient = window.supabaseClient;
+
+    const sendBtn = document.getElementById("sendTransportRequest");
+    const contactBtn = document.getElementById("contactDriver");
+
+    if (!supabaseClient) {
+        console.error("Không tìm thấy Supabase client");
+        return;
+    }
+
+    // Lấy xe hiện tại từ URL
+    const params = new URLSearchParams(window.location.search);
+    const vehicleId = params.get("id");
+
+    // Kiểm tra phiên đăng nhập hiện tại
+    async function getCurrentUser() {
+        const {
+            data: { session },
+            error
+        } = await supabaseClient.auth.getSession();
+
+        if (error) {
+            console.error("Lỗi kiểm tra đăng nhập:", error);
+            return null;
+        }
+
+        return session?.user || null;
+    }
+
+    // GỬI YÊU CẦU VẬN CHUYỂN
+    sendBtn?.addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        const user = await getCurrentUser();
+
+        if (!user) {
+            window.location.href =
+                "dang-nhap.html?redirect=" +
+                encodeURIComponent(window.location.href);
+            return;
+        }
+
+        // Đã đăng nhập thì giữ nguyên phiên và chuyển sang Đăng hàng
+        const target = vehicleId
+            ? "dang-hang.html?vehicle_id=" + encodeURIComponent(vehicleId)
+            : "dang-hang.html";
+
+        window.location.href = target;
+    });
+
+    // LIÊN HỆ TÀI XẾ
+    contactBtn?.addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        const user = await getCurrentUser();
+
+        if (!user) {
+            window.location.href =
+                "dang-nhap.html?redirect=" +
+                encodeURIComponent(window.location.href);
+            return;
+        }
+
+        // Tạm thời xác nhận phiên đăng nhập trước.
+        // Bước sau sẽ lấy thông tin tài xế thật từ bảng vehicles/profiles.
+        alert("Bạn đã đăng nhập. Đang tải thông tin liên hệ tài xế.");
+    });
+});
+</script>
 </body>
 </html>
