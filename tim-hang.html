@@ -1556,11 +1556,13 @@ async function loadOrders(){
       data,
       error
     } = await supabaseClient
-      .from("orders")
-      .select("*")
-      .order("created_at", {
-        ascending: false
-      });
+    .from("orders")
+.select("*")
+.eq("status", "pending")
+.is("accepted_by", null)
+.order("created_at", {
+  ascending: false
+});
 
     if (error) {
     console.error("Lỗi tải đơn hàng:", error);
