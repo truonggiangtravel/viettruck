@@ -578,7 +578,7 @@ async function loadPayment() {
   const {
     data: payment,
     error
-  } = await supabase
+  } = await window.supabaseClient
     .from("payment_requests")
     .select(`
       id,
