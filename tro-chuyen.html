@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Trò chuyện | VietTruck</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#17221d;
+}
+
+.header{
+    background:#078c4b;
+    color:#fff;
+    padding:16px;
+}
+
+.header-inner{
+    max-width:900px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:800;
+}
+
+.back{
+    color:#fff;
+    text-decoration:none;
+    font-weight:700;
+}
+
+.chat-wrap{
+    max-width:900px;
+    margin:25px auto;
+    padding:0 15px;
+}
+
+.chat-card{
+    background:#fff;
+    border:1px solid #dfe7e2;
+    border-radius:14px;
+    overflow:hidden;
+}
+
+.chat-title{
+    padding:16px 18px;
+    border-bottom:1px solid #e5ebe7;
+}
+
+.chat-title strong{
+    display:block;
+    font-size:18px;
+}
+
+.chat-title span{
+    display:block;
+    margin-top:5px;
+    color:#68756e;
+    font-size:13px;
+}
+
+.messages{
+    height:520px;
+    overflow-y:auto;
+    padding:18px;
+    background:#f7faf8;
+}
+
+.empty{
+    text-align:center;
+    color:#78847e;
+    padding:50px 15px;
+}
+
+.message-row{
+    display:flex;
+    margin-bottom:12px;
+}
+
+.message-row.mine{
+    justify-content:flex-end;
+}
+
+.message{
+    max-width:75%;
+    background:#fff;
+    border:1px solid #dfe7e2;
+    border-radius:12px;
+    padding:10px 12px;
+    line-height:1.45;
+    word-break:break-word;
+}
+
+.message-row.mine .message{
+    background:#e5f6ed;
+    border-color:#b9e3cc;
+}
+
+.message-time{
+    display:block;
+    margin-top:5px;
+    font-size:11px;
+    color:#7b8781;
+}
+
+.chat-form{
+    display:flex;
+    gap:10px;
+    padding:14px;
+    border-top:1px solid #e5ebe7;
+    background:#fff;
+}
+
+.chat-form textarea{
+    flex:1;
+    min-height:48px;
+    max-height:120px;
+    resize:vertical;
+    border:1px solid #ccd8d1;
+    border-radius:9px;
+    padding:12px;
+    font:inherit;
+    outline:none;
+}
+
+.chat-form textarea:focus{
+    border-color:#078c4b;
+}
+
+.send-btn{
+    border:0;
+    background:#078c4b;
+    color:#fff;
+    font-weight:700;
+    border-radius:9px;
+    padding:0 22px;
+    cursor:pointer;
+}
+
+.send-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.notice{
+    max-width:900px;
+    margin:15px auto;
+    padding:0 15px;
+}
+
+.notice-box{
+    background:#fff8df;
+    border:1px solid #eed88c;
+    padding:12px 15px;
+    border-radius:9px;
+    font-size:13px;
+    line-height:1.5;
+}
+
+@media(max-width:600px){
+
+    .messages{
+        height:60vh;
+    }
+
+    .message{
+        max-width:88%;
+    }
+
+    .send-btn{
+        padding:0 16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="header-inner">
+
+        <div class="logo">
+            🚚 VietTruck
+        </div>
+
+        <a href="javascript:history.back()" class="back">
+            ← Quay lại
+        </a>
+
+    </div>
+</header>
+
+
+<div class="notice">
+    <div class="notice-box">
+        🔒 Hãy trao đổi và xác nhận giao dịch trong VietTruck.
+        Không nên gửi số điện thoại, Zalo, email hoặc thông tin liên hệ
+        cá nhân trong phần trò chuyện.
+    </div>
+</div>
+
+
+<main class="chat-wrap">
+
+    <div class="chat-card">
+
+        <div class="chat-title">
+            <strong>Trò chuyện vận chuyển</strong>
+            <span id="chatStatus">
+                Đang kết nối...
+            </span>
+        </div>
+
+
+        <div
+            id="messages"
+            class="messages"
+        >
+            <div class="empty">
+                Đang tải cuộc trò chuyện...
+            </div>
+        </div>
+
+
+        <form
+            id="chatForm"
+            class="chat-form"
+        >
+
+            <textarea
+                id="messageInput"
+                maxlength="1000"
+                placeholder="Nhập tin nhắn..."
+                required
+            ></textarea>
+
+            <button
+                id="sendButton"
+                class="send-btn"
+                type="submit"
+            >
+                Gửi
+            </button>
+
+        </form>
+
+    </div>
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+
+const supabaseClient = window.supabaseClient;
+
+const messagesBox =
+    document.getElementById("messages");
+
+const chatForm =
+    document.getElementById("chatForm");
+
+const messageInput =
+    document.getElementById("messageInput");
+
+const sendButton =
+    document.getElementById("sendButton");
+
+const chatStatus =
+    document.getElementById("chatStatus");
+
+
+let currentUser = null;
+let conversationId = null;
+let realtimeChannel = null;
+
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+
+function formatTime(value){
+
+    if(!value) return "";
+
+    return new Date(value)
+        .toLocaleString("vi-VN");
+}
+
+
+function scrollBottom(){
+
+    messagesBox.scrollTop =
+        messagesBox.scrollHeight;
+}
+
+
+function renderMessage(message){
+
+    if(
+        document.getElementById(
+            "message-" + message.id
+        )
+    ){
+        return;
+    }
+
+    const row =
+        document.createElement("div");
+
+    row.id =
+        "message-" + message.id;
+
+    row.className =
+        "message-row" +
+        (
+            message.sender_id === currentUser.id
+            ? " mine"
+            : ""
+        );
+
+
+    row.innerHTML = `
+        <div class="message">
+
+            <div>
+                ${escapeHtml(message.message)}
+            </div>
+
+            <span class="message-time">
+                ${formatTime(message.created_at)}
+            </span>
+
+        </div>
+    `;
+
+    messagesBox.appendChild(row);
+}
+
+
+async function loadMessages(){
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+
+        .from("messages")
+
+        .select(
+            "id, conversation_id, sender_id, message, is_read, created_at"
+        )
+
+        .eq(
+            "conversation_id",
+            conversationId
+        )
+
+        .order(
+            "created_at",
+            {
+                ascending:true
+            }
+        );
+
+
+    if(error){
+
+        console.error(
+            "Lỗi tải tin nhắn:",
+            error
+        );
+
+        messagesBox.innerHTML =
+            '<div class="empty">Không tải được tin nhắn.</div>';
+
+        return;
+    }
+
+
+    messagesBox.innerHTML = "";
+
+
+    if(!data || data.length === 0){
+
+        messagesBox.innerHTML =
+            '<div class="empty" id="emptyChat">Chưa có tin nhắn. Hãy bắt đầu cuộc trò chuyện.</div>';
+
+        return;
+    }
+
+
+    data.forEach(renderMessage);
+
+    scrollBottom();
+}
+
+
+function subscribeMessages(){
+
+    realtimeChannel =
+        supabaseClient
+
+        .channel(
+            "conversation-" +
+            conversationId
+        )
+
+        .on(
+
+            "postgres_changes",
+
+            {
+                event:"INSERT",
+                schema:"public",
+                table:"messages",
+                filter:
+                    "conversation_id=eq." +
+                    conversationId
+            },
+
+            payload => {
+
+                const empty =
+                    document.getElementById(
+                        "emptyChat"
+                    );
+
+                if(empty){
+                    empty.remove();
+                }
+
+                renderMessage(
+                    payload.new
+                );
+
+                scrollBottom();
+            }
+
+        )
+
+        .subscribe();
+}
+
+
+async function startChat(){
+
+    if(!supabaseClient){
+
+        alert(
+            "Không kết nối được Supabase."
+        );
+
+        return;
+    }
+
+
+    const {
+        data:{
+            session
+        },
+        error:sessionError
+
+    } =
+        await supabaseClient
+            .auth
+            .getSession();
+
+
+    if(
+        sessionError ||
+        !session
+    ){
+
+        window.location.href =
+            "dang-nhap.html?redirect=" +
+            encodeURIComponent(
+                window.location.href
+            );
+
+        return;
+    }
+
+
+    currentUser =
+        session.user;
+
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const tripId =
+        params.get("trip_id");
+
+
+    if(!tripId){
+
+        messagesBox.innerHTML =
+            '<div class="empty">Thiếu mã chuyến vận chuyển.</div>';
+
+        chatStatus.textContent =
+            "Không xác định được chuyến";
+
+        chatForm.style.display =
+            "none";
+
+        return;
+    }
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.rpc(
+            "get_or_create_trip_conversation",
+            {
+                p_trip_id:tripId
+            }
+        );
+
+
+    if(error){
+
+        console.error(
+            "Lỗi mở cuộc trò chuyện:",
+            error
+        );
+
+        messagesBox.innerHTML =
+            '<div class="empty">Bạn không thể truy cập cuộc trò chuyện này.</div>';
+
+        chatStatus.textContent =
+            "Không có quyền truy cập";
+
+        chatForm.style.display =
+            "none";
+
+        return;
+    }
+
+
+    conversationId = data;
+
+
+    chatStatus.textContent =
+        "Đã kết nối";
+
+
+    await loadMessages();
+
+    subscribeMessages();
+}
+
+
+chatForm.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+
+        if(
+            !currentUser ||
+            !conversationId
+        ){
+            return;
+        }
+
+
+        const text =
+            messageInput
+                .value
+                .trim();
+
+
+        if(!text){
+            return;
+        }
+
+
+        sendButton.disabled =
+            true;
+
+
+        const {
+            error
+        } =
+            await supabaseClient
+
+            .from("messages")
+
+            .insert({
+
+                conversation_id:
+                    conversationId,
+
+                sender_id:
+                    currentUser.id,
+
+                message:
+                    text
+
+            });
+
+
+        if(error){
+
+            console.error(
+                "Lỗi gửi tin nhắn:",
+                error
+            );
+
+            alert(
+                "Không gửi được tin nhắn: " +
+                error.message
+            );
+
+            sendButton.disabled =
+                false;
+
+            return;
+        }
+
+
+        messageInput.value = "";
+
+        sendButton.disabled =
+            false;
+
+        messageInput.focus();
+    }
+);
+
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        if(realtimeChannel){
+
+            supabaseClient
+                .removeChannel(
+                    realtimeChannel
+                );
+        }
+    }
+);
+
+
+startChat();
+
+</script>
+
+</body>
+</html>
