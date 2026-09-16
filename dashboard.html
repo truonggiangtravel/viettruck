@@ -857,12 +857,7 @@ document.getElementById("pendingAmount").textContent =
 document.getElementById("platformFee").textContent =
   money(platformFee);
 
-    document.getElementById("vehicleCount").textContent =
-      vehicles.length + " xe";
-
-    document.getElementById("pendingOrderCount").textContent =
-      pendingOrders.length;
-
+    
     
 
 
@@ -890,21 +885,9 @@ document.getElementById("paymentTopNote").textContent =
     )
   );
 
-const pendingPods = orders.filter(order => {
-  const status = statusOf(order.status);
 
-  return (
-    status.includes("pod") &&
-    !status.includes("approved") &&
-    !status.includes("completed")
-  );
-});
 
-document.getElementById("podCount").textContent =
-  pendingPods.length;
 
-document.getElementById("paymentCount").textContent =
-  pendingPayments.length;
 
   } catch (error) {
     console.error("Lỗi Dashboard:", error);
