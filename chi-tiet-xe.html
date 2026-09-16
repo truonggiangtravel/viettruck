@@ -203,6 +203,28 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         window.location.href = target;
     });
+  // CHAT NỘI BỘ CHỦ HÀNG <-> NHÀ XE
+contactBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const user = await getCurrentUser();
+
+    if (!user) {
+        window.location.href =
+            "dang-nhap.html?redirect=" +
+            encodeURIComponent(window.location.href);
+        return;
+    }
+
+    if (!vehicleId) {
+        alert("Không xác định được xe.");
+        return;
+    }
+
+    window.location.href =
+        "chat.html?vehicle_id=" +
+        encodeURIComponent(vehicleId);
+});
 
    
 </script>
