@@ -958,6 +958,59 @@ if (logoutLink) {
   });
 }
 })();
+  async function loadUnreadMessagesCount() {
+  const badge = document.getElementById("unreadMessagesBadge");
+
+  if (!badge) return;
+
+  try {
+    const client = window.supabaseClient;
+
+    if (!client) {
+      console.error("Chưa tìm thấy Supabase client.");
+      return;
+    }
+
+    const {
+      data: { session },
+      error: sessionError
+    } = await client.auth.getSession();
+
+    if (sessionError) {
+      console.error("Lỗi lấy phiên đăng nhập:", sessionError);
+      return;
+    }
+
+    if (!session?.user) {
+      badge.style.display = "none";
+      return;
+    }
+
+    const { data, error } = await client.rpc(
+      "get_unread_chat_count"
+    );
+
+    if (error) {
+      console.error("Lỗi đếm tin nhắn chưa đọc:", error);
+      badge.style.display = "none";
+      return;
+    }
+
+    const count = Number(data || 0);
+
+    if (count > 0) {
+      badge.textContent = count > 99 ? "99+" : String(count);
+      badge.style.display = "inline-block";
+    } else {
+      badge.textContent = "";
+      badge.style.display = "none";
+    }
+  } catch (error) {
+    console.error("Lỗi loadUnreadMessagesCount:", error);
+  }
+}
+
+loadUnreadMessagesCount();
 </script>
   >
 
