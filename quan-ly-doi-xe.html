@@ -581,163 +581,520 @@ Lưu xe
 </footer>
 
 <script>
+const db = window.supabaseClient;
 
-const filterButtons =
-document.querySelectorAll(".filter-btn");
+const fleetGrid = document.getElementById("fleetGrid");
+const searchInput = document.getElementById("searchInput");
+const filterButtons = document.querySelectorAll(".filter-btn");
 
-const vehicles =
-document.querySelectorAll(".vehicle");
-
-const searchInput =
-document.getElementById("searchInput");
+const vehicleModal = document.getElementById("vehicleModal");
+const addVehicleBtn = document.getElementById("addVehicleBtn");
+const cancelBtn = document.getElementById("cancelBtn");
+const saveBtn = document.getElementById("saveBtn");
 
 let currentFilter = "all";
+let vehicleData = [];
 
-function applyFilter(){
-
-const keyword =
-searchInput.value.toLowerCase().trim();
-
-vehicles.forEach(function(vehicle){
-
-const status =
-vehicle.dataset.status;
-
-const searchable =
-vehicle.dataset.search.toLowerCase();
-
-const statusMatch =
-currentFilter === "all" ||
-status === currentFilter;
-
-const searchMatch =
-searchable.includes(keyword);
-
-if(statusMatch && searchMatch){
-vehicle.style.display = "block";
-}else{
-vehicle.style.display = "none";
+/* ================================
+   BẢO VỆ HTML
+================================ */
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
-});
+/* ================================
+   CHUẨN HÓA TRẠNG THÁI
+================================ */
+function normalizeStatus(status) {
+  const value = String(status || "").toLowerCase();
 
+  if (
+    value === "free" ||
+    value === "available" ||
+    value === "ready"
+  ) {
+    return "free";
+  }
+
+  if (
+    value === "running" ||
+    value === "busy" ||
+    value === "on_trip"
+  ) {
+    return "running";
+  }
+
+  if (
+    value === "maintenance" ||
+    value === "repair"
+  ) {
+    return "maintenance";
+  }
+
+  return "free";
 }
 
-filterButtons.forEach(function(button){
-
-button.addEventListener("click",function(){
-
-filterButtons.forEach(function(btn){
-btn.classList.remove("active");
-});
-
-this.classList.add("active");
-
-currentFilter =
-this.dataset.filter;
-
-applyFilter();
-
-});
-
-});
-
-searchInput.addEventListener(
-"input",
-applyFilter
-);
-
-const vehicleModal =
-document.getElementById("vehicleModal");
-
-document.getElementById("addVehicleBtn")
-.addEventListener("click",function(){
-
-vehicleModal.style.display =
-"flex";
-
-});
-
-document.getElementById("cancelBtn")
-.addEventListener("click",function(){
-
-vehicleModal.style.display =
-"none";
-
-});
-
-document.getElementById("saveBtn")
-.addEventListener("click",function(){
-
-const plate =
-document.getElementById("plateInput").value.trim();
-
-const driver =
-document.getElementById("driverInput").value.trim();
-
-if(!plate){
-alert("Vui lòng nhập biển số xe.");
-return;
+function statusLabel(status) {
+  if (status === "running") return "ĐANG CHẠY";
+  if (status === "maintenance") return "BẢO DƯỠNG";
+  return "XE RẢNH";
 }
 
-if(!driver){
-alert("Vui lòng nhập tên tài xế phụ trách.");
-return;
+/* ================================
+   LẤY USER ĐANG ĐĂNG NHẬP
+================================ */
+async function getCurrentUser() {
+  const {
+    data: { user },
+    error
+  } = await db.auth.getUser();
+
+  if (error) {
+    console.error("Lỗi lấy tài khoản:", error);
+    return null;
+  }
+
+  return user;
 }
 
-alert(
-"Đã thêm xe " +
-plate +
-" vào đội xe VietTruck."
-);
+/* ================================
+   ĐỌC XE THẬT TỪ SUPABASE
+================================ */
+async function loadVehicles() {
+  if (!fleetGrid) return;
 
-vehicleModal.style.display =
-"none";
+  fleetGrid.innerHTML = "<p>Đang tải danh sách xe...</p>";
 
-});
+  const user = await getCurrentUser();
 
-document.querySelectorAll(".maintenanceBtn")
-.forEach(function(button){
+  if (!user) {
+    fleetGrid.innerHTML =
+      "<p>Vui lòng đăng nhập để quản lý đội xe.</p>";
+    return;
+  }
 
-button.addEventListener("click",function(){
+  const { data, error } = await db
+    .from("vehicles")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
 
-const vehicle =
-this.closest(".vehicle");
+  if (error) {
+    console.error("Lỗi tải vehicles:", error);
 
-const status =
-vehicle.querySelector(".status");
+    fleetGrid.innerHTML =
+      "<p>Không tải được danh sách xe. Vui lòng thử lại.</p>";
 
-status.textContent =
-"XE RẢNH";
+    return;
+  }
 
-status.className =
-"status free";
+  vehicleData = data || [];
 
-vehicle.dataset.status =
-"free";
-
-this.textContent =
-"Tìm hàng";
-
-this.onclick =
-function(){
-window.location.href =
-"tim-hang.html";
-};
-
-});
-
-});
-
-window.addEventListener("click",function(e){
-
-if(e.target === vehicleModal){
-vehicleModal.style.display =
-"none";
+  renderVehicles();
 }
 
+/* ================================
+   HIỂN THỊ DANH SÁCH XE
+================================ */
+function renderVehicles() {
+  if (!fleetGrid) return;
+
+  const keyword =
+    (searchInput?.value || "")
+      .toLowerCase()
+      .trim();
+
+  const filtered = vehicleData.filter(vehicle => {
+    const status = normalizeStatus(vehicle.status);
+
+    const statusMatch =
+      currentFilter === "all" ||
+      status === currentFilter;
+
+    const searchable = [
+      vehicle.plate_number,
+      vehicle.vehicle_type,
+      vehicle.driver_name,
+      vehicle.currentLocation,
+      vehicle.destination,
+      vehicle.current_province,
+      vehicle.destination_province
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    const searchMatch =
+      !keyword || searchable.includes(keyword);
+
+    return statusMatch && searchMatch;
+  });
+
+  if (!filtered.length) {
+    fleetGrid.innerHTML =
+      "<p>Chưa có phương tiện phù hợp.</p>";
+    return;
+  }
+
+  fleetGrid.innerHTML = filtered
+    .map(vehicle => {
+      const status = normalizeStatus(vehicle.status);
+
+      const capacity =
+        vehicle.capacity !== null &&
+        vehicle.capacity !== undefined
+          ? `${escapeHtml(vehicle.capacity)} tấn`
+          : "Chưa cập nhật tải trọng";
+
+      const driver =
+        vehicle.driver_name
+          ? escapeHtml(vehicle.driver_name)
+          : "Chưa phân công tài xế";
+
+      const currentLocation =
+        vehicle.currentLocation ||
+        vehicle.current_province ||
+        "Chưa cập nhật";
+
+      const destination =
+        vehicle.destination ||
+        vehicle.destination_province ||
+        "Chưa cập nhật";
+
+      return `
+        <div
+          class="vehicle"
+          data-id="${escapeHtml(vehicle.id)}"
+          data-status="${escapeHtml(status)}"
+        >
+          <div class="vehicle-top">
+
+            <div class="vehicle-id">
+
+              <div class="vehicle-icon">🚚</div>
+
+              <div>
+                <h2>${escapeHtml(vehicle.plate_number || "Chưa có biển số")}</h2>
+
+                <div class="vehicle-sub">
+                  ${escapeHtml(vehicle.vehicle_type || "Xe tải")}
+                  ·
+                  ${capacity}
+                </div>
+              </div>
+
+            </div>
+
+            <div class="status ${escapeHtml(status)}">
+              ${statusLabel(status)}
+            </div>
+
+          </div>
+
+          <p>
+            <strong>Tài xế:</strong>
+            ${driver}
+          </p>
+
+          <p>
+            <strong>Vị trí hiện tại:</strong>
+            ${escapeHtml(currentLocation)}
+          </p>
+
+          <p>
+            <strong>Điểm đến:</strong>
+            ${escapeHtml(destination)}
+          </p>
+
+          <div class="actions">
+
+            <a
+              href="chi-tiet-xe.html?id=${encodeURIComponent(vehicle.id)}"
+              class="btn-outline"
+            >
+              Xem chi tiết
+            </a>
+
+            ${
+              status === "maintenance"
+                ? `
+                  <button
+                    type="button"
+                    class="btn-green completeMaintenanceBtn"
+                    data-id="${escapeHtml(vehicle.id)}"
+                  >
+                    Hoàn tất bảo dưỡng
+                  </button>
+                `
+                : `
+                  <button
+                    type="button"
+                    class="btn-outline maintenanceBtn"
+                    data-id="${escapeHtml(vehicle.id)}"
+                  >
+                    Bảo dưỡng
+                  </button>
+                `
+            }
+
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+
+  bindVehicleButtons();
+}
+
+/* ================================
+   FILTER
+================================ */
+filterButtons.forEach(button => {
+  button.addEventListener("click", function () {
+
+    filterButtons.forEach(btn =>
+      btn.classList.remove("active")
+    );
+
+    this.classList.add("active");
+
+    currentFilter = this.dataset.filter || "all";
+
+    renderVehicles();
+  });
 });
 
+if (searchInput) {
+  searchInput.addEventListener(
+    "input",
+    renderVehicles
+  );
+}
+
+/* ================================
+   MỞ / ĐÓNG FORM THÊM XE
+================================ */
+if (addVehicleBtn && vehicleModal) {
+  addVehicleBtn.addEventListener(
+    "click",
+    function () {
+      vehicleModal.style.display = "flex";
+    }
+  );
+}
+
+if (cancelBtn && vehicleModal) {
+  cancelBtn.addEventListener(
+    "click",
+    function () {
+      vehicleModal.style.display = "none";
+    }
+  );
+}
+
+window.addEventListener("click", function (e) {
+  if (
+    vehicleModal &&
+    e.target === vehicleModal
+  ) {
+    vehicleModal.style.display = "none";
+  }
+});
+
+/* ================================
+   THÊM XE THẬT
+================================ */
+if (saveBtn) {
+  saveBtn.addEventListener(
+    "click",
+    async function () {
+
+      const plate =
+        document
+          .getElementById("plateInput")
+          ?.value.trim();
+
+      const type =
+        document
+          .getElementById("typeInput")
+          ?.value || "";
+
+      const weightRaw =
+        document
+          .getElementById("weightInput")
+          ?.value;
+
+      const driver =
+        document
+          .getElementById("driverInput")
+          ?.value.trim();
+
+      if (!plate) {
+        alert("Vui lòng nhập biển số xe.");
+        return;
+      }
+
+      const user = await getCurrentUser();
+
+      if (!user) {
+        alert("Phiên đăng nhập đã hết. Vui lòng đăng nhập lại.");
+        return;
+      }
+
+      let capacity = null;
+
+      if (
+        weightRaw !== undefined &&
+        weightRaw !== null &&
+        String(weightRaw).trim() !== ""
+      ) {
+        const parsed = Number(weightRaw);
+
+        if (!Number.isNaN(parsed)) {
+          capacity = parsed;
+        }
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.textContent = "Đang lưu...";
+
+      const payload = {
+        user_id: user.id,
+        plate_number: plate,
+        vehicle_type: type || null,
+        capacity: capacity,
+        driver_name: driver || null,
+        status: "free"
+      };
+
+      const { error } = await db
+        .from("vehicles")
+        .insert(payload);
+
+      saveBtn.disabled = false;
+      saveBtn.textContent = "Lưu xe";
+
+      if (error) {
+        console.error("Lỗi thêm xe:", error);
+
+        alert(
+          "Không thể thêm xe: " +
+          error.message
+        );
+
+        return;
+      }
+
+      alert("Đã thêm xe thành công.");
+
+      if (vehicleModal) {
+        vehicleModal.style.display = "none";
+      }
+
+      const plateInput =
+        document.getElementById("plateInput");
+
+      const driverInput =
+        document.getElementById("driverInput");
+
+      if (plateInput) plateInput.value = "";
+      if (driverInput) driverInput.value = "";
+
+      await loadVehicles();
+    }
+  );
+}
+
+/* ================================
+   NÚT TRẠNG THÁI XE
+================================ */
+function bindVehicleButtons() {
+
+  document
+    .querySelectorAll(".maintenanceBtn")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        async function () {
+
+          await updateVehicleStatus(
+            this.dataset.id,
+            "maintenance"
+          );
+        }
+      );
+
+    });
+
+  document
+    .querySelectorAll(".completeMaintenanceBtn")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        async function () {
+
+          await updateVehicleStatus(
+            this.dataset.id,
+            "free"
+          );
+        }
+      );
+
+    });
+}
+
+/* ================================
+   CẬP NHẬT STATUS TRONG SUPABASE
+================================ */
+async function updateVehicleStatus(
+  vehicleId,
+  newStatus
+) {
+
+  const user = await getCurrentUser();
+
+  if (!user) {
+    alert("Vui lòng đăng nhập lại.");
+    return;
+  }
+
+  const { error } = await db
+    .from("vehicles")
+    .update({
+      status: newStatus,
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", vehicleId)
+    .eq("user_id", user.id);
+
+  if (error) {
+    console.error(
+      "Lỗi cập nhật trạng thái:",
+      error
+    );
+
+    alert(
+      "Không cập nhật được trạng thái xe: " +
+      error.message
+    );
+
+    return;
+  }
+
+  await loadVehicles();
+}
+
+/* ================================
+   KHỞI ĐỘNG
+================================ */
+loadVehicles();
 </script>
 
 </body>
