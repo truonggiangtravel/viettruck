@@ -804,6 +804,37 @@
   /*
    * TẢI LỊCH SỬ CHAT
    */
+  async function markMessagesAsRead() {
+  if (!conversationId || !currentUser?.id) {
+    return;
+  }
+
+  try {
+    const { error } = await db
+      .from("chat_messages")
+      .update({
+        read_at: new Date().toISOString()
+      })
+      .eq("conversation_id", conversationId)
+      .neq("sender_id", currentUser.id)
+      .is("read_at", null);
+
+    if (error) {
+      console.error(
+        "Không thể đánh dấu tin nhắn đã đọc:",
+        error
+      );
+      return;
+    }
+
+    console.log("Đã đánh dấu tin nhắn là đã đọc.");
+  } catch (error) {
+    console.error(
+      "Lỗi markMessagesAsRead:",
+      error
+    );
+  }
+}
 
   async function loadMessages() {
 
