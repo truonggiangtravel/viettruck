@@ -836,6 +836,17 @@
       return;
 
     }
+    // Đánh dấu các tin nhắn của người kia là đã đọc
+const { error: readError } = await db
+  .from("chat_messages")
+  .update({ is_read: true })
+  .eq("conversation_id", conversationId)
+  .neq("sender_id", currentUser.id)
+  .eq("is_read", false);
+
+if (readError) {
+  console.error("Không cập nhật trạng thái đã đọc:", readError);
+}
 
 
     messagesBox.innerHTML = "";
