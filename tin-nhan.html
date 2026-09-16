@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Tin nhắn | VietTruck</title>
+
+  <meta
+    name="description"
+    content="Hộp thư nội bộ VietTruck dành cho chủ hàng, tài xế và nhà xe."
+  />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f7f5;
+      color: #1f2937;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .header {
+      background: #ffffff;
+      border-bottom: 4px solid #078a46;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      min-height: 82px;
+      padding: 0 18px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #06743b;
+      font-weight: 800;
+      font-size: 27px;
+    }
+
+    .brand-icon {
+      font-size: 34px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-weight: 700;
+    }
+
+    .nav a:hover {
+      color: #078a46;
+    }
+
+    .nav .active {
+      color: #078a46;
+    }
+
+    /* =========================
+       PAGE
+    ========================= */
+
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 34px 18px 60px;
+    }
+
+    .page-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: 30px;
+      color: #066d39;
+    }
+
+    .page-subtitle {
+      margin-top: 7px;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    .security-badge {
+      flex-shrink: 0;
+      padding: 10px 15px;
+      border-radius: 999px;
+      border: 1px solid #b7e3c9;
+      background: #edf9f1;
+      color: #08733e;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* =========================
+       NOTICE
+    ========================= */
+
+    .notice {
+      margin-bottom: 20px;
+      padding: 14px 16px;
+      border: 1px solid #f2d488;
+      border-radius: 10px;
+      background: #fff8df;
+      color: #805400;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    /* =========================
+       CARD
+    ========================= */
+
+    .inbox-card {
+      background: #ffffff;
+      border: 1px solid #dde5e0;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.04);
+    }
+
+    .inbox-head {
+      padding: 20px;
+      border-bottom: 1px solid #e5e7eb;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .inbox-head strong {
+      font-size: 19px;
+      color: #075f35;
+    }
+
+    .count {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    /* =========================
+       LOADING / EMPTY / ERROR
+    ========================= */
+
+    .state-box {
+      min-height: 270px;
+      padding: 45px 20px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      text-align: center;
+      color: #6b7280;
+    }
+
+    .state-icon {
+      font-size: 45px;
+      margin-bottom: 14px;
+    }
+
+    .state-title {
+      color: #374151;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .state-text {
+      max-width: 500px;
+      line-height: 1.55;
+    }
+
+    .error-box {
+      display: none;
+      margin: 18px;
+      padding: 14px 16px;
+      border-radius: 9px;
+      border: 1px solid #efb4b4;
+      background: #fff0f0;
+      color: #b42318;
+      line-height: 1.5;
+    }
+
+    /* =========================
+       CONVERSATION LIST
+    ========================= */
+
+    .conversation-list {
+      display: none;
+    }
+
+    .conversation-item {
+      width: 100%;
+      border: 0;
+      border-bottom: 1px solid #edf0ee;
+      background: #ffffff;
+      padding: 18px 20px;
+
+      display: grid;
+      grid-template-columns: 54px 1fr auto;
+      align-items: center;
+      gap: 15px;
+
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .conversation-item:last-child {
+      border-bottom: 0;
+    }
+
+    .conversation-item:hover {
+      background: #f4fbf7;
+    }
+
+    .vehicle-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 13px;
+      background: #e8f6ed;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 28px;
+    }
+
+    .conversation-main {
+      min-width: 0;
+    }
+
+    .conversation-title {
+      color: #075f35;
+      font-weight: 800;
+      font-size: 17px;
+      margin-bottom: 5px;
+    }
+
+    .vehicle-info {
+      color: #667085;
+      font-size: 13px;
+      margin-bottom: 7px;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .last-message {
+      color: #374151;
+      font-size: 14px;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .last-message.no-message {
+      color: #9ca3af;
+      font-style: italic;
+    }
+
+    .conversation-side {
+      min-width: 105px;
+      text-align: right;
+    }
+
+    .time {
+      color: #8a949e;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .open-label {
+      display: inline-block;
+      color: #078a46;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* =========================
+       LOGIN REQUIRED
+    ========================= */
+
+    .login-btn {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 11px 18px;
+      border-radius: 8px;
+      background: #078a46;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .login-btn:hover {
+      background: #056f39;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .footer {
+      margin-top: 50px;
+      background: #034d2d;
+      color: #ffffff;
+      text-align: center;
+      padding: 28px 18px;
+    }
+
+    .footer strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .footer small {
+      color: #c7ddd0;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 760px) {
+      .header-inner {
+        min-height: auto;
+        padding-top: 14px;
+        padding-bottom: 14px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav {
+        width: 100%;
+        gap: 15px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        white-space: nowrap;
+        font-size: 14px;
+      }
+
+      .page {
+        padding: 24px 12px 45px;
+      }
+
+      .page-title-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .page-title {
+        font-size: 25px;
+      }
+
+      .conversation-item {
+        grid-template-columns: 46px 1fr;
+        gap: 12px;
+        padding: 16px 14px;
+      }
+
+      .vehicle-icon {
+        width: 46px;
+        height: 46px;
+        font-size: 24px;
+      }
+
+      .conversation-side {
+        grid-column: 2;
+        min-width: 0;
+        text-align: left;
+        margin-top: -2px;
+      }
+
+      .time {
+        display: inline-block;
+        margin: 0 12px 0 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+
+      <a href="index.html" class="brand">
+        <span class="brand-icon">🚚</span>
+        <span>VietTruck</span>
+      </a>
+
+      <nav class="nav">
+        <a href="index.html">Trang chủ</a>
+        <a href="tim-hang.html">Tìm hàng</a>
+        <a href="tim-xe.html">Tìm xe</a>
+        <a href="dang-hang.html">Đăng hàng</a>
+        <a href="tin-nhan.html" class="active">Tin nhắn</a>
+        <a href="tai-khoan.html">Tài khoản</a>
+      </nav>
+
+    </div>
+  </header>
+
+
+  <!-- MAIN -->
+  <main class="page">
+
+    <div class="page-title-row">
+
+      <div>
+        <h1 class="page-title">💬 Tin nhắn</h1>
+
+        <div class="page-subtitle">
+          Trao đổi trực tiếp giữa chủ hàng và nhà xe trên VietTruck.
+        </div>
+      </div>
+
+      <div class="security-badge">
+        🔒 Chat nội bộ
+      </div>
+
+    </div>
+
+
+    <div class="notice">
+      🔒 Để bảo vệ giao dịch, VietTruck khuyến nghị hai bên trao đổi và
+      xác nhận vận chuyển ngay trên hệ thống. Thông tin liên hệ riêng
+      không được hiển thị tại hộp thư này.
+    </div>
+
+
+    <section class="inbox-card">
+
+      <div class="inbox-head">
+        <strong>Hộp thư của tôi</strong>
+        <span class="count" id="conversationCount">
+          Đang tải...
+        </span>
+      </div>
+
+
+      <div class="error-box" id="errorBox"></div>
+
+
+      <div class="state-box" id="loadingBox">
+        <div class="state-icon">💬</div>
+
+        <div class="state-title">
+          Đang tải tin nhắn...
+        </div>
+
+        <div class="state-text">
+          VietTruck đang lấy các cuộc trò chuyện của tài khoản này.
+        </div>
+      </div>
+
+
+      <div class="state-box" id="loginBox" style="display:none;">
+        <div class="state-icon">🔐</div>
+
+        <div class="state-title">
+          Bạn chưa đăng nhập
+        </div>
+
+        <div class="state-text">
+          Vui lòng đăng nhập để xem các cuộc trò chuyện của bạn.
+        </div>
+
+        <a id="loginLink" href="dang-nhap.html" class="login-btn">
+          Đăng nhập
+        </a>
+      </div>
+
+
+      <div class="state-box" id="emptyBox" style="display:none;">
+        <div class="state-icon">📭</div>
+
+        <div class="state-title">
+          Chưa có cuộc trò chuyện
+        </div>
+
+        <div class="state-text">
+          Khi bạn nhắn tin với chủ hàng hoặc nhà xe,
+          cuộc trò chuyện sẽ xuất hiện tại đây.
+        </div>
+      </div>
+
+
+      <div
+        class="conversation-list"
+        id="conversationList">
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+
+    <small>
+      © 2026 VietTruck. Nền tảng kết nối chủ hàng, tài xế và nhà xe.
+    </small>
+  </footer>
+
+
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+
+      /*
+       * ==========================================
+       * SUPABASE CLIENT
+       * ==========================================
+       */
+
+      const db = window.supabaseClient;
+
+
+      /*
+       * ==========================================
+       * DOM
+       * ==========================================
+       */
+
+      const loadingBox =
+        document.getElementById("loadingBox");
+
+      const loginBox =
+        document.getElementById("loginBox");
+
+      const emptyBox =
+        document.getElementById("emptyBox");
+
+      const errorBox =
+        document.getElementById("errorBox");
+
+      const conversationList =
+        document.getElementById("conversationList");
+
+      const conversationCount =
+        document.getElementById("conversationCount");
+
+      const loginLink =
+        document.getElementById("loginLink");
+
+
+      /*
+       * ==========================================
+       * HELPER
+       * ==========================================
+       */
+
+      function hideAllStates() {
+        loadingBox.style.display = "none";
+        loginBox.style.display = "none";
+        emptyBox.style.display = "none";
+        errorBox.style.display = "none";
+        conversationList.style.display = "none";
+      }
+
+
+      function showError(message) {
+        hideAllStates();
+
+        errorBox.textContent =
+          message || "Đã xảy ra lỗi.";
+
+        errorBox.style.display = "block";
+
+        conversationCount.textContent =
+          "Không tải được";
+      }
+
+
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+
+      function formatDateTime(value) {
+
+        if (!value) {
+          return "";
+        }
+
+        const date = new Date(value);
+
+        if (Number.isNaN(date.getTime())) {
+          return "";
+        }
+
+        const now = new Date();
+
+        const sameDay =
+          date.getFullYear() === now.getFullYear() &&
+          date.getMonth() === now.getMonth() &&
+          date.getDate() === now.getDate();
+
+        if (sameDay) {
+          return date.toLocaleTimeString(
+            "vi-VN",
+            {
+              hour: "2-digit",
+              minute: "2-digit"
+            }
+          );
+        }
+
+        return date.toLocaleDateString(
+          "vi-VN",
+          {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+          }
+        );
+      }
+
+
+      /*
+       * ==========================================
+       * KIỂM TRA SUPABASE
+       * ==========================================
+       */
+
+      if (!db) {
+
+        console.error(
+          "Không tìm thấy window.supabaseClient"
+        );
+
+        showError(
+          "Không thể kết nối hệ thống tin nhắn VietTruck."
+        );
+
+        return;
+      }
+
+
+      /*
+       * ==========================================
+       * KIỂM TRA ĐĂNG NHẬP
+       * ==========================================
+       */
+
+      const {
+        data: sessionData,
+        error: sessionError
+      } = await db.auth.getSession();
+
+
+      if (sessionError) {
+
+        console.error(sessionError);
+
+        showError(
+          "Không kiểm tra được phiên đăng nhập."
+        );
+
+        return;
+      }
+
+
+      const user =
+        sessionData?.session?.user || null;
+
+
+      if (!user) {
+
+        hideAllStates();
+
+        loginBox.style.display = "flex";
+
+        conversationCount.textContent =
+          "Chưa đăng nhập";
+
+        loginLink.href =
+          "dang-nhap.html?redirect=" +
+          encodeURIComponent(
+            window.location.href
+          );
+
+        return;
+      }
+
+
+      /*
+       * ==========================================
+       * LẤY CUỘC TRÒ CHUYỆN
+       *
+       * RLS của Supabase sẽ chỉ cho tài khoản
+       * hiện tại nhìn thấy conversation mà
+       * auth.uid() = user1_id hoặc user2_id.
+       * ==========================================
+       */
+
+      const {
+        data: conversations,
+        error: conversationsError
+      } = await db
+        .from("chat_conversations")
+        .select(
+          "id,vehicle_id,user1_id,user2_id,created_at"
+        )
+        .order(
+          "created_at",
+          { ascending: false }
+        );
+
+
+      if (conversationsError) {
+
+        console.error(
+          "chat_conversations:",
+          conversationsError
+        );
+
+        showError(
+          "Không tải được danh sách cuộc trò chuyện."
+        );
+
+        return;
+      }
+
+
+      if (
+        !conversations ||
+        conversations.length === 0
+      ) {
+
+        hideAllStates();
+
+        emptyBox.style.display = "flex";
+
+        conversationCount.textContent =
+          "0 cuộc trò chuyện";
+
+        return;
+      }
+
+
+      /*
+       * ==========================================
+       * TẢI THÔNG TIN TỪNG CUỘC TRÒ CHUYỆN
+       * ==========================================
+       */
+
+      const rows = [];
+
+
+      for (const conversation of conversations) {
+
+        let vehicle = null;
+        let lastMessage = null;
+
+
+        /*
+         * ------------------------------------------
+         * LẤY THÔNG TIN XE
+         *
+         * Dùng tên cột ĐÚNG với vehicles hiện tại:
+         *
+         * plate_number
+         * vehicle_type
+         * current_location
+         * destination
+         * ------------------------------------------
+         */
+
+        if (conversation.vehicle_id) {
+
+          const {
+            data: vehicleData,
+            error: vehicleError
+          } = await db
+            .from("vehicles")
+            .select(
+              "id,plate_number,vehicle_type,current_location,destination"
+            )
+            .eq(
+              "id",
+              conversation.vehicle_id
+            )
+            .maybeSingle();
+
+
+          if (vehicleError) {
+
+            /*
+             * Không làm hỏng cả hộp thư nếu
+             * RLS vehicles không cho đọc xe.
+             */
+
+            console.warn(
+              "Không tải được vehicle:",
+              conversation.vehicle_id,
+              vehicleError
+            );
+
+          } else {
+
+            vehicle = vehicleData;
+
+          }
+        }
+
+
+        /*
+         * ------------------------------------------
+         * LẤY TIN NHẮN MỚI NHẤT
+         * ------------------------------------------
+         */
+
+        const {
+          data: messageData,
+          error: messageError
+        } = await db
+          .from("chat_messages")
+          .select(
+            "id,sender_id,message,created_at"
+          )
+          .eq(
+            "conversation_id",
+            conversation.id
+          )
+          .order(
+            "created_at",
+            { ascending: false }
+          )
+          .limit(1);
+
+
+        if (messageError) {
+
+          console.warn(
+            "Không tải được tin nhắn mới nhất:",
+            conversation.id,
+            messageError
+          );
+
+        } else if (
+          messageData &&
+          messageData.length > 0
+        ) {
+
+          lastMessage =
+            messageData[0];
+
+        }
+
+
+        rows.push({
+          conversation,
+          vehicle,
+          lastMessage
+        });
+      }
+
+
+      /*
+       * ==========================================
+       * SẮP XẾP
+       *
+       * Conversation có tin nhắn mới nhất
+       * sẽ lên đầu.
+       * ==========================================
+       */
+
+      rows.sort((a, b) => {
+
+        const aDate =
+          a.lastMessage?.created_at ||
+          a.conversation.created_at;
+
+        const bDate =
+          b.lastMessage?.created_at ||
+          b.conversation.created_at;
+
+        return (
+          new Date(bDate).getTime() -
+          new Date(aDate).getTime()
+        );
+      });
+
+
+      /*
+       * ==========================================
+       * HIỂN THỊ
+       * ==========================================
+       */
+
+      conversationList.innerHTML = "";
+
+
+      rows.forEach((row) => {
+
+        const conversation =
+          row.conversation;
+
+        const vehicle =
+          row.vehicle;
+
+        const lastMessage =
+          row.lastMessage;
+
+
+        const button =
+          document.createElement("button");
+
+        button.type = "button";
+
+        button.className =
+          "conversation-item";
+
+
+        /*
+         * Tên xe
+         */
+
+        const vehicleType =
+          vehicle?.vehicle_type ||
+          "Xe vận chuyển";
+
+        const plateNumber =
+          vehicle?.plate_number ||
+          "";
+
+        const currentLocation =
+          vehicle?.current_location ||
+          "";
+
+        const destination =
+          vehicle?.destination ||
+          "";
+
+
+        /*
+         * Dòng thông tin xe
+         */
+
+        const infoParts = [];
+
+        if (plateNumber) {
+          infoParts.push(plateNumber);
+        }
+
+        if (
+          currentLocation &&
+          destination
+        ) {
+
+          infoParts.push(
+            currentLocation +
+            " → " +
+            destination
+          );
+
+        } else if (currentLocation) {
+
+          infoParts.push(
+            currentLocation
+          );
+
+        } else if (destination) {
+
+          infoParts.push(
+            "Đi " + destination
+          );
+
+        }
+
+
+        const vehicleInfo =
+          infoParts.length
+            ? infoParts.join(" · ")
+            : "Trao đổi vận chuyển";
+
+
+        /*
+         * Tin nhắn cuối
+         */
+
+        let messageText =
+          "Chưa có tin nhắn";
+
+        let messageClass =
+          "last-message no-message";
+
+
+        if (lastMessage?.message) {
+
+          const isMine =
+            lastMessage.sender_id === user.id;
+
+          messageText =
+            (isMine ? "Bạn: " : "") +
+            lastMessage.message;
+
+          messageClass =
+            "last-message";
+        }
+
+
+        /*
+         * Thời gian
+         */
+
+        const lastTime =
+          lastMessage?.created_at ||
+          conversation.created_at;
+
+
+        /*
+         * Render
+         */
+
+        button.innerHTML = `
+          <div class="vehicle-icon">
+            🚚
+          </div>
+
+          <div class="conversation-main">
+
+            <div class="conversation-title">
+              ${escapeHtml(vehicleType)}
+            </div>
+
+            <div class="vehicle-info">
+              ${escapeHtml(vehicleInfo)}
+            </div>
+
+            <div class="${messageClass}">
+              ${escapeHtml(messageText)}
+            </div>
+
+          </div>
+
+          <div class="conversation-side">
+
+            <div class="time">
+              ${escapeHtml(formatDateTime(lastTime))}
+            </div>
+
+            <span class="open-label">
+              Mở trò chuyện →
+            </span>
+
+          </div>
+        `;
+
+
+        /*
+         * ==========================================
+         * MỞ CHAT
+         *
+         * chat.html hiện đang dùng vehicle_id.
+         * ==========================================
+         */
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            if (!conversation.vehicle_id) {
+
+              alert(
+                "Cuộc trò chuyện này chưa có thông tin xe."
+              );
+
+              return;
+            }
+
+
+            window.location.href =
+              "chat.html?vehicle_id=" +
+              encodeURIComponent(
+                conversation.vehicle_id
+              );
+
+          }
+        );
+
+
+        conversationList.appendChild(
+          button
+        );
+      });
+
+
+      /*
+       * ==========================================
+       * HOÀN TẤT
+       * ==========================================
+       */
+
+      hideAllStates();
+
+      conversationList.style.display =
+        "block";
+
+      conversationCount.textContent =
+        rows.length +
+        (
+          rows.length === 1
+            ? " cuộc trò chuyện"
+            : " cuộc trò chuyện"
+        );
+
+
+      /*
+       * ==========================================
+       * REALTIME REFRESH
+       *
+       * Khi có INSERT mới vào chat_messages,
+       * nếu thuộc conversation của tài khoản
+       * hiện tại thì tải lại hộp thư.
+       *
+       * Có fallback an toàn: nếu Realtime chưa
+       * bật cho table thì trang vẫn hoạt động.
+       * ==========================================
+       */
+
+      try {
+
+        const conversationIds =
+          new Set(
+            conversations.map(
+              item => item.id
+            )
+          );
+
+
+        db
+          .channel(
+            "viettruck-inbox-" + user.id
+          )
+          .on(
+            "postgres_changes",
+            {
+              event: "INSERT",
+              schema: "public",
+              table: "chat_messages"
+            },
+            (payload) => {
+
+              const newMessage =
+                payload?.new;
+
+              if (
+                newMessage &&
+                conversationIds.has(
+                  newMessage.conversation_id
+                )
+              ) {
+
+                /*
+                 * Refresh để đưa conversation
+                 * mới nhất lên đầu.
+                 */
+
+                window.location.reload();
+              }
+            }
+          )
+          .subscribe();
+
+      } catch (realtimeError) {
+
+        console.warn(
+          "Realtime inbox chưa hoạt động:",
+          realtimeError
+        );
+      }
+
+    });
+  </script>
+
+</body>
+</html>
