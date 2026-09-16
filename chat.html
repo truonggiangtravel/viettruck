@@ -602,9 +602,9 @@
     vehicleInfo.push(vehicle.plate_number);
   }
 
-  if (vehicle.currentLocation) {
-    vehicleInfo.push(vehicle.currentLocation);
-  }
+ if (vehicle.current_location) {
+  vehicleInfo.push(vehicle.current_location);
+}
 
   if (vehicle.destination) {
     vehicleInfo.push("→ " + vehicle.destination);
