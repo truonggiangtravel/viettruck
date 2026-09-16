@@ -563,11 +563,11 @@
   } =
     await db
       .from("vehicles")
-      .select(
-        "id,user_id,plate_number,vehicle_type,capacity,currentLocation,destination,driver_name"
-      )
-      .eq("id", vehicleId)
-      .maybeSingle();
+.select(
+  "id,user_id,plate_number,vehicle_type,capacity,current_location,destination,driver_name"
+)
+.eq("id", vehicleId)
+.maybeSingle();
 
 
   if (vehicleError) {
