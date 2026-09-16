@@ -444,62 +444,7 @@ Không có đơn hàng nào ở trạng thái này.
 </div>
 </footer>
 
-<script>
 
-const buttons =
-document.querySelectorAll(".filter-btn");
-
-const orders =
-document.querySelectorAll(".order-card");
-
-const emptyBox =
-document.getElementById("emptyBox");
-
-buttons.forEach(function(button){
-
-button.addEventListener("click",function(){
-
-buttons.forEach(function(btn){
-btn.classList.remove("active");
-});
-
-this.classList.add("active");
-
-const filter =
-this.dataset.filter;
-
-let visible = 0;
-
-orders.forEach(function(order){
-
-if(
-filter === "all" ||
-order.dataset.status === filter
-){
-
-order.style.display = "block";
-
-visible++;
-
-}else{
-
-order.style.display = "none";
-
-}
-
-});
-
-if(visible === 0){
-emptyBox.style.display = "block";
-}else{
-emptyBox.style.display = "none";
-}
-
-});
-
-});
-
-</script>
 
 </body>
 </html>
