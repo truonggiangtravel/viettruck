@@ -649,7 +649,19 @@ async function loadQuotes() {
             '<div class="empty">Bạn chưa có đơn hàng nào.</div>';
         return;
     }
-const currentOrder = orders[0];
+const params = new URLSearchParams(window.location.search);
+const requestedOrderId = params.get("order_id");
+
+const currentOrder = requestedOrderId
+  ? orders.find(order => order.id === requestedOrderId)
+  : orders[0];
+
+if (!currentOrder) {
+  quoteCount.textContent = "0 báo giá";
+  quotesContainer.innerHTML =
+    '<div class="empty">Không tìm thấy đơn hàng này hoặc bạn không có quyền xem đơn.</div>';
+  return;
+}
 
 document.getElementById("orderCode").textContent =
     currentOrder.id
@@ -680,12 +692,10 @@ document.getElementById("orderPickupDate").textContent =
             currentOrder.pickup_date + "T00:00:00"
           ).toLocaleDateString("vi-VN")
         : "Chưa cập nhật";
-    const orderIds = orders.map(order => order.id);
-
-const { data: quotes, error: quoteError } = await supabaseClient
+   const { data: quotes, error: quoteError } = await supabaseClient
   .from("quotes")
   .select("id, order_id, user_id, price, message, status, created_at")
-  .in("order_id", orderIds)
+  .eq("order_id", currentOrder.id)
   .order("created_at", { ascending: false });
 
 if (quoteError) {
