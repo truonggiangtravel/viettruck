@@ -474,8 +474,30 @@ opacity:.8;
   <div class="quick-icon">🔄</div>
   <strong>Hàng chiều về</strong>
 </a>
-  <a href="tin-nhan.html" class="quick">
-  <div class="quick-icon">💬</div>
+  <a href="tin-nhan.html" class="quick" id="messagesQuickLink">
+  <div class="quick-icon" style="position:relative;">
+    💬
+    <span
+      id="unreadMessagesBadge"
+      style="
+        display:none;
+        position:absolute;
+        top:-8px;
+        right:-12px;
+        min-width:20px;
+        height:20px;
+        padding:0 5px;
+        border-radius:999px;
+        background:#dc2626;
+        color:#fff;
+        font-size:12px;
+        font-weight:700;
+        line-height:20px;
+        text-align:center;
+        box-sizing:border-box;
+      "
+    ></span>
+  </div>
   <strong>Tin nhắn</strong>
 </a>
 
