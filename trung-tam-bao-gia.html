@@ -803,25 +803,75 @@ document.getElementById("quoteSummaryStatus").textContent =
             <div class="quote-actions">
 
                 ${
-                    quote.status === "pending"
-                    ? `
-                    <button
-                        type="button"
-                        class="btn btn-green choose-real-quote"
-                        data-quote-id="${quote.id}"
-                        data-order-id="${quote.order_id}"
-                        data-user-id="${quote.user_id}"
-                    >
-                        Chọn báo giá
-                    </button>
-                    `
-                    : ""
-                }
+                    ${
+    quote.status === "pending"
+    ? `
+        <button
+            type="button"
+            class="btn btn-green choose-real-quote"
+            data-quote-id="${quote.id}"
+            data-order-id="${quote.order_id}"
+            data-user-id="${quote.user_id}"
+        >
+            Chọn báo giá
+        </button>
+      `
+    : quote.status === "accepted"
+    ? `
+        <button
+            type="button"
+            class="btn btn-green chat-with-driver"
+            data-quote-id="${quote.id}"
+        >
+            💬 Nhắn tin với nhà xe
+        </button>
+      `
+    : ""
+}
 
             </div>
         `;
 
         quotesContainer.appendChild(card);
+    });
+  document
+    .querySelectorAll(".chat-with-driver")
+    .forEach(button => {
+        button.addEventListener("click", async function () {
+
+            const quoteId = this.dataset.quoteId;
+
+            this.disabled = true;
+            const oldText = this.textContent;
+            this.textContent = "Đang mở chat...";
+
+            const { data: trip, error } = await supabaseClient
+                .from("trips")
+                .select("id")
+                .eq("quote_id", quoteId)
+                .maybeSingle();
+
+            if (error) {
+                console.error("Lỗi tìm chuyến:", error);
+                alert("Không thể mở cuộc trò chuyện: " + error.message);
+
+                this.disabled = false;
+                this.textContent = oldText;
+                return;
+            }
+
+            if (!trip) {
+                alert("Không tìm thấy chuyến vận chuyển tương ứng.");
+
+                this.disabled = false;
+                this.textContent = oldText;
+                return;
+            }
+
+            window.location.href =
+                "tro-chuyen.html?trip_id=" +
+                encodeURIComponent(trip.id);
+        });
     });
 
     document
