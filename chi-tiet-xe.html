@@ -128,7 +128,7 @@ display:block;width:100%;text-align:center;text-decoration:none;border-radius:8p
 
 
 <a href="#" id="sendTransportRequest" class="primary-btn">Gửi yêu cầu vận chuyển</a>
-<a href="#" id="contactDriver" class="secondary-btn">Liên hệ tài xế</a>
+<a href="#" id="contactDriver" class="secondary-btn">💬 Nhắn tin với nhà xe</a>
 
 </div>
 
@@ -204,24 +204,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         window.location.href = target;
     });
 
-    // LIÊN HỆ TÀI XẾ
-    contactBtn?.addEventListener("click", async (e) => {
-        e.preventDefault();
-
-        const user = await getCurrentUser();
-
-        if (!user) {
-            window.location.href =
-                "dang-nhap.html?redirect=" +
-                encodeURIComponent(window.location.href);
-            return;
-        }
-
-        // Tạm thời xác nhận phiên đăng nhập trước.
-        // Bước sau sẽ lấy thông tin tài xế thật từ bảng vehicles/profiles.
-        alert("Bạn đã đăng nhập. Đang tải thông tin liên hệ tài xế.");
-    });
-});
+   
 </script>
 </body>
 </html>
