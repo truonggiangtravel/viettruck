@@ -884,7 +884,7 @@ const { error: readError } = await db
   .from("chat_messages")
   .update({ is_read: true })
   .eq("conversation_id", conversationId)
-  .neq("sender_id", currentUser.id)
+  .neq("sender_id", user.id)
   .eq("is_read", false);
 
 if (readError) {
