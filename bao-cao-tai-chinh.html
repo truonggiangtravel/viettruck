@@ -418,113 +418,11 @@
       </div>
     </section>
 
-    <section class="cards">
+    
 
-      <div class="card">
-        <div class="title">TỔNG DOANH THU</div>
-        <div class="value">1,285 tỷ</div>
-        <div class="sub">▲ 12,8% so với kỳ trước</div>
-      </div>
+    
 
-      <div class="card">
-        <div class="title">CHI PHÍ VẬN TẢI</div>
-        <div class="value">930 triệu</div>
-        <div class="sub">72,4% doanh thu</div>
-      </div>
-
-      <div class="card">
-        <div class="title">LỢI NHUẬN GỘP</div>
-        <div class="value">355 triệu</div>
-        <div class="sub">Biên lợi nhuận 27,6%</div>
-      </div>
-
-      <div class="card">
-        <div class="title">DÒNG TIỀN THUẦN</div>
-        <div class="value">+145 triệu</div>
-        <div class="sub">Dòng tiền đang dương</div>
-      </div>
-
-    </section>
-
-    <section class="section-grid">
-
-      <div class="panel">
-        <h2>Công nợ hệ thống</h2>
-
-        <div class="summary-row">
-          <span>Phải thu khách hàng</span>
-          <strong>420.000.000 đ</strong>
-        </div>
-
-        <div class="summary-row">
-          <span>Đã thu khách hàng</span>
-          <strong class="positive">865.000.000 đ</strong>
-        </div>
-
-        <div class="summary-row">
-          <span>Phải trả nhà xe</span>
-          <strong>310.000.000 đ</strong>
-        </div>
-
-        <div class="summary-row">
-          <span>Đã trả nhà xe</span>
-          <strong class="positive">620.000.000 đ</strong>
-        </div>
-
-        <div class="summary-row">
-          <span>Công nợ quá hạn</span>
-          <strong class="negative">85.000.000 đ</strong>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h2>Dòng tiền VietTruck</h2>
-
-        <div class="summary-row">
-          <span>Số dư đầu kỳ</span>
-          <strong>275.000.000 đ</strong>
-        </div>
-
-        <div class="summary-row">
-          <span>Tổng tiền vào</span>
-          <strong class="positive">1.065.000.000 đ</strong>
-        </div>
-
-        <div class="summary-row">
-          <span>Tổng tiền ra</span>
-          <strong class="negative">920.000.000 đ</strong>
-        </div>
-
-        <div class="summary-row">
-          <span>Dòng tiền thuần</span>
-          <strong class="positive">+145.000.000 đ</strong>
-        </div>
-
-        <div class="summary-row">
-          <span>Số dư cuối kỳ</span>
-          <strong>420.000.000 đ</strong>
-        </div>
-      </div>
-
-    </section>
-
-    <section class="section-grid">
-
-      <div class="panel">
-        <h2>Doanh thu & chi phí</h2>
-        <div class="chart-wrap">
-          <canvas id="financeChart"></canvas>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h2>Dòng tiền vào / ra</h2>
-        <div class="chart-wrap">
-          <canvas id="cashflowChart"></canvas>
-        </div>
-      </div>
-
-    </section>
+    
 
     <section class="table-panel">
 
@@ -558,57 +456,7 @@
 
           <tbody>
 
-            <tr>
-              <td>06/09/2026</td>
-              <td>VT26090601</td>
-              <td>Samsung Bắc Ninh</td>
-              <td>Nhà xe Minh Long</td>
-              <td>28.500.000</td>
-              <td>21.000.000</td>
-              <td>7.500.000</td>
-              <td>0</td>
-              <td>0</td>
-              <td><span class="status paid">Đã thanh toán</span></td>
-            </tr>
-
-            <tr>
-              <td>05/09/2026</td>
-              <td>VT26090508</td>
-              <td>Foxconn Việt Nam</td>
-              <td>Vận tải Hoàng Gia</td>
-              <td>36.000.000</td>
-              <td>27.500.000</td>
-              <td>8.500.000</td>
-              <td>36.000.000</td>
-              <td>27.500.000</td>
-              <td><span class="status pending">Chờ thanh toán</span></td>
-            </tr>
-
-            <tr>
-              <td>04/09/2026</td>
-              <td>VT26090413</td>
-              <td>Canon Việt Nam</td>
-              <td>Nhà xe Đông Bắc</td>
-              <td>19.800.000</td>
-              <td>14.200.000</td>
-              <td>5.600.000</td>
-              <td>19.800.000</td>
-              <td>0</td>
-              <td><span class="status overdue">Quá hạn</span></td>
-            </tr>
-
-            <tr>
-              <td>03/09/2026</td>
-              <td>VT26090306</td>
-              <td>Goertek Vina</td>
-              <td>Logistics Thành Công</td>
-              <td>42.000.000</td>
-              <td>32.500.000</td>
-              <td>9.500.000</td>
-              <td>0</td>
-              <td>32.500.000</td>
-              <td><span class="status pending">Chờ thanh toán</span></td>
-            </tr>
+            
 
           </tbody>
         </table>
@@ -627,73 +475,7 @@
 
 <script>
 
-const financeCtx = document
-  .getElementById("financeChart")
-  .getContext("2d");
 
-new Chart(financeCtx, {
-  type: "bar",
-  data: {
-    labels: ["T4", "T5", "T6", "T7", "T8", "T9"],
-    datasets: [
-      {
-        label: "Doanh thu",
-        data: [760, 850, 920, 1050, 1120, 1285],
-        backgroundColor: "#159447"
-      },
-      {
-        label: "Chi phí",
-        data: [580, 620, 690, 790, 835, 930],
-        backgroundColor: "#f59e0b"
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: "bottom"
-      }
-    }
-  }
-});
-
-const cashCtx = document
-  .getElementById("cashflowChart")
-  .getContext("2d");
-
-new Chart(cashCtx, {
-  type: "line",
-  data: {
-    labels: ["T4", "T5", "T6", "T7", "T8", "T9"],
-    datasets: [
-      {
-        label: "Tiền vào",
-        data: [670, 720, 810, 880, 950, 1065],
-        borderColor: "#0f7a3d",
-        tension: .35,
-        fill: false
-      },
-      {
-        label: "Tiền ra",
-        data: [610, 665, 735, 790, 850, 920],
-        borderColor: "#dc2626",
-        tension: .35,
-        fill: false
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: "bottom"
-      }
-    }
-  }
-});
 
 function searchTable() {
 
