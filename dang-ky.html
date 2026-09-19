@@ -472,11 +472,16 @@ document
       return;
     }
 
-    alert(
-      "Đăng ký thành công. Nếu Supabase yêu cầu xác nhận email, hãy mở email để xác nhận tài khoản."
-    );
+    // Supabase có thể không tiết lộ email đã tồn tại.
+// Không khẳng định rằng một tài khoản mới chắc chắn vừa được tạo.
+alert(
+  "Yêu cầu đăng ký đã được tiếp nhận. Nếu đây là email mới, hãy kiểm tra hộp thư để xác nhận tài khoản. Nếu email này đã có tài khoản, hãy chuyển sang Đăng nhập hoặc Quên mật khẩu."
+);
 
-    window.location.href = "dang-nhap.html";
+button.disabled = false;
+button.textContent = "Đăng ký tài khoản";
+
+window.location.href = "dang-nhap.html";
   });
 </script>
 
