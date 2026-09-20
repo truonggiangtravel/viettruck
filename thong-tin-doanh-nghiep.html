@@ -404,9 +404,9 @@
           </p>
         </div>
 
-        <div class="status-badge">
-          ✓ Đã xác minh
-        </div>
+        <div class="status-badge" id="verificationStatus">
+  Chưa xác minh
+</div>
       </div>
 
       <div class="grid">
@@ -419,7 +419,8 @@
             <label>Tên doanh nghiệp</label>
             <input class="form-control editable"
                    type="text"
-                   value="CÔNG TY TNHH VIETTRUCK"
+                  value=""
+placeholder="Nhập tên doanh nghiệp"
                    disabled>
           </div>
 
@@ -428,7 +429,8 @@
               <label>Mã số thuế</label>
               <input class="form-control editable"
                      type="text"
-                     value="2301234567"
+                    value=""
+placeholder="Nhập mã số thuế"
                      disabled>
             </div>
 
@@ -447,7 +449,7 @@
             <label>Ngày thành lập</label>
             <input class="form-control editable"
                    type="date"
-                   value="2026-01-01"
+                  value=""
                    disabled>
           </div>
         </section>
@@ -460,7 +462,8 @@
             <label>Người đại diện pháp luật</label>
             <input class="form-control editable"
                    type="text"
-                   value="Nguyễn Văn A"
+                  value=""
+placeholder="Nhập người đại diện pháp luật"
                    disabled>
           </div>
 
@@ -469,7 +472,8 @@
               <label>Số điện thoại</label>
               <input class="form-control editable"
                      type="tel"
-                     value="0901234567"
+                     value=""
+placeholder="Nhập số điện thoại"
                      disabled>
             </div>
 
@@ -477,7 +481,8 @@
               <label>Email</label>
               <input class="form-control editable"
                      type="email"
-                     value="contact@viettruck.vn"
+                     value=""
+placeholder="Nhập email doanh nghiệp"
                      disabled>
             </div>
           </div>
@@ -485,7 +490,8 @@
           <div class="form-group">
             <label>Địa chỉ trụ sở</label>
             <textarea class="form-control editable"
-                      disabled>Bắc Ninh, Việt Nam</textarea>
+          placeholder="Nhập địa chỉ trụ sở"
+          disabled></textarea>
           </div>
         </section>
 
@@ -494,12 +500,12 @@
           <h3>🚛 Thông tin vận tải</h3>
 
           <div class="row">
-            <div class="form-group">
-              <label>Số giấy phép kinh doanh vận tải</label>
-              <input class="form-control editable"
-                     type="text"
-                     value="VT-2026-00001"
-                     disabled>
+            <label>Số giấy phép kinh doanh vận tải</label>
+<input class="form-control editable"
+       type="text"
+       value=""
+       placeholder="Nhập số giấy phép kinh doanh vận tải"
+       disabled>
             </div>
 
             <div class="form-group">
@@ -523,10 +529,11 @@
           </div>
 
           <div class="form-group">
-            <label>Mô tả hoạt động</label>
-            <textarea class="form-control editable"
-                      disabled>Doanh nghiệp chuyên vận chuyển hàng hóa, kết nối chủ hàng, nhà xe và tài xế trên nền tảng VietTruck.</textarea>
-          </div>
+    <label>Mô tả hoạt động</label>
+    <textarea class="form-control editable"
+              placeholder="Nhập mô tả hoạt động của doanh nghiệp"
+              disabled></textarea>
+</div>
         </section>
 
         <!-- HỒ SƠ PHÁP LÝ -->
@@ -538,7 +545,7 @@
             <div class="doc-item">
               <div class="doc-icon">📑</div>
               <h4>Giấy đăng ký kinh doanh</h4>
-              <div class="doc-status">✓ Đã tải lên</div>
+              <div class="doc-status">Chưa cập nhật</div>
               <label class="upload-btn">
                 Tải tài liệu mới
                 <input type="file" hidden>
@@ -548,7 +555,7 @@
             <div class="doc-item">
               <div class="doc-icon">🚚</div>
               <h4>Giấy phép vận tải</h4>
-              <div class="doc-status">✓ Đã tải lên</div>
+              <div class="doc-status">Chưa cập nhật</div>
               <label class="upload-btn">
                 Tải tài liệu mới
                 <input type="file" hidden>
