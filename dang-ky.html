@@ -448,21 +448,54 @@ document
     button.disabled = true;
     button.textContent = "Đang tạo tài khoản...";
 
-    const { data, error } =
-      await supabaseClient.auth.signUp({
-        email: email,
-        password: password,
+    // Lấy nguồn marketing đã lưu khi khách vào VietTrucks
+let marketingData = {};
 
-        options: {
-          data: {
-            full_name: fullName,
-            phone: phone,
-            role: selectedRole,
-            city: city,
-            company_name: companyName
-          }
-        }
-      });
+try {
+  marketingData = JSON.parse(
+    localStorage.getItem("viettrucks_marketing_source") || "{}"
+  );
+} catch (e) {
+  marketingData = {};
+}
+
+const { data, error } =
+  await supabaseClient.auth.signUp({
+    email: email,
+    password: password,
+
+    options: {
+      data: {
+        full_name: fullName,
+        phone: phone,
+        role: selectedRole,
+        city: city,
+        company_name: companyName,
+
+        // VietTrucks marketing tracking
+        marketing_source:
+          marketingData.marketing_source || null,
+
+        marketing_medium:
+          marketingData.marketing_medium || null,
+
+        marketing_campaign:
+          marketingData.marketing_campaign || null,
+
+        marketing_content:
+          marketingData.marketing_content || null,
+
+        referral_code:
+          marketingData.referral_code || null,
+
+        landing_page:
+          marketingData.landing_page || null,
+
+        first_utm_at:
+          marketingData.first_utm_at || null
+      }
+    }
+  });
 
     if(error){
       alert("Đăng ký thất bại: " + error.message);
