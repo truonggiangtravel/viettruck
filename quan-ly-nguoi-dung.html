@@ -466,6 +466,13 @@
 
   async function loadUsers() {
 
+    const { data: sessionData, error: sessionError } =
+  await supabaseClient.auth.getSession();
+
+console.log("SESSION:", sessionData?.session);
+console.log("SESSION ERROR:", sessionError);
+console.log("USER ID:", sessionData?.session?.user?.id);
+
     const errorBox = document.getElementById("errorBox");
 
     try {
