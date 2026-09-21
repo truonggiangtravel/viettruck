@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Quản lý người dùng | VietTrucks</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-back {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .btn-logout {
+      background: #dc2626;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+
+    .stat {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    }
+
+    .stat-label {
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 30px;
+      font-weight: 700;
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+      overflow: hidden;
+    }
+
+    .toolbar {
+      padding: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .toolbar input,
+    .toolbar select {
+      height: 42px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 0 12px;
+      background: #fff;
+      font-size: 14px;
+    }
+
+    #searchInput {
+      min-width: 280px;
+      flex: 1;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1050px;
+    }
+
+    th,
+    td {
+      padding: 13px 14px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+      font-size: 14px;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f9fafb;
+      color: #374151;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    tr:hover td {
+      background: #fafafa;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #eef2ff;
+    }
+
+    .source {
+      text-transform: capitalize;
+    }
+
+    .empty {
+      padding: 40px 20px;
+      text-align: center;
+      color: #6b7280;
+    }
+
+    .loading {
+      padding: 35px;
+      text-align: center;
+      color: #6b7280;
+    }
+
+    .error {
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      background: #fee2e2;
+      color: #991b1b;
+      display: none;
+    }
+
+    .footer-info {
+      padding: 14px 18px;
+      color: #6b7280;
+      font-size: 13px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    @media (max-width: 900px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .container {
+        padding: 15px;
+      }
+
+      .header {
+        padding: 14px;
+      }
+
+      .header h1 {
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .header {
+        align-items: flex-start;
+        gap: 12px;
+        flex-direction: column;
+      }
+
+      #searchInput {
+        min-width: 100%;
+      }
+
+      .toolbar input,
+      .toolbar select {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <div>
+    <h1>👥 Quản lý người dùng</h1>
+    <div style="font-size:13px;color:#6b7280;margin-top:4px;">
+      VietTrucks Admin
+    </div>
+  </div>
+
+  <div class="header-actions">
+    <button class="btn btn-back" onclick="location.href='admin.html'">
+      ← Dashboard
+    </button>
+
+    <button class="btn btn-logout" onclick="logout()">
+      Đăng xuất
+    </button>
+  </div>
+</header>
+
+<main class="container">
+
+  <div id="errorBox" class="error"></div>
+
+  <!-- THỐNG KÊ -->
+  <section class="stats">
+
+    <div class="stat">
+      <div class="stat-label">Tổng tài khoản</div>
+      <div class="stat-value" id="statTotal">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Chủ hàng</div>
+      <div class="stat-value" id="statCustomer">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Nhà xe / Tài xế</div>
+      <div class="stat-value" id="statCarrier">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Có nguồn Marketing</div>
+      <div class="stat-value" id="statMarketing">0</div>
+    </div>
+
+  </section>
+
+  <section class="panel">
+
+    <!-- BỘ LỌC -->
+    <div class="toolbar">
+
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Tìm họ tên, số điện thoại, thành phố..."
+      >
+
+      <select id="roleFilter">
+        <option value="">Tất cả vai trò</option>
+        <option value="customer">Chủ hàng</option>
+        <option value="carrier">Nhà xe</option>
+        <option value="driver">Tài xế</option>
+        <option value="admin">Admin</option>
+      </select>
+
+      <select id="sourceFilter">
+        <option value="">Tất cả nguồn</option>
+        <option value="facebook">Facebook</option>
+        <option value="zalo">Zalo</option>
+        <option value="google">Google</option>
+        <option value="referral">Giới thiệu</option>
+        <option value="direct">Trực tiếp</option>
+      </select>
+
+      <select id="statusFilter">
+        <option value="">Tất cả trạng thái</option>
+        <option value="active">Đang hoạt động</option>
+        <option value="inactive">Không hoạt động</option>
+        <option value="blocked">Đã khóa</option>
+      </select>
+
+    </div>
+
+    <div class="table-wrap">
+
+      <table>
+        <thead>
+          <tr>
+            <th>Họ tên</th>
+            <th>Số điện thoại</th>
+            <th>Vai trò</th>
+            <th>Thành phố</th>
+            <th>Nguồn</th>
+            <th>Chiến dịch</th>
+            <th>Mã giới thiệu</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+
+        <tbody id="userTableBody">
+          <tr>
+            <td colspan="8" class="loading">
+              Đang tải dữ liệu người dùng...
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="footer-info">
+      Đang hiển thị:
+      <strong id="visibleCount">0</strong>
+      /
+      <strong id="totalCount">0</strong>
+      tài khoản
+    </div>
+
+  </section>
+
+</main>
+
+
+<script>
+  const supabaseClient = window.supabaseClient;
+
+  let allUsers = [];
+
+  function normalize(value) {
+    return String(value || "")
+      .trim()
+      .toLowerCase();
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function roleName(role) {
+    const value = normalize(role);
+
+    if (value === "customer") return "Chủ hàng";
+    if (value === "carrier") return "Nhà xe";
+    if (value === "driver") return "Tài xế";
+    if (value === "admin") return "Admin";
+
+    return role || "Chưa xác định";
+  }
+
+  function sourceName(user) {
+    const source = normalize(user.marketing_source);
+
+    if (source === "facebook") return "Facebook";
+    if (source === "zalo") return "Zalo";
+    if (source === "google") return "Google";
+
+    if (
+      source === "referral" ||
+      source === "gioi_thieu" ||
+      source === "gioi-thieu" ||
+      source === "gioi thieu" ||
+      String(user.referral_code || "").trim() !== ""
+    ) {
+      return "Giới thiệu";
+    }
+
+    if (source) {
+      return user.marketing_source;
+    }
+
+    return "Trực tiếp / Chưa xác định";
+  }
+
+  function statusName(status) {
+    const value = normalize(status);
+
+    if (value === "active") return "Đang hoạt động";
+    if (value === "inactive") return "Không hoạt động";
+    if (value === "blocked") return "Đã khóa";
+
+    return status || "Chưa xác định";
+  }
+
+
+  /* ==========================================
+     BẢO VỆ TRANG - CHỈ ADMIN ĐƯỢC TRUY CẬP
+  ========================================== */
+
+  async function protectAdminPage() {
+    const {
+      data: { session },
+      error: sessionError
+    } = await supabaseClient.auth.getSession();
+
+    if (sessionError || !session) {
+      location.replace("dang-nhap.html");
+      return false;
+    }
+
+    const { data: profile, error } = await supabaseClient
+      .from("profiles")
+      .select("role")
+      .eq("id", session.user.id)
+      .single();
+
+    if (error || !profile || profile.role !== "admin") {
+      alert("Bạn không có quyền truy cập trang quản trị.");
+      location.replace("dashboard.html");
+      return false;
+    }
+
+    return true;
+  }
+
+
+  /* ==========================================
+     TẢI NGƯỜI DÙNG THẬT TỪ PROFILES
+  ========================================== */
+
+  async function loadUsers() {
+
+    const errorBox = document.getElementById("errorBox");
+
+    try {
+
+      const { data, error } = await supabaseClient
+        .from("profiles")
+        .select(`
+          id,
+          full_name,
+          phone,
+          role,
+          city,
+          status,
+          marketing_source,
+          marketing_medium,
+          marketing_campaign,
+          marketing_content,
+          referral_code,
+          landing_page,
+          first_utm_at
+        `);
+
+      if (error) {
+        throw error;
+      }
+
+      allUsers = data || [];
+
+      updateStats();
+      applyFilters();
+
+    } catch (error) {
+
+      console.error("Lỗi tải người dùng:", error);
+
+      errorBox.style.display = "block";
+      errorBox.textContent =
+        "Không tải được danh sách người dùng: " +
+        (error.message || "Lỗi không xác định");
+
+      document.getElementById("userTableBody").innerHTML = `
+        <tr>
+          <td colspan="8" class="empty">
+            Không tải được dữ liệu.
+          </td>
+        </tr>
+      `;
+    }
+  }
+
+
+  /* ==========================================
+     THỐNG KÊ
+  ========================================== */
+
+  function updateStats() {
+
+    const total = allUsers.length;
+
+    const customers = allUsers.filter(
+      user => normalize(user.role) === "customer"
+    ).length;
+
+    const carriers = allUsers.filter(user => {
+      const role = normalize(user.role);
+
+      return role === "carrier" || role === "driver";
+    }).length;
+
+    const marketing = allUsers.filter(user =>
+      String(user.marketing_source || "").trim() !== "" ||
+      String(user.referral_code || "").trim() !== ""
+    ).length;
+
+    document.getElementById("statTotal").textContent =
+      total.toLocaleString("vi-VN");
+
+    document.getElementById("statCustomer").textContent =
+      customers.toLocaleString("vi-VN");
+
+    document.getElementById("statCarrier").textContent =
+      carriers.toLocaleString("vi-VN");
+
+    document.getElementById("statMarketing").textContent =
+      marketing.toLocaleString("vi-VN");
+
+    document.getElementById("totalCount").textContent =
+      total.toLocaleString("vi-VN");
+  }
+
+
+  /* ==========================================
+     LỌC DỮ LIỆU
+  ========================================== */
+
+  function applyFilters() {
+
+    const keyword =
+      normalize(document.getElementById("searchInput").value);
+
+    const role =
+      normalize(document.getElementById("roleFilter").value);
+
+    const source =
+      normalize(document.getElementById("sourceFilter").value);
+
+    const status =
+      normalize(document.getElementById("statusFilter").value);
+
+    const filtered = allUsers.filter(user => {
+
+      const searchable = normalize([
+        user.full_name,
+        user.phone,
+        user.city,
+        user.marketing_source,
+        user.marketing_campaign,
+        user.referral_code
+      ].join(" "));
+
+      if (keyword && !searchable.includes(keyword)) {
+        return false;
+      }
+
+      if (role && normalize(user.role) !== role) {
+        return false;
+      }
+
+      if (status && normalize(user.status) !== status) {
+        return false;
+      }
+
+      if (source) {
+
+        if (source === "referral") {
+
+          const isReferral =
+            normalize(user.marketing_source) === "referral" ||
+            String(user.referral_code || "").trim() !== "";
+
+          if (!isReferral) {
+            return false;
+          }
+
+        } else if (source === "direct") {
+
+          const hasSource =
+            String(user.marketing_source || "").trim() !== "" ||
+            String(user.referral_code || "").trim() !== "";
+
+          if (hasSource) {
+            return false;
+          }
+
+        } else {
+
+          if (normalize(user.marketing_source) !== source) {
+            return false;
+          }
+
+        }
+      }
+
+      return true;
+    });
+
+    renderUsers(filtered);
+  }
+
+
+  /* ==========================================
+     HIỂN THỊ BẢNG
+  ========================================== */
+
+  function renderUsers(users) {
+
+    const tbody =
+      document.getElementById("userTableBody");
+
+    document.getElementById("visibleCount").textContent =
+      users.length.toLocaleString("vi-VN");
+
+    if (!users.length) {
+
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8" class="empty">
+            Không có người dùng phù hợp.
+          </td>
+        </tr>
+      `;
+
+      return;
+    }
+
+    tbody.innerHTML = users.map(user => {
+
+      return `
+        <tr>
+
+          <td>
+            <strong>
+              ${escapeHtml(user.full_name || "Chưa cập nhật")}
+            </strong>
+          </td>
+
+          <td>
+            ${escapeHtml(user.phone || "—")}
+          </td>
+
+          <td>
+            <span class="badge">
+              ${escapeHtml(roleName(user.role))}
+            </span>
+          </td>
+
+          <td>
+            ${escapeHtml(user.city || "—")}
+          </td>
+
+          <td class="source">
+            ${escapeHtml(sourceName(user))}
+          </td>
+
+          <td>
+            ${escapeHtml(user.marketing_campaign || "—")}
+          </td>
+
+          <td>
+            ${escapeHtml(user.referral_code || "—")}
+          </td>
+
+          <td>
+            <span class="badge">
+              ${escapeHtml(statusName(user.status))}
+            </span>
+          </td>
+
+        </tr>
+      `;
+
+    }).join("");
+  }
+
+
+  /* ==========================================
+     ĐĂNG XUẤT
+  ========================================== */
+
+  async function logout() {
+    await supabaseClient.auth.signOut();
+    location.replace("dang-nhap.html");
+  }
+
+
+  /* ==========================================
+     KHỞI ĐỘNG
+  ========================================== */
+
+  document.getElementById("searchInput")
+    .addEventListener("input", applyFilters);
+
+  document.getElementById("roleFilter")
+    .addEventListener("change", applyFilters);
+
+  document.getElementById("sourceFilter")
+    .addEventListener("change", applyFilters);
+
+  document.getElementById("statusFilter")
+    .addEventListener("change", applyFilters);
+
+
+  (async function init() {
+
+    const allowed = await protectAdminPage();
+
+    if (!allowed) {
+      return;
+    }
+
+    await loadUsers();
+
+  })();
+</script>
+
+</body>
+</html>
