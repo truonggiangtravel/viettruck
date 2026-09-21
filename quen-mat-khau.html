@@ -184,11 +184,11 @@ async function sendReset(event) {
     }
 
     const { error } = await supabaseClient.auth.resetPasswordForEmail(
-        account,
-        {
-            redirectTo: "https://viettruck-vn.netlify.app/doi-mat-khau.html"
-        }
-    );
+    account,
+    {
+        redirectTo: "https://viettrucks.com/doi-mat-khau.html"
+    }
+);
 
     if (error) {
         console.error(error);
