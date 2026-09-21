@@ -898,145 +898,73 @@
 
       <!-- STATS -->
 
-      <div class="stats">
-
-        <div class="stat-card">
-
-          <div class="stat-head">
-
-            <div class="stat-icon blue">📦</div>
-
-            <div class="stat-change">+12.5%</div>
-
-          </div>
-
-          <h4>Tổng đơn vận chuyển</h4>
-
-          <div class="stat-value" id="totalOrders">1,268</div>
-
-          <div class="stat-note">Tháng hiện tại</div>
-
-        </div>
-
-        <div class="stat-card">
-
-          <div class="stat-head">
-
-            <div class="stat-icon green">🚚</div>
-
-            <div class="stat-change">+8.2%</div>
-
-          </div>
-
-          <h4>Xe đang hoạt động</h4>
-
-          <div class="stat-value" id="activeVehicles">428</div>
-
-          <div class="stat-note">Trên toàn hệ thống</div>
-
-        </div>
-
-        <div class="stat-card">
-
-          <div class="stat-head">
-
-            <div class="stat-icon orange">👨‍✈️</div>
-
-            <div class="stat-change">+5.4%</div>
-
-          </div>
-
-          <h4>Tài xế hoạt động</h4>
-
-          <div class="stat-value" id="drivers">586</div>
-
-          <div class="stat-note">Đã xác minh</div>
-
-        </div>
-
-        <div class="stat-card">
-
-          <div class="stat-head">
-
-            <div class="stat-icon purple">💰</div>
-
-            <div class="stat-change">+18.7%</div>
-
-          </div>
-
-          <h4>Doanh thu tháng</h4>
-
-          <div class="stat-value" id="revenue">2.84 tỷ</div>
-
-          <div class="stat-note">Doanh thu ghi nhận</div>
-
-        </div>
-
-        <div class="stat-card">
-
-          <div class="stat-head">
-
-            <div class="stat-icon yellow">🏢</div>
-
-          </div>
-
-          <h4>Nhà xe / Đối tác</h4>
-
-          <div class="stat-value">214</div>
-
-          <div class="stat-note">19 hồ sơ chờ duyệt</div>
-
-        </div>
-
-        <div class="stat-card">
-
-          <div class="stat-head">
-
-            <div class="stat-icon teal">👥</div>
-
-          </div>
-
-          <h4>Khách hàng</h4>
-
-          <div class="stat-value">846</div>
-
-          <div class="stat-note">Doanh nghiệp và cá nhân</div>
-
-        </div>
-
-        <div class="stat-card">
-
-          <div class="stat-head">
-
-            <div class="stat-icon red">⚖️</div>
-
-          </div>
-
-          <h4>Công nợ phải thu</h4>
-
-          <div class="stat-value">486 tr</div>
-
-          <div class="stat-note">38 khoản chưa đối soát</div>
-
-        </div>
-
-        <div class="stat-card">
-
-          <div class="stat-head">
-
-            <div class="stat-icon blue">💳</div>
-
-          </div>
-
-          <h4>Giao dịch hôm nay</h4>
-
-          <div class="stat-value">326</div>
-
-          <div class="stat-note">Tổng giá trị 784 triệu</div>
-
-        </div>
-
-      </div>
+      <!-- THỐNG KÊ TÀI KHOẢN & NGUỒN KHÁCH -->
+<div class="stats">
+
+  <div class="stat-card">
+    <div class="stat-head">
+      <div class="stat-icon blue">👥</div>
+    </div>
+    <h4>Tổng tài khoản</h4>
+    <div class="stat-value" id="totalAccounts">0</div>
+    <div class="stat-note">Tài khoản đã đăng ký</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-head">
+      <div class="stat-icon green">📦</div>
+    </div>
+    <h4>Chủ hàng</h4>
+    <div class="stat-value" id="totalCustomers">0</div>
+    <div class="stat-note">Tài khoản chủ hàng</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-head">
+      <div class="stat-icon orange">🚚</div>
+    </div>
+    <h4>Nhà xe / Tài xế</h4>
+    <div class="stat-value" id="totalCarriers">0</div>
+    <div class="stat-note">Tài khoản vận tải</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-head">
+      <div class="stat-icon blue">f</div>
+    </div>
+    <h4>Facebook</h4>
+    <div class="stat-value" id="sourceFacebook">0</div>
+    <div class="stat-note">Khách đăng ký từ Facebook</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-head">
+      <div class="stat-icon green">Z</div>
+    </div>
+    <h4>Zalo</h4>
+    <div class="stat-value" id="sourceZalo">0</div>
+    <div class="stat-note">Khách đăng ký từ Zalo</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-head">
+      <div class="stat-icon red">G</div>
+    </div>
+    <h4>Google</h4>
+    <div class="stat-value" id="sourceGoogle">0</div>
+    <div class="stat-note">Khách đăng ký từ Google</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-head">
+      <div class="stat-icon purple">🔗</div>
+    </div>
+    <h4>Giới thiệu</h4>
+    <div class="stat-value" id="sourceReferral">0</div>
+    <div class="stat-note">Khách từ link giới thiệu</div>
+  </div>
+
+</div>
 
       <!-- CHART + QUICK -->
 
