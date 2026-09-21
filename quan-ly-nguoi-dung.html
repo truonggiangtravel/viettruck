@@ -477,7 +477,7 @@
           full_name,
           phone,
           role,
-          city,
+          
           status,
           marketing_source,
           marketing_medium,
@@ -580,7 +580,7 @@
       const searchable = normalize([
         user.full_name,
         user.phone,
-        user.city,
+        
         user.marketing_source,
         user.marketing_campaign,
         user.referral_code
@@ -682,9 +682,7 @@
             </span>
           </td>
 
-          <td>
-            ${escapeHtml(user.city || "—")}
-          </td>
+          <td>-</td>
 
           <td class="source">
             ${escapeHtml(sourceName(user))}
