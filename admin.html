@@ -1564,6 +1564,104 @@ async function logout() {
     "dang-nhap.html"
   );
 }
+
+  /* =====================================================
+   THỐNG KÊ TÀI KHOẢN + NGUỒN KHÁCH HÀNG
+   DỮ LIỆU THẬT TỪ SUPABASE
+===================================================== */
+
+async function loadUserStats() {
+  try {
+    const { data: profiles, error } = await supabaseClient
+      .from("profiles")
+      .select("id, role, source");
+
+    if (error) {
+      console.error("Lỗi tải thống kê profiles:", error);
+      return;
+    }
+
+    const rows = profiles || [];
+
+    // Tổng tài khoản
+    const totalAccounts = rows.length;
+
+    // Phân loại tài khoản
+    const totalCustomers = rows.filter(
+      (p) => p.role === "customer"
+    ).length;
+
+    const totalCarriers = rows.filter(
+      (p) => p.role === "carrier" || p.role === "driver"
+    ).length;
+
+    // Chuẩn hóa nguồn khách
+    const normalizeSource = (value) =>
+      String(value || "")
+        .trim()
+        .toLowerCase();
+
+    const facebook = rows.filter(
+      (p) => normalizeSource(p.source) === "facebook"
+    ).length;
+
+    const zalo = rows.filter(
+      (p) => normalizeSource(p.source) === "zalo"
+    ).length;
+
+    const google = rows.filter(
+      (p) => normalizeSource(p.source) === "google"
+    ).length;
+
+    const referral = rows.filter((p) => {
+      const source = normalizeSource(p.source);
+
+      return (
+        source === "referral" ||
+        source === "gioi_thieu" ||
+        source === "giới thiệu" ||
+        source === "gioi thieu"
+      );
+    }).length;
+
+    // Đưa số liệu lên Admin Dashboard
+    const setValue = (id, value) => {
+      const el = document.getElementById(id);
+
+      if (el) {
+        el.textContent = Number(value || 0).toLocaleString("vi-VN");
+      }
+    };
+
+    setValue("totalAccounts", totalAccounts);
+    setValue("totalCustomers", totalCustomers);
+    setValue("totalCarriers", totalCarriers);
+
+    setValue("sourceFacebook", facebook);
+    setValue("sourceZalo", zalo);
+    setValue("sourceGoogle", google);
+    setValue("sourceReferral", referral);
+
+    console.log("VietTruck Admin Stats:", {
+      totalAccounts,
+      totalCustomers,
+      totalCarriers,
+      facebook,
+      zalo,
+      google,
+      referral
+    });
+
+  } catch (err) {
+    console.error("Lỗi loadUserStats:", err);
+  }
+}
+
+
+/* Chạy thống kê sau khi trang tải xong */
+window.addEventListener("DOMContentLoaded", () => {
+  loadUserStats();
+});
 </script>
 </body>
 </html>
