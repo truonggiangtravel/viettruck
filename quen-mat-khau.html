@@ -162,15 +162,10 @@ button:hover{
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 
 <script>
-const SUPABASE_URL = "https://ksyakrcgqzsupqyusyo.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_OLGPIepJQ0FBoEoL7jvySA_9GC5hSgD";
-
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-);
+const supabaseClient = window.supabaseClient;
 
 async function sendReset(event) {
     event.preventDefault();
