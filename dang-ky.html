@@ -386,39 +386,195 @@ body{
 
 <script>
 const supabaseClient = window.supabaseClient;
+
 const shipperBox = document.getElementById("shipperBox");
 const driverBox = document.getElementById("driverBox");
 
+const phoneField = document.getElementById("phoneField");
+const emailField = document.getElementById("emailField");
+const otpField = document.getElementById("otpField");
+
+const phoneInput = document.getElementById("phone");
+const emailInput = document.getElementById("email");
+const otpInput = document.getElementById("otpCode");
+
+const sendOtpBtn = document.getElementById("sendOtpBtn");
+const otpMessage = document.getElementById("otpMessage");
+
 let selectedRole = "customer";
+let phoneOtpVerified = false;
 
-shipperBox.addEventListener("click", function(){
+/* =========================
+   CHỌN LOẠI TÀI KHOẢN
+========================= */
+
+shipperBox.addEventListener("click", function () {
   selectedRole = "customer";
-
   shipperBox.classList.add("active");
   driverBox.classList.remove("active");
 });
 
-driverBox.addEventListener("click", function(){
+driverBox.addEventListener("click", function () {
   selectedRole = "driver";
-
   driverBox.classList.add("active");
   shipperBox.classList.remove("active");
 });
 
+/* =========================
+   EMAIL / SỐ ĐIỆN THOẠI
+========================= */
+
+document
+  .querySelectorAll('input[name="registerMethod"]')
+  .forEach(function (radio) {
+
+    radio.addEventListener("change", function () {
+
+      if (this.value === "phone") {
+
+        phoneField.style.display = "";
+        otpField.style.display = "";
+        emailField.style.display = "none";
+
+        emailInput.value = "";
+
+      } else {
+
+        phoneField.style.display = "none";
+        otpField.style.display = "none";
+        emailField.style.display = "";
+
+        phoneInput.value = "";
+        otpInput.value = "";
+
+        phoneOtpVerified = false;
+      }
+
+    });
+
+  });
+
+/* Hiển thị OTP ngay từ đầu vì mặc định chọn điện thoại */
+otpField.style.display = "";
+
+
+/* =========================
+   GỬI OTP
+========================= */
+
+sendOtpBtn.addEventListener("click", async function () {
+
+  const phone = phoneInput.value.trim();
+
+  if (!phone) {
+    alert("Vui lòng nhập số điện thoại.");
+    return;
+  }
+
+  sendOtpBtn.disabled = true;
+  sendOtpBtn.textContent = "Đang gửi...";
+
+  otpMessage.textContent = "";
+
+  try {
+
+    const { data, error } =
+      await supabaseClient.functions.invoke(
+        "twilio-send-otp",
+        {
+          body: {
+            phone: phone
+          }
+        }
+      );
+
+    if (error) {
+      throw error;
+    }
+
+    if (!data || !data.success) {
+      throw new Error(
+        data?.error || "Không gửi được mã OTP."
+      );
+    }
+
+    otpMessage.style.color = "#087b40";
+    otpMessage.textContent =
+      "Mã OTP đã được gửi tới số điện thoại của bạn.";
+
+  } catch (error) {
+
+    console.error(error);
+
+    otpMessage.style.color = "#c62828";
+    otpMessage.textContent =
+      error.message || "Không gửi được mã OTP.";
+
+  } finally {
+
+    sendOtpBtn.disabled = false;
+    sendOtpBtn.textContent = "Gửi lại OTP";
+
+  }
+
+});
+
+
+/* =========================
+   XÁC MINH OTP
+========================= */
+
+async function verifyPhoneOtp(phone, code) {
+
+  const { data, error } =
+    await supabaseClient.functions.invoke(
+      "twilio-verify-otp",
+      {
+        body: {
+          phone: phone,
+          code: code
+        }
+      }
+    );
+
+  if (error) {
+    throw error;
+  }
+
+  if (!data || data.success !== true || data.verified !== true) {
+    throw new Error(
+      data?.error ||
+      "Mã OTP không đúng hoặc đã hết hạn."
+    );
+  }
+
+  return true;
+}
+
+
+/* =========================
+   ĐĂNG KÝ
+========================= */
+
 document
   .getElementById("registerForm")
-  .addEventListener("submit", async function(e){
+  .addEventListener("submit", async function (e) {
 
     e.preventDefault();
+
+    const method =
+      document.querySelector(
+        'input[name="registerMethod"]:checked'
+      ).value;
 
     const fullName =
       document.getElementById("fullName").value.trim();
 
     const phone =
-      document.getElementById("phone").value.trim();
+      phoneInput.value.trim();
 
     const email =
-      document.getElementById("email").value.trim();
+      emailInput.value.trim();
 
     const city =
       document.getElementById("city").value.trim();
@@ -432,13 +588,28 @@ document
     const companyName =
       document.getElementById("companyName").value.trim();
 
-    if(password.length < 8){
+    if (!fullName) {
+      alert("Vui lòng nhập họ và tên.");
+      return;
+    }
+
+    if (password.length < 8) {
       alert("Mật khẩu phải có ít nhất 8 ký tự.");
       return;
     }
 
-    if(password !== confirmPassword){
+    if (password !== confirmPassword) {
       alert("Hai mật khẩu không giống nhau.");
+      return;
+    }
+
+    if (method === "phone" && !phone) {
+      alert("Vui lòng nhập số điện thoại.");
+      return;
+    }
+
+    if (method === "email" && !email) {
+      alert("Vui lòng nhập email.");
       return;
     }
 
@@ -446,75 +617,129 @@ document
       document.querySelector(".register-btn");
 
     button.disabled = true;
-    button.textContent = "Đang tạo tài khoản...";
+    button.textContent = "Đang xử lý...";
 
-    // Lấy nguồn marketing đã lưu khi khách vào VietTrucks
-let marketingData = {};
+    try {
 
-try {
-  marketingData = JSON.parse(
-    localStorage.getItem("viettrucks_marketing_source") || "{}"
-  );
-} catch (e) {
-  marketingData = {};
-}
+      /* =====================
+         ĐĂNG KÝ BẰNG ĐIỆN THOẠI
+      ===================== */
 
-const { data, error } =
-  await supabaseClient.auth.signUp({
-    email: email,
-    password: password,
+      if (method === "phone") {
 
-    options: {
-      data: {
-        full_name: fullName,
-        phone: phone,
-        role: selectedRole,
-        city: city,
-        company_name: companyName,
+        const code = otpInput.value.trim();
 
-        // VietTrucks marketing tracking
-        marketing_source:
-          marketingData.marketing_source || null,
+        if (!code) {
+          throw new Error(
+            "Vui lòng nhập mã OTP đã gửi về điện thoại."
+          );
+        }
 
-        marketing_medium:
-          marketingData.marketing_medium || null,
+        await verifyPhoneOtp(phone, code);
 
-        marketing_campaign:
-          marketingData.marketing_campaign || null,
+        phoneOtpVerified = true;
 
-        marketing_content:
-          marketingData.marketing_content || null,
+        /*
+          OTP Twilio đã xác minh thành công.
 
-        referral_code:
-          marketingData.referral_code || null,
+          Bước tạo user bằng số điện thoại sẽ được
+          thực hiện bằng server-side function để không
+          đưa Service Role Key ra trình duyệt.
+        */
 
-        landing_page:
-          marketingData.landing_page || null,
+        alert(
+          "Số điện thoại đã xác minh thành công."
+        );
 
-        first_utm_at:
-          marketingData.first_utm_at || null
+        button.disabled = false;
+        button.textContent = "Đăng ký tài khoản";
+
+        return;
       }
-    }
-  });
 
-    if(error){
-      alert("Đăng ký thất bại: " + error.message);
+
+      /* =====================
+         ĐĂNG KÝ BẰNG EMAIL
+      ===================== */
+
+      let marketingData = {};
+
+      try {
+        marketingData = JSON.parse(
+          localStorage.getItem(
+            "viettrucks_marketing_source"
+          ) || "{}"
+        );
+      } catch (e) {
+        marketingData = {};
+      }
+
+      const { data, error } =
+        await supabaseClient.auth.signUp({
+
+          email: email,
+          password: password,
+
+          options: {
+
+            data: {
+
+              full_name: fullName,
+              phone: null,
+              role: selectedRole,
+              city: city,
+              company_name: companyName,
+
+              marketing_source:
+                marketingData.marketing_source || null,
+
+              marketing_medium:
+                marketingData.marketing_medium || null,
+
+              marketing_campaign:
+                marketingData.marketing_campaign || null,
+
+              marketing_content:
+                marketingData.marketing_content || null,
+
+              referral_code:
+                marketingData.referral_code || null,
+
+              landing_page:
+                marketingData.landing_page || null,
+
+              first_utm_at:
+                marketingData.first_utm_at || null
+            }
+
+          }
+
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      alert(
+        "Yêu cầu đăng ký đã được tiếp nhận. " +
+        "Vui lòng kiểm tra email để xác nhận tài khoản."
+      );
+
+      window.location.href = "dang-nhap.html";
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert(
+        error.message ||
+        "Không thể đăng ký tài khoản."
+      );
 
       button.disabled = false;
       button.textContent = "Đăng ký tài khoản";
-      return;
     }
 
-    // Supabase có thể không tiết lộ email đã tồn tại.
-// Không khẳng định rằng một tài khoản mới chắc chắn vừa được tạo.
-alert(
-  "Yêu cầu đăng ký đã được tiếp nhận. Nếu đây là email mới, hãy kiểm tra hộp thư để xác nhận tài khoản. Nếu email này đã có tài khoản, hãy chuyển sang Đăng nhập hoặc Quên mật khẩu."
-);
-
-button.disabled = false;
-button.textContent = "Đăng ký tài khoản";
-
-window.location.href = "dang-nhap.html";
   });
 </script>
 
