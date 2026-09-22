@@ -526,31 +526,59 @@ sendOtpBtn.addEventListener("click", async function () {
    XÁC MINH OTP
 ========================= */
 
-async function verifyPhoneOtp(phone, code) {
-
+async function verifyPhoneOtp(
+  phone,
+  code,
+  password,
+  fullName,
+  role,
+  city,
+  companyName
+) {
   const { data, error } =
     await supabaseClient.functions.invoke(
       "twilio-verify-otp",
       {
         body: {
           phone: phone,
-          code: code
+          code: code,
+          password: password,
+          full_name: fullName,
+          role: role,
+          city: city,
+          company_name: companyName
         }
       }
     );
 
   if (error) {
-    throw error;
+    console.error("twilio-verify-otp invoke error:", error);
+
+    throw new Error(
+      data?.error ||
+      error.message ||
+      "Không thể xác minh OTP."
+    );
   }
 
-  if (!data || data.success !== true || data.verified !== true) {
+  if (!data || data.success !== true) {
     throw new Error(
       data?.error ||
       "Mã OTP không đúng hoặc đã hết hạn."
     );
   }
 
-  return true;
+  if (
+    data.verified !== true ||
+    data.account_created !== true
+  ) {
+    throw new Error(
+      data?.error ||
+      "Không thể tạo tài khoản."
+    );
+  }
+
+  return data;
 }
 
 
