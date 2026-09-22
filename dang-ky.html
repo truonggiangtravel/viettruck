@@ -688,30 +688,24 @@ document
         button.disabled = true;
         button.textContent = "Đang xác minh OTP...";
 
-        await verifyPhoneOtp(phone, code);
+        await verifyPhoneOtp(
+  phone,
+  code,
+  password,
+  fullName,
+  selectedRole,
+  city,
+  companyName
+);
 
         phoneOtpVerified = true;
 
-        /*
-         * OTP đã đúng.
-         *
-         * QUAN TRỌNG:
-         * Không dùng email giả để tạo tài khoản.
-         * Không đưa Service Role Key ra trình duyệt.
-         *
-         * Bước tiếp theo sẽ gọi Edge Function
-         * server-side để tạo Supabase user bằng phone.
-         */
+alert(
+  "Đăng ký tài khoản bằng số điện thoại thành công. Bạn có thể đăng nhập ngay."
+);
 
-        alert(
-          "Số điện thoại đã xác minh thành công."
-        );
-
-        button.disabled = false;
-        button.textContent = "Đăng ký tài khoản";
-
-        return;
-
+window.location.href = "dang-nhap.html";
+return;
       } catch (error) {
         console.error(error);
 
