@@ -317,7 +317,17 @@ body{
 
 <div class="field">
   <label>Số điện thoại</label>
-  <input id="phone" type="tel" placeholder="09xxxxxxxx">
+  <input
+  id="phone"
+  type="tel"
+  placeholder="09xxxxxxxx"
+  inputmode="numeric"
+  autocomplete="tel"
+  pattern="0[0-9]{9}"
+  minlength="10"
+  maxlength="10"
+  required
+>
   <small>Nhập số điện thoại nếu đăng ký bằng OTP</small>
 </div>
 
