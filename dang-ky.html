@@ -330,6 +330,31 @@ body{
 >
   <small>Số điện thoại dùng để nhận mã OTP xác minh tài khoản</small>
 </div>
+  <div class="field full" id="otpField">
+  <label>Mã xác minh OTP *</label>
+
+  <div style="display:flex; gap:10px; align-items:center;">
+    <input
+      id="otpCode"
+      type="text"
+      inputmode="numeric"
+      autocomplete="one-time-code"
+      placeholder="Nhập mã OTP"
+      maxlength="10"
+      style="flex:1;"
+    >
+
+    <button
+      id="sendOtpBtn"
+      type="button"
+      style="white-space:nowrap; padding:12px 18px;"
+    >
+      Gửi mã OTP
+    </button>
+  </div>
+
+  <small id="otpMessage"></small>
+</div>
 
 <div class="field">
   <label>Email</label>
