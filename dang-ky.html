@@ -422,10 +422,18 @@ body{
 <script src="supabase-config.js"></script>
 
 <script>
+/* =========================================================
+   VIETTRUCK - ĐĂNG KÝ TÀI KHOẢN
+   LUỒNG:
+   1. twilio-send-otp   -> gửi OTP
+   2. twilio-verify-otp -> xác minh OTP
+   3. create-phone-user -> tạo tài khoản
+   ========================================================= */
+
 const supabaseClient = window.supabaseClient;
 
 /* =========================================================
-   VIETTRUCK - ĐĂNG KÝ TÀI KHOẢN BẰNG SỐ ĐIỆN THOẠI + OTP
+   DOM
    ========================================================= */
 
 const registerForm = document.getElementById("registerForm");
@@ -438,17 +446,15 @@ const phoneInput = document.getElementById("phone");
 const emailInput = document.getElementById("email");
 const cityInput = document.getElementById("city");
 const passwordInput = document.getElementById("password");
-const confirmPasswordInput =
-  document.getElementById("confirmPassword");
-const companyNameInput =
-  document.getElementById("companyName");
+const confirmPasswordInput = document.getElementById("confirmPassword");
+const companyNameInput = document.getElementById("companyName");
 
 const otpInput = document.getElementById("otpCode");
 const sendOtpBtn = document.getElementById("sendOtpBtn");
 const otpMessage = document.getElementById("otpMessage");
 
-const registerBtn =
-  document.querySelector(".register-btn");
+const registerBtn = document.querySelector(".register-btn");
+const agreeTerms = document.getElementById("agreeTerms");
 
 let selectedRole = "customer";
 let otpSentPhone = "";
@@ -457,6 +463,7 @@ let otpVerified = false;
 
 /* =========================================================
    CHUẨN HÓA SỐ ĐIỆN THOẠI VIỆT NAM
+   0388134999 -> +84388134999
    ========================================================= */
 
 function normalizeVietnamPhone(phone) {
@@ -487,10 +494,38 @@ function normalizeVietnamPhone(phone) {
 function showOtpMessage(message, success = false) {
   if (!otpMessage) return;
 
-  otpMessage.textContent = message;
+  otpMessage.textContent = message || "";
+  otpMessage.style.color = success ? "#087b40" : "#c62828";
+}
 
-  otpMessage.style.color =
-    success ? "#087b40" : "#c62828";
+
+/* =========================================================
+   LẤY MESSAGE TỪ EDGE FUNCTION ERROR
+   ========================================================= */
+
+async function getFunctionErrorMessage(error, fallback) {
+  try {
+    if (error && error.context) {
+      const response = error.context;
+
+      if (typeof response.clone === "function") {
+        const cloned = response.clone();
+
+        try {
+          const body = await cloned.json();
+
+          if (body?.error) return body.error;
+          if (body?.message) return body.message;
+        } catch (_) {
+          // bỏ qua
+        }
+      }
+    }
+  } catch (_) {
+    // bỏ qua
+  }
+
+  return error?.message || fallback;
 }
 
 
@@ -507,6 +542,14 @@ if (shipperBox) {
     if (driverBox) {
       driverBox.classList.remove("active");
     }
+
+    const radio = shipperBox.querySelector(
+      'input[name="accountType"]'
+    );
+
+    if (radio) {
+      radio.checked = true;
+    }
   });
 }
 
@@ -520,18 +563,25 @@ if (driverBox) {
     if (shipperBox) {
       shipperBox.classList.remove("active");
     }
+
+    const radio = driverBox.querySelector(
+      'input[name="accountType"]'
+    );
+
+    if (radio) {
+      radio.checked = true;
+    }
   });
 }
 
 
 /* =========================================================
    KHI ĐỔI SỐ ĐIỆN THOẠI
-   BẮT BUỘC XÁC MINH OTP LẠI
+   PHẢI GỬI OTP LẠI
    ========================================================= */
 
 if (phoneInput) {
   phoneInput.addEventListener("input", function () {
-
     const currentPhone =
       normalizeVietnamPhone(phoneInput.value);
 
@@ -540,6 +590,7 @@ if (phoneInput) {
       currentPhone !== otpSentPhone
     ) {
       otpVerified = false;
+      otpSentPhone = "";
 
       if (otpInput) {
         otpInput.value = "";
@@ -555,13 +606,20 @@ if (phoneInput) {
 
 /* =========================================================
    GỬI OTP
+   EDGE FUNCTION: twilio-send-otp
    ========================================================= */
 
 if (sendOtpBtn) {
-
   sendOtpBtn.addEventListener(
     "click",
     async function () {
+
+      if (!supabaseClient) {
+        alert(
+          "Không kết nối được máy chủ Supabase."
+        );
+        return;
+      }
 
       const rawPhone =
         phoneInput?.value.trim() || "";
@@ -572,15 +630,11 @@ if (sendOtpBtn) {
         return;
       }
 
-      /*
-       * Form HTML hiện yêu cầu số Việt Nam
-       * dạng 0xxxxxxxxx gồm 10 chữ số.
-       */
-
       if (!/^0\d{9}$/.test(rawPhone)) {
         alert(
           "Số điện thoại không hợp lệ. Ví dụ: 0388134999"
         );
+
         phoneInput?.focus();
         return;
       }
@@ -595,6 +649,11 @@ if (sendOtpBtn) {
 
       try {
 
+        console.log(
+          "Đang gọi twilio-send-otp:",
+          phone
+        );
+
         const { data, error } =
           await supabaseClient.functions.invoke(
             "twilio-send-otp",
@@ -605,34 +664,37 @@ if (sendOtpBtn) {
             }
           );
 
+        console.log(
+          "twilio-send-otp result:",
+          {
+            data,
+            error
+          }
+        );
 
         if (error) {
-          console.error(
-            "twilio-send-otp invoke error:",
-            error
-          );
+          const message =
+            await getFunctionErrorMessage(
+              error,
+              "Không thể gửi mã OTP."
+            );
 
+          throw new Error(message);
+        }
+
+        if (!data) {
           throw new Error(
-            error.message ||
-            "Không thể gửi mã OTP."
+            "Máy chủ không trả về dữ liệu."
           );
         }
 
-
-        if (!data || data.success !== true) {
-
-          console.error(
-            "twilio-send-otp response:",
-            data
-          );
-
+        if (data.success !== true) {
           throw new Error(
-            data?.error ||
-            data?.message ||
+            data.error ||
+            data.message ||
             "Không gửi được mã OTP."
           );
         }
-
 
         otpSentPhone = phone;
         otpVerified = false;
@@ -647,7 +709,6 @@ if (sendOtpBtn) {
           otpInput.focus();
         }
 
-
       } catch (error) {
 
         console.error(
@@ -655,20 +716,22 @@ if (sendOtpBtn) {
           error
         );
 
-        showOtpMessage(
+        const message =
           error?.message ||
-          "Không gửi được mã OTP."
-        );
+          "Không gửi được mã OTP.";
 
-        alert(
-          error?.message ||
-          "Không gửi được mã OTP."
-        );
+        showOtpMessage(message);
+
+        alert(message);
 
       } finally {
 
         sendOtpBtn.disabled = false;
-        sendOtpBtn.textContent = "Gửi lại OTP";
+
+        sendOtpBtn.textContent =
+          otpSentPhone
+            ? "Gửi lại OTP"
+            : "Gửi mã OTP";
       }
     }
   );
@@ -676,12 +739,98 @@ if (sendOtpBtn) {
 
 
 /* =========================================================
-   XÁC MINH OTP + TẠO TÀI KHOẢN
+   XÁC MINH OTP
+   EDGE FUNCTION: twilio-verify-otp
    ========================================================= */
 
-async function verifyPhoneOtpAndCreateAccount({
+async function verifyPhoneOtp(phone, code) {
+
+  console.log(
+    "Đang gọi twilio-verify-otp:",
+    phone
+  );
+
+  const { data, error } =
+    await supabaseClient.functions.invoke(
+      "twilio-verify-otp",
+      {
+        body: {
+          phone: phone,
+          code: code
+        }
+      }
+    );
+
+  console.log(
+    "twilio-verify-otp result:",
+    {
+      data,
+      error
+    }
+  );
+
+  if (error) {
+    const message =
+      await getFunctionErrorMessage(
+        error,
+        "Không thể xác minh OTP."
+      );
+
+    throw new Error(message);
+  }
+
+  if (!data) {
+    throw new Error(
+      "Máy chủ xác minh OTP không trả về dữ liệu."
+    );
+  }
+
+  if (data.success !== true) {
+    throw new Error(
+      data.error ||
+      data.message ||
+      "Mã OTP không đúng hoặc đã hết hạn."
+    );
+  }
+
+  /*
+     Chấp nhận cả hai dạng response:
+
+     {
+       success: true,
+       verified: true
+     }
+
+     hoặc Twilio trả:
+     {
+       success: true,
+       status: "approved"
+     }
+  */
+
+  const verified =
+    data.verified === true ||
+    data.status === "approved";
+
+  if (!verified) {
+    throw new Error(
+      data.error ||
+      data.message ||
+      "Mã OTP chưa được xác minh."
+    );
+  }
+
+  return data;
+}
+
+
+/* =========================================================
+   TẠO TÀI KHOẢN
+   EDGE FUNCTION: create-phone-user
+   ========================================================= */
+
+async function createPhoneUser({
   phone,
-  code,
   password,
   fullName,
   role,
@@ -690,18 +839,24 @@ async function verifyPhoneOtpAndCreateAccount({
   email
 }) {
 
+  console.log(
+    "Đang gọi create-phone-user:",
+    phone
+  );
+
   const { data, error } =
     await supabaseClient.functions.invoke(
-      "twilio-verify-otp",
+      "create-phone-user",
       {
         body: {
           phone: phone,
-          code: code,
           password: password,
 
           full_name: fullName,
           role: role,
-          city: city || null,
+
+          city:
+            city || null,
 
           company_name:
             companyName || null,
@@ -712,65 +867,37 @@ async function verifyPhoneOtpAndCreateAccount({
       }
     );
 
+  console.log(
+    "create-phone-user result:",
+    {
+      data,
+      error
+    }
+  );
 
   if (error) {
+    const message =
+      await getFunctionErrorMessage(
+        error,
+        "Không thể tạo tài khoản."
+      );
 
-    console.error(
-      "twilio-verify-otp invoke error:",
-      error
-    );
-
-    throw new Error(
-      data?.error ||
-      error.message ||
-      "Không thể xác minh OTP."
-    );
+    throw new Error(message);
   }
-
 
   if (!data) {
     throw new Error(
-      "Máy chủ không trả về dữ liệu."
+      "Máy chủ tạo tài khoản không trả về dữ liệu."
     );
   }
-
 
   if (data.success !== true) {
-
-    console.error(
-      "twilio-verify-otp response:",
-      data
-    );
-
     throw new Error(
       data.error ||
       data.message ||
-      "Mã OTP không đúng hoặc đã hết hạn."
+      "Không thể tạo tài khoản."
     );
   }
-
-
-  /*
-   * Edge Function hiện tại của VietTruck
-   * xác minh OTP và tạo tài khoản.
-   */
-
-  if (data.verified !== true) {
-    throw new Error(
-      data.error ||
-      "Mã OTP chưa được xác minh."
-    );
-  }
-
-
-  if (data.account_created !== true) {
-    throw new Error(
-      data.error ||
-      data.message ||
-      "OTP đúng nhưng chưa tạo được tài khoản."
-    );
-  }
-
 
   return data;
 }
@@ -788,6 +915,17 @@ if (registerForm) {
 
       event.preventDefault();
 
+      if (!supabaseClient) {
+        alert(
+          "Không kết nối được Supabase. Kiểm tra supabase-config.js"
+        );
+        return;
+      }
+
+
+      /* =====================================================
+         LẤY DỮ LIỆU
+         ===================================================== */
 
       const fullName =
         fullNameInput?.value.trim() || "";
@@ -814,44 +952,49 @@ if (registerForm) {
         otpInput?.value.trim() || "";
 
 
-      /* -------------------------
+      /* =====================================================
          KIỂM TRA HỌ TÊN
-         ------------------------- */
+         ===================================================== */
 
       if (!fullName) {
-        alert("Vui lòng nhập họ và tên.");
+        alert(
+          "Vui lòng nhập họ và tên."
+        );
+
         fullNameInput?.focus();
         return;
       }
 
 
-      /* -------------------------
+      /* =====================================================
          KIỂM TRA SỐ ĐIỆN THOẠI
-         ------------------------- */
+         ===================================================== */
 
       if (!rawPhone) {
-        alert("Vui lòng nhập số điện thoại.");
+        alert(
+          "Vui lòng nhập số điện thoại."
+        );
+
         phoneInput?.focus();
         return;
       }
-
 
       if (!/^0\d{9}$/.test(rawPhone)) {
         alert(
           "Số điện thoại không hợp lệ. Ví dụ: 0388134999"
         );
+
         phoneInput?.focus();
         return;
       }
-
 
       const phone =
         normalizeVietnamPhone(rawPhone);
 
 
-      /* -------------------------
+      /* =====================================================
          KIỂM TRA ĐÃ GỬI OTP
-         ------------------------- */
+         ===================================================== */
 
       if (!otpSentPhone) {
         alert(
@@ -862,30 +1005,42 @@ if (registerForm) {
         return;
       }
 
-
       if (phone !== otpSentPhone) {
         alert(
           "Số điện thoại đã thay đổi. Vui lòng gửi lại mã OTP."
         );
 
+        sendOtpBtn?.focus();
         return;
       }
 
 
-      /* -------------------------
-         KIỂM TRA MÃ OTP
-         ------------------------- */
+      /* =====================================================
+         KIỂM TRA OTP
+         ===================================================== */
 
       if (!code) {
-        alert("Vui lòng nhập mã OTP.");
+        alert(
+          "Vui lòng nhập mã OTP."
+        );
+
+        otpInput?.focus();
+        return;
+      }
+
+      if (!/^\d{4,10}$/.test(code)) {
+        alert(
+          "Mã OTP không hợp lệ."
+        );
+
         otpInput?.focus();
         return;
       }
 
 
-      /* -------------------------
-         KIỂM TRA EMAIL NẾU CÓ
-         ------------------------- */
+      /* =====================================================
+         KIỂM TRA EMAIL
+         ===================================================== */
 
       if (email) {
 
@@ -903,9 +1058,9 @@ if (registerForm) {
       }
 
 
-      /* -------------------------
+      /* =====================================================
          KIỂM TRA MẬT KHẨU
-         ------------------------- */
+         ===================================================== */
 
       if (password.length < 8) {
         alert(
@@ -915,7 +1070,6 @@ if (registerForm) {
         passwordInput?.focus();
         return;
       }
-
 
       if (password !== confirmPassword) {
         alert(
@@ -927,12 +1081,9 @@ if (registerForm) {
       }
 
 
-      /* -------------------------
+      /* =====================================================
          ĐIỀU KHOẢN
-         ------------------------- */
-
-      const agreeTerms =
-        document.getElementById("agreeTerms");
+         ===================================================== */
 
       if (
         agreeTerms &&
@@ -947,23 +1098,56 @@ if (registerForm) {
       }
 
 
-      /* -------------------------
-         XÁC MINH + TẠO USER
-         ------------------------- */
+      /* =====================================================
+         BƯỚC 1:
+         XÁC MINH OTP
+         ===================================================== */
 
       try {
 
         if (registerBtn) {
           registerBtn.disabled = true;
+
           registerBtn.textContent =
             "Đang xác minh OTP...";
         }
 
+        showOtpMessage(
+          "Đang xác minh mã OTP..."
+        );
 
-        const result =
-          await verifyPhoneOtpAndCreateAccount({
+        const verifyResult =
+          await verifyPhoneOtp(
             phone,
-            code,
+            code
+          );
+
+        console.log(
+          "OTP VERIFIED:",
+          verifyResult
+        );
+
+        otpVerified = true;
+
+        showOtpMessage(
+          "OTP chính xác. Đang tạo tài khoản...",
+          true
+        );
+
+
+        /* ===================================================
+           BƯỚC 2:
+           TẠO TÀI KHOẢN
+           =================================================== */
+
+        if (registerBtn) {
+          registerBtn.textContent =
+            "Đang tạo tài khoản...";
+        }
+
+        const createResult =
+          await createPhoneUser({
+            phone,
             password,
             fullName,
             role: selectedRole,
@@ -972,26 +1156,24 @@ if (registerForm) {
             email
           });
 
-
-        otpVerified = true;
-
-
         console.log(
-          "REGISTER SUCCESS:",
-          result
+          "ACCOUNT CREATED:",
+          createResult
         );
 
+
+        /* ===================================================
+           THÀNH CÔNG
+           =================================================== */
 
         showOtpMessage(
-          "Xác minh thành công.",
+          "Đăng ký tài khoản thành công.",
           true
         );
-
 
         alert(
           "Đăng ký tài khoản thành công. Bạn có thể đăng nhập ngay."
         );
-
 
         window.location.href =
           "dang-nhap.html";
@@ -1004,17 +1186,16 @@ if (registerForm) {
           error
         );
 
-
-        otpVerified = false;
-
-
         const message =
           error?.message ||
           "Không thể đăng ký tài khoản.";
 
+        /*
+           Nếu OTP sai thì vẫn cho nhập lại OTP.
+           Không xóa otpSentPhone để không bắt gửi SMS mới.
+        */
 
         showOtpMessage(message);
-
 
         alert(message);
 
@@ -1023,6 +1204,7 @@ if (registerForm) {
 
         if (registerBtn) {
           registerBtn.disabled = false;
+
           registerBtn.textContent =
             "Đăng ký tài khoản";
         }
@@ -1033,7 +1215,7 @@ if (registerForm) {
 
 
 /* =========================================================
-   KIỂM TRA CẤU HÌNH KHI TRANG LOAD
+   KIỂM TRA CẤU HÌNH KHI LOAD TRANG
    ========================================================= */
 
 if (!supabaseClient) {
@@ -1042,13 +1224,11 @@ if (!supabaseClient) {
   );
 }
 
-
 if (!registerForm) {
   console.error(
     "Không tìm thấy #registerForm"
   );
 }
-
 
 if (!phoneInput) {
   console.error(
@@ -1056,19 +1236,21 @@ if (!phoneInput) {
   );
 }
 
-
 if (!otpInput) {
   console.error(
     "Không tìm thấy #otpCode"
   );
 }
 
-
 if (!sendOtpBtn) {
   console.error(
     "Không tìm thấy #sendOtpBtn"
   );
 }
+
+console.log(
+  "VietTruck registration script loaded."
+);
 </script>
 
 </body>
