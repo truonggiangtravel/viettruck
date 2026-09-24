@@ -299,18 +299,51 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
   e.preventDefault();
 
   const inputs = this.querySelectorAll("input");
-  const email = inputs[0].value.trim();
-  const password = inputs[1].value.trim();
 
-  if (!email || !password) {
-    alert("Vui lòng nhập đầy đủ email và mật khẩu.");
+const loginValue = inputs[0].value.trim();
+const password = inputs[1].value;
+
+if (!loginValue || !password) {
+  alert("Vui lòng nhập số điện thoại/email và mật khẩu");
+  return;
+}
+
+/* Chuẩn hóa thông tin đăng nhập */
+let credentials = {
+  password: password
+};
+
+if (loginValue.includes("@")) {
+  // Đăng nhập bằng email
+  credentials.email = loginValue.toLowerCase();
+} else {
+  // Đăng nhập bằng số điện thoại
+  let phone = loginValue.replace(/[^\d+]/g, "");
+
+  // 0891234567 -> +84891234567
+  if (phone.startsWith("0")) {
+    phone = "+84" + phone.slice(1);
+  }
+  // 84891234567 -> +84891234567
+  else if (phone.startsWith("84")) {
+    phone = "+" + phone;
+  }
+
+  if (!phone.startsWith("+84")) {
+    alert("Số điện thoại không hợp lệ. Ví dụ: 0891234567");
     return;
   }
 
-  const { data, error } = await supabaseClient.auth.signInWithPassword({
-    email: email,
-    password: password
-  });
+  credentials.phone = phone;
+}
+
+console.log("Đang đăng nhập:", {
+  type: credentials.phone ? "phone" : "email",
+  value: credentials.phone || credentials.email
+});
+
+const { data, error } =
+  await supabaseClient.auth.signInWithPassword(credentials);
 
   if (error) {
     alert("Đăng nhập thất bại: " + error.message);
