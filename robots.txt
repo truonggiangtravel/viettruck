@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://viettrucks.com/sitemap.xml
