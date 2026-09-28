@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Dịch vụ vận tải | VietTrucks</title>
+
+  <meta
+    name="description"
+    content="Dịch vụ vận tải VietTrucks: đăng hàng, tìm xe, tìm hàng, đăng xe, báo giá vận chuyển, hàng chiều về và kết nối chủ hàng với nhà xe trên toàn quốc."
+  />
+
+  <meta
+    name="keywords"
+    content="VietTrucks, vận tải, tìm xe tải, tìm hàng, đăng hàng, đăng xe, báo giá vận chuyển, hàng chiều về, nhà xe"
+  />
+
+  <meta name="robots" content="index, follow" />
+
+  <link rel="canonical" href="https://viettrucks.com/dich-vu.html" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7f9;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ================= HEADER ================= */
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 13px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 27px;
+      font-weight: 800;
+      color: #15803d;
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: #f97316;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    nav a {
+      font-size: 15px;
+      font-weight: 600;
+      color: #374151;
+      transition: 0.2s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: #15803d;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 9px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      padding: 11px 18px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-green {
+      background: #15803d;
+      color: white;
+    }
+
+    .btn-green:hover {
+      background: #166534;
+    }
+
+    .btn-orange {
+      background: #f97316;
+      color: white;
+    }
+
+    .btn-orange:hover {
+      background: #ea580c;
+    }
+
+    .btn-outline {
+      border: 1px solid #15803d;
+      color: #15803d;
+      background: white;
+    }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      background:
+        linear-gradient(135deg, rgba(13, 107, 57, 0.96), rgba(22, 101, 52, 0.93));
+      color: white;
+      padding: 80px 20px;
+    }
+
+    .hero-container {
+      max-width: 1100px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      max-width: 780px;
+      margin: auto;
+      font-size: 18px;
+      color: #ecfdf5;
+    }
+
+    .hero-buttons {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hero-buttons .btn {
+      min-width: 180px;
+      padding: 14px 22px;
+    }
+
+    /* ================= GENERAL ================= */
+
+    .section {
+      padding: 70px 20px;
+    }
+
+    .container {
+      max-width: 1150px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .section-title h2 {
+      font-size: 32px;
+      color: #111827;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #6b7280;
+      max-width: 720px;
+      margin: auto;
+    }
+
+    /* ================= SERVICES ================= */
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .service-card {
+      background: white;
+      border-radius: 14px;
+      padding: 28px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      transition: 0.25s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    }
+
+    .service-icon {
+      width: 55px;
+      height: 55px;
+      border-radius: 12px;
+      background: #dcfce7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 27px;
+      margin-bottom: 18px;
+    }
+
+    .service-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #111827;
+    }
+
+    .service-card p {
+      color: #6b7280;
+      min-height: 76px;
+      margin-bottom: 18px;
+    }
+
+    .service-link {
+      color: #15803d;
+      font-weight: 700;
+    }
+
+    /* ================= HOW IT WORKS ================= */
+
+    .how {
+      background: white;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+    }
+
+    .step {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .step-number {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      background: #15803d;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .step h3 {
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: #6b7280;
+      font-size: 15px;
+    }
+
+    /* ================= BENEFITS ================= */
+
+    .benefits {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .benefit-content h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .benefit-item {
+      display: flex;
+      gap: 13px;
+      margin-bottom: 17px;
+    }
+
+    .check {
+      color: #15803d;
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    .benefit-item strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .benefit-item p {
+      color: #6b7280;
+    }
+
+    .benefit-box {
+      background: #ecfdf5;
+      border-radius: 18px;
+      padding: 35px;
+    }
+
+    .benefit-box h3 {
+      color: #166534;
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .benefit-box p {
+      color: #4b5563;
+      margin-bottom: 20px;
+    }
+
+    /* ================= CTA ================= */
+
+    .cta {
+      background: #166534;
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 31px;
+      margin-bottom: 10px;
+    }
+
+    .cta p {
+      margin-bottom: 25px;
+      color: #dcfce7;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      background: #111827;
+      color: #d1d5db;
+      padding: 50px 20px 25px;
+    }
+
+    .footer-grid {
+      max-width: 1150px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    footer h3,
+    footer h4 {
+      color: white;
+      margin-bottom: 14px;
+    }
+
+    footer p {
+      margin-bottom: 7px;
+      font-size: 14px;
+    }
+
+    footer a {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    footer a:hover {
+      color: white;
+    }
+
+    .copyright {
+      max-width: 1150px;
+      margin: 30px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid #374151;
+      text-align: center;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 900px) {
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .benefits {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        border-bottom: 1px solid #ddd;
+      }
+
+      nav.show {
+        display: flex;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .header-actions {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding: 55px 18px;
+      }
+
+      .hero h1 {
+        font-size: 31px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .services-grid,
+      .steps,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 50px 17px;
+      }
+
+      .section-title h2,
+      .benefit-content h2 {
+        font-size: 27px;
+      }
+
+      .service-card p {
+        min-height: auto;
+      }
+
+      .hero-buttons .btn,
+      .cta-buttons .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-container">
+
+    <a href="index.html" class="logo">
+      Viet<span>Trucks</span>
+    </a>
+
+    <button
+      class="menu-btn"
+      id="menuBtn"
+      aria-label="Mở menu"
+      type="button"
+    >
+      ☰
+    </button>
+
+    <nav id="mainNav">
+      <a href="index.html">Trang chủ</a>
+      <a href="tim-hang.html">Tìm hàng</a>
+      <a href="tim-xe.html">Tìm xe</a>
+      <a href="dich-vu.html" class="active">Dịch vụ</a>
+      <a href="bang-gia.html">Bảng giá</a>
+      <a href="tin-tuc.html">Tin tức</a>
+      <a href="lien-he.html">Liên hệ</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="dang-hang.html" class="btn btn-green">
+        Đăng hàng
+      </a>
+
+      <a href="dang-xe.html" class="btn btn-outline">
+        Đăng xe
+      </a>
+    </div>
+
+  </div>
+</header>
+
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-container">
+
+    <h1>
+      Giải pháp kết nối vận tải hàng hóa
+    </h1>
+
+    <p>
+      VietTrucks kết nối chủ hàng với nhà xe và tài xế,
+      hỗ trợ tìm phương tiện, tìm nguồn hàng, nhận báo giá
+      và quản lý quá trình vận chuyển thuận tiện hơn.
+    </p>
+
+    <div class="hero-buttons">
+
+      <a href="dang-hang.html" class="btn btn-orange">
+        Đăng hàng miễn phí
+      </a>
+
+      <a href="tim-xe.html" class="btn btn-outline"
+         style="background:white;">
+        Tìm xe ngay
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- SERVICES -->
+<section class="section">
+
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Dịch vụ của VietTrucks</h2>
+      <p>
+        Các công cụ hỗ trợ chủ hàng, doanh nghiệp,
+        nhà xe và tài xế kết nối vận chuyển trên một nền tảng.
+      </p>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon">📦</div>
+        <h3>Đăng hàng vận chuyển</h3>
+        <p>
+          Đăng nhu cầu vận chuyển với điểm lấy hàng,
+          điểm giao hàng, loại hàng, trọng lượng và thời gian vận chuyển.
+        </p>
+        <a href="dang-hang.html" class="service-link">
+          Đăng hàng →
+        </a>
+      </div>
+
+
+      <div class="service-card">
+        <div class="service-icon">🚚</div>
+        <h3>Tìm xe vận chuyển</h3>
+        <p>
+          Tìm phương tiện phù hợp với tuyến đường,
+          loại xe và nhu cầu vận chuyển của chủ hàng.
+        </p>
+        <a href="tim-xe.html" class="service-link">
+          Tìm xe →
+        </a>
+      </div>
+
+
+      <div class="service-card">
+        <div class="service-icon">🔎</div>
+        <h3>Tìm hàng</h3>
+        <p>
+          Nhà xe và tài xế có thể tìm các đơn hàng
+          phù hợp với phương tiện và hành trình của mình.
+        </p>
+        <a href="tim-hang.html" class="service-link">
+          Tìm hàng →
+        </a>
+      </div>
+
+
+      <div class="service-card">
+        <div class="service-icon">🚛</div>
+        <h3>Đăng xe</h3>
+        <p>
+          Nhà xe đăng phương tiện và lịch trình
+          để chủ hàng có nhu cầu phù hợp có thể tìm thấy.
+        </p>
+        <a href="dang-xe.html" class="service-link">
+          Đăng xe →
+        </a>
+      </div>
+
+
+      <div class="service-card">
+        <div class="service-icon">💬</div>
+        <h3>Báo giá vận chuyển</h3>
+        <p>
+          Hỗ trợ chủ hàng tiếp nhận báo giá
+          và trao đổi với nhà xe ngay trên nền tảng.
+        </p>
+        <a href="trung-tam-bao-gia.html" class="service-link">
+          Trung tâm báo giá →
+        </a>
+      </div>
+
+
+      <div class="service-card">
+        <div class="service-icon">🔄</div>
+        <h3>Hàng chiều về</h3>
+        <p>
+          Hỗ trợ nhà xe tìm nguồn hàng phù hợp
+          cho chiều về, góp phần hạn chế xe chạy rỗng.
+        </p>
+        <a href="hang-chieu-ve.html" class="service-link">
+          Xem hàng chiều về →
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section class="section how">
+
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Quy trình sử dụng</h2>
+      <p>
+        Kết nối nhu cầu vận chuyển theo quy trình đơn giản.
+      </p>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Đăng nhu cầu</h3>
+        <p>
+          Chủ hàng đăng thông tin hàng hóa
+          hoặc nhà xe đăng phương tiện.
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Kết nối</h3>
+        <p>
+          Tìm đơn hàng hoặc phương tiện
+          phù hợp với nhu cầu vận chuyển.
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Báo giá</h3>
+        <p>
+          Nhà xe gửi báo giá để chủ hàng
+          xem xét và trao đổi.
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="step-number">4</div>
+        <h3>Vận chuyển</h3>
+        <p>
+          Hai bên xác nhận chuyến và
+          thực hiện quá trình vận chuyển.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- BENEFITS -->
+<section class="section">
+
+  <div class="container benefits">
+
+    <div class="benefit-content">
+
+      <h2>Một nền tảng cho nhu cầu vận tải</h2>
+
+      <div class="benefit-item">
+        <div class="check">✓</div>
+        <div>
+          <strong>Kết nối trực tiếp</strong>
+          <p>
+            Hỗ trợ chủ hàng và nhà xe tìm kiếm
+            đối tác vận chuyển phù hợp.
+          </p>
+        </div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="check">✓</div>
+        <div>
+          <strong>Báo giá thuận tiện</strong>
+          <p>
+            Quản lý và theo dõi báo giá vận chuyển
+            ngay trên hệ thống.
+          </p>
+        </div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="check">✓</div>
+        <div>
+          <strong>Hỗ trợ hàng chiều về</strong>
+          <p>
+            Tạo thêm cơ hội tìm hàng cho các chuyến
+            xe quay về sau khi giao hàng.
+          </p>
+        </div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="check">✓</div>
+        <div>
+          <strong>Hỗ trợ trực tuyến</strong>
+          <p>
+            VietTrucks hỗ trợ người dùng trong quá trình
+            đăng hàng, đăng xe và sử dụng nền tảng.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="benefit-box">
+
+      <h3>Bạn đang cần vận chuyển hàng?</h3>
+
+      <p>
+        Đăng thông tin chuyến hàng để các nhà xe
+        phù hợp có thể tiếp cận và gửi báo giá.
+      </p>
+
+      <a href="dang-hang.html" class="btn btn-green">
+        Đăng hàng ngay
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="cta">
+
+  <div class="container">
+
+    <h2>Bắt đầu sử dụng VietTrucks</h2>
+
+    <p>
+      Chủ hàng tìm xe – Nhà xe tìm hàng – Kết nối vận tải thuận tiện.
+    </p>
+
+    <div class="cta-buttons">
+
+      <a href="dang-hang.html" class="btn btn-orange">
+        Đăng hàng miễn phí
+      </a>
+
+      <a href="tim-xe.html"
+         class="btn"
+         style="background:white;color:#166534;">
+        Tìm xe ngay
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+  <div class="footer-grid">
+
+    <div>
+      <h3>VietTrucks</h3>
+
+      <p>
+        Nền tảng kết nối vận tải hàng hóa giữa
+        chủ hàng, doanh nghiệp, nhà xe và tài xế.
+      </p>
+
+      <br>
+
+      <p>
+        <strong>
+          CÔNG TY TNHH ĐẦU TƯ THƯƠNG MẠI DỊCH VỤ TRƯỜNG GIANG
+        </strong>
+      </p>
+
+      <p>
+        Hotline: 0388 134 999 – 0898 877 111
+      </p>
+
+      <p>
+        Email: admin@viettrucks.com
+      </p>
+    </div>
+
+
+    <div>
+      <h4>Dịch vụ</h4>
+
+      <a href="dang-hang.html">Đăng hàng</a>
+      <a href="tim-hang.html">Tìm hàng</a>
+      <a href="dang-xe.html">Đăng xe</a>
+      <a href="tim-xe.html">Tìm xe</a>
+      <a href="trung-tam-bao-gia.html">
+        Trung tâm báo giá
+      </a>
+    </div>
+
+
+    <div>
+      <h4>Thông tin</h4>
+
+      <a href="gioi-thieu.html">Giới thiệu</a>
+      <a href="bang-gia.html">Bảng giá</a>
+      <a href="huong-dan-su-dung.html">
+        Hướng dẫn sử dụng
+      </a>
+      <a href="cau-hoi-thuong-gap.html">
+        Câu hỏi thường gặp
+      </a>
+      <a href="dieu-khoan-su-dung.html">
+        Điều khoản sử dụng
+      </a>
+      <a href="chinh-sach-bao-mat.html">
+        Chính sách bảo mật
+      </a>
+      <a href="lien-he.html">Liên hệ</a>
+    </div>
+
+  </div>
+
+
+  <div class="copyright">
+    © 2026 VietTrucks. All rights reserved.
+  </div>
+
+</footer>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+    const menuBtn = document.getElementById("menuBtn");
+    const mainNav = document.getElementById("mainNav");
+
+    if (menuBtn && mainNav) {
+
+      menuBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        mainNav.classList.toggle("show");
+      });
+
+      mainNav.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function () {
+          mainNav.classList.remove("show");
+        });
+      });
+
+      document.addEventListener("click", function (event) {
+        if (
+          !mainNav.contains(event.target) &&
+          !menuBtn.contains(event.target)
+        ) {
+          mainNav.classList.remove("show");
+        }
+      });
+
+    }
+
+  });
+</script>
+
+</body>
+</html>
