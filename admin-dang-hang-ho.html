@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Admin - Đăng hàng hộ | VietTrucks</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      background:#f4f7f6;
+      color:#17212b;
+    }
+
+    .topbar{
+      height:68px;
+      background:#fff;
+      border-bottom:1px solid #e5e7eb;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 28px;
+      position:sticky;
+      top:0;
+      z-index:20;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .brand-logo{
+      width:42px;
+      height:42px;
+      border-radius:10px;
+      background:#078c4b;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+      font-weight:800;
+    }
+
+    .brand strong{
+      display:block;
+      font-size:20px;
+      color:#078c4b;
+    }
+
+    .brand span{
+      display:block;
+      font-size:12px;
+      color:#64748b;
+      margin-top:2px;
+    }
+
+    .back-btn{
+      text-decoration:none;
+      color:#078c4b;
+      border:1px solid #078c4b;
+      padding:10px 15px;
+      border-radius:8px;
+      font-weight:700;
+      font-size:14px;
+    }
+
+    .container{
+      max-width:1100px;
+      margin:30px auto;
+      padding:0 18px 50px;
+    }
+
+    .page-title{
+      margin-bottom:22px;
+    }
+
+    .page-title h1{
+      font-size:28px;
+      margin-bottom:8px;
+    }
+
+    .page-title p{
+      color:#64748b;
+      line-height:1.6;
+    }
+
+    .notice{
+      background:#ecfdf5;
+      border:1px solid #a7f3d0;
+      color:#065f46;
+      padding:15px 17px;
+      border-radius:10px;
+      margin-bottom:22px;
+      line-height:1.55;
+      font-size:14px;
+    }
+
+    .form-card{
+      background:#fff;
+      border:1px solid #e5e7eb;
+      border-radius:14px;
+      padding:26px;
+      box-shadow:0 4px 16px rgba(0,0,0,.04);
+      margin-bottom:22px;
+    }
+
+    .form-card h2{
+      font-size:19px;
+      margin-bottom:18px;
+      padding-bottom:12px;
+      border-bottom:1px solid #e5e7eb;
+    }
+
+    .private-title{
+      color:#b45309;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+    }
+
+    .field.full{
+      grid-column:1/-1;
+    }
+
+    label{
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .required{
+      color:#dc2626;
+    }
+
+    input,
+    select,
+    textarea{
+      width:100%;
+      border:1px solid #cbd5e1;
+      border-radius:8px;
+      padding:12px 13px;
+      font-size:15px;
+      outline:none;
+      background:#fff;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus{
+      border-color:#078c4b;
+      box-shadow:0 0 0 3px rgba(7,140,75,.08);
+    }
+
+    textarea{
+      min-height:100px;
+      resize:vertical;
+    }
+
+    .help{
+      font-size:12px;
+      color:#64748b;
+      line-height:1.4;
+    }
+
+    .private-box{
+      background:#fffbeb;
+      border-color:#fde68a;
+    }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      justify-content:flex-end;
+      margin-top:22px;
+      flex-wrap:wrap;
+    }
+
+    button{
+      border:0;
+      border-radius:8px;
+      padding:13px 20px;
+      font-size:15px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .btn-cancel{
+      background:#e5e7eb;
+      color:#334155;
+    }
+
+    .btn-submit{
+      background:#078c4b;
+      color:#fff;
+      min-width:180px;
+    }
+
+    .btn-submit:disabled{
+      opacity:.6;
+      cursor:not-allowed;
+    }
+
+    .message{
+      display:none;
+      padding:15px 17px;
+      border-radius:9px;
+      margin-bottom:20px;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .message.success{
+      display:block;
+      background:#ecfdf5;
+      border:1px solid #a7f3d0;
+      color:#065f46;
+    }
+
+    .message.error{
+      display:block;
+      background:#fef2f2;
+      border:1px solid #fecaca;
+      color:#991b1b;
+    }
+
+    .loading-screen{
+      position:fixed;
+      inset:0;
+      background:#fff;
+      z-index:9999;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .spinner{
+      width:42px;
+      height:42px;
+      border:4px solid #e5e7eb;
+      border-top-color:#078c4b;
+      border-radius:50%;
+      animation:spin .8s linear infinite;
+    }
+
+    @keyframes spin{
+      to{transform:rotate(360deg)}
+    }
+
+    @media(max-width:700px){
+      .grid{
+        grid-template-columns:1fr;
+      }
+
+      .field.full{
+        grid-column:auto;
+      }
+
+      .topbar{
+        padding:0 14px;
+      }
+
+      .container{
+        margin-top:20px;
+      }
+
+      .form-card{
+        padding:18px;
+      }
+
+      .page-title h1{
+        font-size:23px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="loading-screen" id="loadingScreen">
+  <div class="spinner"></div>
+  <strong>Đang kiểm tra quyền Admin...</strong>
+</div>
+
+<header class="topbar">
+
+  <div class="brand">
+    <div class="brand-logo">V</div>
+
+    <div>
+      <strong>VietTrucks</strong>
+      <span>Admin Control Center</span>
+    </div>
+  </div>
+
+  <a href="admin.html" class="back-btn">
+    ← Dashboard Admin
+  </a>
+
+</header>
+
+
+<main class="container">
+
+  <div class="page-title">
+    <h1>📦 Đăng hàng hộ chủ hàng</h1>
+
+    <p>
+      Admin nhập nhu cầu vận chuyển thay cho khách chưa có tài khoản.
+      Thông tin liên hệ của chủ hàng không công khai trên VietTrucks.
+    </p>
+  </div>
+
+
+  <div class="notice">
+    <strong>🔒 Bảo vệ thông tin khách hàng:</strong>
+    tên, số điện thoại và Zalo được lưu riêng trong khu vực Admin.
+    Nhà xe/tài xế xem đơn hàng sẽ không nhận được các thông tin này.
+  </div>
+
+
+  <div id="messageBox" class="message"></div>
+
+
+  <form id="orderForm">
+
+    <!-- ======================================
+         THÔNG TIN CÔNG KHAI
+    ======================================= -->
+
+    <section class="form-card">
+
+      <h2>Thông tin đơn hàng</h2>
+
+      <div class="grid">
+
+        <div class="field">
+          <label>
+            Điểm lấy hàng
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="pickup_location"
+            type="text"
+            placeholder="Ví dụ: Bắc Ninh"
+            required
+          >
+        </div>
+
+
+        <div class="field">
+          <label>
+            Điểm giao hàng
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="delivery_location"
+            type="text"
+            placeholder="Ví dụ: Hải Phòng"
+            required
+          >
+        </div>
+
+
+        <div class="field">
+          <label>
+            Loại hàng
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="cargo_type"
+            type="text"
+            placeholder="Ví dụ: Linh kiện điện tử"
+            required
+          >
+        </div>
+
+
+        <div class="field">
+          <label>
+            Trọng lượng (tấn)
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="weight"
+            type="number"
+            min="0.01"
+            step="0.01"
+            placeholder="Ví dụ: 5"
+            required
+          >
+        </div>
+
+
+        <div class="field">
+          <label>Loại xe yêu cầu</label>
+
+          <select id="vehicle_type">
+            <option value="">Không yêu cầu cụ thể</option>
+            <option value="Xe tải thùng">Xe tải thùng</option>
+            <option value="Xe container">Xe container</option>
+            <option value="Xe tải lạnh">Xe tải lạnh</option>
+            <option value="Xe đầu kéo">Xe đầu kéo</option>
+            <option value="Xe van">Xe van</option>
+            <option value="Khác">Khác</option>
+          </select>
+        </div>
+
+
+        <div class="field">
+          <label>
+            Ngày lấy hàng
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="pickup_date"
+            type="date"
+            required
+          >
+        </div>
+
+
+        <div class="field">
+          <label>Giá dự kiến (VNĐ)</label>
+
+          <input
+            id="price"
+            type="number"
+            min="0"
+            step="1000"
+            placeholder="Để trống nếu thỏa thuận"
+          >
+
+          <span class="help">
+            Nếu chưa có giá, để trống. Trang Tìm hàng sẽ hiển thị
+            “Thỏa thuận”.
+          </span>
+        </div>
+
+
+        <div class="field">
+          <label>Nguồn khách</label>
+
+          <select id="source">
+            <option value="Facebook">Facebook</option>
+            <option value="Zalo">Zalo</option>
+            <option value="TikTok">TikTok</option>
+            <option value="Google">Google</option>
+            <option value="Điện thoại">Điện thoại</option>
+            <option value="Giới thiệu">Giới thiệu</option>
+            <option value="Khác">Khác</option>
+          </select>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ======================================
+         THÔNG TIN RIÊNG
+    ======================================= -->
+
+    <section class="form-card private-box">
+
+      <h2 class="private-title">
+        🔒 Thông tin chủ hàng – Chỉ Admin
+      </h2>
+
+      <div class="grid">
+
+        <div class="field">
+          <label>
+            Tên chủ hàng
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="contact_name"
+            type="text"
+            placeholder="Tên người liên hệ"
+            required
+          >
+        </div>
+
+
+        <div class="field">
+          <label>
+            Số điện thoại
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="contact_phone"
+            type="tel"
+            inputmode="tel"
+            placeholder="Ví dụ: 09xxxxxxxx"
+            required
+          >
+        </div>
+
+
+        <div class="field">
+          <label>Zalo</label>
+
+          <input
+            id="contact_zalo"
+            type="text"
+            placeholder="SĐT Zalo hoặc tên Zalo"
+          >
+        </div>
+
+
+        <div class="field">
+          <label>Tên công ty / cửa hàng</label>
+
+          <input
+            id="company_name"
+            type="text"
+            placeholder="Không bắt buộc"
+          >
+        </div>
+
+
+        <div class="field full">
+          <label>Ghi chú nội bộ</label>
+
+          <textarea
+            id="note"
+            placeholder="Ví dụ: Khách lấy hàng sau 15h, cần gọi trước khi ghép xe..."
+          ></textarea>
+
+          <span class="help">
+            Nội dung này chỉ lưu trong bảng Admin, không hiển thị cho
+            tài xế/nhà xe.
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <div class="actions">
+
+      <button
+        type="button"
+        class="btn-cancel"
+        onclick="window.location.href='admin.html'"
+      >
+        Hủy
+      </button>
+
+      <button
+        type="submit"
+        class="btn-submit"
+        id="submitBtn"
+      >
+        Đăng hàng hộ
+      </button>
+
+    </div>
+
+  </form>
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="auth.js"></script>
+
+
+<script>
+
+const supabaseClient = window.supabaseClient;
+
+let currentAdmin = null;
+
+
+/* ============================================================
+   HIỂN THỊ THÔNG BÁO
+============================================================ */
+
+function showMessage(type, text){
+
+  const box =
+    document.getElementById("messageBox");
+
+  box.className =
+    "message " + type;
+
+  box.textContent =
+    text;
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* ============================================================
+   KIỂM TRA ADMIN
+============================================================ */
+
+async function protectAdminPage(){
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+    await supabaseClient.auth.getSession();
+
+
+    const session =
+      data?.session;
+
+
+    if(error || !session){
+
+      window.location.replace(
+        "dang-nhap.html"
+      );
+
+      return false;
+    }
+
+
+    const {
+      data:profile,
+      error:profileError
+    } =
+    await supabaseClient
+      .from("profiles")
+      .select("role, full_name")
+      .eq(
+        "id",
+        session.user.id
+      )
+      .single();
+
+
+    if(
+      profileError ||
+      !profile
+    ){
+
+      console.error(
+        "Không đọc được profile:",
+        profileError
+      );
+
+      window.location.replace(
+        "dashboard.html"
+      );
+
+      return false;
+    }
+
+
+    const role =
+      String(
+        profile.role || ""
+      )
+      .trim()
+      .toLowerCase();
+
+
+    const allowedRoles = [
+      "admin",
+      "administrator",
+      "super_admin"
+    ];
+
+
+    if(
+      !allowedRoles.includes(role)
+    ){
+
+      window.location.replace(
+        "dashboard.html"
+      );
+
+      return false;
+    }
+
+
+    currentAdmin = {
+      id:session.user.id,
+      email:session.user.email,
+      role:role,
+      full_name:profile.full_name
+    };
+
+
+    document
+      .getElementById(
+        "loadingScreen"
+      )
+      .style.display =
+      "none";
+
+
+    return true;
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    window.location.replace(
+      "dang-nhap.html"
+    );
+
+    return false;
+  }
+
+}
+
+
+/* ============================================================
+   NGÀY MẶC ĐỊNH
+============================================================ */
+
+function setDefaultDate(){
+
+  const input =
+    document.getElementById(
+      "pickup_date"
+    );
+
+
+  const today =
+    new Date();
+
+
+  const yyyy =
+    today.getFullYear();
+
+
+  const mm =
+    String(
+      today.getMonth() + 1
+    ).padStart(2,"0");
+
+
+  const dd =
+    String(
+      today.getDate()
+    ).padStart(2,"0");
+
+
+  const value =
+    `${yyyy}-${mm}-${dd}`;
+
+
+  input.value =
+    value;
+
+
+  input.min =
+    value;
+
+}
+
+
+/* ============================================================
+   CHUẨN HÓA SỐ ĐIỆN THOẠI
+============================================================ */
+
+function normalizePhone(value){
+
+  return String(
+    value || ""
+  )
+  .trim()
+  .replace(/[^\d+]/g,"");
+
+}
+
+
+/* ============================================================
+   SUBMIT
+============================================================ */
+
+document
+.getElementById("orderForm")
+.addEventListener(
+"submit",
+async function(event){
+
+  event.preventDefault();
+
+
+  if(!currentAdmin){
+
+    showMessage(
+      "error",
+      "Phiên Admin không hợp lệ. Vui lòng đăng nhập lại."
+    );
+
+    return;
+  }
+
+
+  const submitBtn =
+    document.getElementById(
+      "submitBtn"
+    );
+
+
+  submitBtn.disabled =
+    true;
+
+  submitBtn.textContent =
+    "Đang đăng hàng...";
+
+
+  let createdOrderId =
+    null;
+
+
+  try{
+
+    /* ========================================================
+       1. LẤY DỮ LIỆU
+    ======================================================== */
+
+    const pickup_location =
+      document
+      .getElementById(
+        "pickup_location"
+      )
+      .value
+      .trim();
+
+
+    const delivery_location =
+      document
+      .getElementById(
+        "delivery_location"
+      )
+      .value
+      .trim();
+
+
+    const cargo_type =
+      document
+      .getElementById(
+        "cargo_type"
+      )
+      .value
+      .trim();
+
+
+    const weight =
+      Number(
+        document
+        .getElementById(
+          "weight"
+        )
+        .value
+      );
+
+
+    const vehicle_type =
+      document
+      .getElementById(
+        "vehicle_type"
+      )
+      .value;
+
+
+    const pickup_date =
+      document
+      .getElementById(
+        "pickup_date"
+      )
+      .value;
+
+
+    const priceValue =
+      document
+      .getElementById(
+        "price"
+      )
+      .value;
+
+
+    const price =
+      priceValue
+      ? Number(priceValue)
+      : null;
+
+
+    const source =
+      document
+      .getElementById(
+        "source"
+      )
+      .value;
+
+
+    const contact_name =
+      document
+      .getElementById(
+        "contact_name"
+      )
+      .value
+      .trim();
+
+
+    const contact_phone =
+      normalizePhone(
+        document
+        .getElementById(
+          "contact_phone"
+        )
+        .value
+      );
+
+
+    const contact_zalo =
+      document
+      .getElementById(
+        "contact_zalo"
+      )
+      .value
+      .trim();
+
+
+    const company_name =
+      document
+      .getElementById(
+        "company_name"
+      )
+      .value
+      .trim();
+
+
+    const note =
+      document
+      .getElementById(
+        "note"
+      )
+      .value
+      .trim();
+
+
+    /* ========================================================
+       2. VALIDATE
+    ======================================================== */
+
+    if(
+      !pickup_location ||
+      !delivery_location ||
+      !cargo_type ||
+      !pickup_date ||
+      !contact_name ||
+      !contact_phone
+    ){
+
+      throw new Error(
+        "Vui lòng nhập đầy đủ các trường bắt buộc."
+      );
+    }
+
+
+    if(
+      !Number.isFinite(weight) ||
+      weight <= 0
+    ){
+
+      throw new Error(
+        "Trọng lượng hàng không hợp lệ."
+      );
+    }
+
+
+    if(
+      contact_phone.length < 9
+    ){
+
+      throw new Error(
+        "Số điện thoại chủ hàng không hợp lệ."
+      );
+    }
+
+
+    /* ========================================================
+       3. TẠO ORDER CÔNG KHAI
+
+       QUAN TRỌNG:
+       Không lưu tên/SĐT/Zalo ở bảng orders.
+    ======================================================== */
+
+    const orderPayload = {
+
+      pickup_location:
+        pickup_location,
+
+      delivery_location:
+        delivery_location,
+
+      cargo_type:
+        cargo_type,
+
+      weight:
+        weight,
+
+      vehicle_type:
+        vehicle_type || null,
+
+      pickup_date:
+        pickup_date,
+
+      price:
+        (
+          Number.isFinite(price) &&
+          price > 0
+        )
+        ? price
+        : null,
+
+      status:
+        "pending",
+
+      posted_by_admin:
+        true,
+
+      contact_hidden:
+        true,
+
+      source:
+        source,
+
+      admin_note:
+        null
+
+    };
+
+
+    const {
+      data:orderData,
+      error:orderError
+    } =
+    await supabaseClient
+      .from("orders")
+      .insert(
+        orderPayload
+      )
+      .select("id")
+      .single();
+
+
+    if(orderError){
+
+      console.error(
+        "Lỗi tạo order:",
+        orderError
+      );
+
+      throw new Error(
+        "Không tạo được đơn hàng: "
+        + orderError.message
+      );
+    }
+
+
+    if(
+      !orderData ||
+      !orderData.id
+    ){
+
+      throw new Error(
+        "Không nhận được ID đơn hàng."
+      );
+    }
+
+
+    createdOrderId =
+      orderData.id;
+
+
+    /* ========================================================
+       4. LƯU THÔNG TIN RIÊNG
+    ======================================================== */
+
+    const contactPayload = {
+
+      post_type:
+        "order",
+
+      post_id:
+        createdOrderId,
+
+      contact_name:
+        contact_name,
+
+      contact_phone:
+        contact_phone,
+
+      contact_zalo:
+        contact_zalo || null,
+
+      company_name:
+        company_name || null,
+
+      source:
+        source,
+
+      note:
+        note || null,
+
+      created_by:
+        currentAdmin.id
+
+    };
+
+
+    const {
+      error:contactError
+    } =
+    await supabaseClient
+      .from(
+        "admin_post_contacts"
+      )
+      .insert(
+        contactPayload
+      );
+
+
+    /* ========================================================
+       5. NẾU LƯU CONTACT THẤT BẠI
+          XÓA ORDER VỪA TẠO
+
+          Tránh sinh đơn hàng mà Admin
+          không còn thông tin khách.
+    ======================================================== */
+
+    if(contactError){
+
+      console.error(
+        "Lỗi lưu contact:",
+        contactError
+      );
+
+
+      const {
+        error:rollbackError
+      } =
+      await supabaseClient
+        .from("orders")
+        .delete()
+        .eq(
+          "id",
+          createdOrderId
+        );
+
+
+      if(rollbackError){
+
+        console.error(
+          "Rollback order thất bại:",
+          rollbackError
+        );
+      }
+
+
+      throw new Error(
+        "Không lưu được thông tin chủ hàng: "
+        + contactError.message
+      );
+    }
+
+
+    /* ========================================================
+       6. THÀNH CÔNG
+    ======================================================== */
+
+    showMessage(
+      "success",
+      "Đăng hàng hộ thành công. Đơn hàng đã được tạo và thông tin liên hệ chủ hàng được lưu riêng cho Admin."
+    );
+
+
+    document
+      .getElementById(
+        "orderForm"
+      )
+      .reset();
+
+
+    setDefaultDate();
+
+
+    setTimeout(
+      function(){
+
+        const goToOrders =
+          confirm(
+            "Đăng hàng hộ thành công!\n\nBạn có muốn mở trang Tìm hàng để kiểm tra đơn vừa đăng không?"
+          );
+
+
+        if(goToOrders){
+
+          window.location.href =
+            "tim-hang.html";
+
+        }
+
+      },
+      500
+    );
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "error",
+      error.message ||
+      "Có lỗi xảy ra khi đăng hàng hộ."
+    );
+
+  }
+  finally{
+
+    submitBtn.disabled =
+      false;
+
+    submitBtn.textContent =
+      "Đăng hàng hộ";
+
+  }
+
+});
+
+
+/* ============================================================
+   KHỞI ĐỘNG
+============================================================ */
+
+document.addEventListener(
+"DOMContentLoaded",
+async function(){
+
+  setDefaultDate();
+
+  await protectAdminPage();
+
+});
+
+</script>
+
+</body>
+</html>
