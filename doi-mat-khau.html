@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Đổi mật khẩu | VietTruck</title>
+<title>Đặt lại mật khẩu | VietTrucks</title>
 
 <style>
 *{
@@ -16,67 +16,47 @@
 
 body{
   min-height:100vh;
-  background:#f5f7fa;
+  background:linear-gradient(135deg,#0f5132,#16a34a);
   color:#1f2937;
-}
-
-.header{
-  background:#fff;
-  border-bottom:1px solid #e5e7eb;
-  padding:16px 28px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
-}
-
-.logo{
-  color:#16a34a;
-  font-size:24px;
-  font-weight:800;
-  text-decoration:none;
-}
-
-.header-links{
-  display:flex;
-  gap:18px;
-  flex-wrap:wrap;
-}
-
-.header-links a{
-  color:#4b5563;
-  text-decoration:none;
-  font-size:14px;
-}
-
-.container{
-  max-width:560px;
-  margin:60px auto;
-  padding:0 20px;
+  justify-content:center;
+  padding:24px;
 }
 
 .card{
+  width:100%;
+  max-width:520px;
   background:#fff;
-  border-radius:16px;
-  padding:32px;
-  box-shadow:0 5px 25px rgba(0,0,0,.07);
+  border-radius:18px;
+  padding:34px;
+  box-shadow:0 20px 60px rgba(0,0,0,.20);
+}
+
+.logo{
+  text-align:center;
+  color:#16a34a;
+  font-size:28px;
+  font-weight:800;
+  margin-bottom:20px;
 }
 
 .icon{
-  width:64px;
-  height:64px;
-  margin:0 auto 18px;
+  width:66px;
+  height:66px;
   border-radius:50%;
   background:#dcfce7;
   display:flex;
   align-items:center;
   justify-content:center;
+  margin:0 auto 18px;
   font-size:30px;
 }
 
 h1{
   text-align:center;
-  font-size:27px;
-  margin-bottom:9px;
+  font-size:26px;
+  margin-bottom:10px;
 }
 
 .desc{
@@ -84,7 +64,7 @@ h1{
   color:#6b7280;
   font-size:14px;
   line-height:1.6;
-  margin-bottom:28px;
+  margin-bottom:25px;
 }
 
 .form-group{
@@ -104,16 +84,16 @@ label{
 
 input{
   width:100%;
-  padding:13px 45px 13px 14px;
   border:1px solid #d1d5db;
-  border-radius:9px;
+  border-radius:10px;
+  padding:13px 46px 13px 14px;
+  font-size:15px;
   outline:none;
-  font-size:14px;
 }
 
 input:focus{
   border-color:#16a34a;
-  box-shadow:0 0 0 3px rgba(22,163,74,.1);
+  box-shadow:0 0 0 3px rgba(22,163,74,.10);
 }
 
 .eye{
@@ -135,8 +115,8 @@ input:focus{
 
 .rules strong{
   display:block;
-  margin-bottom:9px;
   font-size:13px;
+  margin-bottom:8px;
 }
 
 .rules p{
@@ -148,7 +128,7 @@ input:focus{
 .save-btn{
   width:100%;
   border:0;
-  border-radius:9px;
+  border-radius:10px;
   padding:14px;
   background:#16a34a;
   color:#fff;
@@ -162,47 +142,47 @@ input:focus{
 }
 
 .save-btn:disabled{
-  opacity:.65;
+  opacity:.6;
   cursor:not-allowed;
-}
-
-.back{
-  text-align:center;
-  margin-top:20px;
-}
-
-.back a{
-  color:#16a34a;
-  text-decoration:none;
-  font-size:14px;
-  font-weight:700;
 }
 
 .message{
   display:none;
+  margin-top:18px;
   padding:14px;
   border-radius:10px;
-  margin-top:18px;
   font-size:13px;
   line-height:1.6;
 }
 
-.success{
+.message.success{
   background:#f0fdf4;
   border:1px solid #bbf7d0;
   color:#166534;
 }
 
-.error{
+.message.error{
   background:#fef2f2;
   border:1px solid #fecaca;
   color:#991b1b;
 }
 
-.info{
+.message.info{
   background:#eff6ff;
   border:1px solid #bfdbfe;
   color:#1e40af;
+}
+
+.back{
+  text-align:center;
+  margin-top:22px;
+}
+
+.back a{
+  color:#16a34a;
+  text-decoration:none;
+  font-weight:700;
+  font-size:14px;
 }
 
 .reset-link{
@@ -217,21 +197,16 @@ input:focus{
   display:none !important;
 }
 
-@media(max-width:600px){
-  .header{
-    padding:15px 18px;
-  }
+.loading{
+  text-align:center;
+  padding:18px 0;
+  color:#6b7280;
+  font-size:14px;
+}
 
-  .header-links{
-    gap:10px;
-  }
-
-  .container{
-    margin:30px auto;
-  }
-
+@media(max-width:520px){
   .card{
-    padding:24px;
+    padding:26px 20px;
   }
 }
 </style>
@@ -239,160 +214,141 @@ input:focus{
 
 <body>
 
-<header class="header">
+<div class="card">
 
-  <a href="index.html" class="logo">
-    🚚 VietTruck
-  </a>
-
-  <div class="header-links">
-    <a href="quan-ly-tai-khoan.html">Tài khoản</a>
-    <a href="cai-dat-he-thong.html">Cài đặt</a>
-    <a href="dashboard.html">Dashboard</a>
+  <div class="logo">
+    🚚 VietTrucks
   </div>
 
-</header>
+  <div class="icon">
+    🔐
+  </div>
+
+  <h1 id="pageTitle">
+    Tạo mật khẩu mới
+  </h1>
+
+  <p class="desc" id="pageDesc">
+    Đang kiểm tra liên kết đặt lại mật khẩu...
+  </p>
 
 
-<div class="container">
-
-  <div class="card">
-
-    <div class="icon">🔐</div>
-
-    <h1 id="pageTitle">Đổi mật khẩu</h1>
-
-    <p class="desc" id="pageDesc">
-      Tạo mật khẩu mới cho tài khoản VietTruck.
-    </p>
+  <!-- LOADING -->
+  <div id="loadingBox" class="loading">
+    Đang xác thực...
+  </div>
 
 
-    <form id="passwordForm">
+  <!-- FORM -->
+  <form id="passwordForm" class="hidden">
 
-      <div class="form-group" id="currentPasswordGroup">
+    <div class="form-group">
 
-        <label>Mật khẩu hiện tại</label>
+      <label>
+        Mật khẩu mới
+      </label>
 
-        <div class="password-box">
+      <div class="password-box">
 
-          <input
-            id="currentPassword"
-            type="password"
-            autocomplete="current-password"
-            placeholder="Nhập mật khẩu hiện tại"
-          >
+        <input
+          id="newPassword"
+          type="password"
+          autocomplete="new-password"
+          placeholder="Nhập mật khẩu mới"
+          minlength="8"
+          required
+        >
 
-          <span
-            class="eye"
-            onclick="togglePassword('currentPassword')">
-            👁
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>Mật khẩu mới</label>
-
-        <div class="password-box">
-
-          <input
-            id="newPassword"
-            type="password"
-            autocomplete="new-password"
-            placeholder="Nhập mật khẩu mới"
-            minlength="8"
-            required
-          >
-
-          <span
-            class="eye"
-            onclick="togglePassword('newPassword')">
-            👁
-          </span>
-
-        </div>
+        <span
+          class="eye"
+          onclick="togglePassword('newPassword')"
+        >
+          👁
+        </span>
 
       </div>
 
+    </div>
 
-      <div class="form-group">
 
-        <label>Nhập lại mật khẩu mới</label>
+    <div class="form-group">
 
-        <div class="password-box">
+      <label>
+        Nhập lại mật khẩu mới
+      </label>
 
-          <input
-            id="confirmPassword"
-            type="password"
-            autocomplete="new-password"
-            placeholder="Nhập lại mật khẩu mới"
-            minlength="8"
-            required
-          >
+      <div class="password-box">
 
-          <span
-            class="eye"
-            onclick="togglePassword('confirmPassword')">
-            👁
-          </span>
+        <input
+          id="confirmPassword"
+          type="password"
+          autocomplete="new-password"
+          placeholder="Nhập lại mật khẩu mới"
+          minlength="8"
+          required
+        >
 
-        </div>
+        <span
+          class="eye"
+          onclick="togglePassword('confirmPassword')"
+        >
+          👁
+        </span>
 
       </div>
 
-
-      <div class="rules">
-
-        <strong>Yêu cầu mật khẩu</strong>
-
-        <p>
-          ✓ Tối thiểu 8 ký tự<br>
-          ✓ Có chữ hoa và chữ thường<br>
-          ✓ Có ít nhất một chữ số<br>
-          ✓ Nên có ký tự đặc biệt<br>
-          ✓ Không sử dụng lại mật khẩu cũ
-        </p>
-
-      </div>
-
-
-      <button
-        type="submit"
-        class="save-btn"
-        id="saveBtn">
-        Đổi mật khẩu
-      </button>
-
-    </form>
-
-
-    <div
-      class="message success"
-      id="successBox">
-    </div>
-
-    <div
-      class="message error"
-      id="errorBox">
-    </div>
-
-    <div
-      class="message info"
-      id="infoBox">
     </div>
 
 
-    <div class="back">
+    <div class="rules">
 
-      <a href="dang-nhap.html">
-        ← Quay lại đăng nhập
-      </a>
+      <strong>
+        Yêu cầu mật khẩu
+      </strong>
+
+      <p>
+        ✓ Tối thiểu 8 ký tự<br>
+        ✓ Có ít nhất một chữ thường<br>
+        ✓ Có ít nhất một chữ hoa<br>
+        ✓ Có ít nhất một chữ số<br>
+        ✓ Nên có thêm ký tự đặc biệt
+      </p>
 
     </div>
+
+
+    <button
+      id="saveBtn"
+      type="submit"
+      class="save-btn"
+    >
+      Cập nhật mật khẩu
+    </button>
+
+  </form>
+
+
+  <div
+    id="infoBox"
+    class="message info"
+  ></div>
+
+  <div
+    id="successBox"
+    class="message success"
+  ></div>
+
+  <div
+    id="errorBox"
+    class="message error"
+  ></div>
+
+
+  <div class="back">
+
+    <a href="dang-nhap.html">
+      ← Quay lại đăng nhập
+    </a>
 
   </div>
 
@@ -400,28 +356,63 @@ input:focus{
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 
 <script>
 
-const SUPABASE_URL =
-  "https://ksyakrcgqzsupqyusyo.supabase.co";
+/* =========================================================
+   SUPABASE
+========================================================= */
 
-const SUPABASE_ANON_KEY =
-  "sb_publishable_OLGPIepJQ0FBoEoL7jvySA_9GC5hSgD";
+const supabaseClient = window.supabaseClient;
 
-
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
-
-
-let recoveryMode = false;
+if (!supabaseClient) {
+  alert("Không khởi tạo được Supabase.");
+  throw new Error("supabaseClient not found");
+}
 
 
-/* =========================
-   HIỆN / ẨN MẬT KHẨU
-========================= */
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const passwordForm =
+  document.getElementById("passwordForm");
+
+const newPasswordInput =
+  document.getElementById("newPassword");
+
+const confirmPasswordInput =
+  document.getElementById("confirmPassword");
+
+const saveBtn =
+  document.getElementById("saveBtn");
+
+const loadingBox =
+  document.getElementById("loadingBox");
+
+const pageTitle =
+  document.getElementById("pageTitle");
+
+const pageDesc =
+  document.getElementById("pageDesc");
+
+const infoBox =
+  document.getElementById("infoBox");
+
+const successBox =
+  document.getElementById("successBox");
+
+const errorBox =
+  document.getElementById("errorBox");
+
+
+let recoveryReady = false;
+
+
+/* =========================================================
+   HIỆN / ẨN PASSWORD
+========================================================= */
 
 function togglePassword(id){
 
@@ -437,46 +428,21 @@ function togglePassword(id){
 }
 
 
-/* =========================
-   HIỂN THỊ THÔNG BÁO
-========================= */
+/* =========================================================
+   MESSAGE
+========================================================= */
 
 function hideMessages(){
 
-  document.getElementById("successBox").style.display =
+  infoBox.style.display =
     "none";
 
-  document.getElementById("errorBox").style.display =
+  successBox.style.display =
     "none";
 
-  document.getElementById("infoBox").style.display =
+  errorBox.style.display =
     "none";
-}
 
-
-function showError(message){
-
-  hideMessages();
-
-  const box =
-    document.getElementById("errorBox");
-
-  box.innerHTML = message;
-
-  box.style.display = "block";
-}
-
-
-function showSuccess(message){
-
-  hideMessages();
-
-  const box =
-    document.getElementById("successBox");
-
-  box.innerHTML = message;
-
-  box.style.display = "block";
 }
 
 
@@ -484,18 +450,44 @@ function showInfo(message){
 
   hideMessages();
 
-  const box =
-    document.getElementById("infoBox");
+  infoBox.innerHTML =
+    message;
 
-  box.innerHTML = message;
+  infoBox.style.display =
+    "block";
 
-  box.style.display = "block";
 }
 
 
-/* =========================
-   KIỂM TRA MẬT KHẨU
-========================= */
+function showSuccess(message){
+
+  hideMessages();
+
+  successBox.innerHTML =
+    message;
+
+  successBox.style.display =
+    "block";
+
+}
+
+
+function showError(message){
+
+  hideMessages();
+
+  errorBox.innerHTML =
+    message;
+
+  errorBox.style.display =
+    "block";
+
+}
+
+
+/* =========================================================
+   PASSWORD VALIDATION
+========================================================= */
 
 function validatePassword(password){
 
@@ -507,34 +499,107 @@ function validatePassword(password){
 
   if(!/[a-z]/.test(password)){
 
-    return "Mật khẩu cần có ít nhất một chữ thường.";
+    return "Mật khẩu phải có ít nhất một chữ thường.";
 
   }
 
   if(!/[A-Z]/.test(password)){
 
-    return "Mật khẩu cần có ít nhất một chữ hoa.";
+    return "Mật khẩu phải có ít nhất một chữ hoa.";
 
   }
 
   if(!/[0-9]/.test(password)){
 
-    return "Mật khẩu cần có ít nhất một chữ số.";
+    return "Mật khẩu phải có ít nhất một chữ số.";
 
   }
 
   return null;
+
 }
 
 
-/* =========================
-   KIỂM TRA LINK RECOVERY
-========================= */
+/* =========================================================
+   HIỆN FORM RESET
+========================================================= */
 
-async function initializePage(){
+function enableRecoveryForm(){
+
+  if(recoveryReady){
+    return;
+  }
+
+  recoveryReady = true;
+
+  loadingBox.classList.add(
+    "hidden"
+  );
+
+  passwordForm.classList.remove(
+    "hidden"
+  );
+
+  pageTitle.textContent =
+    "Tạo mật khẩu mới";
+
+  pageDesc.textContent =
+    "Liên kết đã được xác thực. Hãy nhập mật khẩu mới cho tài khoản VietTrucks.";
+
+  showInfo(
+    "✓ Xác thực thành công. Bạn có thể tạo mật khẩu mới."
+  );
+
+}
+
+
+/* =========================================================
+   LINK KHÔNG HỢP LỆ
+========================================================= */
+
+function showInvalidLink(message){
+
+  recoveryReady = false;
+
+  loadingBox.classList.add(
+    "hidden"
+  );
+
+  passwordForm.classList.add(
+    "hidden"
+  );
+
+  pageTitle.textContent =
+    "Liên kết không hợp lệ";
+
+  pageDesc.textContent =
+    "Không thể xác thực yêu cầu đặt lại mật khẩu.";
+
+  showError(
+    "❌ " +
+    message +
+    "<br><br>" +
+    '<a class="reset-link" href="quen-mat-khau.html">' +
+    "Gửi yêu cầu đặt lại mật khẩu mới →" +
+    "</a>"
+  );
+
+}
+
+
+/* =========================================================
+   XỬ LÝ RECOVERY LINK
+========================================================= */
+
+async function initializeRecovery(){
+
+  hideMessages();
+
+  const url =
+    new URL(window.location.href);
 
   const params =
-    new URLSearchParams(window.location.search);
+    url.searchParams;
 
   const hashParams =
     new URLSearchParams(
@@ -542,62 +607,64 @@ async function initializePage(){
     );
 
 
+  /*
+    ========================================================
+    1. KIỂM TRA ERROR TRONG URL
+    ========================================================
+  */
+
+  const urlError =
+    params.get("error") ||
+    hashParams.get("error");
+
   const errorCode =
-    params.get("error_code");
+    params.get("error_code") ||
+    hashParams.get("error_code");
 
   const errorDescription =
-    params.get("error_description");
+    params.get("error_description") ||
+    hashParams.get("error_description");
 
 
-  /* LINK HẾT HẠN */
+  if(urlError || errorCode){
 
-  if(
-    errorCode === "otp_expired" ||
-    params.get("error") === "access_denied"
-  ){
+    console.error(
+      "Recovery URL error:",
+      {
+        urlError,
+        errorCode,
+        errorDescription
+      }
+    );
 
-    recoveryMode = true;
-
-    document
-      .getElementById("currentPasswordGroup")
-      .classList.add("hidden");
-
-    document
-      .getElementById("passwordForm")
-      .classList.add("hidden");
-
-    document.getElementById("pageTitle").textContent =
-      "Liên kết đã hết hạn";
-
-    document.getElementById("pageDesc").textContent =
-      "Liên kết đặt lại mật khẩu không còn hiệu lực.";
-
-    showError(
-      "❌ Link đặt lại mật khẩu đã hết hạn hoặc đã được sử dụng." +
-      "<br><br>" +
-      "Vui lòng yêu cầu một email đặt lại mật khẩu mới." +
-      "<br>" +
-      '<a class="reset-link" href="quen-mat-khau.html">' +
-      "Gửi lại yêu cầu đặt mật khẩu →" +
-      "</a>"
+    showInvalidLink(
+      decodeURIComponent(
+        errorDescription ||
+        "Liên kết đã hết hạn hoặc đã được sử dụng."
+      )
     );
 
     return;
   }
 
 
-  /* SUPABASE PKCE */
+  /*
+    ========================================================
+    2. PKCE FLOW
+       URL dạng:
+       doi-mat-khau.html?code=...
+    ========================================================
+  */
 
   const code =
     params.get("code");
 
+
   if(code){
 
-    recoveryMode = true;
-
-    document
-      .getElementById("currentPasswordGroup")
-      .classList.add("hidden");
+    console.log(
+      "Recovery PKCE code detected"
+    );
 
     try{
 
@@ -606,7 +673,9 @@ async function initializePage(){
         error
       } =
       await supabaseClient.auth
-        .exchangeCodeForSession(code);
+        .exchangeCodeForSession(
+          code
+        );
 
 
       if(error){
@@ -616,51 +685,90 @@ async function initializePage(){
           error
         );
 
-        showError(
-          "❌ Link đặt lại mật khẩu không hợp lệ hoặc đã hết hạn." +
-          "<br><br>" +
-          '<a class="reset-link" href="quen-mat-khau.html">' +
-          "Yêu cầu link mới →" +
-          "</a>"
+        /*
+          Có trường hợp Supabase client đã tự xử lý
+          code trước khi đoạn JS này chạy.
+
+          Vì vậy kiểm tra session một lần nữa
+          trước khi kết luận link hỏng.
+        */
+
+        const {
+          data: sessionCheck
+        } =
+        await supabaseClient.auth
+          .getSession();
+
+
+        if(
+          sessionCheck?.session?.user
+        ){
+
+          enableRecoveryForm();
+
+          cleanRecoveryUrl();
+
+          return;
+        }
+
+
+        showInvalidLink(
+          "Liên kết đặt lại mật khẩu đã hết hạn hoặc đã được sử dụng."
         );
 
-        document
-          .getElementById("passwordForm")
-          .classList.add("hidden");
+        return;
+
+      }
+
+
+      if(
+        data?.session?.user
+      ){
+
+        enableRecoveryForm();
+
+        cleanRecoveryUrl();
 
         return;
       }
 
-
-      if(data?.session){
-
-        showInfo(
-          "✓ Link xác thực hợp lệ. " +
-          "Vui lòng nhập mật khẩu mới."
-        );
-
-      }
-
     }
-    catch(err){
+    catch(error){
 
-      console.error(err);
+      console.error(
+        "PKCE recovery error:",
+        error
+      );
 
     }
 
   }
 
 
-  /* SUPABASE IMPLICIT FLOW */
+  /*
+    ========================================================
+    3. IMPLICIT FLOW
+       URL dạng:
+       #access_token=...
+       &refresh_token=...
+       &type=recovery
+    ========================================================
+  */
 
   const accessToken =
-    hashParams.get("access_token");
+    hashParams.get(
+      "access_token"
+    );
 
   const refreshToken =
-    hashParams.get("refresh_token");
+    hashParams.get(
+      "refresh_token"
+    );
 
   const type =
-    hashParams.get("type");
+    hashParams.get(
+      "type"
+    );
 
 
   if(
@@ -668,350 +776,277 @@ async function initializePage(){
     refreshToken
   ){
 
-    if(type === "recovery"){
-
-      recoveryMode = true;
-
-    }
-
-    document
-      .getElementById("currentPasswordGroup")
-      .classList.add("hidden");
-
-
-    const {
-      error
-    } =
-    await supabaseClient.auth.setSession({
-
-      access_token:
-        accessToken,
-
-      refresh_token:
-        refreshToken
-
-    });
-
-
-    if(error){
-
-      console.error(
-        "setSession:",
-        error
-      );
-
-      showError(
-        "❌ Không thể xác thực link đặt lại mật khẩu."
-      );
-
-      return;
-
-    }
-
-
-    showInfo(
-      "✓ Link xác thực hợp lệ. " +
-      "Vui lòng nhập mật khẩu mới."
+    console.log(
+      "Recovery implicit tokens detected"
     );
 
-  }
+
+    try{
+
+      const {
+        data,
+        error
+      } =
+      await supabaseClient.auth
+        .setSession({
+
+          access_token:
+            accessToken,
+
+          refresh_token:
+            refreshToken
+
+        });
 
 
-  /* LẮNG NGHE PASSWORD RECOVERY */
+      if(error){
 
-  supabaseClient.auth.onAuthStateChange(
-    (event, session) => {
-
-      console.log(
-        "Auth event:",
-        event
-      );
-
-      if(event === "PASSWORD_RECOVERY"){
-
-        recoveryMode = true;
-
-        document
-          .getElementById("currentPasswordGroup")
-          .classList.add("hidden");
-
-        showInfo(
-          "✓ Xác thực thành công. " +
-          "Hãy nhập mật khẩu mới."
+        console.error(
+          "setSession:",
+          error
         );
+
+        showInvalidLink(
+          "Không thể xác thực phiên đặt lại mật khẩu."
+        );
+
+        return;
+
+      }
+
+
+      if(
+        data?.session?.user
+      ){
+
+        enableRecoveryForm();
+
+        cleanRecoveryUrl();
+
+        return;
 
       }
 
     }
-  );
+    catch(error){
 
-
-  /* KIỂM TRA SESSION */
-
-  const {
-    data: {
-      session
-    }
-  } =
-  await supabaseClient.auth.getSession();
-
-
-  if(!session){
-
-    /*
-      Nếu không có session
-      và cũng không phải recovery link
-    */
-
-    if(
-      !code &&
-      !accessToken
-    ){
-
-      showError(
-        "❌ Phiên đăng nhập hoặc link đặt lại mật khẩu không hợp lệ." +
-        "<br><br>" +
-        '<a class="reset-link" href="quen-mat-khau.html">' +
-        "Quên mật khẩu? Gửi yêu cầu mới →" +
-        "</a>"
+      console.error(
+        "Implicit recovery error:",
+        error
       );
 
-      document
-        .getElementById("passwordForm")
-        .classList.add("hidden");
-
     }
-
-    return;
 
   }
 
 
   /*
-    Nếu đang đăng nhập bình thường:
-    yêu cầu mật khẩu hiện tại
+    ========================================================
+    4. KIỂM TRA SESSION ĐÃ ĐƯỢC SUPABASE TỰ TẠO
+    ========================================================
   */
 
-  if(!recoveryMode){
-
-    document
-      .getElementById("currentPasswordGroup")
-      .classList.remove("hidden");
-
-  }
-
-}
-
-
-/* =========================
-   ĐỔI MẬT KHẨU THẬT
-========================= */
-
-async function changePassword(event){
-
-  event.preventDefault();
-
-  hideMessages();
-
-
-  const currentPassword =
-    document
-      .getElementById("currentPassword")
-      .value;
-
-  const newPassword =
-    document
-      .getElementById("newPassword")
-      .value;
-
-  const confirmPassword =
-    document
-      .getElementById("confirmPassword")
-      .value;
-
-
-  const saveBtn =
-    document.getElementById("saveBtn");
-
-
-  /* KIỂM TRA */
-
-  const validation =
-    validatePassword(newPassword);
-
-
-  if(validation){
-
-    showError(
-      "❌ " + validation
-    );
-
-    return;
-
-  }
-
-
-  if(
-    newPassword !==
-    confirmPassword
-  ){
-
-    showError(
-      "❌ Hai mật khẩu mới không trùng khớp."
-    );
-
-    return;
-
-  }
-
-
-  if(
-    !recoveryMode &&
-    !currentPassword
-  ){
-
-    showError(
-      "❌ Vui lòng nhập mật khẩu hiện tại."
-    );
-
-    return;
-
-  }
-
-
-  if(
-    currentPassword &&
-    currentPassword ===
-    newPassword
-  ){
-
-    showError(
-      "❌ Mật khẩu mới không được giống mật khẩu hiện tại."
-    );
-
-    return;
-
-  }
-
-
-  saveBtn.disabled = true;
-
-  saveBtn.textContent =
-    "Đang xử lý...";
-
-
   try{
-
-
-    const {
-      data: {
-        session
-      }
-    } =
-    await supabaseClient.auth.getSession();
-
-
-    if(!session){
-
-      showError(
-        "❌ Phiên xác thực đã hết hạn." +
-        "<br><br>" +
-        '<a class="reset-link" href="quen-mat-khau.html">' +
-        "Yêu cầu link mới →" +
-        "</a>"
-      );
-
-      return;
-
-    }
-
-
-    /*
-      ĐỔI MẬT KHẨU KHI
-      ĐANG ĐĂNG NHẬP
-
-      Xác minh mật khẩu hiện tại
-      bằng signInWithPassword.
-    */
-
-    if(!recoveryMode){
-
-      const email =
-        session.user.email;
-
-
-      if(!email){
-
-        showError(
-          "❌ Không tìm thấy email của tài khoản."
-        );
-
-        return;
-
-      }
-
-
-      const {
-        error:
-        verifyError
-      } =
-      await supabaseClient.auth
-        .signInWithPassword({
-
-          email:
-            email,
-
-          password:
-            currentPassword
-
-        });
-
-
-      if(verifyError){
-
-        console.error(
-          verifyError
-        );
-
-        showError(
-          "❌ Mật khẩu hiện tại không chính xác."
-        );
-
-        return;
-
-      }
-
-    }
-
-
-    /*
-      CẬP NHẬT MẬT KHẨU
-      THẬT TRÊN SUPABASE AUTH
-    */
 
     const {
       data,
       error
     } =
     await supabaseClient.auth
-      .updateUser({
-
-        password:
-          newPassword
-
-      });
+      .getSession();
 
 
     if(error){
 
       console.error(
-        "updateUser:",
+        "getSession:",
         error
       );
 
+    }
+
+
+    if(
+      data?.session?.user
+    ){
+
+      console.log(
+        "Existing authenticated recovery session found"
+      );
+
+      enableRecoveryForm();
+
+      cleanRecoveryUrl();
+
+      return;
+
+    }
+
+  }
+  catch(error){
+
+    console.error(
+      "Session check error:",
+      error
+    );
+
+  }
+
+
+  /*
+    ========================================================
+    5. CHỜ EVENT PASSWORD_RECOVERY
+       Supabase đôi khi phát event sau khi trang load.
+    ========================================================
+  */
+
+  showInfo(
+    "Đang xác thực liên kết đặt lại mật khẩu..."
+  );
+
+
+  let resolved =
+    false;
+
+
+  const {
+    data: listener
+  } =
+  supabaseClient.auth
+    .onAuthStateChange(
+      (event, session) => {
+
+        console.log(
+          "Auth event:",
+          event
+        );
+
+
+        if(
+          event === "PASSWORD_RECOVERY" &&
+          session?.user
+        ){
+
+          resolved =
+            true;
+
+          enableRecoveryForm();
+
+          cleanRecoveryUrl();
+
+        }
+
+      }
+    );
+
+
+  /*
+    Chờ tối đa 2 giây cho Supabase xử lý recovery.
+  */
+
+  setTimeout(
+    async function(){
+
+      if(recoveryReady || resolved){
+        return;
+      }
+
+
+      try{
+
+        const {
+          data
+        } =
+        await supabaseClient.auth
+          .getSession();
+
+
+        if(
+          data?.session?.user
+        ){
+
+          enableRecoveryForm();
+
+          cleanRecoveryUrl();
+
+          return;
+
+        }
+
+      }
+      catch(error){
+
+        console.error(
+          error
+        );
+
+      }
+
+
+      showInvalidLink(
+        "Phiên đặt lại mật khẩu không tồn tại hoặc đã hết hạn."
+      );
+
+
+      try{
+
+        listener?.subscription
+          ?.unsubscribe();
+
+      }
+      catch(e){}
+
+    },
+    2000
+  );
+
+}
+
+
+/* =========================================================
+   XÓA TOKEN/CODE KHỎI THANH ĐỊA CHỈ
+========================================================= */
+
+function cleanRecoveryUrl(){
+
+  try{
+
+    window.history.replaceState(
+      {},
+      document.title,
+      window.location.pathname
+    );
+
+  }
+  catch(error){
+
+    console.warn(
+      "Không thể làm sạch URL:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   CẬP NHẬT MẬT KHẨU
+========================================================= */
+
+passwordForm.addEventListener(
+  "submit",
+  async function(event){
+
+    event.preventDefault();
+
+    hideMessages();
+
+
+    if(!recoveryReady){
+
       showError(
-        "❌ Không thể đổi mật khẩu: " +
-        error.message
+        "❌ Phiên đặt lại mật khẩu chưa được xác thực."
       );
 
       return;
@@ -1019,78 +1054,218 @@ async function changePassword(event){
     }
 
 
-    console.log(
-      "Password updated:",
-      data
-    );
+    const newPassword =
+      newPasswordInput.value;
 
-
-    showSuccess(
-      "✅ Đổi mật khẩu thành công." +
-      "<br>Bạn sẽ được chuyển về trang đăng nhập."
-    );
+    const confirmPassword =
+      confirmPasswordInput.value;
 
 
     /*
-      ĐĂNG XUẤT SESSION CŨ
+      VALIDATE PASSWORD
     */
 
-    await supabaseClient.auth.signOut();
+    const validation =
+      validatePassword(
+        newPassword
+      );
 
 
-    setTimeout(
-      function(){
+    if(validation){
 
-        window.location.href =
-          "dang-nhap.html";
+      showError(
+        "❌ " +
+        validation
+      );
 
-      },
-      1800
-    );
+      return;
+
+    }
 
 
-  }
-  catch(error){
+    if(
+      newPassword !==
+      confirmPassword
+    ){
 
-    console.error(
-      error
-    );
+      showError(
+        "❌ Hai mật khẩu mới không trùng khớp."
+      );
 
-    showError(
-      "❌ Có lỗi xảy ra. Vui lòng thử lại."
-    );
+      return;
 
-  }
-  finally{
+    }
+
 
     saveBtn.disabled =
-      false;
+      true;
 
     saveBtn.textContent =
-      "Đổi mật khẩu";
+      "Đang cập nhật...";
+
+
+    try{
+
+      /*
+        KIỂM TRA SESSION TRƯỚC KHI UPDATE
+      */
+
+      const {
+        data: sessionData,
+        error: sessionError
+      } =
+      await supabaseClient.auth
+        .getSession();
+
+
+      if(sessionError){
+
+        throw sessionError;
+
+      }
+
+
+      if(
+        !sessionData?.session?.user
+      ){
+
+        throw new Error(
+          "Phiên xác thực đã hết hạn. Vui lòng yêu cầu link đặt lại mật khẩu mới."
+        );
+
+      }
+
+
+      /*
+        UPDATE PASSWORD THẬT
+      */
+
+      const {
+        data,
+        error
+      } =
+      await supabaseClient.auth
+        .updateUser({
+
+          password:
+            newPassword
+
+        });
+
+
+      if(error){
+
+        console.error(
+          "updateUser:",
+          error
+        );
+
+        throw error;
+
+      }
+
+
+      console.log(
+        "Password updated successfully:",
+        data?.user?.id
+      );
+
+
+      /*
+        KHÓA FORM
+      */
+
+      newPasswordInput.disabled =
+        true;
+
+      confirmPasswordInput.disabled =
+        true;
+
+      saveBtn.disabled =
+        true;
+
+
+      showSuccess(
+        "✅ Mật khẩu đã được cập nhật thành công." +
+        "<br><br>" +
+        "Đang chuyển về trang đăng nhập..."
+      );
+
+
+      /*
+        ĐĂNG XUẤT RECOVERY SESSION
+      */
+
+      try{
+
+        await supabaseClient.auth
+          .signOut();
+
+      }
+      catch(error){
+
+        console.warn(
+          "signOut:",
+          error
+        );
+
+      }
+
+
+      /*
+        VỀ ĐĂNG NHẬP
+      */
+
+      setTimeout(
+        function(){
+
+          window.location.replace(
+            "dang-nhap.html"
+          );
+
+        },
+        1800
+      );
+
+    }
+    catch(error){
+
+      console.error(
+        "Password reset error:",
+        error
+      );
+
+
+      showError(
+        "❌ Không thể cập nhật mật khẩu: " +
+        (
+          error?.message ||
+          "Có lỗi không xác định."
+        ) +
+        "<br><br>" +
+        '<a class="reset-link" href="quen-mat-khau.html">' +
+        "Gửi yêu cầu đặt lại mật khẩu mới →" +
+        "</a>"
+      );
+
+
+      saveBtn.disabled =
+        false;
+
+      saveBtn.textContent =
+        "Cập nhật mật khẩu";
+
+    }
 
   }
-
-}
-
-
-/* =========================
-   FORM
-========================= */
-
-document
-  .getElementById("passwordForm")
-  .addEventListener(
-    "submit",
-    changePassword
-  );
+);
 
 
-/* =========================
-   KHỞI TẠO
-========================= */
+/* =========================================================
+   KHỞI ĐỘNG
+========================================================= */
 
-initializePage();
+initializeRecovery();
 
 </script>
 
