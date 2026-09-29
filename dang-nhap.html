@@ -293,81 +293,291 @@ body{
 <script src="supabase-config.js"></script>
 <script src="auth.js"></script>
 <script>
+document.addEventListener("DOMContentLoaded", () => {
 
+  const form = document.getElementById("loginForm");
+  const button = form.querySelector(".login-btn");
+  const inputs = form.querySelectorAll(".field input");
 
-document.getElementById("loginForm").addEventListener("submit", async function(e){
-  e.preventDefault();
+  const loginInput = inputs[0];
+  const passwordInput = inputs[1];
 
-  const inputs = this.querySelectorAll("input");
+  /* =========================================================
+     CHUẨN HÓA SỐ ĐIỆN THOẠI VIỆT NAM
+  ========================================================= */
+  function normalizeVietnamPhone(value) {
 
-const loginValue = inputs[0].value.trim();
-const password = inputs[1].value;
+    let phone = String(value || "")
+      .trim()
+      .replace(/[^\d+]/g, "");
 
-if (!loginValue || !password) {
-  alert("Vui lòng nhập số điện thoại/email và mật khẩu");
-  return;
-}
+    if (phone.startsWith("0")) {
+      phone = "+84" + phone.slice(1);
+    }
+    else if (
+      phone.startsWith("84") &&
+      !phone.startsWith("+84")
+    ) {
+      phone = "+" + phone;
+    }
 
-/* Chuẩn hóa thông tin đăng nhập */
-let credentials = {
-  password: password
-};
-
-if (loginValue.includes("@")) {
-  // Đăng nhập bằng email
-  credentials.email = loginValue.toLowerCase();
-} else {
-  // Đăng nhập bằng số điện thoại
-  let phone = loginValue.replace(/[^\d+]/g, "");
-
-  // 0891234567 -> +84891234567
-  if (phone.startsWith("0")) {
-    phone = "+84" + phone.slice(1);
-  }
-  // 84891234567 -> +84891234567
-  else if (phone.startsWith("84")) {
-    phone = "+" + phone;
+    return phone;
   }
 
-  if (!phone.startsWith("+84")) {
-    alert("Số điện thoại không hợp lệ. Ví dụ: 0891234567");
-    return;
+
+  /* =========================================================
+     LẤY ROLE USER
+  ========================================================= */
+  async function getUserRole(userId) {
+
+    const { data: profile, error } =
+      await supabaseClient
+        .from("profiles")
+        .select("role, full_name")
+        .eq("id", userId)
+        .maybeSingle();
+
+    if (error) {
+      console.error("Lỗi đọc profiles:", error);
+      return null;
+    }
+
+    return profile;
   }
 
-  credentials.phone = phone;
-}
 
-console.log("Đang đăng nhập:", {
-  type: credentials.phone ? "phone" : "email",
-  value: credentials.phone || credentials.email
-});
+  /* =========================================================
+     CHUYỂN TRANG THEO ROLE
+  ========================================================= */
+  async function redirectByRole(user) {
 
-const { data, error } =
-  await supabaseClient.auth.signInWithPassword(credentials);
+    if (!user || !user.id) {
+      throw new Error("Không xác định được tài khoản đăng nhập.");
+    }
 
-  if (error) {
-    alert("Đăng nhập thất bại: " + error.message);
-    return;
+    const profile = await getUserRole(user.id);
+
+    console.log("USER ID:", user.id);
+    console.log("PROFILE:", profile);
+
+    const role = String(profile?.role || "")
+      .trim()
+      .toLowerCase();
+
+    /*
+      ADMIN
+    */
+    if (
+      role === "admin" ||
+      role === "administrator" ||
+      role === "super_admin"
+    ) {
+
+      console.log("Đăng nhập ADMIN thành công");
+
+      window.location.replace(
+        "admin-dang-hang-ho.html"
+      );
+
+      return;
+    }
+
+    /*
+      USER THÔNG THƯỜNG
+    */
+    console.log(
+      "Đăng nhập user thành công. Role:",
+      role || "chưa có role"
+    );
+
+    window.location.replace(
+      "dashboard.html"
+    );
   }
 
-  const user = data.user;
 
-  const { data: profile, error: profileError } = await supabaseClient
-    .from("profiles")
-    .select("role, full_name")
-    .eq("id", user.id)
-    .maybeSingle();
+  /* =========================================================
+     SUBMIT LOGIN
+  ========================================================= */
+  form.addEventListener("submit", async (e) => {
 
-if (profileError) {
-    console.error("Không đọc được profile:", profileError);
-}
+    e.preventDefault();
 
-/* KHÔNG đăng xuất nếu profile lỗi hoặc chưa có */
-if (profile && profile.role === "admin") {
-    window.location.href = "admin.html";
-} else {
-    window.location.href = "dashboard.html";
-}
+    const loginValue =
+      loginInput.value.trim();
+
+    const password =
+      passwordInput.value;
+
+    if (!loginValue || !password) {
+
+      alert(
+        "Vui lòng nhập số điện thoại/email và mật khẩu."
+      );
+
+      return;
+    }
+
+
+    button.disabled = true;
+    button.textContent = "Đang đăng nhập...";
+
+
+    try {
+
+      let credentials = {
+        password: password
+      };
+
+
+      /* =====================================================
+         EMAIL
+      ===================================================== */
+      if (loginValue.includes("@")) {
+
+        credentials.email =
+          loginValue.toLowerCase();
+
+      }
+
+      /* =====================================================
+         PHONE
+      ===================================================== */
+      else {
+
+        const phone =
+          normalizeVietnamPhone(loginValue);
+
+        if (!phone.startsWith("+84")) {
+
+          throw new Error(
+            "Số điện thoại không hợp lệ. Ví dụ: 0891234567"
+          );
+        }
+
+        credentials.phone = phone;
+      }
+
+
+      /* =====================================================
+         ĐĂNG NHẬP SUPABASE
+      ===================================================== */
+
+      const {
+        data,
+        error
+      } =
+      await supabaseClient.auth.signInWithPassword(
+        credentials
+      );
+
+
+      if (error) {
+
+        console.error(
+          "LOGIN ERROR:",
+          error
+        );
+
+        if (
+          error.message
+            ?.toLowerCase()
+            .includes("invalid login credentials")
+        ) {
+
+          throw new Error(
+            "Email/số điện thoại hoặc mật khẩu không đúng."
+          );
+        }
+
+        throw error;
+      }
+
+
+      if (!data?.session) {
+
+        throw new Error(
+          "Đăng nhập thành công nhưng không tạo được phiên đăng nhập."
+        );
+      }
+
+
+      if (!data?.user) {
+
+        throw new Error(
+          "Không lấy được thông tin tài khoản."
+        );
+      }
+
+
+      console.log(
+        "LOGIN SUCCESS:",
+        data.user.id
+      );
+
+
+      /* =====================================================
+         KIỂM TRA SESSION LẦN NỮA
+      ===================================================== */
+
+      const {
+        data: sessionData,
+        error: sessionError
+      } =
+      await supabaseClient.auth.getSession();
+
+
+      if (sessionError) {
+
+        console.error(
+          "SESSION ERROR:",
+          sessionError
+        );
+
+        throw new Error(
+          "Không kiểm tra được phiên đăng nhập."
+        );
+      }
+
+
+      if (!sessionData?.session?.user) {
+
+        throw new Error(
+          "Phiên đăng nhập chưa được lưu."
+        );
+      }
+
+
+      /* =====================================================
+         CHUYỂN TRANG
+      ===================================================== */
+
+      await redirectByRole(
+        sessionData.session.user
+      );
+
+    }
+    catch (err) {
+
+      console.error(
+        "LOGIN FAILED:",
+        err
+      );
+
+      alert(
+        "Đăng nhập thất bại: " +
+        (
+          err?.message ||
+          "Có lỗi không xác định."
+        )
+      );
+
+      button.disabled = false;
+      button.textContent = "Đăng nhập";
+    }
+
+  });
+
 });
 </script>
 </body>
