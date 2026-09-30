@@ -35,6 +35,127 @@
     href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   >
+  <style>
+.vt-live-market{
+  width:100%;
+  display:flex;
+  align-items:center;
+  background:#ffffff;
+  border-top:1px solid #e5e7eb;
+  border-bottom:1px solid #e5e7eb;
+  min-height:54px;
+  overflow:hidden;
+}
+
+.vt-live-label{
+  position:relative;
+  z-index:5;
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  min-height:54px;
+  padding:0 18px;
+  background:#15803d;
+  color:#fff;
+  font-size:13px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.vt-live-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#fff;
+  animation:vtPulse 1.4s infinite;
+}
+
+@keyframes vtPulse{
+  0%,100%{opacity:1;transform:scale(1);}
+  50%{opacity:.4;transform:scale(.7);}
+}
+
+.vt-live-window{
+  flex:1;
+  overflow:hidden;
+  min-width:0;
+}
+
+.vt-live-track{
+  display:flex;
+  align-items:center;
+  width:max-content;
+  white-space:nowrap;
+  animation:vtTicker 55s linear infinite;
+}
+
+.vt-live-window:hover .vt-live-track{
+  animation-play-state:paused;
+}
+
+.vt-live-item{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:0 22px;
+  min-height:54px;
+  border-right:1px solid #e5e7eb;
+  color:#334155;
+  font-size:14px;
+}
+
+.vt-live-item strong{
+  color:#0f172a;
+}
+
+.vt-live-item.order .vt-type{
+  color:#15803d;
+  font-weight:800;
+}
+
+.vt-live-item.vehicle .vt-type{
+  color:#0369a1;
+  font-weight:800;
+}
+
+.vt-live-separator{
+  color:#94a3b8;
+}
+
+@keyframes vtTicker{
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);}
+}
+
+@media(max-width:768px){
+  .vt-live-market{
+    min-height:48px;
+  }
+
+  .vt-live-label{
+    min-height:48px;
+    padding:0 10px;
+    font-size:11px;
+  }
+
+  .vt-live-item{
+    min-height:48px;
+    padding:0 14px;
+    font-size:12px;
+  }
+
+  .vt-live-track{
+    animation-duration:45s;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .vt-live-track{
+    animation:none;
+  }
+}
+</style>
 </head>
   
 <body>
@@ -45,6 +166,18 @@
   <a class="tab" href="tim-hang.html">Tìm hàng</a>
   <a class="tab" href="dang-xe.html">Đăng xe</a>
 </div><div class="search-grid"><label>Nơi đi<input id="from" placeholder="Chọn tỉnh/thành"></label><label>Nơi đến<input id="to" placeholder="Chọn tỉnh/thành"></label><label>Loại hàng<select id="cargoType"><option>Chọn loại hàng</option><option>Hàng tiêu dùng</option><option>Điện tử</option><option>Nông sản</option><option>Vật liệu xây dựng</option></select></label><label>Thời gian<input type="date" id="date"></label><button class="btn btn-primary big" id="searchBtn">Tìm xe ngay</button></div><div class="popular">Tìm kiếm phổ biến: <button>Hà Nội → Hồ Chí Minh</button><button>Hà Nội → Đà Nẵng</button><button>Bắc Ninh → Hải Phòng</button><button>Đồng Nai → Bình Dương</button></div></div></div></section>
+
+  <!-- ===== VIETTRUCK LIVE MARKET ===== -->
+<section id="vtLiveMarket" class="vt-live-market" style="display:none;">
+  <div class="vt-live-label">
+    <span class="vt-live-dot"></span>
+    DỮ LIỆU VẬN TẢI
+  </div>
+
+  <div class="vt-live-window">
+    <div id="vtLiveTrack" class="vt-live-track"></div>
+  </div>
+</section>
 <section class="market-stats">
   <div class="stat-box">
     <strong>MIỄN PHÍ</strong>
