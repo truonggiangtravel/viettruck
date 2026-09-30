@@ -1653,9 +1653,10 @@ async function loadUserStats() {
 }
 
 
-/* Chạy thống kê sau khi trang tải xong */
+/* Chạy dữ liệu thật sau khi trang tải xong */
 window.addEventListener("DOMContentLoaded", () => {
   loadUserStats();
+  loadLatestOrders();
 });
 </script>
 </body>
