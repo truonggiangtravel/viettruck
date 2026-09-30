@@ -3,17 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Đăng Xe Tải Nhận Hàng Vận Chuyển | VietTrucks</title>
 
-<meta name="description" content="Đăng xe tải trên VietTrucks để tìm hàng và nhận chuyến vận chuyển phù hợp. Kết nối chủ hàng, tìm đơn hàng theo tuyến đường trên toàn quốc.">
+  <meta
+    name="description"
+    content="Đăng xe tải trên VietTrucks để tìm hàng và nhận chuyến vận chuyển phù hợp. Kết nối chủ hàng, tìm đơn hàng theo tuyến đường trên toàn quốc."
+  >
 
-<meta name="robots" content="index, follow">
+  <meta name="robots" content="index, follow">
 
-<link rel="canonical" href="https://viettrucks.com/dang-xe.html">
+  <link
+    rel="canonical"
+    href="https://viettrucks.com/dang-xe.html"
+  >
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -52,6 +63,10 @@
       flex-direction: column;
     }
 
+    .full {
+      grid-column: 1 / -1;
+    }
+
     label {
       font-weight: 600;
       margin-bottom: 6px;
@@ -64,6 +79,7 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 15px;
+      width: 100%;
     }
 
     textarea {
@@ -71,11 +87,8 @@
       resize: vertical;
     }
 
-    .full {
-      grid-column: 1 / -1;
-    }
-
     button {
+      width: 100%;
       margin-top: 20px;
       padding: 14px 22px;
       background: #078a45;
@@ -83,6 +96,7 @@
       border: 0;
       border-radius: 8px;
       font-size: 16px;
+      font-weight: 700;
       cursor: pointer;
     }
 
@@ -90,17 +104,72 @@
       background: #066f39;
     }
 
+    button:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+    }
+
     #message {
       margin-top: 15px;
       font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .section-title {
+      grid-column: 1 / -1;
+      font-size: 18px;
+      font-weight: 700;
+      color: #078a45;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 10px;
+      margin-top: 10px;
+    }
+
+    .admin-box {
+      display: none;
+      grid-column: 1 / -1;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      padding: 14px;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    .admin-fields {
+      display: none;
+      grid-column: 1 / -1;
+    }
+
+    .admin-fields .grid {
+      margin-top: 0;
+    }
+
+    .privacy-box {
+      grid-column: 1 / -1;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+      padding: 14px;
+      border-radius: 8px;
+      line-height: 1.6;
     }
 
     @media(max-width: 700px) {
+      .container {
+        margin: 15px;
+        padding: 20px;
+      }
+
       .grid {
         grid-template-columns: 1fr;
       }
 
-      .full {
+      .full,
+      .section-title,
+      .admin-box,
+      .admin-fields,
+      .privacy-box {
         grid-column: auto;
       }
     }
@@ -114,176 +183,632 @@
   </div>
 
   <div class="container">
-    <h1>Đăng xe tải nhận hàng vận chuyển</h1>
+
+    <h1 id="pageTitle">
+      Đăng xe tải nhận hàng vận chuyển
+    </h1>
 
     <form id="vehicleForm">
+
       <div class="grid">
+
+        <!-- ADMIN -->
+        <div
+          id="adminPostNotice"
+          class="admin-box"
+        >
+          <strong>🛡️ ADMIN – ĐĂNG XE HỘ</strong><br>
+          Anh đang đăng xe thay cho chủ xe/nhà xe.
+          Thông tin chủ xe được lưu để VietTrucks quản lý
+          và kết nối khách hàng.
+        </div>
+
+        <div
+          id="adminOwnerFields"
+          class="admin-fields"
+        >
+          <div class="grid">
+
+            <div class="section-title">
+              Thông tin chủ xe / nhà xe
+            </div>
+
+            <div class="field">
+              <label>Tên chủ xe / nhà xe *</label>
+              <input
+                id="owner_name"
+                type="text"
+                placeholder="Tên người hoặc nhà xe"
+              >
+            </div>
+
+            <div class="field">
+              <label>Số điện thoại chủ xe *</label>
+              <input
+                id="owner_phone"
+                type="tel"
+                placeholder="09xxxxxxxx"
+              >
+            </div>
+
+            <div class="field">
+              <label>Tên công ty / nhà xe</label>
+              <input
+                id="owner_company"
+                type="text"
+                placeholder="Nếu có"
+              >
+            </div>
+
+            <div class="field">
+              <label>Nguồn khách</label>
+
+              <select id="customer_source">
+                <option value="">Chọn nguồn</option>
+                <option value="Facebook">Facebook</option>
+                <option value="Zalo">Zalo</option>
+                <option value="TikTok">TikTok</option>
+                <option value="Google">Google</option>
+                <option value="GioiThieu">Giới thiệu</option>
+                <option value="DienThoai">Điện thoại</option>
+                <option value="Khac">Khác</option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label>Ghi chú nội bộ</label>
+
+              <input
+                id="admin_note"
+                type="text"
+                placeholder="Thông tin chỉ Admin VietTrucks sử dụng"
+              >
+            </div>
+
+          </div>
+        </div>
+
+        <!-- XE -->
+        <div class="section-title">
+          Thông tin xe
+        </div>
 
         <div class="field">
           <label>Biển số xe *</label>
-          <input id="plate_number" required />
+          <input
+            id="plate_number"
+            required
+          >
         </div>
 
         <div class="field">
           <label>Loại xe *</label>
-          <select id="vehicle_type" required>
-            <option value="">Chọn loại xe</option>
-            <option value="Xe tải thùng">Xe tải thùng</option>
-            <option value="Xe mui bạt">Xe mui bạt</option>
-            <option value="Xe đông lạnh">Xe đông lạnh</option>
-            <option value="Container">Container</option>
-            <option value="Xe đầu kéo">Xe đầu kéo</option>
+
+          <select
+            id="vehicle_type"
+            required
+          >
+            <option value="">
+              Chọn loại xe
+            </option>
+
+            <option value="Xe tải thùng">
+              Xe tải thùng
+            </option>
+
+            <option value="Xe mui bạt">
+              Xe mui bạt
+            </option>
+
+            <option value="Xe đông lạnh">
+              Xe đông lạnh
+            </option>
+
+            <option value="Container">
+              Container
+            </option>
+
+            <option value="Xe đầu kéo">
+              Xe đầu kéo
+            </option>
           </select>
         </div>
 
         <div class="field">
           <label>Tải trọng (tấn)</label>
-          <input id="capacity" type="number" step="0.1" />
+
+          <input
+            id="capacity"
+            type="number"
+            step="0.1"
+          >
         </div>
 
         <div class="field">
           <label>Ngày sẵn sàng</label>
-          <input id="available_date" type="date" />
+
+          <input
+            id="available_date"
+            type="date"
+          >
+        </div>
+
+        <!-- TUYẾN -->
+        <div class="section-title">
+          Tuyến đường
         </div>
 
         <div class="field">
           <label>Tỉnh/Thành xe đang ở *</label>
-          <input id="current_province" required />
+
+          <input
+            id="current_province"
+            required
+          >
         </div>
 
         <div class="field">
           <label>Quận/Huyện hiện tại</label>
-          <input id="current_district" />
+
+          <input
+            id="current_district"
+          >
         </div>
 
         <div class="field">
           <label>Tỉnh/Thành muốn đi *</label>
-          <input id="destination_province" required />
+
+          <input
+            id="destination_province"
+            required
+          >
         </div>
 
         <div class="field">
           <label>Quận/Huyện điểm đến</label>
-          <input id="destination_district" />
+
+          <input
+            id="destination_district"
+          >
+        </div>
+
+        <!-- TÀI XẾ -->
+        <div class="section-title">
+          Thông tin tài xế
         </div>
 
         <div class="field">
           <label>Tên tài xế</label>
-          <input id="driver_name" />
+
+          <input id="driver_name">
         </div>
 
         <div class="field">
           <label>Số điện thoại tài xế</label>
-          <input id="driver_phone" />
+
+          <input
+            id="driver_phone"
+            type="tel"
+          >
         </div>
 
         <div class="field full">
           <label>Mô tả thêm</label>
+
           <textarea id="description"></textarea>
+        </div>
+
+        <div class="privacy-box">
+          🔒 Thông tin liên hệ của chủ xe và tài xế
+          được VietTrucks sử dụng để kết nối vận chuyển.
+          Không nên hiển thị trực tiếp số điện thoại trên
+          danh sách xe công khai trước khi kết nối chuyến.
         </div>
 
       </div>
 
-      <button type="submit">Đăng xe</button>
+      <button
+        id="submitBtn"
+        type="submit"
+      >
+        Đăng xe
+      </button>
 
       <div id="message"></div>
+
     </form>
+
   </div>
 
-  <script>
-    const SUPABASE_URL = "https://kqypidctajadqwmdcash.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_fXOBoK_Udnl4yOuswW0xlQ_YwIFil0g";
+<script>
+const SUPABASE_URL =
+  "https://kqypidctajadqwmdcash.supabase.co";
 
-    const supabaseClient = supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
+const SUPABASE_ANON_KEY =
+  "sb_publishable_fXOBoK_Udnl4yOuswW0xlQ_YwIFil0g";
+
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY,
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    }
+  );
+
+const form =
+  document.getElementById("vehicleForm");
+
+const message =
+  document.getElementById("message");
+
+const submitBtn =
+  document.getElementById("submitBtn");
+
+let currentUserRole = "driver";
+
+
+async function detectUserRole() {
+
+  try {
+
+    const {
+      data: { session },
+      error: sessionError
+    } =
+      await supabaseClient.auth.getSession();
+
+    if (sessionError) {
+      console.error(sessionError);
+      return;
+    }
+
+    if (!session) {
+      return;
+    }
+
+    const {
+      data: profile,
+      error: profileError
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select("role")
+        .eq("id", session.user.id)
+        .maybeSingle();
+
+    if (profileError) {
+      console.error(
+        "Không đọc được role:",
+        profileError
+      );
+      return;
+    }
+
+    currentUserRole =
+      profile?.role || "driver";
+
+    if (currentUserRole === "admin") {
+
+      document
+        .getElementById("adminPostNotice")
+        .style.display = "block";
+
+      document
+        .getElementById("adminOwnerFields")
+        .style.display = "block";
+
+      document
+        .getElementById("pageTitle")
+        .textContent =
+          "Đăng xe hộ chủ xe / nhà xe";
+
+      submitBtn.textContent =
+        "Đăng xe hộ chủ xe";
+
+      document
+        .getElementById("owner_name")
+        .required = true;
+
+      document
+        .getElementById("owner_phone")
+        .required = true;
+    }
+
+  } catch (error) {
+
+    console.error(
+      "detectUserRole:",
+      error
     );
+  }
+}
 
-    const form = document.getElementById("vehicleForm");
-    const message = document.getElementById("message");
 
-    form.addEventListener("submit", async function(e) {
-      e.preventDefault();
+detectUserRole();
 
-      message.textContent = "Đang lưu xe...";
+
+form.addEventListener(
+  "submit",
+  async function(e) {
+
+    e.preventDefault();
+
+    message.style.color = "#222";
+    message.textContent =
+      "Đang lưu xe...";
+
+    submitBtn.disabled = true;
+
+
+    try {
 
       const {
         data: { user },
         error: userError
-      } = await supabaseClient.auth.getUser();
+      } =
+        await supabaseClient.auth.getUser();
+
 
       if (userError || !user) {
-        message.textContent = "Bạn cần đăng nhập trước khi đăng xe.";
+
+        message.style.color = "#b91c1c";
+
+        message.textContent =
+          "Bạn cần đăng nhập trước khi đăng xe.";
+
+        submitBtn.disabled = false;
+
         return;
       }
 
+
+      const isAdmin =
+        currentUserRole === "admin";
+
+
+      const ownerName =
+        document
+          .getElementById("owner_name")
+          ?.value
+          .trim() || "";
+
+
+      const ownerPhone =
+        document
+          .getElementById("owner_phone")
+          ?.value
+          .trim() || "";
+
+
+      const ownerCompany =
+        document
+          .getElementById("owner_company")
+          ?.value
+          .trim() || "";
+
+
+      const customerSource =
+        document
+          .getElementById("customer_source")
+          ?.value || "";
+
+
+      const adminNote =
+        document
+          .getElementById("admin_note")
+          ?.value
+          .trim() || "";
+
+
+      if (
+        isAdmin &&
+        (!ownerName || !ownerPhone)
+      ) {
+
+        message.style.color = "#b91c1c";
+
+        message.textContent =
+          "Vui lòng nhập tên và số điện thoại chủ xe.";
+
+        submitBtn.disabled = false;
+
+        return;
+      }
+
+
       const vehicleData = {
+
         user_id: user.id,
 
         plate_number:
-          document.getElementById("plate_number").value.trim(),
+          document
+            .getElementById("plate_number")
+            .value
+            .trim(),
 
         vehicle_type:
-          document.getElementById("vehicle_type").value,
+          document
+            .getElementById("vehicle_type")
+            .value,
 
         capacity:
-          document.getElementById("capacity").value
-            ? Number(document.getElementById("capacity").value)
+          document
+            .getElementById("capacity")
+            .value
+            ? Number(
+                document
+                  .getElementById("capacity")
+                  .value
+              )
             : null,
 
         current_location:
-          document.getElementById("current_province").value.trim(),
+          document
+            .getElementById("current_province")
+            .value
+            .trim(),
 
         destination:
-          document.getElementById("destination_province").value.trim(),
+          document
+            .getElementById("destination_province")
+            .value
+            .trim(),
 
         available_date:
-          document.getElementById("available_date").value || null,
+          document
+            .getElementById("available_date")
+            .value || null,
 
         current_province:
-          document.getElementById("current_province").value.trim(),
+          document
+            .getElementById("current_province")
+            .value
+            .trim(),
 
         current_district:
-          document.getElementById("current_district").value.trim() || null,
+          document
+            .getElementById("current_district")
+            .value
+            .trim() || null,
 
         destination_province:
-          document.getElementById("destination_province").value.trim(),
+          document
+            .getElementById("destination_province")
+            .value
+            .trim(),
 
         destination_district:
-          document.getElementById("destination_district").value.trim() || null,
+          document
+            .getElementById("destination_district")
+            .value
+            .trim() || null,
 
         driver_name:
-          document.getElementById("driver_name").value.trim() || null,
+          document
+            .getElementById("driver_name")
+            .value
+            .trim() || null,
 
         driver_phone:
-          document.getElementById("driver_phone").value.trim() || null,
+          document
+            .getElementById("driver_phone")
+            .value
+            .trim() || null,
 
         description:
-          document.getElementById("description").value.trim() || null,
+          document
+            .getElementById("description")
+            .value
+            .trim() || null,
 
-        status: "available"
+        status: "available",
+
+        created_by:
+          user.id,
+
+        created_by_role:
+          isAdmin
+            ? "admin"
+            : "driver",
+
+        is_admin_created:
+          isAdmin,
+
+        owner_name:
+          isAdmin
+            ? ownerName
+            : null,
+
+        owner_phone:
+          isAdmin
+            ? ownerPhone
+            : null,
+
+        owner_company:
+          isAdmin
+            ? (ownerCompany || null)
+            : null,
+
+        customer_source:
+          isAdmin
+            ? (customerSource || null)
+            : null,
+
+        admin_note:
+          isAdmin
+            ? (adminNote || null)
+            : null
       };
 
-      const { data, error } = await supabaseClient
-        .from("vehicles")
-        .insert(vehicleData)
-        .select()
-        .single();
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("vehicles")
+          .insert(vehicleData)
+          .select()
+          .single();
+
 
       if (error) {
+
         console.error(error);
-        message.textContent = "Lỗi đăng xe: " + error.message;
+
+        message.style.color =
+          "#b91c1c";
+
+        message.textContent =
+          "Lỗi đăng xe: " +
+          error.message;
+
+        submitBtn.disabled = false;
+
         return;
       }
 
-      message.textContent = "Đăng xe thành công.";
+
+      message.style.color =
+        "#078a45";
+
+      message.textContent =
+        isAdmin
+          ? "✅ Đăng xe hộ chủ xe thành công."
+          : "✅ Đăng xe thành công.";
+
 
       form.reset();
 
+
       setTimeout(() => {
-        window.location.href = "tim-xe.html";
-      }, 1000);
-    });
-  </script>
+
+        window.location.href =
+          "tim-xe.html";
+
+      }, 1200);
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      message.style.color =
+        "#b91c1c";
+
+      message.textContent =
+        "Có lỗi xảy ra khi đăng xe.";
+
+      submitBtn.disabled = false;
+    }
+  }
+);
+</script>
 
 </body>
 </html>
