@@ -1124,10 +1124,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           return `
             <a
-              class="vt-home-card"
-              href="tim-xe.html"
-              title="Xem xe đang sẵn sàng"
-            >
+  class="vt-home-card"
+  href="#"
+  onclick="event.preventDefault(); openVehicleDetail('${vehicle.id}')"
+  title="Xem chi tiết xe"
+>
 
               <div class="vt-home-card-top">
 
