@@ -1237,16 +1237,32 @@ async function vtSendMessage(){
 
     loading.remove();
 
-    if(error){
-      console.error(error);
+    if (error) {
+    console.error("VIETTRUCKS AI FUNCTION ERROR:", error);
 
-      vtAddMessage(
-        "Trợ lý AI hiện chưa kết nối được. Anh/chị vui lòng thử lại hoặc gọi Hotline 0388 134 999.",
-        "ai"
-      );
+    let errorText = error?.message || "Không xác định được lỗi";
 
-      return;
+    try {
+        if (error?.context) {
+            const errorBody = await error.context.json();
+            console.error("VIETTRUCKS AI ERROR BODY:", errorBody);
+
+            errorText =
+                errorBody?.error ||
+                errorBody?.message ||
+                errorText;
+        }
+    } catch (e) {
+        console.error("Không đọc được error body:", e);
     }
+
+    vtAddMessage(
+        "Lỗi kết nối AI: " + errorText,
+        "ai"
+    );
+
+    return;
+}
 
     if(data?.error){
 
