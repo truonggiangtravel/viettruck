@@ -880,6 +880,259 @@ body{
   }
 }
 </style>
+    <style>
+/* =====================================================
+   VIETTRUCKS - FIX TIM HANG MOBILE FINAL
+   Mobile: Bộ lọc trên - Hàng hóa dưới - full width
+   ===================================================== */
+
+@media (max-width: 900px) {
+
+  html,
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  * {
+    box-sizing: border-box !important;
+  }
+
+  /* Khung trang */
+  .container,
+  .container-page,
+  main {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* QUAN TRỌNG: bỏ layout 2 cột desktop */
+  .content-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    gap: 16px !important;
+    margin: 0 !important;
+    padding: 12px !important;
+  }
+
+  /* =========================
+     BỘ LỌC
+     ========================= */
+
+  .content-layout > aside.filter,
+  aside.filter,
+  .filter {
+    display: block !important;
+    position: static !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    flex: none !important;
+
+    margin: 0 0 16px 0 !important;
+    padding: 18px !important;
+
+    height: auto !important;
+  }
+
+  .filter h3 {
+    margin-top: 0 !important;
+  }
+
+  .filter-group {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* =========================
+     KHU VỰC HÀNG HÓA
+     ========================= */
+
+  .content-layout > section,
+  .content-layout > div:not(.filter),
+  .cargo-section,
+  .cargo-content,
+  .cargo-area,
+  .jobs-section,
+  .jobs-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    flex: 1 1 100% !important;
+
+    margin: 0 !important;
+  }
+
+  /* Tiêu đề Hàng hóa mới nhất */
+  .section-header,
+  .cargo-header,
+  .jobs-header {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+
+    gap: 10px !important;
+  }
+
+  .section-header h2,
+  .cargo-header h2,
+  .jobs-header h2 {
+    font-size: 25px !important;
+    line-height: 1.25 !important;
+    margin: 0 !important;
+  }
+
+  /* =========================
+     DANH SÁCH ĐƠN
+     ========================= */
+
+  .cargo-list,
+  .orders-list,
+  .jobs-list,
+  #cargoList,
+  #ordersList {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    gap: 14px !important;
+  }
+
+  /* Mỗi card phải full màn hình */
+  .cargo-card,
+  .order-card,
+  .job-card,
+  .cargo-item,
+  .order-item,
+  .job-item {
+    display: block !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    margin: 0 !important;
+    padding: 16px !important;
+
+    overflow: hidden !important;
+  }
+
+  /* Không cho chữ ép card rộng ra */
+  .cargo-card *,
+  .order-card *,
+  .job-card *,
+  .cargo-item *,
+  .order-item *,
+  .job-item * {
+    max-width: 100% !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+  }
+
+  /* =========================
+     NÚT BÁO GIÁ / NHẬN CHUYẾN
+     ========================= */
+
+  .card-actions,
+  .cargo-actions,
+  .order-actions,
+  .job-actions,
+  .actions {
+    position: static !important;
+
+    display: flex !important;
+    flex-wrap: wrap !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    gap: 8px !important;
+    margin-top: 14px !important;
+  }
+
+  .card-actions a,
+  .card-actions button,
+  .cargo-actions a,
+  .cargo-actions button,
+  .order-actions a,
+  .order-actions button,
+  .job-actions a,
+  .job-actions button,
+  .actions a,
+  .actions button {
+    position: static !important;
+
+    flex: 1 1 140px !important;
+
+    width: auto !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    margin: 0 !important;
+  }
+
+}
+
+/* Điện thoại nhỏ */
+@media (max-width: 480px) {
+
+  .content-layout {
+    padding: 10px !important;
+  }
+
+  .filter {
+    padding: 15px !important;
+  }
+
+  .cargo-card,
+  .order-card,
+  .job-card,
+  .cargo-item,
+  .order-item,
+  .job-item {
+    padding: 14px !important;
+  }
+
+  .card-actions,
+  .cargo-actions,
+  .order-actions,
+  .job-actions,
+  .actions {
+    flex-direction: column !important;
+  }
+
+  .card-actions a,
+  .card-actions button,
+  .cargo-actions a,
+  .cargo-actions button,
+  .order-actions a,
+  .order-actions button,
+  .job-actions a,
+  .job-actions button,
+  .actions a,
+  .actions button {
+    width: 100% !important;
+    flex: none !important;
+  }
+}
+</style>
 </head>
 
 <body>
