@@ -803,21 +803,95 @@ loadActiveOrdersCount();
 </script>
 ...phần code phía trên...
 
-<!-- =====================================================
-     VIETTRUCKS FLOATING SUPPORT
-     AI + ZALO + HOTLINE
-===================================================== -->
+<!-- ===== VIETTRUCKS FLOATING SUPPORT ===== -->
 
-[TOÀN BỘ KHỐI CODE TÔI VỪA GỬI]
+<style>
+.vt-floating-support{
+  position:fixed;
+  right:16px;
+  bottom:22px;
+  z-index:99999;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  align-items:flex-end;
+}
+
+.vt-float-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:205px;
+  padding:12px 16px;
+  border-radius:30px;
+  background:#fff;
+  box-shadow:0 5px 20px rgba(0,0,0,.18);
+  text-decoration:none;
+  font-weight:700;
+  font-size:14px;
+  color:#111;
+  border:1px solid #eee;
+  cursor:pointer;
+}
+
+.vt-float-btn:hover{
+  transform:translateY(-2px);
+}
+
+.vt-ai{
+  background:#0b8f4d;
+  color:#fff;
+}
+
+.vt-phone{
+  color:#08783f;
+}
+
+.vt-zalo{
+  color:#0866ff;
+}
+
+@media(max-width:600px){
+  .vt-floating-support{
+    right:10px;
+    bottom:14px;
+    gap:7px;
+  }
+
+  .vt-float-btn{
+    min-width:auto;
+    padding:10px 13px;
+    font-size:13px;
+  }
+}
+</style>
+
+<div class="vt-floating-support">
+
+  <button
+    type="button"
+    class="vt-float-btn vt-ai"
+    onclick="alert('Trợ lý AI VietTrucks đang được hoàn thiện. Anh/chị có thể liên hệ Hotline hoặc Zalo để được hỗ trợ ngay.')">
+    🤖 Chatbot AI
+  </button>
+
+  <a class="vt-float-btn vt-phone"
+     href="tel:0388134999">
+    📞 Hotline: 0388 134 999
+  </a>
+
+  <a class="vt-float-btn vt-zalo"
+     href="https://zalo.me/0898877111"
+     target="_blank"
+     rel="noopener noreferrer">
+    💬 Zalo: 0898 877 111
+  </a>
+
+</div>
 
 <!-- ===== END VIETTRUCKS FLOATING SUPPORT ===== -->
 
 <script src="mobile.js"></script>
-
-<script>
-/* VIETTRUCK - HÀNG HÓA MỚI NHẤT + XE TRỐNG MỚI NHẤT */
-...
-  <script src="mobile.js"></script>
   <script>
 /* =========================================================
    VIETTRUCK - HÀNG HÓA MỚI NHẤT + XE TRỐNG MỚI NHẤT
