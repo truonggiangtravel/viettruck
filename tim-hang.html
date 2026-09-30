@@ -1258,6 +1258,122 @@ body{
   }
 }
 </style>
+    /* =====================================================
+   VIETTRUCK - DANH SACH HANG 4 COT THANG HANG
+   ===================================================== */
+
+/* Mỗi đơn hàng = 4 cột */
+.order-card {
+    display: grid !important;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        150px
+        120px
+        140px !important;
+
+    align-items: center !important;
+    column-gap: 16px !important;
+
+    position: relative !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Cột 2: Giá cước */
+.order-card > .price {
+    position: static !important;
+
+    width: auto !important;
+    min-width: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+
+    font-size: 20px !important;
+    font-weight: 700 !important;
+
+    white-space: nowrap !important;
+}
+
+/* Cột 3 + 4 */
+.order-card > .order-actions {
+    position: static !important;
+
+    display: contents !important;
+
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Nút Báo giá */
+.order-actions .quote-btn {
+    position: static !important;
+
+    width: 110px !important;
+    height: 44px !important;
+
+    margin: 0 !important;
+    padding: 0 15px !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    white-space: nowrap !important;
+}
+
+/* Nút Nhận chuyến */
+.order-actions .receive-btn {
+    position: static !important;
+
+    width: 130px !important;
+    height: 44px !important;
+
+    margin: 0 !important;
+    padding: 0 15px !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    white-space: nowrap !important;
+}
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+    .order-card {
+        display: block !important;
+    }
+
+    .order-card > .price {
+        display: block !important;
+        margin-top: 10px !important;
+    }
+
+    .order-card > .order-actions {
+        display: flex !important;
+
+        flex-direction: row !important;
+        gap: 8px !important;
+
+        margin-top: 10px !important;
+    }
+
+    .order-actions .quote-btn,
+    .order-actions .receive-btn {
+        width: auto !important;
+        flex: 1 1 0 !important;
+    }
+}
 </head>
 
 <body>
