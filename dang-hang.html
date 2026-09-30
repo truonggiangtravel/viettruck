@@ -409,32 +409,96 @@ body{
 
       <div class="section-title">5. Thông tin liên hệ</div>
 
-      <div class="field">
-        <label>Họ và tên *</label>
-        <input type="text" placeholder="Tên người liên hệ" required>
-      </div>
+<div id="adminPostNotice"
+     class="field full"
+     style="display:none;">
+  <div class="info-box"
+       style="background:#fff7ed;border-color:#fed7aa;color:#9a3412;">
+    <strong>🛡️ ADMIN – ĐĂNG HÀNG HỘ</strong><br>
+    Anh đang đăng đơn thay cho chủ hàng.
+    Thông tin liên hệ bên dưới chỉ phục vụ quản trị VietTrucks
+    và không được công khai trên trang Tìm hàng.
+  </div>
+</div>
 
-      <div class="field">
-        <label>Số điện thoại *</label>
-        <input type="tel" placeholder="09xxxxxxxx" required>
-      </div>
+<div class="field">
+  <label>Họ và tên chủ hàng *</label>
+  <input
+    id="customer_name"
+    type="text"
+    placeholder="Tên người liên hệ"
+    required
+  >
+</div>
 
-      <div class="field">
-        <label>Email</label>
-        <input type="email" placeholder="example@email.com">
-      </div>
+<div class="field">
+  <label>Số điện thoại chủ hàng *</label>
+  <input
+    id="customer_phone"
+    type="tel"
+    placeholder="09xxxxxxxx"
+    required
+  >
+</div>
 
-      <div class="field">
-        <label>Tên công ty</label>
-        <input type="text" placeholder="Nếu có">
-      </div>
+<div class="field">
+  <label>Email</label>
+  <input
+    id="customer_email"
+    type="email"
+    placeholder="example@email.com"
+  >
+</div>
 
-      <div class="field full">
-        <div class="info-box">
-          🔒 Thông tin của bạn chỉ được sử dụng để kết nối với tài xế hoặc nhà xe phù hợp.
-          Đơn hàng của bạn sẽ được lưu vào hệ thống VietTruck để kết nối với tài xế hoặc nhà xe phù hợp.
-        </div>
-      </div>
+<div class="field">
+  <label>Tên công ty</label>
+  <input
+    id="customer_company"
+    type="text"
+    placeholder="Nếu có"
+  >
+</div>
+
+<div id="adminExtraFields"
+     class="field full"
+     style="display:none;">
+
+  <div class="form-grid">
+
+    <div class="field">
+      <label>Nguồn khách</label>
+      <select id="customer_source">
+        <option value="">Chọn nguồn</option>
+        <option value="Facebook">Facebook</option>
+        <option value="Zalo">Zalo</option>
+        <option value="TikTok">TikTok</option>
+        <option value="Google">Google</option>
+        <option value="GioiThieu">Giới thiệu</option>
+        <option value="DienThoai">Điện thoại</option>
+        <option value="Khac">Khác</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Ghi chú nội bộ</label>
+      <input
+        id="admin_note"
+        type="text"
+        placeholder="Chỉ Admin VietTrucks nhìn thấy"
+      >
+    </div>
+
+  </div>
+
+</div>
+
+<div class="field full">
+  <div class="info-box">
+    🔒 Số điện thoại và thông tin liên hệ của chủ hàng
+    không hiển thị công khai trên danh sách Tìm hàng.
+    Tài xế/nhà xe liên hệ VietTrucks để được kết nối.
+  </div>
+</div>
 
     </div>
 
