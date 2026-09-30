@@ -1211,6 +1211,53 @@ body{
   }
 }
 </style>
+    <style>
+.order-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  margin: 0 !important;
+}
+
+.order-actions .price {
+  margin: 0 8px 0 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  line-height: 44px !important;
+}
+
+.order-actions .quote-btn,
+.order-actions .receive-btn {
+  margin: 0 !important;
+  height: 44px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+}
+
+/* Điện thoại */
+@media (max-width: 600px) {
+  .order-actions {
+    width: 100% !important;
+    gap: 7px !important;
+  }
+
+  .order-actions .price {
+    font-size: 16px !important;
+    margin-right: 2px !important;
+  }
+
+  .order-actions .quote-btn,
+  .order-actions .receive-btn {
+    padding: 0 10px !important;
+    font-size: 14px !important;
+  }
+}
+</style>
 </head>
 
 <body>
