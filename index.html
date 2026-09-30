@@ -1595,5 +1595,369 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 });
 </script>
+  <!-- POPUP CHI TIẾT HÀNG / XE -->
+<div id="vtDetailModal"
+     style="
+       display:none;
+       position:fixed;
+       inset:0;
+       z-index:99999;
+       background:rgba(15,23,42,.55);
+       padding:20px;
+       align-items:center;
+       justify-content:center;
+     ">
+
+  <div style="
+       width:100%;
+       max-width:620px;
+       max-height:90vh;
+       overflow:auto;
+       background:#fff;
+       border-radius:18px;
+       box-shadow:0 25px 70px rgba(0,0,0,.25);
+       position:relative;
+       padding:26px;
+     ">
+
+    <button
+      type="button"
+      onclick="closeVtDetail()"
+      style="
+        position:absolute;
+        right:15px;
+        top:13px;
+        border:0;
+        background:#f1f5f9;
+        width:36px;
+        height:36px;
+        border-radius:50%;
+        font-size:20px;
+        cursor:pointer;
+      ">
+      ×
+    </button>
+
+    <div id="vtDetailContent">
+      Đang tải...
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+(function () {
+
+  const modal =
+    document.getElementById("vtDetailModal");
+
+  const content =
+    document.getElementById("vtDetailContent");
+
+
+  function safe(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+
+  function row(label, value) {
+
+    if (
+      value === null ||
+      value === undefined ||
+      String(value).trim() === ""
+    ) {
+      return "";
+    }
+
+    return `
+      <div style="
+        display:grid;
+        grid-template-columns:145px 1fr;
+        gap:12px;
+        padding:10px 0;
+        border-bottom:1px solid #eef2f7;
+        font-size:14px;
+        line-height:1.5;
+      ">
+        <strong style="color:#475569;">
+          ${safe(label)}
+        </strong>
+
+        <span style="
+          color:#0f172a;
+          overflow-wrap:anywhere;
+        ">
+          ${safe(value)}
+        </span>
+      </div>
+    `;
+  }
+
+
+  function openModal() {
+    modal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  }
+
+
+  window.closeVtDetail = function () {
+    modal.style.display = "none";
+    document.body.style.overflow = "";
+  };
+
+
+  modal.addEventListener("click", function (event) {
+    if (event.target === modal) {
+      closeVtDetail();
+    }
+  });
+
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      closeVtDetail();
+    }
+  });
+
+
+  /* =============================================
+     CHI TIẾT HÀNG ĐĂNG HỘ
+     ============================================= */
+
+  window.openCargoDetail = async function (id) {
+
+    if (!id) return;
+
+    openModal();
+
+    content.innerHTML =
+      "<p>Đang tải thông tin hàng...</p>";
+
+    try {
+
+      const { data, error } =
+        await window.supabaseClient
+          .from("orders")
+          .select("*")
+          .eq("id", id)
+          .single();
+
+
+      if (error) throw error;
+
+
+      const weight =
+        data.weight !== null &&
+        data.weight !== undefined &&
+        data.weight !== ""
+          ? data.weight + " tấn"
+          : "";
+
+
+      content.innerHTML = `
+
+        <div style="
+          color:#15803d;
+          font-size:13px;
+          font-weight:800;
+          margin-bottom:6px;
+        ">
+          📦 HÀNG ĐANG TÌM XE
+        </div>
+
+        <h2 style="
+          margin:0 45px 18px 0;
+          font-size:22px;
+          line-height:1.4;
+          color:#111827;
+        ">
+          ${safe(data.pickup_location || "Chưa xác định")}
+          →
+          ${safe(data.delivery_location || "Chưa xác định")}
+        </h2>
+
+        ${row("Loại hàng", data.cargo_type)}
+        ${row("Khối lượng", weight)}
+        ${row("Loại xe yêu cầu", data.vehicle_type)}
+        ${row("Ngày lấy hàng", data.pickup_date)}
+        ${row("Giá đề xuất", data.price)}
+        ${row("Ghi chú", data.note)}
+
+        <div style="
+          margin-top:20px;
+          padding:14px;
+          border-radius:10px;
+          background:#ecfdf5;
+          color:#065f46;
+          font-size:13px;
+          line-height:1.6;
+        ">
+          🔒 Thông tin liên hệ chủ hàng được VietTrucks bảo vệ.
+          Nhà xe có nhu cầu nhận chuyến có thể thực hiện qua hệ thống VietTrucks.
+        </div>
+
+        <a
+          href="trung-tam-bao-gia.html"
+          style="
+            display:block;
+            margin-top:18px;
+            padding:13px 18px;
+            background:#16a34a;
+            color:#fff;
+            text-align:center;
+            text-decoration:none;
+            border-radius:10px;
+            font-weight:800;
+          ">
+          Báo giá / Nhận chuyến
+        </a>
+      `;
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      content.innerHTML = `
+        <h3>Không tải được thông tin hàng</h3>
+        <p style="color:#64748b;">
+          ${safe(error.message || error)}
+        </p>
+      `;
+
+    }
+  };
+
+
+  /* =============================================
+     CHI TIẾT XE ĐĂNG HỘ
+     ============================================= */
+
+  window.openVehicleDetail = async function (id) {
+
+    if (!id) return;
+
+    openModal();
+
+    content.innerHTML =
+      "<p>Đang tải thông tin xe...</p>";
+
+    try {
+
+      const { data, error } =
+        await window.supabaseClient
+          .from("vehicles")
+          .select("*")
+          .eq("id", id)
+          .single();
+
+
+      if (error) throw error;
+
+
+      const type =
+        data.vehicle_type ||
+        data.type ||
+        data.truck_type ||
+        "";
+
+
+      const from =
+        data.current_location ||
+        data.location ||
+        data.pickup_location ||
+        data.province ||
+        "";
+
+
+      const to =
+        data.destination ||
+        data.delivery_location ||
+        data.route_to ||
+        "";
+
+
+      content.innerHTML = `
+
+        <div style="
+          color:#0369a1;
+          font-size:13px;
+          font-weight:800;
+          margin-bottom:6px;
+        ">
+          🚚 XE TRỐNG
+        </div>
+
+        <h2 style="
+          margin:0 45px 18px 0;
+          font-size:22px;
+          line-height:1.4;
+          color:#111827;
+        ">
+          ${safe(from || "Xe đang sẵn sàng")}
+          ${to ? " → " + safe(to) : ""}
+        </h2>
+
+        ${row("Loại xe", type)}
+        ${row("Tải trọng", data.capacity)}
+        ${row("Ngày sẵn sàng", data.available_date)}
+        ${row("Sẵn sàng từ", data.available_from)}
+        ${row("Sẵn sàng đến", data.available_to)}
+        ${row("Mô tả", data.description)}
+
+        <div style="
+          margin-top:20px;
+          padding:14px;
+          border-radius:10px;
+          background:#eff6ff;
+          color:#1e40af;
+          font-size:13px;
+          line-height:1.6;
+        ">
+          🔒 Thông tin liên hệ nhà xe/tài xế được VietTrucks bảo vệ.
+          Chủ hàng có nhu cầu vận chuyển có thể kết nối qua hệ thống VietTrucks.
+        </div>
+
+        <a
+          href="dang-hang.html"
+          style="
+            display:block;
+            margin-top:18px;
+            padding:13px 18px;
+            background:#16a34a;
+            color:#fff;
+            text-align:center;
+            text-decoration:none;
+            border-radius:10px;
+            font-weight:800;
+          ">
+          Tôi có hàng cần vận chuyển
+        </a>
+      `;
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      content.innerHTML = `
+        <h3>Không tải được thông tin xe</h3>
+        <p style="color:#64748b;">
+          ${safe(error.message || error)}
+        </p>
+      `;
+
+    }
+  };
+
+})();
+</script>
 </body>
 </html>
