@@ -256,18 +256,16 @@
   }
 
   #vtLiveTrack{
-    display:flex !important;
-    width:max-content !important;
-    min-width:max-content !important;
-    flex-wrap:nowrap !important;
-    white-space:nowrap !important;
+  display:flex !important;
+  width:max-content !important;
+  min-width:max-content !important;
+  flex-wrap:nowrap !important;
+  white-space:nowrap !important;
 
-    animation-name:vtMobileTicker !important;
-    animation-duration:38s !important;
-    animation-timing-function:linear !important;
-    animation-iteration-count:infinite !important;
-    animation-play-state:running !important;
-  }
+  animation:none !important;
+  transform:translate3d(0,0,0);
+  will-change:transform;
+}
 
   #vtLiveTrack .vt-live-item{
     display:flex !important;
