@@ -482,5 +482,325 @@ loadActiveOrdersCount();
 
 </div>
   <script src="mobile.js"></script>
+  <script>
+/* =====================================================
+   VIETTRUCK - BẢNG TIN HÀNG & XE THỰC TẾ TRÊN TRANG CHỦ
+   ===================================================== */
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+  const client = window.supabaseClient;
+  const market = document.getElementById("vtLiveMarket");
+  const track = document.getElementById("vtLiveTrack");
+
+  if (!client || !market || !track) {
+    console.warn("VietTruck Live Market: chưa sẵn sàng");
+    return;
+  }
+
+  function escapeHTML(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function shortText(value, max = 35) {
+    const text = String(value ?? "").trim();
+
+    if (!text) return "";
+
+    return text.length > max
+      ? text.slice(0, max) + "…"
+      : text;
+  }
+
+  function formatWeight(value) {
+    if (value === null || value === undefined || value === "") {
+      return "";
+    }
+
+    const number = Number(value);
+
+    if (Number.isNaN(number)) {
+      return String(value);
+    }
+
+    return number.toLocaleString("vi-VN");
+  }
+
+  async function loadLiveMarket() {
+
+    try {
+
+      /* ==========================
+         LẤY HÀNG THẬT
+         ========================== */
+
+      const { data: orders, error: orderError } =
+        await client
+          .from("orders")
+          .select(`
+            id,
+            pickup_location,
+            delivery_location,
+            cargo_type,
+            weight,
+            vehicle_type,
+            pickup_date,
+            status,
+            created_at
+          `)
+          .in("status", ["pending", "open"])
+          .order("created_at", { ascending: false })
+          .limit(15);
+
+      if (orderError) {
+        console.error(
+          "VietTruck - lỗi lấy orders:",
+          orderError
+        );
+      }
+
+
+      /* ==========================
+         LẤY XE THẬT
+         ========================== */
+
+      const { data: vehicles, error: vehicleError } =
+        await client
+          .from("vehicles")
+          .select("*")
+          .order("created_at", { ascending: false })
+          .limit(15);
+
+      if (vehicleError) {
+        console.error(
+          "VietTruck - lỗi lấy vehicles:",
+          vehicleError
+        );
+      }
+
+
+      const items = [];
+
+
+      /* ==========================
+         HIỂN THỊ HÀNG
+         ========================== */
+
+      (orders || []).forEach(order => {
+
+        const from = shortText(order.pickup_location);
+        const to = shortText(order.delivery_location);
+        const cargo = shortText(order.cargo_type, 25);
+        const vehicle = shortText(order.vehicle_type, 25);
+        const weight = formatWeight(order.weight);
+
+        if (!from && !to) return;
+
+        let details = [];
+
+        if (cargo) details.push(cargo);
+
+        if (weight) {
+          details.push(weight + " tấn");
+        }
+
+        if (vehicle) {
+          details.push(vehicle);
+        }
+
+        items.push(`
+          <div class="vt-live-item order">
+
+            <span class="vt-type">
+              📦 HÀNG
+            </span>
+
+            <strong>
+              ${escapeHTML(from || "Chưa xác định")}
+              →
+              ${escapeHTML(to || "Chưa xác định")}
+            </strong>
+
+            ${
+              details.length
+                ? `<span class="vt-live-separator">•</span>
+                   <span>${escapeHTML(details.join(" • "))}</span>`
+                : ""
+            }
+
+          </div>
+        `);
+
+      });
+
+
+      /* ==========================
+         HIỂN THỊ XE
+         ========================== */
+
+      (vehicles || []).forEach(vehicle => {
+
+        /*
+          Dùng nhiều tên cột dự phòng để phù hợp
+          với bảng vehicles hiện tại của VietTruck.
+        */
+
+        const location =
+          vehicle.current_location ||
+          vehicle.location ||
+          vehicle.pickup_location ||
+          vehicle.province ||
+          "";
+
+        const destination =
+          vehicle.destination ||
+          vehicle.delivery_location ||
+          vehicle.route_to ||
+          "";
+
+        const type =
+          vehicle.vehicle_type ||
+          vehicle.type ||
+          vehicle.truck_type ||
+          "";
+
+        const plate =
+          vehicle.license_plate ||
+          vehicle.plate_number ||
+          vehicle.plate ||
+          "";
+
+        if (!location && !destination && !type) return;
+
+        let route = shortText(location);
+
+        if (destination) {
+          route +=
+            (route ? " → " : "") +
+            shortText(destination);
+        }
+
+        let details = [];
+
+        if (type) {
+          details.push(shortText(type, 25));
+        }
+
+        /*
+          Không công khai toàn bộ biển số.
+          Chỉ hiện khi thực sự cần.
+        */
+
+        if (plate) {
+          const cleanPlate = String(plate).trim();
+
+          if (cleanPlate.length >= 4) {
+            details.push(
+              "Xe " +
+              cleanPlate.slice(0, 2) +
+              "***"
+            );
+          }
+        }
+
+        items.push(`
+          <div class="vt-live-item vehicle">
+
+            <span class="vt-type">
+              🚚 XE
+            </span>
+
+            <strong>
+              ${escapeHTML(route || "Xe đang sẵn sàng")}
+            </strong>
+
+            ${
+              details.length
+                ? `<span class="vt-live-separator">•</span>
+                   <span>${escapeHTML(details.join(" • "))}</span>`
+                : ""
+            }
+
+          </div>
+        `);
+
+      });
+
+
+      /* ==========================
+         KHÔNG CÓ DỮ LIỆU THẬT
+         => KHÔNG HIỆN DỮ LIỆU GIẢ
+         ========================== */
+
+      if (!items.length) {
+
+        market.style.display = "none";
+
+        console.log(
+          "VietTruck Live Market: chưa có dữ liệu phù hợp."
+        );
+
+        return;
+      }
+
+
+      /* Trộn hàng và xe để bảng tin sinh động */
+
+      items.sort(() => Math.random() - 0.5);
+
+
+      /*
+        Nhân đôi dữ liệu để chạy ticker liên tục,
+        không bị khoảng trắng cuối dòng.
+      */
+
+      const html = items.join("");
+
+      track.innerHTML = html + html;
+
+      market.style.display = "flex";
+
+      console.log(
+        "VietTruck Live Market:",
+        items.length,
+        "dữ liệu thật đang hiển thị"
+      );
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "VietTruck Live Market Error:",
+        error
+      );
+
+      market.style.display = "none";
+    }
+  }
+
+
+  /* Tải lần đầu */
+
+  await loadLiveMarket();
+
+
+  /*
+    Tự cập nhật 60 giây/lần.
+    Khách không cần F5 trang.
+  */
+
+  setInterval(
+    loadLiveMarket,
+    60000
+  );
+
+});
+</script>
 </body>
 </html>
