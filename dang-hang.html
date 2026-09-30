@@ -559,18 +559,83 @@ const user = session.user;
       return;
     }
 
-    const orderData = {
-      user_id: user.id,
-      pickup_location: pickupLocation,
-      delivery_location: deliveryLocation,
-      cargo_type: cargoType,
-      weight: weight,
-      vehicle_type: vehicleType || null,
-      price: priceValue ? Number(priceValue) : null,
-      pickup_date: pickupDate,
-      notes: notes || null,
-      status: "pending"
-    };
+    const customerName =
+  document.getElementById("customer_name")?.value.trim() || "";
+
+const customerPhone =
+  document.getElementById("customer_phone")?.value.trim() || "";
+
+const customerCompany =
+  document.getElementById("customer_company")?.value.trim() || "";
+
+const customerSource =
+  document.getElementById("customer_source")?.value || "";
+
+const adminNote =
+  document.getElementById("admin_note")?.value.trim() || "";
+
+if (!customerName || !customerPhone) {
+  alert("Vui lòng nhập tên và số điện thoại chủ hàng.");
+  return;
+}
+
+const isAdmin =
+  currentUserRole === "admin";
+
+const orderData = {
+  user_id: user.id,
+
+  pickup_location: pickupLocation,
+  delivery_location: deliveryLocation,
+
+  cargo_type: cargoType,
+  weight: weight,
+
+  vehicle_type:
+    vehicleType || null,
+
+  price:
+    priceValue
+      ? Number(priceValue)
+      : null,
+
+  pickup_date: pickupDate,
+
+  notes:
+    notes || null,
+
+  status: "pending",
+
+  created_by:
+    user.id,
+
+  created_by_role:
+    isAdmin
+      ? "admin"
+      : "customer",
+
+  is_admin_created:
+    isAdmin,
+
+  customer_name:
+    customerName,
+
+  customer_phone:
+    customerPhone,
+
+  customer_company:
+    customerCompany || null,
+
+  customer_source:
+    isAdmin
+      ? (customerSource || null)
+      : null,
+
+  admin_note:
+    isAdmin
+      ? (adminNote || null)
+      : null
+};
 
     const { data, error } = await supabaseClient
       .from("orders")
