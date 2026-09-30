@@ -893,10 +893,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           return `
             <a
-              class="vt-home-card"
-              href="tim-hang.html"
-              title="Xem hàng đang tìm xe"
-            >
+  class="vt-home-card"
+  href="#"
+  onclick="event.preventDefault(); openCargoDetail('${order.id}')"
+  title="Xem chi tiết hàng"
+>
 
               <div class="vt-home-card-top">
 
