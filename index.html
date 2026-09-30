@@ -1670,14 +1670,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       if (!items.length) {
 
-        track.innerHTML = "";
+  console.log(
+    "VietTruck Live Market: lần cập nhật này chưa có dữ liệu - giữ nguyên dữ liệu đang chạy."
+  );
 
-        console.log(
-          "VietTruck Live Market: chưa có dữ liệu."
-        );
-
-        return;
-      }
+  return;
+}
 
 
       /*
