@@ -492,32 +492,34 @@ async function detectUserRole() {
     currentUserRole =
       profile?.role || "driver";
 
-    if (currentUserRole === "admin") {
+    /* Trang dang-xe.html luôn dùng để đăng xe vận chuyển bình thường.
+   Chức năng Admin đăng xe hộ sẽ tách sang trang quản trị riêng. */
 
-      document
-        .getElementById("adminPostNotice")
-        .style.display = "block";
+document
+  .getElementById("adminPostNotice")
+  .style.display = "none";
 
-      document
-        .getElementById("adminOwnerFields")
-        .style.display = "block";
+document
+  .getElementById("adminOwnerFields")
+  .style.display = "none";
 
-      document
-        .getElementById("pageTitle")
-        .textContent =
-          "Đăng xe hộ chủ xe / nhà xe";
+document
+  .getElementById("pageTitle")
+  .textContent =
+    "Đăng xe tải nhận hàng vận chuyển";
 
-      submitBtn.textContent =
-        "Đăng xe hộ chủ xe";
+submitBtn.textContent =
+  "Đăng xe";
 
-      document
-        .getElementById("owner_name")
-        .required = true;
+document
+  .getElementById("owner_name")
+  .required = false;
 
-      document
-        .getElementById("owner_phone")
-        .required = true;
-    }
+document
+  .getElementById("owner_phone")
+  .required = false;
+
+currentUserRole = "driver";
 
   } catch (error) {
 
