@@ -1242,5 +1242,356 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 </script>
+  <script>
+/* =========================================================
+   KHÔI PHỤC DÒNG DỮ LIỆU VẬN TẢI VIETTRUCK
+   Chỉ đọc dữ liệu thật - không sửa/xóa dữ liệu Supabase
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", async function () {
+
+  const client = window.supabaseClient;
+  const market = document.getElementById("vtLiveMarket");
+  const track = document.getElementById("vtLiveTrack");
+
+  if (!client || !market || !track) {
+    console.warn("VietTruck Live Market: thiếu Supabase hoặc vùng hiển thị.");
+    return;
+  }
+
+  function esc(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function short(value, max = 30) {
+    const text = String(value ?? "").trim();
+
+    if (!text) return "";
+
+    return text.length > max
+      ? text.slice(0, max).trim() + "..."
+      : text;
+  }
+
+  function maskPlate(value) {
+    const plate = String(value ?? "").trim();
+
+    if (!plate) return "";
+
+    return plate.length >= 2
+      ? plate.slice(0, 2) + "****"
+      : "****";
+  }
+
+  async function loadLiveTransport() {
+
+    try {
+
+      /* ==========================
+         LẤY HÀNG ĐANG TÌM XE
+         ========================== */
+
+      const ordersPromise = client
+        .from("orders")
+        .select(`
+          id,
+          pickup_location,
+          delivery_location,
+          cargo_type,
+          weight,
+          vehicle_type,
+          pickup_date,
+          status,
+          created_at
+        `)
+        .in("status", ["pending", "open"])
+        .order("created_at", {
+          ascending: false
+        })
+        .limit(10);
+
+
+      /* ==========================
+         LẤY XE
+         ========================== */
+
+      const vehiclesPromise = client
+        .from("vehicles")
+        .select("*")
+        .order("created_at", {
+          ascending: false
+        })
+        .limit(10);
+
+
+      const [
+        ordersResult,
+        vehiclesResult
+      ] = await Promise.all([
+        ordersPromise,
+        vehiclesPromise
+      ]);
+
+
+      if (ordersResult.error) {
+        console.error(
+          "Live Market - lỗi orders:",
+          ordersResult.error
+        );
+      }
+
+      if (vehiclesResult.error) {
+        console.error(
+          "Live Market - lỗi vehicles:",
+          vehiclesResult.error
+        );
+      }
+
+
+      const orders =
+        ordersResult.data || [];
+
+      const vehicles =
+        vehiclesResult.data || [];
+
+      const items = [];
+
+
+      /* ==========================
+         TẠO DÒNG HÀNG
+         ========================== */
+
+      orders.forEach(order => {
+
+        const from = short(
+          order.pickup_location,
+          28
+        );
+
+        const to = short(
+          order.delivery_location,
+          28
+        );
+
+        if (!from && !to) return;
+
+
+        const cargo = short(
+          order.cargo_type,
+          22
+        );
+
+        const vehicleType = short(
+          order.vehicle_type,
+          22
+        );
+
+
+        let weight = "";
+
+        if (
+          order.weight !== null &&
+          order.weight !== undefined &&
+          order.weight !== ""
+        ) {
+          const number = Number(order.weight);
+
+          weight = Number.isNaN(number)
+            ? String(order.weight)
+            : number.toLocaleString("vi-VN") + " tấn";
+        }
+
+
+        const details = [];
+
+        if (cargo) details.push(esc(cargo));
+        if (weight) details.push(esc(weight));
+        if (vehicleType) details.push(esc(vehicleType));
+
+
+        items.push(`
+          <div class="vt-live-item order">
+
+            <span class="vt-type">
+              📦 HÀNG
+            </span>
+
+            <strong>
+              ${esc(from || "Chưa xác định")}
+              →
+              ${esc(to || "Chưa xác định")}
+            </strong>
+
+            ${
+              details.length
+                ? `
+                  <span class="vt-live-separator">•</span>
+                  <span>${details.join(" • ")}</span>
+                `
+                : ""
+            }
+
+          </div>
+        `);
+
+      });
+
+
+      /* ==========================
+         TẠO DÒNG XE
+         ========================== */
+
+      vehicles.forEach(vehicle => {
+
+        const from =
+          vehicle.current_location ||
+          vehicle.location ||
+          vehicle.pickup_location ||
+          vehicle.province ||
+          "";
+
+
+        const to =
+          vehicle.destination ||
+          vehicle.delivery_location ||
+          vehicle.route_to ||
+          "";
+
+
+        const type =
+          vehicle.vehicle_type ||
+          vehicle.type ||
+          vehicle.truck_type ||
+          "";
+
+
+        const plate =
+          vehicle.plate_number ||
+          vehicle.license_plate ||
+          vehicle.plate ||
+          "";
+
+
+        if (!from && !to && !type) return;
+
+
+        const details = [];
+
+        if (type) {
+          details.push(
+            esc(short(type, 22))
+          );
+        }
+
+        if (plate) {
+          details.push(
+            "Xe " + esc(maskPlate(plate))
+          );
+        }
+
+
+        items.push(`
+          <div class="vt-live-item vehicle">
+
+            <span class="vt-type">
+              🚚 XE
+            </span>
+
+            <strong>
+              ${esc(short(from || "Xe sẵn sàng", 28))}
+              ${
+                to
+                  ? " → " + esc(short(to, 28))
+                  : ""
+              }
+            </strong>
+
+            ${
+              details.length
+                ? `
+                  <span class="vt-live-separator">•</span>
+                  <span>${details.join(" • ")}</span>
+                `
+                : ""
+            }
+
+          </div>
+        `);
+
+      });
+
+
+      /* ==========================
+         KHÔNG CÓ DỮ LIỆU
+         ========================== */
+
+      if (!items.length) {
+
+        track.innerHTML = "";
+
+        console.log(
+          "VietTruck Live Market: chưa có dữ liệu."
+        );
+
+        return;
+      }
+
+
+      /*
+        Nhân đôi danh sách để animation CSS
+        chạy vòng liên tục, không bị khoảng trống.
+      */
+
+      const html = items.join("");
+
+      track.innerHTML =
+        html + html;
+
+
+      /*
+        Đảm bảo thanh được hiển thị.
+      */
+
+      market.style.display = "flex";
+
+
+      console.log(
+        "VietTruck Live Market:",
+        orders.length,
+        "hàng,",
+        vehicles.length,
+        "xe"
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        "VietTruck Live Market Error:",
+        error
+      );
+
+    }
+
+  }
+
+
+  /* TẢI NGAY */
+  await loadLiveTransport();
+
+
+  /* CẬP NHẬT MỖI 60 GIÂY */
+  setInterval(
+    loadLiveTransport,
+    60000
+  );
+
+});
+</script>
 </body>
 </html>
