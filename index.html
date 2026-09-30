@@ -156,6 +156,142 @@
   }
 }
 </style>
+  <style>
+/* =====================================================
+   FIX DỮ LIỆU VẬN TẢI CHẠY NGANG TRÊN MOBILE
+   ===================================================== */
+
+#vtLiveMarket{
+  display:flex !important;
+  width:100%;
+  overflow:hidden !important;
+  position:relative;
+}
+
+#vtLiveMarket .vt-live-inner{
+  display:flex;
+  align-items:center;
+  width:100%;
+  min-width:0;
+  overflow:hidden;
+}
+
+#vtLiveMarket .vt-live-label{
+  flex:0 0 auto;
+  position:relative;
+  z-index:3;
+  white-space:nowrap;
+}
+
+#vtLiveMarket .vt-live-window{
+  flex:1 1 auto;
+  min-width:0;
+  overflow:hidden !important;
+  position:relative;
+}
+
+#vtLiveTrack{
+  display:flex !important;
+  align-items:center;
+  flex-wrap:nowrap !important;
+  width:max-content !important;
+  min-width:max-content;
+  white-space:nowrap !important;
+  will-change:transform;
+  animation:vtMobileTicker 45s linear infinite !important;
+}
+
+#vtLiveTrack .vt-live-item{
+  flex:0 0 auto !important;
+  display:flex !important;
+  align-items:center;
+  white-space:nowrap !important;
+  margin-right:45px;
+}
+
+@keyframes vtMobileTicker{
+  from{
+    transform:translate3d(0,0,0);
+  }
+
+  to{
+    transform:translate3d(-50%,0,0);
+  }
+}
+
+
+/* =========================
+   ĐIỆN THOẠI
+   ========================= */
+
+@media(max-width:768px){
+
+  #vtLiveMarket{
+    display:flex !important;
+    height:42px;
+    min-height:42px;
+    overflow:hidden !important;
+    margin:0;
+  }
+
+  #vtLiveMarket .vt-live-inner{
+    height:42px;
+    min-height:42px;
+  }
+
+  #vtLiveMarket .vt-live-label{
+    height:42px;
+    display:flex;
+    align-items:center;
+    padding:0 9px;
+    font-size:10px !important;
+    line-height:1.1;
+  }
+
+  #vtLiveMarket .vt-live-window{
+    height:42px;
+    display:flex;
+    align-items:center;
+    overflow:hidden !important;
+  }
+
+  #vtLiveTrack{
+    display:flex !important;
+    width:max-content !important;
+    min-width:max-content !important;
+    flex-wrap:nowrap !important;
+    white-space:nowrap !important;
+
+    animation-name:vtMobileTicker !important;
+    animation-duration:38s !important;
+    animation-timing-function:linear !important;
+    animation-iteration-count:infinite !important;
+    animation-play-state:running !important;
+  }
+
+  #vtLiveTrack .vt-live-item{
+    display:flex !important;
+    flex:0 0 auto !important;
+    align-items:center;
+    width:auto !important;
+    max-width:none !important;
+    white-space:nowrap !important;
+    margin-right:32px !important;
+    font-size:11px !important;
+  }
+
+  #vtLiveTrack .vt-type{
+    font-size:10px !important;
+    margin-right:5px;
+  }
+
+  #vtLiveTrack strong,
+  #vtLiveTrack span{
+    white-space:nowrap !important;
+  }
+
+}
+</style>
 </head>
   
 <body>
