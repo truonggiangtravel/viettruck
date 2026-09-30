@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Đăng xe hộ | VietTrucks</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial,Helvetica,sans-serif;
+    }
+
+    body{
+      background:#f4f7f6;
+      color:#172033;
+      min-height:100vh;
+    }
+
+    header{
+      background:#fff;
+      border-bottom:1px solid #e5e7eb;
+      padding:14px 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      position:sticky;
+      top:0;
+      z-index:20;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .logo{
+      width:44px;
+      height:44px;
+      border-radius:11px;
+      background:#079447;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:26px;
+      font-weight:800;
+    }
+
+    .brand-name{
+      color:#008f45;
+      font-size:21px;
+      font-weight:800;
+    }
+
+    .brand-sub{
+      color:#64748b;
+      font-size:12px;
+      margin-top:2px;
+    }
+
+    .back-btn{
+      text-decoration:none;
+      color:#008f45;
+      border:1px solid #079447;
+      border-radius:10px;
+      padding:10px 17px;
+      font-weight:700;
+      font-size:14px;
+      background:#fff;
+    }
+
+    .back-btn:hover{
+      background:#ecfdf3;
+    }
+
+    main{
+      width:min(1080px,calc(100% - 30px));
+      margin:32px auto 60px;
+    }
+
+    h1{
+      font-size:29px;
+      margin-bottom:8px;
+    }
+
+    .intro{
+      color:#64748b;
+      line-height:1.6;
+      margin-bottom:22px;
+    }
+
+    .privacy{
+      background:#ecfdf3;
+      border:1px solid #86efac;
+      color:#065f46;
+      border-radius:11px;
+      padding:16px 18px;
+      line-height:1.55;
+      margin-bottom:22px;
+      font-size:14px;
+    }
+
+    .alert{
+      display:none;
+      padding:15px 17px;
+      border-radius:10px;
+      margin-bottom:20px;
+      line-height:1.5;
+      font-size:14px;
+    }
+
+    .alert.success{
+      display:block;
+      background:#ecfdf3;
+      border:1px solid #86efac;
+      color:#166534;
+    }
+
+    .alert.error{
+      display:block;
+      background:#fef2f2;
+      border:1px solid #fecaca;
+      color:#b91c1c;
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid #e5e7eb;
+      border-radius:16px;
+      padding:26px;
+      margin-bottom:22px;
+      box-shadow:0 4px 15px rgba(15,23,42,.04);
+    }
+
+    .card-title{
+      font-size:19px;
+      font-weight:800;
+      padding-bottom:13px;
+      border-bottom:1px solid #e5e7eb;
+      margin-bottom:20px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .full{
+      grid-column:1 / -1;
+    }
+
+    label{
+      display:block;
+      font-size:14px;
+      font-weight:700;
+      margin-bottom:7px;
+      color:#1f2937;
+    }
+
+    .required{
+      color:#dc2626;
+    }
+
+    input,
+    select,
+    textarea{
+      width:100%;
+      border:1px solid #cbd5e1;
+      border-radius:9px;
+      padding:12px 13px;
+      font-size:15px;
+      background:#fff;
+      color:#111827;
+      outline:none;
+      transition:.15s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus{
+      border-color:#16a34a;
+      box-shadow:0 0 0 3px rgba(22,163,74,.10);
+    }
+
+    textarea{
+      min-height:100px;
+      resize:vertical;
+    }
+
+    .help{
+      color:#64748b;
+      font-size:12px;
+      line-height:1.45;
+      margin-top:6px;
+    }
+
+    .submit-area{
+      display:flex;
+      justify-content:flex-end;
+      gap:12px;
+      margin-top:6px;
+    }
+
+    button{
+      border:0;
+      border-radius:10px;
+      padding:13px 22px;
+      font-size:15px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .btn-clear{
+      background:#e5e7eb;
+      color:#374151;
+    }
+
+    .btn-submit{
+      background:#079447;
+      color:#fff;
+      min-width:180px;
+    }
+
+    .btn-submit:hover{
+      background:#067a3c;
+    }
+
+    .btn-submit:disabled{
+      opacity:.6;
+      cursor:not-allowed;
+    }
+
+    .loading{
+      display:none;
+      margin-top:13px;
+      color:#64748b;
+      font-size:13px;
+      text-align:right;
+    }
+
+    @media(max-width:760px){
+      header{
+        padding:12px 15px;
+      }
+
+      .brand-sub{
+        display:none;
+      }
+
+      .back-btn{
+        padding:9px 11px;
+        font-size:12px;
+      }
+
+      main{
+        width:min(100% - 20px,1080px);
+        margin-top:20px;
+      }
+
+      h1{
+        font-size:24px;
+      }
+
+      .card{
+        padding:18px;
+      }
+
+      .grid{
+        grid-template-columns:1fr;
+      }
+
+      .full{
+        grid-column:auto;
+      }
+
+      .submit-area{
+        flex-direction:column-reverse;
+      }
+
+      button{
+        width:100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo">V</div>
+
+    <div>
+      <div class="brand-name">VietTrucks</div>
+      <div class="brand-sub">Admin Control Center</div>
+    </div>
+  </div>
+
+  <a href="admin.html" class="back-btn">
+    ← Dashboard Admin
+  </a>
+</header>
+
+<main>
+
+  <h1>🚚 Đăng xe hộ nhà xe</h1>
+
+  <div class="intro">
+    Admin nhập thông tin xe thay cho nhà xe hoặc tài xế chưa có tài khoản.
+    Thông tin liên hệ của chủ xe được lưu phục vụ quản trị và không dùng làm
+    thông tin liên hệ công khai.
+  </div>
+
+  <div class="privacy">
+    🔒 <strong>Bảo vệ thông tin nhà xe:</strong>
+    tên chủ xe, số điện thoại và thông tin doanh nghiệp được lưu trong dữ liệu
+    quản trị. Xe được đánh dấu là do Admin đăng hộ và thông tin liên hệ được
+    đặt ở trạng thái ẩn.
+  </div>
+
+  <div id="alertBox" class="alert"></div>
+
+  <form id="vehicleForm">
+
+    <div class="card">
+
+      <div class="card-title">
+        Thông tin phương tiện
+      </div>
+
+      <div class="grid">
+
+        <div>
+          <label>
+            Biển số xe
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="plate_number"
+            type="text"
+            placeholder="Nhập biển số xe"
+            autocomplete="off"
+            required
+          >
+        </div>
+
+        <div>
+          <label>
+            Loại xe
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="vehicle_type"
+            type="text"
+            placeholder="Ví dụ: xe tải, đầu kéo, mooc..."
+            required
+          >
+        </div>
+
+        <div>
+          <label>
+            Tải trọng / khả năng chở
+          </label>
+
+          <input
+            id="capacity"
+            type="text"
+            placeholder="Nhập tải trọng hoặc khả năng chở"
+          >
+        </div>
+
+        <div>
+          <label>
+            Trạng thái xe
+          </label>
+
+          <select id="status">
+            <option value="available">Sẵn sàng nhận hàng</option>
+            <option value="busy">Đang có chuyến</option>
+            <option value="inactive">Tạm ngừng hoạt động</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        Lịch trình xe
+      </div>
+
+      <div class="grid">
+
+        <div>
+          <label>
+            Vị trí xe hiện tại
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="current_location"
+            type="text"
+            placeholder="Tỉnh/thành hoặc địa điểm xe đang ở"
+            required
+          >
+        </div>
+
+        <div>
+          <label>
+            Điểm đến / hướng xe chạy
+          </label>
+
+          <input
+            id="destination"
+            type="text"
+            placeholder="Nhập điểm đến nếu đã có lịch trình"
+          >
+        </div>
+
+        <div>
+          <label>
+            Tỉnh/thành điểm đến
+          </label>
+
+          <input
+            id="destination_province"
+            type="text"
+            placeholder="Nhập tỉnh/thành"
+          >
+        </div>
+
+        <div>
+          <label>
+            Quận/huyện điểm đến
+          </label>
+
+          <input
+            id="destination_district"
+            type="text"
+            placeholder="Nhập quận/huyện"
+          >
+        </div>
+
+        <div>
+          <label>
+            Ngày xe sẵn sàng
+          </label>
+
+          <input
+            id="available_date"
+            type="date"
+          >
+        </div>
+
+        <div>
+          <label>
+            Sẵn sàng từ thời điểm
+          </label>
+
+          <input
+            id="available_from"
+            type="datetime-local"
+          >
+        </div>
+
+        <div>
+          <label>
+            Sẵn sàng đến thời điểm
+          </label>
+
+          <input
+            id="available_to"
+            type="datetime-local"
+          >
+        </div>
+
+        <div class="full">
+          <label>
+            Mô tả xe / nhu cầu tìm hàng
+          </label>
+
+          <textarea
+            id="description"
+            placeholder="Nhập thêm loại hàng có thể chở, tuyến mong muốn, yêu cầu đặc biệt..."
+          ></textarea>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        Thông tin chủ xe / nhà xe
+      </div>
+
+      <div class="grid">
+
+        <div>
+          <label>
+            Tên chủ xe / người liên hệ
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="owner_name"
+            type="text"
+            placeholder="Nhập tên chủ xe hoặc người liên hệ"
+            required
+          >
+        </div>
+
+        <div>
+          <label>
+            Số điện thoại
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="owner_phone"
+            type="tel"
+            placeholder="Nhập số điện thoại"
+            autocomplete="off"
+            required
+          >
+        </div>
+
+        <div>
+          <label>
+            Công ty / nhà xe
+          </label>
+
+          <input
+            id="owner_company"
+            type="text"
+            placeholder="Nhập tên công ty hoặc nhà xe nếu có"
+          >
+        </div>
+
+        <div>
+          <label>
+            Nguồn khách
+          </label>
+
+          <select id="customer_source">
+            <option value="">-- Chọn nguồn --</option>
+            <option value="Facebook">Facebook</option>
+            <option value="Zalo">Zalo</option>
+            <option value="TikTok">TikTok</option>
+            <option value="Google">Google</option>
+            <option value="GioiThieu">Giới thiệu</option>
+            <option value="TrucTiep">Liên hệ trực tiếp</option>
+            <option value="Khac">Khác</option>
+          </select>
+        </div>
+
+        <div class="full">
+          <label>
+            Ghi chú nội bộ Admin
+          </label>
+
+          <textarea
+            id="admin_note"
+            placeholder="Thông tin này chỉ phục vụ quản trị nội bộ"
+          ></textarea>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="submit-area">
+
+      <button
+        type="button"
+        class="btn-clear"
+        id="clearBtn"
+      >
+        Nhập lại
+      </button>
+
+      <button
+        type="submit"
+        class="btn-submit"
+        id="submitBtn"
+      >
+        Đăng xe hộ
+      </button>
+
+    </div>
+
+    <div id="loading" class="loading">
+      Đang lưu dữ liệu...
+    </div>
+
+  </form>
+
+</main>
+
+
+<script type="module">
+
+  /*
+    ==========================================================
+    VIETTRUCKS - ADMIN ĐĂNG XE HỘ
+    Không chứa dữ liệu demo.
+    Chỉ lưu dữ liệu thực tế do Admin nhập.
+    ==========================================================
+  */
+
+  import {
+    createClient
+  } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+
+  /*
+    ==========================================================
+    SUPABASE CONFIG
+
+    Trang sẽ ưu tiên lấy cấu hình đang dùng chung của VietTrucks
+    từ /assets/js/supabase-config.js nếu file đó export:
+      SUPABASE_URL
+      SUPABASE_ANON_KEY
+
+    Nếu dự án hiện tại dùng kiểu cấu hình khác, phần này sẽ
+    thử một số vị trí cấu hình phổ biến bên dưới.
+    ==========================================================
+  */
+
+  let SUPABASE_URL = "";
+  let SUPABASE_ANON_KEY = "";
+
+
+  async function loadSupabaseConfig(){
+
+    /*
+      Cách 1:
+      thử đọc file cấu hình module đang có của VietTrucks.
+    */
+
+    try{
+
+      const config =
+        await import("./assets/js/supabase-config.js");
+
+      SUPABASE_URL =
+        config.SUPABASE_URL ||
+        config.supabaseUrl ||
+        config.url ||
+        "";
+
+      SUPABASE_ANON_KEY =
+        config.SUPABASE_ANON_KEY ||
+        config.SUPABASE_KEY ||
+        config.supabaseAnonKey ||
+        config.anonKey ||
+        "";
+
+    }catch(error){
+
+      console.warn(
+        "Không đọc được ./assets/js/supabase-config.js",
+        error
+      );
+
+    }
+
+
+    /*
+      Cách 2:
+      kiểm tra biến global nếu website hiện tại đang dùng.
+    */
+
+    SUPABASE_URL =
+      SUPABASE_URL ||
+      window.SUPABASE_URL ||
+      window.supabaseUrl ||
+      "";
+
+    SUPABASE_ANON_KEY =
+      SUPABASE_ANON_KEY ||
+      window.SUPABASE_ANON_KEY ||
+      window.SUPABASE_KEY ||
+      window.supabaseAnonKey ||
+      "";
+
+
+    if(
+      !SUPABASE_URL ||
+      !SUPABASE_ANON_KEY
+    ){
+      throw new Error(
+        "Không tìm thấy cấu hình Supabase của VietTrucks."
+      );
+    }
+
+  }
+
+
+  const form =
+    document.getElementById("vehicleForm");
+
+  const alertBox =
+    document.getElementById("alertBox");
+
+  const submitBtn =
+    document.getElementById("submitBtn");
+
+  const clearBtn =
+    document.getElementById("clearBtn");
+
+  const loading =
+    document.getElementById("loading");
+
+
+  function showMessage(
+    message,
+    type = "error"
+  ){
+
+    alertBox.className =
+      "alert " + type;
+
+    alertBox.textContent =
+      message;
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  }
+
+
+  function clearMessage(){
+
+    alertBox.className =
+      "alert";
+
+    alertBox.textContent =
+      "";
+
+  }
+
+
+  function getValue(id){
+
+    return (
+      document
+        .getElementById(id)
+        ?.value || ""
+    ).trim();
+
+  }
+
+
+  function emptyToNull(value){
+
+    if(
+      value === undefined ||
+      value === null ||
+      value === ""
+    ){
+      return null;
+    }
+
+    return value;
+
+  }
+
+
+  function normalizePlate(value){
+
+    return String(value || "")
+      .trim()
+      .toUpperCase();
+
+  }
+
+
+  function normalizePhone(value){
+
+    return String(value || "")
+      .trim()
+      .replace(/\s+/g,"");
+
+  }
+
+
+  function normalizeDateTime(value){
+
+    if(!value){
+      return null;
+    }
+
+    const date =
+      new Date(value);
+
+    if(
+      Number.isNaN(
+        date.getTime()
+      )
+    ){
+      return null;
+    }
+
+    return date.toISOString();
+
+  }
+
+
+  clearBtn.addEventListener(
+    "click",
+    function(){
+
+      const ok =
+        window.confirm(
+          "Xóa toàn bộ thông tin đang nhập?"
+        );
+
+      if(!ok){
+        return;
+      }
+
+      form.reset();
+
+      clearMessage();
+
+    }
+  );
+
+
+  form.addEventListener(
+    "submit",
+    async function(event){
+
+      event.preventDefault();
+
+      clearMessage();
+
+      submitBtn.disabled = true;
+
+      loading.style.display =
+        "block";
+
+
+      try{
+
+        /*
+          ======================================================
+          1. LOAD SUPABASE
+          ======================================================
+        */
+
+        await loadSupabaseConfig();
+
+
+        const supabaseClient =
+          createClient(
+            SUPABASE_URL,
+            SUPABASE_ANON_KEY
+          );
+
+
+        /*
+          ======================================================
+          2. KIỂM TRA ĐĂNG NHẬP
+          ======================================================
+        */
+
+        const {
+          data:sessionData,
+          error:sessionError
+        } =
+          await supabaseClient
+            .auth
+            .getSession();
+
+
+        if(sessionError){
+          throw sessionError;
+        }
+
+
+        const session =
+          sessionData?.session;
+
+
+        if(!session?.user){
+
+          throw new Error(
+            "Phiên đăng nhập Admin đã hết. Vui lòng đăng nhập lại."
+          );
+
+        }
+
+
+        const user =
+          session.user;
+
+
+        /*
+          ======================================================
+          3. LẤY DỮ LIỆU FORM
+          ======================================================
+        */
+
+        const plate_number =
+          normalizePlate(
+            getValue("plate_number")
+          );
+
+        const vehicle_type =
+          getValue("vehicle_type");
+
+        const capacity =
+          getValue("capacity");
+
+        const current_location =
+          getValue("current_location");
+
+        const destination =
+          getValue("destination");
+
+        const destination_province =
+          getValue("destination_province");
+
+        const destination_district =
+          getValue("destination_district");
+
+        const status =
+          getValue("status") ||
+          "available";
+
+        const available_date =
+          getValue("available_date");
+
+        const available_from =
+          getValue("available_from");
+
+        const available_to =
+          getValue("available_to");
+
+        const description =
+          getValue("description");
+
+        const owner_name =
+          getValue("owner_name");
+
+        const owner_phone =
+          normalizePhone(
+            getValue("owner_phone")
+          );
+
+        const owner_company =
+          getValue("owner_company");
+
+        const customer_source =
+          getValue("customer_source");
+
+        const admin_note =
+          getValue("admin_note");
+
+
+        /*
+          ======================================================
+          4. VALIDATE
+          ======================================================
+        */
+
+        if(!plate_number){
+
+          throw new Error(
+            "Vui lòng nhập biển số xe."
+          );
+
+        }
+
+
+        if(!vehicle_type){
+
+          throw new Error(
+            "Vui lòng nhập loại xe."
+          );
+
+        }
+
+
+        if(!current_location){
+
+          throw new Error(
+            "Vui lòng nhập vị trí hiện tại của xe."
+          );
+
+        }
+
+
+        if(!owner_name){
+
+          throw new Error(
+            "Vui lòng nhập tên chủ xe hoặc người liên hệ."
+          );
+
+        }
+
+
+        if(!owner_phone){
+
+          throw new Error(
+            "Vui lòng nhập số điện thoại chủ xe."
+          );
+
+        }
+
+
+        if(
+          available_from &&
+          available_to
+        ){
+
+          const from =
+            new Date(available_from);
+
+          const to =
+            new Date(available_to);
+
+
+          if(to < from){
+
+            throw new Error(
+              "Thời gian xe sẵn sàng đến phải sau thời gian bắt đầu."
+            );
+
+          }
+
+        }
+
+
+        /*
+          ======================================================
+          5. KIỂM TRA BIỂN SỐ TRÙNG
+
+          Không tạo dữ liệu demo.
+          Nếu biển số đã tồn tại thì yêu cầu Admin kiểm tra lại.
+          ======================================================
+        */
+
+        const {
+          data:existingVehicle,
+          error:checkError
+        } =
+          await supabaseClient
+            .from("vehicles")
+            .select("id")
+            .eq(
+              "plate_number",
+              plate_number
+            )
+            .limit(1);
+
+
+        if(checkError){
+
+          console.warn(
+            "Không kiểm tra được biển số:",
+            checkError
+          );
+
+        }
+
+
+        if(
+          !checkError &&
+          existingVehicle &&
+          existingVehicle.length > 0
+        ){
+
+          throw new Error(
+            "Biển số xe này đã tồn tại trên VietTrucks. Vui lòng kiểm tra lại trước khi đăng."
+          );
+
+        }
+
+
+        /*
+          ======================================================
+          6. PAYLOAD
+
+          Chỉ sử dụng các cột đã xác nhận trong bảng vehicles.
+
+          owner_phone / owner_name:
+          lưu trong cùng bản ghi vehicles theo cấu trúc hiện tại.
+
+          contact_hidden = true:
+          frontend công khai phải tôn trọng cờ này và không hiển thị
+          thông tin liên hệ.
+          ======================================================
+        */
+
+        const vehiclePayload = {
+
+          /*
+            Xe đăng hộ không gán quyền sở hữu cho Admin.
+            user_id để null.
+          */
+
+          user_id:
+            null,
+
+
+          plate_number:
+            plate_number,
+
+
+          vehicle_type:
+            vehicle_type,
+
+
+          capacity:
+            emptyToNull(
+              capacity
+            ),
+
+
+          current_location:
+            current_location,
+
+
+          destination:
+            emptyToNull(
+              destination
+            ),
+
+
+          destination_province:
+            emptyToNull(
+              destination_province
+            ),
+
+
+          destination_district:
+            emptyToNull(
+              destination_district
+            ),
+
+
+          status:
+            status,
+
+
+          available_date:
+            emptyToNull(
+              available_date
+            ),
+
+
+          available_from:
+            normalizeDateTime(
+              available_from
+            ),
+
+
+          available_to:
+            normalizeDateTime(
+              available_to
+            ),
+
+
+          description:
+            emptyToNull(
+              description
+            ),
+
+
+          created_by:
+            user.id,
+
+
+          created_by_role:
+            "admin",
+
+
+          owner_name:
+            owner_name,
+
+
+          owner_phone:
+            owner_phone,
+
+
+          owner_company:
+            emptyToNull(
+              owner_company
+            ),
+
+
+          customer_source:
+            emptyToNull(
+              customer_source
+            ),
+
+
+          admin_note:
+            emptyToNull(
+              admin_note
+            ),
+
+
+          posted_by_admin:
+            true,
+
+
+          contact_hidden:
+            true
+
+        };
+
+
+        /*
+          ======================================================
+          7. INSERT VEHICLE
+          ======================================================
+        */
+
+        const {
+          data:vehicleData,
+          error:vehicleError
+        } =
+          await supabaseClient
+            .from("vehicles")
+            .insert(
+              vehiclePayload
+            )
+            .select("id")
+            .single();
+
+
+        if(vehicleError){
+
+          console.error(
+            "Lỗi tạo xe:",
+            vehicleError
+          );
+
+          throw new Error(
+            "Không đăng được xe: " +
+            vehicleError.message
+          );
+
+        }
+
+
+        if(
+          !vehicleData ||
+          !vehicleData.id
+        ){
+
+          throw new Error(
+            "Xe đã gửi nhưng hệ thống không trả về mã phương tiện."
+          );
+
+        }
+
+
+        /*
+          ======================================================
+          8. THÀNH CÔNG
+          ======================================================
+        */
+
+        form.reset();
+
+
+        showMessage(
+          "Đăng xe hộ thành công. Xe đã được lưu vào hệ thống VietTrucks.",
+          "success"
+        );
+
+
+      }catch(error){
+
+        console.error(
+          "ADMIN ĐĂNG XE HỘ:",
+          error
+        );
+
+
+        showMessage(
+          error?.message ||
+          "Có lỗi xảy ra khi đăng xe."
+        );
+
+
+      }finally{
+
+        submitBtn.disabled =
+          false;
+
+        loading.style.display =
+          "none";
+
+      }
+
+    }
+  );
+
+</script>
+
+</body>
+</html>
