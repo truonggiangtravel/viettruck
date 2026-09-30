@@ -1133,6 +1133,84 @@ body{
   }
 }
 </style>
+    <style>
+/* ===== VIETTRUCKS - CAN THANG HANG GIA + NUT HANH DONG ===== */
+
+/* Khối bên phải của từng đơn */
+.cargo-card,
+.order-card,
+.job-card,
+.cargo-item,
+.order-item,
+.job-item {
+  align-items: center !important;
+}
+
+/* Giá + các nút */
+.card-actions,
+.cargo-actions,
+.order-actions,
+.job-actions,
+.actions {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  margin: 0 !important;
+}
+
+/* Chữ Thỏa thuận */
+.card-actions .price,
+.cargo-actions .price,
+.order-actions .price,
+.job-actions .price,
+.actions .price,
+.price,
+.cargo-price,
+.order-price {
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 8px 0 0 !important;
+  white-space: nowrap !important;
+  line-height: 44px !important;
+}
+
+/* Hai nút */
+.card-actions button,
+.card-actions a,
+.cargo-actions button,
+.cargo-actions a,
+.order-actions button,
+.order-actions a,
+.job-actions button,
+.job-actions a,
+.actions button,
+.actions a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  height: 44px !important;
+  min-height: 44px !important;
+
+  margin: 0 !important;
+  white-space: nowrap !important;
+  vertical-align: middle !important;
+}
+
+/* Desktop */
+@media (min-width: 901px) {
+  .card-actions,
+  .cargo-actions,
+  .order-actions,
+  .job-actions,
+  .actions {
+    min-height: 44px !important;
+  }
+}
+</style>
 </head>
 
 <body>
