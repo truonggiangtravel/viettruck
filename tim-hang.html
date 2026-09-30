@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <link rel="stylesheet" href="mobile.css?v=20260912-4">
 <title>Tìm Hàng Vận Chuyển Cho Xe Tải Toàn Quốc | VietTrucks</title>
 
 <meta name="description" content="Tìm hàng vận chuyển cho xe tải trên VietTrucks. Xem đơn hàng theo tuyến đường, loại hàng và kết nối chủ hàng để nhận chuyến phù hợp.">
-
 <meta name="robots" content="index, follow">
-
 <link rel="canonical" href="https://viettrucks.com/tim-hang.html">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,9 +25,15 @@ html,body{
 }
 
 body{
-    font-family:"Be Vietnam Pro",sans-serif;
+    font-family:"Be Vietnam Pro",Arial,sans-serif;
     background:#f6f8f7;
     color:#13221b;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
 }
 
 a{
@@ -38,8 +41,9 @@ a{
 }
 
 .container-page{
+    width:100%;
     max-width:1180px;
-    margin:auto;
+    margin:0 auto;
     padding:0 20px;
 }
 
@@ -60,7 +64,7 @@ a{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:25px;
+    gap:22px;
 }
 
 .logo{
@@ -68,8 +72,7 @@ a{
     align-items:center;
     gap:10px;
     color:#087b40;
-    position:relative;
-    z-index:1001;
+    flex-shrink:0;
 }
 
 .logo-icon{
@@ -77,11 +80,14 @@ a{
 }
 
 .logo strong{
+    display:block;
     font-size:25px;
+    line-height:1.1;
 }
 
 .logo small{
     display:block;
+    margin-top:2px;
     font-size:11px;
     color:#65736c;
 }
@@ -89,6 +95,7 @@ a{
 .menu{
     display:flex;
     align-items:center;
+    justify-content:center;
     gap:22px;
 }
 
@@ -96,6 +103,7 @@ a{
     color:#17221d;
     font-weight:600;
     font-size:14px;
+    white-space:nowrap;
 }
 
 .menu a:hover,
@@ -103,55 +111,51 @@ a{
     color:#078c4b;
 }
 
-/* =========================
-   NÚT ĐĂNG NHẬP
-========================= */
-
 .nav-buttons{
     display:flex;
     align-items:center;
     gap:10px;
-    position:relative;
-    z-index:99999 !important;
-    pointer-events:auto !important;
+    flex-shrink:0;
 }
 
-.nav-buttons button,
-.nav-buttons a{
+.btn{
     display:inline-flex;
     align-items:center;
     justify-content:center;
+    min-height:44px;
+    padding:0 20px;
     border-radius:8px;
-    padding:12px 20px;
-    font-family:"Be Vietnam Pro",sans-serif;
     font-size:14px;
     font-weight:700;
-    cursor:pointer !important;
-    position:relative;
-    z-index:100000 !important;
-    pointer-events:auto !important;
-    text-decoration:none;
+    cursor:pointer;
+    white-space:nowrap;
 }
 
 .btn-outline{
-    color:#078c4b;
-    background:#ffffff;
     border:1px solid #078c4b;
+    background:#fff;
+    color:#078c4b;
 }
 
 .btn-green{
-    color:#ffffff;
-    background:#078c4b;
     border:1px solid #078c4b;
+    background:#078c4b;
+    color:#fff;
 }
 
-.nav-buttons button:hover,
-.nav-buttons a:hover{
-    opacity:.88;
+.mobile-menu-btn{
+    display:none;
+    width:44px;
+    height:44px;
+    border:1px solid #dce5e0;
+    background:#fff;
+    border-radius:8px;
+    font-size:22px;
+    cursor:pointer;
 }
 
 /* =========================
-   TIÊU ĐỀ
+   PAGE HEAD
 ========================= */
 
 .page-head{
@@ -163,15 +167,16 @@ a{
 .page-head h1{
     margin:0 0 8px;
     font-size:30px;
+    line-height:1.3;
 }
 
 .page-head p{
     margin:0;
-    opacity:.9;
+    opacity:.92;
 }
 
 /* =========================
-   TÌM KIẾM
+   SEARCH
 ========================= */
 
 .search-box{
@@ -190,6 +195,10 @@ a{
     align-items:end;
 }
 
+.field{
+    min-width:0;
+}
+
 .field label{
     display:block;
     font-size:13px;
@@ -204,28 +213,37 @@ a{
     border:1px solid #d9e1dd;
     border-radius:8px;
     padding:0 12px;
-    font-family:inherit;
     background:#fff;
+    color:#17221d;
+    font-size:14px;
+    outline:none;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:#078c4b;
+    box-shadow:0 0 0 3px rgba(7,140,75,.08);
 }
 
 .search-button{
     height:48px;
-    padding:0 25px;
+    padding:0 24px;
     background:#078c4b;
-    color:white;
+    color:#fff;
     border:0;
     border-radius:8px;
     font-weight:700;
     cursor:pointer;
+    white-space:nowrap;
 }
 
 /* =========================
-   NỘI DUNG
+   CONTENT
 ========================= */
 
 .content-layout{
     display:grid;
-    grid-template-columns:240px 1fr;
+    grid-template-columns:240px minmax(0,1fr);
     gap:22px;
     margin-top:24px;
     margin-bottom:50px;
@@ -240,7 +258,8 @@ a{
 }
 
 .filter h3{
-    margin-top:0;
+    margin:0 0 14px;
+    font-size:19px;
 }
 
 .filter-group{
@@ -255,16 +274,28 @@ a{
 }
 
 .filter label{
-    display:block;
-    margin:9px 0;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    margin:12px 0;
     font-size:13px;
     color:#56635d;
+    cursor:pointer;
+}
+
+.filter input[type="checkbox"]{
+    accent-color:#078c4b;
+}
+
+.results-section{
+    min-width:0;
 }
 
 .results-head{
     display:flex;
     justify-content:space-between;
     align-items:center;
+    gap:15px;
     margin-bottom:14px;
 }
 
@@ -276,7 +307,12 @@ a{
 .results-head span{
     font-size:13px;
     color:#6d7772;
+    white-space:nowrap;
 }
+
+/* =========================
+   ORDER CARD
+========================= */
 
 .order-card{
     background:#fff;
@@ -284,29 +320,33 @@ a{
     border-radius:12px;
     padding:20px;
     margin-bottom:14px;
-    display:flex;
-    <div class="nav-buttons" id="navUserButtons">
 
-    <button
-        type="button"
-        class="btn btn-outline"
-        onclick="window.location.href='dang-nhap.html'">
-        Đăng nhập
-    </button>
+    display:grid;
+    grid-template-columns:
+        minmax(0,1fr)
+        150px
+        120px
+        140px;
 
-    <button
-        type="button"
-        class="btn btn-green"
-        onclick="window.location.href='dang-ky.html'">
-        Đăng ký
-    </button>
-    
-</div>
+    align-items:center;
+    column-gap:16px;
+}
+
+.order-main{
+    min-width:0;
+}
 
 .order-route{
-    font-size:18px;
+    font-size:16px;
+    font-weight:600;
+    line-height:1.45;
+    margin-bottom:4px;
+    color:#13221b;
+}
+
+.route-arrow{
+    color:#078c4b;
     font-weight:800;
-    margin-bottom:12px;
 }
 
 .order-info{
@@ -316,31 +356,67 @@ a{
 }
 
 .order-price{
-    min-width:180px;
-    text-align:right;
+    min-width:0;
+    text-align:center;
 }
 
-.order-actions{
+.price{
+    margin:0;
+    color:#078c4b;
+    font-size:20px;
+    font-weight:800;
+    line-height:1.25;
+    white-space:nowrap;
+}
+
+.order-quote,
+.order-receive{
     display:flex;
-    gap:10px;
-    justify-content:flex-end;
     align-items:center;
-    flex-wrap:wrap;
+    justify-content:center;
 }
 
 .quote-btn,
 .receive-btn{
+    position:static;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:44px;
+    margin:0;
+    padding:0 14px;
+    border-radius:7px;
+    font-weight:700;
+    font-size:13px;
+    cursor:pointer;
     white-space:nowrap;
 }
 
+.quote-btn{
+    border:1px solid #078c4b;
+    background:#fff;
+    color:#078c4b;
+}
+
 .receive-btn{
-    border:0;
+    border:1px solid #078c4b;
     background:#078c4b;
     color:#fff;
-    padding:11px 18px;
-    border-radius:8px;
-    font-weight:700;
-    cursor:pointer;
+}
+
+.quote-btn:hover{
+    background:#f0faf5;
+}
+
+.receive-btn:hover{
+    background:#06763f;
+}
+
+.quote-btn:disabled,
+.receive-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
 }
 
 .message-box{
@@ -348,6 +424,7 @@ a{
     padding:25px;
     border-radius:12px;
     border:1px solid #e1e6e4;
+    color:#56635d;
 }
 
 /* =========================
@@ -357,1278 +434,556 @@ a{
 .footer{
     background:#073c27;
     color:#fff;
-    padding:30px 0;
+    padding:32px 20px;
     text-align:center;
 }
 
+.footer strong{
+    display:block;
+    margin-bottom:8px;
+}
+
 .footer p{
-    opacity:.8;
+    margin:5px 0;
+    opacity:.85;
     font-size:13px;
 }
 
 /* =========================
-   MOBILE
+   TABLET
 ========================= */
 
-@media (max-width: 900px) {
+@media(max-width:1050px){
 
-    .menu {
-        display: none;
+    .menu{
+        gap:13px;
     }
 
-    .search-grid {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        width: 100% !important;
-        max-width: 100% !important;
+    .menu a{
+        font-size:12px;
     }
 
-    .content-layout {
-        display: block !important;
-        grid-template-columns: none !important;
-        width: 100% !important;
-        max-width: 100% !important;
+    .order-card{
+        grid-template-columns:
+            minmax(0,1fr)
+            130px
+            105px
+            125px;
+
+        column-gap:10px;
     }
 
-    .content-layout > * {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-    }
-
-    .filter {
-        display: block !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        margin-bottom: 20px !important;
-    }
-
-    .orders,
-    .order-list,
-    .results,
-    .latest-orders,
-    aside {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
+    .quote-btn,
+    .receive-btn{
+        padding:0 10px;
     }
 }
 
-@media(max-width:600px){
+/* =========================
+   MOBILE / TABLET
+========================= */
 
-    html,
-body{
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-    overflow-x:hidden !important;
-}
+@media(max-width:900px){
 
-.container-page,
-.search-box{
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-    box-sizing:border-box !important;
-}
-
-.search-grid{
-    display:grid !important;
-    grid-template-columns:1fr !important;
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-    gap:14px !important;
-}
-
-.search-grid > .field{
-    display:block !important;
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-}
-
-.search-grid input,
-.search-grid select{
-    display:block !important;
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-    height:50px !important;
-    min-height:50px !important;
-    padding:10px 12px !important;
-    font-size:16px !important;
-    line-height:1.2 !important;
-    box-sizing:border-box !important;
-    position:relative !important;
-    z-index:20 !important;
-    pointer-events:auto !important;
-    touch-action:manipulation !important;
-    opacity:1 !important;
-    visibility:visible !important;
-    color:#14231b !important;
-    background:#fff !important;
-    -webkit-text-fill-color:#14231b !important;
-}
-
-.search-grid input:focus{
-    color:#14231b !important;
-    -webkit-text-fill-color:#14231b !important;
-}
     .search-nav{
         flex-wrap:wrap;
         padding-top:12px;
         padding-bottom:12px;
     }
 
-    .search-grid{
-    display:grid !important;
-    grid-template-columns:minmax(0,1fr) !important;
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-    gap:14px !important;
-}
-    .search-grid > .field{
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-}
+    .mobile-menu-btn{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        margin-left:auto;
+    }
 
-.search-grid .field input,
-.search-grid .field select{
-    display:block !important;
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-    box-sizing:border-box !important;
-    height:48px !important;
-    min-height:48px !important;
-    font-size:16px !important;
-    padding:10px 12px !important;
-    pointer-events:auto !important;
-    opacity:1 !important;
-    visibility:visible !important;
-    position:relative !important;
-    z-index:5 !important;
-}
+    .menu{
+        display:none;
+        order:4;
+        width:100%;
+        flex-direction:column;
+        align-items:stretch;
+        gap:0;
+        padding:8px 0;
+        border-top:1px solid #edf0ee;
+    }
+
+    .menu.open{
+        display:flex;
+    }
+
+    .menu a{
+        padding:12px 4px;
+        font-size:14px;
+    }
 
     .nav-buttons{
+        margin-left:auto;
+    }
+
+    .search-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .search-button{
         width:100%;
     }
 
-    .nav-buttons a{
-        flex:1;
+    .content-layout{
+        grid-template-columns:1fr;
+    }
+
+    .filter{
+        width:100%;
     }
 
     .order-card{
-        flex-direction:column;
+        grid-template-columns:minmax(0,1fr) 130px;
+        gap:14px;
+    }
+
+    .order-main{
+        grid-column:1;
+        grid-row:1 / span 2;
+    }
+
+    .order-price{
+        grid-column:2;
+        grid-row:1;
+    }
+
+    .order-quote,
+    .order-receive{
+        grid-column:auto;
+    }
+
+    .order-quote{
+        grid-column:2;
+        grid-row:2;
+    }
+
+    .order-receive{
+        grid-column:2;
+        grid-row:3;
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    .container-page{
+        padding-left:14px;
+        padding-right:14px;
+    }
+
+    .logo strong{
+        font-size:21px;
+    }
+
+    .logo-icon{
+        font-size:29px;
+    }
+
+    .nav-buttons{
+        order:3;
+        width:100%;
+        margin:0;
+    }
+
+    .nav-buttons .btn{
+        flex:1;
+    }
+
+    .mobile-menu-btn{
+        order:2;
+    }
+
+    .menu{
+        order:4;
+    }
+
+    .page-head{
+        padding:28px 0;
+    }
+
+    .page-head h1{
+        font-size:24px;
+    }
+
+    .page-head p{
+        font-size:14px;
+    }
+
+    .search-box{
+        padding:16px;
+        margin-top:16px;
+    }
+
+    .search-grid{
+        grid-template-columns:1fr;
+        gap:14px;
+    }
+
+    .field input,
+    .field select{
+        height:50px;
+        font-size:16px;
+    }
+
+    .content-layout{
+        margin-top:18px;
+        gap:18px;
+    }
+
+    .results-head{
+        flex-wrap:wrap;
+    }
+
+    .order-card{
+        display:block;
+        padding:17px;
+    }
+
+    .order-main,
+    .order-price,
+    .order-quote,
+    .order-receive{
+        width:100%;
     }
 
     .order-price{
         text-align:left;
-    }
-  .order-actions{
-    justify-content:flex-start;
-    margin-top:10px;
-}
-
-.quote-btn,
-.receive-btn{
-    flex:0 0 auto;
-}
-  /* FIX PHẦN NỘI DUNG DƯỚI TRÊN ĐIỆN THOẠI */
-.content-layout{
-    display:block !important;
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-}
-
-.filter{
-    display:block !important;
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-    margin:0 0 20px 0 !important;
-    box-sizing:border-box !important;
-}
-
-.orders{
-    display:block !important;
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-}
-
-.orders-head{
-    width:100% !important;
-    max-width:100% !important;
-}
-
-.filter-group{
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-}
-}
-
-  /* ===== FIX CUOI CUNG TIM HANG MOBILE ===== */
-@media screen and (max-width: 768px) {
-
-    .content-layout{
-        display:flex !important;
-        flex-direction:column !important;
-        align-items:stretch !important;
-        width:100% !important;
-        max-width:100% !important;
-        min-width:0 !important;
-        gap:20px !important;
-        grid-template-columns:none !important;
+        margin-top:14px;
     }
 
-    .content-layout > .filter,
-    .content-layout > div,
-    .content-layout > section,
-    .content-layout > aside{
-        width:100% !important;
-        max-width:100% !important;
-        min-width:0 !important;
-        flex:0 0 100% !important;
-        box-sizing:border-box !important;
+    .price{
+        text-align:left;
+        margin-bottom:10px;
     }
 
-    .filter{
-        width:100% !important;
-        max-width:100% !important;
-        min-width:0 !important;
-        display:block !important;
+    .order-quote,
+    .order-receive{
+        display:inline-flex;
+        width:auto;
+        margin-right:6px;
+        margin-top:6px;
     }
 
-    .orders,
-    .orders-list,
-    .order-list{
-        width:100% !important;
-        max-width:100% !important;
-        min-width:0 !important;
-        display:block !important;
-    }
-
-    .container-page{
-        width:100% !important;
-        max-width:100% !important;
-        padding-left:16px !important;
-        padding-right:16px !important;
-        box-sizing:border-box !important;
-    }
-}
-  /* ===== FIX MOBILE TIM HANG - BO LOC + KET QUA 1 COT ===== */
-@media (max-width: 900px), (hover: none) and (pointer: coarse) {
-
-    .content-layout {
-        display: block !important;
-        grid-template-columns: none !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        margin: 18px 0 30px !important;
-    }
-
-    .content-layout > aside,
-    .content-layout > .filter {
-        display: block !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        height: auto !important;
-        margin: 0 0 20px 0 !important;
-        box-sizing: border-box !important;
-        position: static !important;
-    }
-
-    .content-layout > section {
-        display: block !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        margin: 0 !important;
-        box-sizing: border-box !important;
-    }
-
-    .results-head {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        display: flex !important;
-        flex-wrap: wrap !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        gap: 10px !important;
-    }
-
-    .filter,
-    .filter-group,
-    .filter-group label {
-        max-width: 100% !important;
-        min-width: 0 !important;
-        box-sizing: border-box !important;
-    }
-}
-  /* ===== ORDER CARD FINAL FIX ===== */
-
-.order-card{
-    display:flex !important;
-    justify-content:space-between !important;
-    align-items:flex-start !important;
-    gap:24px !important;
-    width:100% !important;
-}
-
-.order-info{
-    flex:1 1 auto !important;
-    min-width:0 !important;
-}
-
-.order-price{
-    flex:0 0 220px !important;
-    width:220px !important;
-    min-width:220px !important;
-    margin:0 !important;
-    text-align:right !important;
-    display:flex !important;
-    flex-direction:column !important;
-    align-items:flex-end !important;
-}
-
-.order-price .price{
-    margin:0 0 12px 0 !important;
-    padding:0 !important;
-    color:#078c4b !important;
-    font-size:20px !important;
-    font-weight:800 !important;
-    line-height:1.2 !important;
-}
-
-.order-actions{
-    display:flex !important;
-    justify-content:flex-end !important;
-    align-items:center !important;
-    gap:10px !important;
-    width:auto !important;
-    margin:0 !important;
-}
-
-.quote-btn,
-.receive-btn{
-    position:static !important;
-    float:none !important;
-    margin:0 !important;
-    height:44px !important;
-    padding:0 16px !important;
-    border-radius:7px !important;
-    font-weight:700 !important;
-    white-space:nowrap !important;
-    cursor:pointer !important;
-}
-
-.quote-btn{
-    border:1px solid #078c4b !important;
-    background:#fff !important;
-    color:#078c4b !important;
-}
-
-.receive-btn{
-    border:1px solid #078c4b !important;
-    background:#078c4b !important;
-    color:#fff !important;
-}
-
-@media(max-width:600px){
-
-    .order-card{
-        display:block !important;
-    }
-
-    .order-price{
-        width:100% !important;
-        min-width:0 !important;
-        margin-top:16px !important;
-        align-items:flex-start !important;
-        text-align:left !important;
-    }
-
-    .order-price .price{
-        text-align:left !important;
-    }
-
-    .order-actions{
-        width:100% !important;
-        justify-content:flex-start !important;
-        flex-wrap:wrap !important;
-    }
-}
-
-    .order-card{
-        display:block !important;
-        width:100% !important;
-    }
-
-    .order-info{
-        width:100% !important;
-    }
-
-    .order-price{
-        width:100% !important;
-        min-width:0 !important;
-        margin:16px 0 0 0 !important;
-        align-items:flex-start !important;
-        text-align:left !important;
-    }
-
-    .order-price .price{
-        text-align:left !important;
-    }
-
-    .order-actions{
-        justify-content:flex-start !important;
-        flex-wrap:wrap !important;
+    .quote-btn,
+    .receive-btn{
+        width:auto;
+        min-width:115px;
     }
 }
 </style>
-    <style>
-/* ==================================================
-   VIETTRUCK - FIX TIM HANG MOBILE
-   ================================================== */
-
-@media (max-width: 768px) {
-
-  html,
-  body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden !important;
-  }
-
-  /* Khung chính trang tìm hàng */
-  .main-content,
-  .search-content,
-  .content-wrapper,
-  .jobs-layout,
-  .cargo-layout,
-  .market-layout {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    grid-template-columns: 1fr !important;
-  }
-
-  /* Bộ lọc */
-  .filters,
-  .filter,
-  .filter-box,
-  .sidebar,
-  .filter-sidebar {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    margin: 0 0 18px 0 !important;
-  }
-
-  /* Khu vực danh sách hàng */
-  .cargo-list,
-  .orders-list,
-  .results,
-  .result-list,
-  .list-content {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-  }
-
-  /* Card đơn hàng */
-  .cargo-card,
-  .order-card,
-  .job-card,
-  .result-card {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Không cho chữ/card đẩy rộng màn hình */
-  .cargo-card *,
-  .order-card *,
-  .job-card *,
-  .result-card * {
-    max-width: 100%;
-    box-sizing: border-box;
-    overflow-wrap: break-word;
-  }
-
-  /* Các nút trong đơn */
-  .cargo-card button,
-  .cargo-card .btn,
-  .order-card button,
-  .order-card .btn,
-  .job-card button,
-  .job-card .btn {
-    position: static !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-top: 8px !important;
-  }
-}
-</style>
-    <style>
-/* =====================================================
-   VIETTRUCKS - FIX TIM HANG MOBILE FINAL
-   Mobile: Bộ lọc trên - Hàng hóa dưới - full width
-   ===================================================== */
-
-@media (max-width: 900px) {
-
-  html,
-  body {
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: hidden !important;
-  }
-
-  * {
-    box-sizing: border-box !important;
-  }
-
-  /* Khung trang */
-  .container,
-  .container-page,
-  main {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-  }
-
-  /* QUAN TRỌNG: bỏ layout 2 cột desktop */
-  .content-layout {
-    display: flex !important;
-    flex-direction: column !important;
-    grid-template-columns: none !important;
-
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-
-    gap: 16px !important;
-    margin: 0 !important;
-    padding: 12px !important;
-  }
-
-  /* =========================
-     BỘ LỌC
-     ========================= */
-
-  .content-layout > aside.filter,
-  aside.filter,
-  .filter {
-    display: block !important;
-    position: static !important;
-
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-
-    flex: none !important;
-
-    margin: 0 0 16px 0 !important;
-    padding: 18px !important;
-
-    height: auto !important;
-  }
-
-  .filter h3 {
-    margin-top: 0 !important;
-  }
-
-  .filter-group {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  /* =========================
-     KHU VỰC HÀNG HÓA
-     ========================= */
-
-  .content-layout > section,
-  .content-layout > div:not(.filter),
-  .cargo-section,
-  .cargo-content,
-  .cargo-area,
-  .jobs-section,
-  .jobs-content {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-
-    flex: 1 1 100% !important;
-
-    margin: 0 !important;
-  }
-
-  /* Tiêu đề Hàng hóa mới nhất */
-  .section-header,
-  .cargo-header,
-  .jobs-header {
-    width: 100% !important;
-    max-width: 100% !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-
-    gap: 10px !important;
-  }
-
-  .section-header h2,
-  .cargo-header h2,
-  .jobs-header h2 {
-    font-size: 25px !important;
-    line-height: 1.25 !important;
-    margin: 0 !important;
-  }
-
-  /* =========================
-     DANH SÁCH ĐƠN
-     ========================= */
-
-  .cargo-list,
-  .orders-list,
-  .jobs-list,
-  #cargoList,
-  #ordersList {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-
-    gap: 14px !important;
-  }
-
-  /* Mỗi card phải full màn hình */
-  .cargo-card,
-  .order-card,
-  .job-card,
-  .cargo-item,
-  .order-item,
-  .job-item {
-    display: block !important;
-
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-
-    margin: 0 !important;
-    padding: 16px !important;
-
-    overflow: hidden !important;
-  }
-
-  /* Không cho chữ ép card rộng ra */
-  .cargo-card *,
-  .order-card *,
-  .job-card *,
-  .cargo-item *,
-  .order-item *,
-  .job-item * {
-    max-width: 100% !important;
-    overflow-wrap: anywhere !important;
-    word-break: normal !important;
-  }
-
-  /* =========================
-     NÚT BÁO GIÁ / NHẬN CHUYẾN
-     ========================= */
-
-  .card-actions,
-  .cargo-actions,
-  .order-actions,
-  .job-actions,
-  .actions {
-    position: static !important;
-
-    display: flex !important;
-    flex-wrap: wrap !important;
-
-    width: 100% !important;
-    max-width: 100% !important;
-
-    gap: 8px !important;
-    margin-top: 14px !important;
-  }
-
-  .card-actions a,
-  .card-actions button,
-  .cargo-actions a,
-  .cargo-actions button,
-  .order-actions a,
-  .order-actions button,
-  .job-actions a,
-  .job-actions button,
-  .actions a,
-  .actions button {
-    position: static !important;
-
-    flex: 1 1 140px !important;
-
-    width: auto !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-
-    margin: 0 !important;
-  }
-
-}
-
-/* Điện thoại nhỏ */
-@media (max-width: 480px) {
-
-  .content-layout {
-    padding: 10px !important;
-  }
-
-  .filter {
-    padding: 15px !important;
-  }
-
-  .cargo-card,
-  .order-card,
-  .job-card,
-  .cargo-item,
-  .order-item,
-  .job-item {
-    padding: 14px !important;
-  }
-
-  .card-actions,
-  .cargo-actions,
-  .order-actions,
-  .job-actions,
-  .actions {
-    flex-direction: column !important;
-  }
-
-  .card-actions a,
-  .card-actions button,
-  .cargo-actions a,
-  .cargo-actions button,
-  .order-actions a,
-  .order-actions button,
-  .job-actions a,
-  .job-actions button,
-  .actions a,
-  .actions button {
-    width: 100% !important;
-    flex: none !important;
-  }
-}
-</style>
-    <style>
-/* ===== VIETTRUCKS - CAN THANG HANG GIA + NUT HANH DONG ===== */
-
-/* Khối bên phải của từng đơn */
-.cargo-card,
-.order-card,
-.job-card,
-.cargo-item,
-.order-item,
-.job-item {
-  align-items: center !important;
-}
-
-/* Giá + các nút */
-.card-actions,
-.cargo-actions,
-.order-actions,
-.job-actions,
-.actions {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  gap: 10px !important;
-  margin: 0 !important;
-}
-
-/* Chữ Thỏa thuận */
-.card-actions .price,
-.cargo-actions .price,
-.order-actions .price,
-.job-actions .price,
-.actions .price,
-.price,
-.cargo-price,
-.order-price {
-  display: flex !important;
-  align-items: center !important;
-  margin: 0 8px 0 0 !important;
-  white-space: nowrap !important;
-  line-height: 44px !important;
-}
-
-/* Hai nút */
-.card-actions button,
-.card-actions a,
-.cargo-actions button,
-.cargo-actions a,
-.order-actions button,
-.order-actions a,
-.job-actions button,
-.job-actions a,
-.actions button,
-.actions a {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-
-  height: 44px !important;
-  min-height: 44px !important;
-
-  margin: 0 !important;
-  white-space: nowrap !important;
-  vertical-align: middle !important;
-}
-
-/* Desktop */
-@media (min-width: 901px) {
-  .card-actions,
-  .cargo-actions,
-  .order-actions,
-  .job-actions,
-  .actions {
-    min-height: 44px !important;
-  }
-}
-</style>
-    <style>
-.order-actions {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  gap: 10px !important;
-  margin: 0 !important;
-}
-
-.order-actions .price {
-  margin: 0 8px 0 0 !important;
-  padding: 0 !important;
-  white-space: nowrap !important;
-  line-height: 44px !important;
-}
-
-.order-actions .quote-btn,
-.order-actions .receive-btn {
-  margin: 0 !important;
-  height: 44px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  white-space: nowrap !important;
-}
-
-/* Điện thoại */
-@media (max-width: 600px) {
-  .order-actions {
-    width: 100% !important;
-    gap: 7px !important;
-  }
-
-  .order-actions .price {
-    font-size: 16px !important;
-    margin-right: 2px !important;
-  }
-
-  .order-actions .quote-btn,
-  .order-actions .receive-btn {
-    padding: 0 10px !important;
-    font-size: 14px !important;
-  }
-}
-</style>
-    /* =====================================================
-   VIETTRUCK - DANH SACH HANG 4 COT THANG HANG
-   ===================================================== */
-
-/* Mỗi đơn hàng = 4 cột */
-.order-card {
-    display: grid !important;
-
-    grid-template-columns:
-        minmax(0, 1fr)
-        150px
-        120px
-        140px !important;
-
-    align-items: center !important;
-    column-gap: 16px !important;
-
-    position: relative !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-}
-
-/* Cột 2: Giá cước */
-.order-card > .price {
-    position: static !important;
-
-    width: auto !important;
-    min-width: 0 !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    display: flex !important;
-    align-items: center !important;
-
-    font-size: 20px !important;
-    font-weight: 700 !important;
-
-    white-space: nowrap !important;
-}
-
-/* Cột 3 + 4 */
-.order-card > .order-actions {
-    position: static !important;
-
-    display: contents !important;
-
-    width: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-/* Nút Báo giá */
-.order-actions .quote-btn {
-    position: static !important;
-
-    width: 110px !important;
-    height: 44px !important;
-
-    margin: 0 !important;
-    padding: 0 15px !important;
-
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    white-space: nowrap !important;
-}
-
-/* Nút Nhận chuyến */
-.order-actions .receive-btn {
-    position: static !important;
-
-    width: 130px !important;
-    height: 44px !important;
-
-    margin: 0 !important;
-    padding: 0 15px !important;
-
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    white-space: nowrap !important;
-}
-
-/* =====================================================
-   MOBILE
-   ===================================================== */
-
-@media (max-width: 700px) {
-
-    .order-card {
-        display: block !important;
-    }
-
-    .order-card > .price {
-        display: block !important;
-        margin-top: 10px !important;
-    }
-
-    .order-card > .order-actions {
-        display: flex !important;
-
-        flex-direction: row !important;
-        gap: 8px !important;
-
-        margin-top: 10px !important;
-    }
-
-    .order-actions .quote-btn,
-    .order-actions .receive-btn {
-        width: auto !important;
-        flex: 1 1 0 !important;
-    }
-}
 </head>
 
 <body>
 
 <header class="search-header">
+    <div class="container-page search-nav">
 
-<div class="container-page search-nav">
+        <a href="index.html" class="logo">
+            <span class="logo-icon">🚚</span>
+            <div>
+                <strong>VietTruck</strong>
+                <small>Kết nối hàng hóa Việt Nam</small>
+            </div>
+        </a>
 
-<a href="index.html" class="logo">
+        <button
+            type="button"
+            class="mobile-menu-btn"
+            id="mobileMenuBtn"
+            aria-label="Mở menu"
+        >
+            ☰
+        </button>
 
-<span class="logo-icon">🚚</span>
+        <nav class="menu" id="mainMenu">
+            <a href="index.html">Trang chủ</a>
+            <a href="tim-hang.html" class="active">Tìm hàng</a>
+            <a href="tim-xe.html">Tìm xe</a>
+            <a href="dang-hang.html">Đăng hàng</a>
+            <a href="bang-gia.html">Bảng giá</a>
+            <a href="dich-vu.html">Dịch vụ</a>
+            <a href="tin-tuc.html">Tin tức</a>
+            <a href="lien-he.html">Liên hệ</a>
+        </nav>
 
-<div>
-<strong>VietTruck</strong>
-<small>Kết nối hàng hóa Việt Nam</small>
-</div>
+        <div class="nav-buttons" id="navUserButtons">
+            <a href="dang-nhap.html" class="btn btn-outline">
+                Đăng nhập
+            </a>
 
-</a>
+            <a href="dang-ky.html" class="btn btn-green">
+                Đăng ký
+            </a>
+        </div>
 
-<nav class="menu">
-
-<a href="index.html">Trang chủ</a>
-<a href="tim-hang.html" class="active">Tìm hàng</a>
-<a href="tim-xe.html">Tìm xe</a>
-<a href="dang-hang.html">Đăng hàng</a>
-<a href="bang-gia.html">Bảng giá</a>
-<a href="dich-vu.html">Dịch vụ</a>
-<a href="tin-tuc.html">Tin tức</a>
-<a href="lien-he.html">Liên hệ</a>
-
-</nav>
-
-<div class="nav-buttons" id="navUserButtons">
-
-<a href="dang-nhap.html" class="btn btn-outline">
-Đăng nhập
-</a>
-
-<a href="dang-ky.html" class="btn btn-green">
-Đăng ký
-</a>
-
-</div>
-
-</div>
-
+    </div>
 </header>
 
 
 <section class="page-head">
-
-<div class="container-page">
-
-<h1>Tìm hàng vận chuyển cho xe tải toàn quốc</h1>
-
-<p>
-Hàng nghìn đơn hàng đang chờ tài xế trên toàn quốc
-</p>
-
-</div>
-
+    <div class="container-page">
+        <h1>Tìm hàng vận chuyển cho xe tải toàn quốc</h1>
+        <p>Tìm các đơn hàng phù hợp với tuyến đường và phương tiện của bạn.</p>
+    </div>
 </section>
 
 
 <main class="container-page">
 
-<section class="search-box">
+    <section class="search-box">
 
-<div class="search-grid">
+        <div class="search-grid">
 
-<div class="field">
+            <div class="field">
+                <label for="pickupSearch">Nơi đi</label>
+                <input
+                    type="text"
+                    id="pickupSearch"
+                    placeholder="Tỉnh / Thành phố"
+                >
+            </div>
 
-<label>Nơi đi</label>
+            <div class="field">
+                <label for="deliverySearch">Nơi đến</label>
+                <input
+                    type="text"
+                    id="deliverySearch"
+                    placeholder="Tỉnh / Thành phố"
+                >
+            </div>
 
-<input
-type="text"
-id="pickupSearch"
-placeholder="Tỉnh / Thành phố"
->
+            <div class="field">
+                <label for="cargoSearch">Loại hàng</label>
 
-</div>
+                <select id="cargoSearch">
+                    <option value="">Tất cả loại hàng</option>
+                    <option value="Hàng tiêu dùng">Hàng tiêu dùng</option>
+                    <option value="Máy móc">Máy móc</option>
+                    <option value="Nông sản">Nông sản</option>
+                    <option value="Vật liệu xây dựng">Vật liệu xây dựng</option>
+                    <option value="Điện tử">Điện tử</option>
+                </select>
+            </div>
 
+            <div class="field">
+                <label for="dateSearch">Ngày vận chuyển</label>
 
-<div class="field">
+                <input
+                    type="date"
+                    id="dateSearch"
+                >
+            </div>
 
-<label>Nơi đến</label>
+            <button
+                type="button"
+                class="search-button"
+                id="searchButton"
+            >
+                🔍 Tìm hàng
+            </button>
 
-<input
-type="text"
-id="deliverySearch"
-placeholder="Tỉnh / Thành phố"
->
+        </div>
 
-</div>
-
-
-<div class="field">
-
-<label>Loại hàng</label>
-
-<select id="cargoSearch">
-
-<option value="">Tất cả loại hàng</option>
-<option>Hàng tiêu dùng</option>
-<option>Máy móc</option>
-<option>Nông sản</option>
-<option>Vật liệu xây dựng</option>
-<option>Điện tử</option>
-
-</select>
-
-</div>
-
-
-<div class="field">
-
-<label>Ngày vận chuyển</label>
-
-<input
-type="date"
-id="dateSearch"
->
-
-</div>
+    </section>
 
 
-<button
-type="button"
-class="search-button"
-id="searchButton"
->
+    <div class="content-layout">
 
-🔍 Tìm hàng
+        <aside class="filter">
 
-</button>
+            <h3>Bộ lọc</h3>
 
-</div>
+            <div class="filter-group">
 
-</section>
+                <strong>Trọng lượng</strong>
 
+                <label>
+                    <input
+                        type="checkbox"
+                        class="weight-filter"
+                        value="under1"
+                    >
+                    Dưới 1 tấn
+                </label>
 
-<div class="content-layout">
+                <label>
+                    <input
+                        type="checkbox"
+                        class="weight-filter"
+                        value="1to5"
+                    >
+                    1 – 5 tấn
+                </label>
 
-<aside class="filter">
+                <label>
+                    <input
+                        type="checkbox"
+                        class="weight-filter"
+                        value="5to10"
+                    >
+                    5 – 10 tấn
+                </label>
 
-<h3>Bộ lọc</h3>
+                <label>
+                    <input
+                        type="checkbox"
+                        class="weight-filter"
+                        value="over10"
+                    >
+                    Trên 10 tấn
+                </label>
 
-<div class="filter-group">
-
-<strong>Trọng lượng</strong>
-
-<label>
-<input type="checkbox">
-Dưới 1 tấn
-</label>
-
-<label>
-<input type="checkbox">
-1 – 5 tấn
-</label>
-
-<label>
-<input type="checkbox">
-5 – 10 tấn
-</label>
-
-<label>
-<input type="checkbox">
-Trên 10 tấn
-</label>
-
-</div>
-
-
-<div class="filter-group">
-
-<strong>Loại xe yêu cầu</strong>
-
-<label>
-<input type="checkbox">
-Xe tải thùng
-</label>
-
-<label>
-<input type="checkbox">
-Xe container
-</label>
-
-<label>
-<input type="checkbox">
-Xe lạnh
-</label>
-
-<label>
-<input type="checkbox">
-Xe đầu kéo
-</label>
-
-</div>
-
-</aside>
+            </div>
 
 
-<section>
+            <div class="filter-group">
 
-<div class="results-head">
+                <strong>Loại xe yêu cầu</strong>
 
-<h2>Hàng hóa mới nhất</h2>
+                <label>
+                    <input
+                        type="checkbox"
+                        class="vehicle-filter"
+                        value="Xe tải thùng"
+                    >
+                    Xe tải thùng
+                </label>
 
-<span id="orderCount">
-Đang tải...
-</span>
+                <label>
+                    <input
+                        type="checkbox"
+                        class="vehicle-filter"
+                        value="Xe container"
+                    >
+                    Xe container
+                </label>
 
-</div>
+                <label>
+                    <input
+                        type="checkbox"
+                        class="vehicle-filter"
+                        value="Xe lạnh"
+                    >
+                    Xe lạnh
+                </label>
 
-<div id="orders">
+                <label>
+                    <input
+                        type="checkbox"
+                        class="vehicle-filter"
+                        value="Xe đầu kéo"
+                    >
+                    Xe đầu kéo
+                </label>
 
-<div class="message-box">
-Đang tải danh sách hàng...
-</div>
+            </div>
 
-</div>
-
-</section>
-
-</div>
+        </aside>
 
 
-</div>
+        <section class="results-section">
 
+            <div class="results-head">
+                <h2>Hàng hóa mới nhất</h2>
+
+                <span id="orderCount">
+                    Đang tải...
+                </span>
+            </div>
+
+
+            <div id="orders">
+
+                <div class="message-box">
+                    Đang tải danh sách hàng...
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+    <strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+
+    <p>
+        CÔNG TY TNHH ĐẦU TƯ THƯƠNG MẠI DỊCH VỤ TRƯỜNG GIANG
+    </p>
+
+    <p>
+        Hotline: 0388134999 - 0898877111
+    </p>
+
+    <p>
+        © 2026 VietTrucks.com
+    </p>
 </footer>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="supabase-config.js"></script>
 <script src="auth.js"></script>
 
 <script>
 const supabaseClient = window.supabaseClient;
 
-
 const navUserButtons =
-document.getElementById("navUserButtons");
+    document.getElementById("navUserButtons");
 
 const orderContainer =
-document.getElementById("orders");
+    document.getElementById("orders");
 
 const orderCount =
-document.getElementById("orderCount");
+    document.getElementById("orderCount");
+
+const pickupSearch =
+    document.getElementById("pickupSearch");
+
+const deliverySearch =
+    document.getElementById("deliverySearch");
+
+const cargoSearch =
+    document.getElementById("cargoSearch");
+
+const dateSearch =
+    document.getElementById("dateSearch");
+
+let allOrders = [];
 
 
-/* ====================================
-   CẬP NHẬT MENU ĐĂNG NHẬP
-==================================== */
+/* ================================
+   MOBILE MENU
+================================ */
+
+const mobileMenuBtn =
+    document.getElementById("mobileMenuBtn");
+
+const mainMenu =
+    document.getElementById("mainMenu");
+
+mobileMenuBtn.addEventListener("click",function(){
+
+    mainMenu.classList.toggle("open");
+
+});
+
+
+/* ================================
+   MENU TÀI KHOẢN
+================================ */
 
 function updateUserMenu(session){
 
@@ -1638,53 +993,47 @@ function updateUserMenu(session){
 
     if(session){
 
-    navUserButtons.innerHTML = `
+        navUserButtons.innerHTML = `
+            <a
+                href="dashboard.html"
+                class="btn btn-outline"
+            >
+                Dashboard
+            </a>
 
-        <button
-            type="button"
-            class="btn btn-outline"
-            onclick="window.location.href='dashboard.html'">
-            Dashboard
-        </button>
-
-        <button
-            type="button"
-            class="btn btn-green"
-            onclick="window.location.href='tai-khoan.html'">
-            Tài khoản
-        </button>
-
-    `;
-
-
+            <a
+                href="tai-khoan.html"
+                class="btn btn-green"
+            >
+                Tài khoản
+            </a>
+        `;
 
     }else{
 
         navUserButtons.innerHTML = `
+            <a
+                href="dang-nhap.html"
+                class="btn btn-outline"
+            >
+                Đăng nhập
+            </a>
 
-    <button
-        type="button"
-        class="btn btn-outline"
-        onclick="window.location.href='dang-nhap.html'">
-        Đăng nhập
-    </button>
+            <a
+                href="dang-ky.html"
+                class="btn btn-green"
+            >
+                Đăng ký
+            </a>
+        `;
 
-    <button
-        type="button"
-        class="btn btn-green"
-        onclick="window.location.href='dang-ky.html'">
-        Đăng ký
-    </button>
-
-`;
-       
     }
 }
 
 
-/* ====================================
+/* ================================
    KIỂM TRA ĐĂNG NHẬP
-==================================== */
+================================ */
 
 async function checkLogin(){
 
@@ -1695,7 +1044,6 @@ async function checkLogin(){
             error
         } =
         await supabaseClient.auth.getSession();
-
 
         if(error){
 
@@ -1709,119 +1057,290 @@ async function checkLogin(){
             return;
         }
 
-
-        updateUserMenu(
-            data.session
-        );
-
+        updateUserMenu(data.session);
 
     }catch(error){
 
         console.error(error);
 
         updateUserMenu(null);
-
     }
-
 }
 
 
-/* ====================================
-   THEO DÕI THAY ĐỔI ĐĂNG NHẬP
-==================================== */
+/* ================================
+   THEO DÕI AUTH
+================================ */
 
 supabaseClient.auth.onAuthStateChange(
-function(event,session){
+    function(event,session){
 
-    console.log(
-        "Auth:",
-        event
-    );
+        console.log(
+            "Auth:",
+            event
+        );
 
-    updateUserMenu(session);
+        updateUserMenu(session);
+    }
+);
 
-});
 
-
-/* ====================================
-   CHỐNG CHÈN HTML
-==================================== */
+/* ================================
+   ESCAPE HTML
+================================ */
 
 function escapeHTML(value){
 
-    return String(
-        value ?? ""
-    )
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
 }
 
 
-/* ====================================
-   ĐỊNH DẠNG GIÁ
-==================================== */
+/* ================================
+   CHUẨN HÓA TEXT
+================================ */
+
+function normalizeText(value){
+
+    return String(value || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"")
+        .trim();
+}
+
+
+/* ================================
+   GIÁ
+================================ */
 
 function formatPrice(value){
 
     const number =
-    Number(value);
+        Number(value);
 
     if(
         !Number.isFinite(number) ||
         number <= 0
     ){
-
         return "Thỏa thuận";
-
     }
 
     return new Intl.NumberFormat(
         "vi-VN"
-    ).format(number)
-    + " đ";
-
+    ).format(number) + " đ";
 }
 
 
-/* ====================================
-   ĐỊNH DẠNG NGÀY
-==================================== */
+/* ================================
+   NGÀY
+================================ */
 
 function formatDate(value){
 
     if(!value){
-
         return "Chưa xác định";
-
     }
 
-    const date =
-    new Date(value);
+    const parts =
+        String(value)
+        .substring(0,10)
+        .split("-");
 
-    if(
-        Number.isNaN(
-            date.getTime()
-        )
-    ){
+    if(parts.length === 3){
 
-        return escapeHTML(value);
-
+        return (
+            Number(parts[2]) +
+            "/" +
+            Number(parts[1]) +
+            "/" +
+            parts[0]
+        );
     }
 
-    return date.toLocaleDateString(
-        "vi-VN"
-    );
-
+    return escapeHTML(value);
 }
 
 
-/* ====================================
-   HIỂN THỊ ĐƠN HÀNG
-==================================== */
+/* ================================
+   KIỂM TRA TRỌNG LƯỢNG
+================================ */
+
+function matchWeight(order){
+
+    const checked =
+        Array.from(
+            document.querySelectorAll(
+                ".weight-filter:checked"
+            )
+        )
+        .map(item => item.value);
+
+    if(!checked.length){
+        return true;
+    }
+
+    const weight =
+        Number(order.weight);
+
+    if(!Number.isFinite(weight)){
+        return false;
+    }
+
+    return checked.some(function(type){
+
+        if(type === "under1"){
+            return weight < 1;
+        }
+
+        if(type === "1to5"){
+            return weight >= 1 && weight <= 5;
+        }
+
+        if(type === "5to10"){
+            return weight > 5 && weight <= 10;
+        }
+
+        if(type === "over10"){
+            return weight > 10;
+        }
+
+        return false;
+    });
+}
+
+
+/* ================================
+   KIỂM TRA LOẠI XE
+================================ */
+
+function matchVehicle(order){
+
+    const checked =
+        Array.from(
+            document.querySelectorAll(
+                ".vehicle-filter:checked"
+            )
+        )
+        .map(
+            item =>
+            normalizeText(item.value)
+        );
+
+    if(!checked.length){
+        return true;
+    }
+
+    const vehicle =
+        normalizeText(
+            order.vehicle_type
+        );
+
+    return checked.some(
+        type =>
+        vehicle.includes(type)
+    );
+}
+
+
+/* ================================
+   LỌC DỮ LIỆU
+================================ */
+
+function filterOrders(){
+
+    const pickup =
+        normalizeText(
+            pickupSearch.value
+        );
+
+    const delivery =
+        normalizeText(
+            deliverySearch.value
+        );
+
+    const cargo =
+        normalizeText(
+            cargoSearch.value
+        );
+
+    const selectedDate =
+        dateSearch.value;
+
+    const filtered =
+        allOrders.filter(function(order){
+
+            const pickupValue =
+                normalizeText(
+                    order.pickup_location
+                );
+
+            const deliveryValue =
+                normalizeText(
+                    order.delivery_location
+                );
+
+            const cargoValue =
+                normalizeText(
+                    order.cargo_type
+                );
+
+            const orderDate =
+                order.pickup_date
+                ? String(order.pickup_date)
+                    .substring(0,10)
+                : "";
+
+            if(
+                pickup &&
+                !pickupValue.includes(pickup)
+            ){
+                return false;
+            }
+
+            if(
+                delivery &&
+                !deliveryValue.includes(delivery)
+            ){
+                return false;
+            }
+
+            if(
+                cargo &&
+                !cargoValue.includes(cargo)
+            ){
+                return false;
+            }
+
+            if(
+                selectedDate &&
+                orderDate !== selectedDate
+            ){
+                return false;
+            }
+
+            if(!matchWeight(order)){
+                return false;
+            }
+
+            if(!matchVehicle(order)){
+                return false;
+            }
+
+            return true;
+        });
+
+    renderOrders(filtered);
+}
+
+
+/* ================================
+   RENDER ORDERS
+================================ */
 
 function renderOrders(orders){
 
@@ -1830,49 +1349,71 @@ function renderOrders(orders){
     orderCount.textContent =
         orders.length + " đơn hàng";
 
-    if (!orders.length) {
+    if(!orders.length){
 
         orderContainer.innerHTML = `
             <div class="message-box">
-                <strong>Hiện chưa có đơn hàng.</strong>
+                <strong>
+                    Không tìm thấy đơn hàng phù hợp.
+                </strong>
                 <br><br>
-                Các đơn mới đăng sẽ xuất hiện tại đây.
+                Hãy thử thay đổi điều kiện tìm kiếm hoặc bộ lọc.
             </div>
         `;
 
         return;
     }
 
+
     orders.forEach(function(order){
 
-        const card = document.createElement("div");
-        card.className = "order-card";
+        const card =
+            document.createElement("div");
 
-        const pickup = escapeHTML(
-            order.pickup_location || "Chưa xác định"
-        );
+        card.className =
+            "order-card";
 
-        const delivery = escapeHTML(
-            order.delivery_location || "Chưa xác định"
-        );
 
-        const cargo = escapeHTML(
-            order.cargo_type || "Hàng hóa"
-        );
+        const pickup =
+            escapeHTML(
+                order.pickup_location ||
+                "Chưa xác định"
+            );
 
-        const weight = escapeHTML(
-            order.weight ?? "Chưa xác định"
-        );
+        const delivery =
+            escapeHTML(
+                order.delivery_location ||
+                "Chưa xác định"
+            );
 
-        const vehicle = escapeHTML(
-            order.vehicle_type || "Không yêu cầu"
-        );
+        const cargo =
+            escapeHTML(
+                order.cargo_type ||
+                "Hàng hóa"
+            );
+
+        const weight =
+            escapeHTML(
+                order.weight ??
+                "Chưa xác định"
+            );
+
+        const vehicle =
+            escapeHTML(
+                order.vehicle_type ||
+                "Không yêu cầu"
+            );
+
 
         card.innerHTML = `
-            <div>
+
+            <div class="order-main">
+
                 <div class="order-route">
                     ${pickup}
-                    <span style="color:#078c4b">→</span>
+                    <span class="route-arrow">
+                        →
+                    </span>
                     ${delivery}
                 </div>
 
@@ -1880,39 +1421,56 @@ function renderOrders(orders){
                     📦 ${cargo}<br>
                     ⚖️ Trọng lượng: ${weight}<br>
                     🚚 Loại xe: ${vehicle}<br>
-                    📅 Ngày lấy: ${formatDate(order.pickup_date)}
+                    📅 Ngày lấy:
+                    ${formatDate(order.pickup_date)}
                 </div>
+
             </div>
+
 
             <div class="order-price">
 
-    <div class="order-actions">
-  <div class="price">
-    ${formatPrice(order.price)}
-  </div>
+                <div class="price">
+                    ${formatPrice(order.price)}
+                </div>
 
-  <button
-    type="button"
-    class="quote-btn"
-  >
-    Báo giá
-  </button>
+            </div>
 
-  <button
-    type="button"
-    class="receive-btn"
-  >
-    Nhận chuyến
-  </button>
-</div>
-</div>
+
+            <div class="order-quote">
+
+                <button
+                    type="button"
+                    class="quote-btn"
+                >
+                    Báo giá
+                </button>
+
+            </div>
+
+
+            <div class="order-receive">
+
+                <button
+                    type="button"
+                    class="receive-btn"
+                >
+                    Nhận chuyến
+                </button>
+
+            </div>
         `;
 
+
         const quoteButton =
-            card.querySelector(".quote-btn");
+            card.querySelector(
+                ".quote-btn"
+            );
 
         const receiveButton =
-            card.querySelector(".receive-btn");
+            card.querySelector(
+                ".receive-btn"
+            );
 
 
         /* =========================
@@ -1923,38 +1481,23 @@ function renderOrders(orders){
             "click",
             async function(){
 
-                const priceInput = prompt(
-                    "Nhập giá vận chuyển bạn muốn báo (VNĐ):"
-                );
-
-                if (priceInput === null) return;
-
-                const price = Number(
-                    priceInput.replace(/[^\d]/g, "")
-                );
-
-                if (!price || price <= 0) {
-                    alert("Giá báo không hợp lệ.");
-                    return;
-                }
-
-                const message =
-                    prompt(
-                        "Ghi chú cho chủ hàng (không bắt buộc):"
-                    ) || null;
-
-                quoteButton.disabled = true;
-                quoteButton.textContent = "Đang gửi...";
-
-                try {
+                try{
 
                     const {
-                        data: { session },
-                        error: sessionError
+                        data:{
+                            session
+                        },
+                        error:sessionError
                     } =
-                    await supabaseClient.auth.getSession();
+                    await supabaseClient
+                        .auth
+                        .getSession();
 
-                    if (sessionError || !session) {
+
+                    if(
+                        sessionError ||
+                        !session
+                    ){
 
                         alert(
                             "Bạn cần đăng nhập để báo giá."
@@ -1966,62 +1509,134 @@ function renderOrders(orders){
                         return;
                     }
 
-                    if (
+
+                    if(
                         session.user.id ===
                         order.user_id
-                    ) {
+                    ){
 
                         alert(
                             "Bạn không thể tự báo giá cho đơn hàng của mình."
                         );
 
-                        quoteButton.disabled = false;
-                        quoteButton.textContent = "Báo giá";
+                        return;
+                    }
+
+
+                    const priceInput =
+                        prompt(
+                            "Nhập giá vận chuyển bạn muốn báo (VNĐ):"
+                        );
+
+
+                    if(
+                        priceInput === null
+                    ){
+                        return;
+                    }
+
+
+                    const price =
+                        Number(
+                            String(priceInput)
+                            .replace(/[^\d]/g,"")
+                        );
+
+
+                    if(
+                        !price ||
+                        price <= 0
+                    ){
+
+                        alert(
+                            "Giá báo không hợp lệ."
+                        );
 
                         return;
                     }
 
-                    const { error } =
-                        await supabaseClient
-                            .from("quotes")
-                            .insert({
-                                order_id: order.id,
-                                user_id: session.user.id,
-                                price: price,
-                                message: message,
-                                status: "pending"
-                            });
 
-                    if (error) {
+                    const message =
+                        prompt(
+                            "Ghi chú cho chủ hàng (không bắt buộc):"
+                        ) || null;
+
+
+                    quoteButton.disabled =
+                        true;
+
+                    quoteButton.textContent =
+                        "Đang gửi...";
+
+
+                    const {
+                        error
+                    } =
+                    await supabaseClient
+                        .from("quotes")
+                        .insert({
+                            order_id:
+                                order.id,
+
+                            user_id:
+                                session.user.id,
+
+                            price:
+                                price,
+
+                            message:
+                                message,
+
+                            status:
+                                "pending"
+                        });
+
+
+                    if(error){
 
                         console.error(
                             "Lỗi gửi báo giá:",
                             error
                         );
 
-                        if (error.code === "23505") {
+
+                        if(
+                            error.code ===
+                            "23505"
+                        ){
+
                             alert(
                                 "Bạn đã gửi báo giá cho đơn hàng này rồi."
                             );
-                        } else {
+
+                        }else{
+
                             alert(
                                 "Không thể gửi báo giá: " +
                                 error.message
                             );
                         }
 
-                        quoteButton.disabled = false;
-                        quoteButton.textContent = "Báo giá";
+
+                        quoteButton.disabled =
+                            false;
+
+                        quoteButton.textContent =
+                            "Báo giá";
 
                         return;
                     }
 
-                    alert("Gửi báo giá thành công!");
+
+                    alert(
+                        "Gửi báo giá thành công!"
+                    );
 
                     quoteButton.textContent =
                         "Đã báo giá";
 
-                } catch(error) {
+
+                }catch(error){
 
                     console.error(error);
 
@@ -2029,8 +1644,11 @@ function renderOrders(orders){
                         "Có lỗi khi gửi báo giá."
                     );
 
-                    quoteButton.disabled = false;
-                    quoteButton.textContent = "Báo giá";
+                    quoteButton.disabled =
+                        false;
+
+                    quoteButton.textContent =
+                        "Báo giá";
                 }
             }
         );
@@ -2044,27 +1662,81 @@ function renderOrders(orders){
             "click",
             async function(){
 
-                const ok = confirm(
-                    "Bạn xác nhận nhận chuyến hàng này?"
-                );
+                try{
 
-                if (!ok) return;
+                    const {
+                        data:{
+                            session
+                        },
+                        error:sessionError
+                    } =
+                    await supabaseClient
+                        .auth
+                        .getSession();
 
-                receiveButton.disabled = true;
-                receiveButton.textContent =
-                    "Đang nhận chuyến...";
 
-                try {
+                    if(
+                        sessionError ||
+                        !session
+                    ){
 
-                    const { data, error } =
-                        await supabaseClient.rpc(
+                        alert(
+                            "Bạn cần đăng nhập để nhận chuyến."
+                        );
+
+                        window.location.href =
+                            "dang-nhap.html";
+
+                        return;
+                    }
+
+
+                    if(
+                        session.user.id ===
+                        order.user_id
+                    ){
+
+                        alert(
+                            "Bạn không thể tự nhận đơn hàng của mình."
+                        );
+
+                        return;
+                    }
+
+
+                    const ok =
+                        confirm(
+                            "Bạn xác nhận nhận chuyến hàng này?"
+                        );
+
+
+                    if(!ok){
+                        return;
+                    }
+
+
+                    receiveButton.disabled =
+                        true;
+
+                    receiveButton.textContent =
+                        "Đang nhận...";
+
+
+                    const {
+                        data,
+                        error
+                    } =
+                    await supabaseClient
+                        .rpc(
                             "accept_order",
                             {
-                                p_order_id: order.id
+                                p_order_id:
+                                    order.id
                             }
                         );
 
-                    if (error) {
+
+                    if(error){
 
                         console.error(
                             "Lỗi nhận chuyến:",
@@ -2076,14 +1748,17 @@ function renderOrders(orders){
                             error.message
                         );
 
-                        receiveButton.disabled = false;
+                        receiveButton.disabled =
+                            false;
+
                         receiveButton.textContent =
                             "Nhận chuyến";
 
                         return;
                     }
 
-                    if (data !== true) {
+
+                    if(data !== true){
 
                         alert(
                             "Đơn hàng này đã được người khác nhận hoặc không còn khả dụng."
@@ -2094,13 +1769,16 @@ function renderOrders(orders){
                         return;
                     }
 
+
                     alert(
                         "Nhận chuyến thành công!"
                     );
 
+
                     await loadOrders();
 
-                } catch(error) {
+
+                }catch(error){
 
                     console.error(error);
 
@@ -2108,7 +1786,9 @@ function renderOrders(orders){
                         "Có lỗi xảy ra khi nhận chuyến."
                     );
 
-                    receiveButton.disabled = false;
+                    receiveButton.disabled =
+                        false;
+
                     receiveButton.textContent =
                         "Nhận chuyến";
                 }
@@ -2116,85 +1796,180 @@ function renderOrders(orders){
         );
 
 
-        orderContainer.appendChild(card);
-
+        orderContainer.appendChild(
+            card
+        );
     });
 }
 
-/* ====================================
-   TẢI ĐƠN HÀNG
-==================================== */
+
+/* ================================
+   LOAD ORDERS
+================================ */
 
 async function loadOrders(){
 
-  orderContainer.innerHTML = `
-    <div class="message-box">
-      Đang tải danh sách hàng...
-    </div>
-  `;
+    orderContainer.innerHTML = `
+        <div class="message-box">
+            Đang tải danh sách hàng...
+        </div>
+    `;
 
-  
-  try {
+    orderCount.textContent =
+        "Đang tải...";
 
-    const {
-      data,
-      error
-    } = await supabaseClient
-    .from("orders")
-.select("*")
-.eq("status", "pending")
-.is("accepted_by", null)
-.order("created_at", {
-  ascending: false
-});
 
-    if (error) {
-    console.error("Lỗi tải đơn hàng:", error);
-    renderOrders([]);
-    orderCount.textContent = "0 đơn hàng";
-    return;
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .from("orders")
+            .select("*")
+            .eq(
+                "status",
+                "pending"
+            )
+            .is(
+                "accepted_by",
+                null
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Lỗi tải đơn hàng:",
+                error
+            );
+
+            allOrders = [];
+
+            orderContainer.innerHTML = `
+                <div class="message-box">
+                    Không thể tải danh sách hàng.
+                    Vui lòng thử lại sau.
+                </div>
+            `;
+
+            orderCount.textContent =
+                "0 đơn hàng";
+
+            return;
+        }
+
+
+        allOrders =
+            Array.isArray(data)
+            ? data
+            : [];
+
+
+        filterOrders();
+
+
+    }catch(error){
+
+        console.error(
+            "Không kết nối được Supabase:",
+            error
+        );
+
+        allOrders = [];
+
+        orderContainer.innerHTML = `
+            <div class="message-box">
+                Không thể kết nối dữ liệu.
+                Vui lòng tải lại trang.
+            </div>
+        `;
+
+        orderCount.textContent =
+            "0 đơn hàng";
+    }
 }
 
-    if (data && data.length > 0) {
-    renderOrders(data);
-    orderCount.textContent = data.length + " đơn hàng";
-} else {
-    renderOrders([]);
-    orderCount.textContent = "0 đơn hàng";
-}
-  } catch(error) {
-    console.error("Không kết nối được Supabase:", error);
-    renderOrders([]);
-    orderCount.textContent = "0 đơn hàng";
-}
-}
 
-/* ====================================
-   NÚT TÌM HÀNG
-==================================== */
+/* ================================
+   SEARCH BUTTON
+================================ */
 
 document
 .getElementById("searchButton")
 .addEventListener(
-"click",
-loadOrders
+    "click",
+    filterOrders
 );
 
 
-/* ====================================
-   KHỞI ĐỘNG
-==================================== */
+/* ENTER TÌM KIẾM */
 
-document.addEventListener(
-"DOMContentLoaded",
-async function(){
+[
+    pickupSearch,
+    deliverySearch
+].forEach(function(input){
 
-    await checkLogin();
+    input.addEventListener(
+        "keydown",
+        function(event){
 
-    await loadOrders();
-
+            if(
+                event.key === "Enter"
+            ){
+                filterOrders();
+            }
+        }
+    );
 });
 
+
+cargoSearch.addEventListener(
+    "change",
+    filterOrders
+);
+
+dateSearch.addEventListener(
+    "change",
+    filterOrders
+);
+
+
+/* FILTER CHECKBOX */
+
+document
+.querySelectorAll(
+    ".weight-filter, .vehicle-filter"
+)
+.forEach(function(item){
+
+    item.addEventListener(
+        "change",
+        filterOrders
+    );
+});
+
+
+/* ================================
+   KHỞI ĐỘNG
+================================ */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function(){
+
+        await checkLogin();
+
+        await loadOrders();
+    }
+);
 </script>
 
 </body>
