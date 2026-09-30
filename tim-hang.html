@@ -795,6 +795,91 @@ body{
     }
 }
 </style>
+    <style>
+/* ==================================================
+   VIETTRUCK - FIX TIM HANG MOBILE
+   ================================================== */
+
+@media (max-width: 768px) {
+
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden !important;
+  }
+
+  /* Khung chính trang tìm hàng */
+  .main-content,
+  .search-content,
+  .content-wrapper,
+  .jobs-layout,
+  .cargo-layout,
+  .market-layout {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Bộ lọc */
+  .filters,
+  .filter,
+  .filter-box,
+  .sidebar,
+  .filter-sidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 0 18px 0 !important;
+  }
+
+  /* Khu vực danh sách hàng */
+  .cargo-list,
+  .orders-list,
+  .results,
+  .result-list,
+  .list-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* Card đơn hàng */
+  .cargo-card,
+  .order-card,
+  .job-card,
+  .result-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Không cho chữ/card đẩy rộng màn hình */
+  .cargo-card *,
+  .order-card *,
+  .job-card *,
+  .result-card * {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+  }
+
+  /* Các nút trong đơn */
+  .cargo-card button,
+  .cargo-card .btn,
+  .order-card button,
+  .order-card .btn,
+  .job-card button,
+  .job-card .btn {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 8px !important;
+  }
+}
+</style>
 </head>
 
 <body>
