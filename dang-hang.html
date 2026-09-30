@@ -497,8 +497,59 @@ body{
 
 updateAuthButtons();
 
-const orderForm = document.querySelector(".form-card");
+let currentUserRole = "customer";
 
+async function detectAdminRole() {
+  try {
+    const {
+      data: { session },
+      error: sessionError
+    } = await supabaseClient.auth.getSession();
+
+    if (sessionError || !session) {
+      return;
+    }
+
+    const { data: profile, error: profileError } =
+      await supabaseClient
+        .from("profiles")
+        .select("role")
+        .eq("id", session.user.id)
+        .maybeSingle();
+
+    if (profileError) {
+      console.error("Không đọc được role:", profileError);
+      return;
+    }
+
+    currentUserRole = profile?.role || "customer";
+
+    if (currentUserRole === "admin") {
+      const notice =
+        document.getElementById("adminPostNotice");
+
+      const extra =
+        document.getElementById("adminExtraFields");
+
+      if (notice) notice.style.display = "block";
+      if (extra) extra.style.display = "block";
+
+      const submitButton =
+        document.querySelector(".submit-btn");
+
+      if (submitButton) {
+        submitButton.textContent = "Đăng hàng hộ chủ hàng";
+      }
+    }
+
+  } catch (error) {
+    console.error("detectAdminRole:", error);
+  }
+}
+
+detectAdminRole();
+
+const orderForm = document.querySelector(".form-card");
 orderForm.addEventListener("submit", async function(event) {
   event.preventDefault();
 
