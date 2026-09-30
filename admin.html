@@ -1420,6 +1420,126 @@ async function protectAdminPage() {
   );
 }
 
+  /* =====================================================
+   ĐƠN VẬN CHUYỂN MỚI NHẤT - DỮ LIỆU THẬT TỪ SUPABASE
+===================================================== */
+
+async function loadLatestOrders() {
+  const table = document.getElementById("orderTable");
+
+  if (!table) return;
+
+  table.innerHTML = `
+    <tr>
+      <td colspan="6" style="text-align:center;padding:18px;color:#64748b;">
+        Đang tải dữ liệu...
+      </td>
+    </tr>
+  `;
+
+  try {
+    const { data: orders, error } = await supabaseClient
+      .from("orders")
+      .select(`
+        id,
+        pickup_location,
+        delivery_location,
+        cargo_type,
+        price,
+        status,
+        created_at,
+        customer_name,
+        customer_company
+      `)
+      .order("created_at", { ascending: false })
+      .limit(10);
+
+    if (error) {
+      console.error("Lỗi tải đơn hàng:", error);
+
+      table.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align:center;padding:18px;color:#dc2626;">
+            Không tải được dữ liệu đơn hàng.
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    if (!orders || orders.length === 0) {
+      table.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align:center;padding:18px;color:#64748b;">
+            Chưa có đơn vận chuyển.
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    table.innerHTML = "";
+
+    orders.forEach((order) => {
+      const tr = document.createElement("tr");
+
+      const customer =
+        order.customer_company ||
+        order.customer_name ||
+        "Khách hàng";
+
+      const route =
+        `${order.pickup_location || "—"} → ${order.delivery_location || "—"}`;
+
+      const price =
+        order.price != null
+          ? Number(order.price).toLocaleString("vi-VN") + " đ"
+          : "Thỏa thuận";
+
+      const statusMap = {
+        pending: "Đang tìm xe",
+        searching: "Đang tìm xe",
+        quoted: "Đã có báo giá",
+        accepted: "Đã nhận chuyến",
+        confirmed: "Đã xác nhận",
+        in_progress: "Đang vận chuyển",
+        completed: "Hoàn thành",
+        cancelled: "Đã hủy"
+      };
+
+      const status =
+        statusMap[order.status] ||
+        order.status ||
+        "Đang xử lý";
+
+      const shortId = order.id
+        ? String(order.id).split("-")[0].toUpperCase()
+        : "—";
+
+      tr.innerHTML = `
+        <td>${shortId}</td>
+        <td>${customer}</td>
+        <td>${route}</td>
+        <td>${order.cargo_type || "—"}</td>
+        <td>${price}</td>
+        <td>${status}</td>
+      `;
+
+      table.appendChild(tr);
+    });
+
+  } catch (err) {
+    console.error("Lỗi loadLatestOrders:", err);
+
+    table.innerHTML = `
+      <tr>
+        <td colspan="6" style="text-align:center;padding:18px;color:#dc2626;">
+          Có lỗi khi tải đơn vận chuyển.
+        </td>
+      </tr>
+    `;
+  }
+}
 protectAdminPage();
 
 /* ĐĂNG XUẤT THẬT KHỎI SUPABASE */
