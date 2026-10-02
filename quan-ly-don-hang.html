@@ -465,29 +465,12 @@ body{
 
 <section class="filters">
 
-<button class="filter-btn active" data-filter="all">
-Tất cả
-</button>
-
-<button class="filter-btn" data-filter="waiting">
-Chờ tài xế
-</button>
-
-<button class="filter-btn" data-filter="accepted">
-Đã nhận
-</button>
-
-<button class="filter-btn" data-filter="running">
-Đang vận chuyển
-</button>
-
-<button class="filter-btn" data-filter="delivered">
-Đã giao
-</button>
-
-<button class="filter-btn" data-filter="paid">
-Đã thanh toán
-</button>
+<button class="filter-btn active" data-filter="all">Tất cả</button>
+<button class="filter-btn" data-filter="waiting">Chờ tài xế</button>
+<button class="filter-btn" data-filter="accepted">Đã nhận</button>
+<button class="filter-btn" data-filter="running">Đang vận chuyển</button>
+<button class="filter-btn" data-filter="delivered">Đã giao</button>
+<button class="filter-btn" data-filter="paid">Đã thanh toán</button>
 
 </section>
 
@@ -532,6 +515,7 @@ const emptyBox =
 let allOrders = [];
 let currentFilter = "all";
 let currentUser = null;
+let currentRole = "";
 
 
 /* ========================================
@@ -659,10 +643,7 @@ function getStatusInfo(order){
     };
   }
 
-  if(
-    status === "cancelled" ||
-    status === "canceled"
-  ){
+  if(status === "cancelled"){
     return {
       filter:"cancelled",
       className:"cancelled",
@@ -673,7 +654,7 @@ function getStatusInfo(order){
   return {
     filter:"waiting",
     className:"waiting",
-    text:order.status || "Đang xử lý"
+    text:status || "Đang xử lý"
   };
 
 }
@@ -783,11 +764,23 @@ function renderOrders(){
         ? order.id.substring(0,8).toUpperCase()
         : "—";
 
+    /*
+      CHỈ CHỦ ĐƠN MỚI ĐƯỢC
+      CHỈNH SỬA / HỦY ĐƠN.
+      ADMIN CHỈ ĐƯỢC XEM TOÀN BỘ.
+    */
+
+    const isOwner =
+      currentUser &&
+      order.user_id === currentUser.id;
+
     const canEdit =
-      statusInfo.filter === "waiting";
+      statusInfo.filter === "waiting" &&
+      isOwner;
 
     const canCancel =
-      statusInfo.filter === "waiting";
+      statusInfo.filter === "waiting" &&
+      isOwner;
 
     card.innerHTML = `
 
@@ -1053,7 +1046,7 @@ function bindCancelButtons(){
 
 
 /* ========================================
-   FILTER
+   BỘ LỌC
 ======================================== */
 
 document
@@ -1092,7 +1085,7 @@ document
 
 
 /* ========================================
-   LOAD ORDERS
+   TẢI ĐƠN HÀNG
 ======================================== */
 
 async function loadOrders(){
@@ -1117,9 +1110,9 @@ async function loadOrders(){
     }
 
 
-    /* ------------------------------
+    /* ====================================
        KIỂM TRA ĐĂNG NHẬP
-    ------------------------------ */
+    ==================================== */
 
     const {
       data:sessionData,
@@ -1144,6 +1137,11 @@ async function loadOrders(){
         : null;
 
 
+    /*
+      CHƯA ĐĂNG NHẬP:
+      KHÔNG ĐƯỢC VÀO QUẢN LÝ ĐƠN
+    */
+
     if(
       !session ||
       !session.user
@@ -1164,24 +1162,97 @@ async function loadOrders(){
       session.user;
 
 
-    /* ------------------------------
-       CHỈ LẤY ĐƠN CỦA CHÍNH USER
-       MỚI NHẤT LÊN ĐẦU
-    ------------------------------ */
+    /* ====================================
+       LẤY ROLE TỪ PROFILES
+    ==================================== */
+
+    const {
+      data:profileData,
+      error:profileError
+    } =
+    await supabaseClient
+      .from("profiles")
+      .select("role")
+      .eq(
+        "id",
+        currentUser.id
+      )
+      .maybeSingle();
+
+
+    if(profileError){
+
+      throw profileError;
+
+    }
+
+
+    currentRole =
+      String(
+        profileData &&
+        profileData.role
+          ? profileData.role
+          : ""
+      )
+      .trim()
+      .toLowerCase();
+
+
+    console.log(
+      "VietTruck current user:",
+      currentUser.id
+    );
+
+    console.log(
+      "VietTruck current role:",
+      currentRole
+    );
+
+
+    /* ====================================
+       TẠO QUERY ORDERS
+    ==================================== */
+
+    let ordersQuery =
+      supabaseClient
+        .from("orders")
+        .select(
+          "id,user_id,pickup_location,delivery_location,cargo_type,weight,vehicle_type,price,status,pickup_date,accepted_by,accepted_at,created_at,updated_at"
+        );
+
+
+    /* ====================================
+       QUYỀN XEM
+
+       ADMIN:
+       KHÔNG lọc user_id
+       => lấy toàn bộ đơn mà RLS cho phép.
+
+       USER THƯỜNG:
+       lọc theo currentUser.id
+       => chỉ thấy đơn của mình.
+    ==================================== */
+
+    if(currentRole !== "admin"){
+
+      ordersQuery =
+        ordersQuery.eq(
+          "user_id",
+          currentUser.id
+        );
+
+    }
+
+
+    /* ====================================
+       THỰC HIỆN QUERY
+    ==================================== */
 
     const {
       data,
       error
     } =
-    await supabaseClient
-      .from("orders")
-      .select(
-        "id,user_id,pickup_location,delivery_location,cargo_type,weight,vehicle_type,price,status,pickup_date,accepted_by,accepted_at,created_at,updated_at"
-      )
-      .eq(
-        "user_id",
-        currentUser.id
-      )
+    await ordersQuery
       .order(
         "created_at",
         {
@@ -1201,6 +1272,12 @@ async function loadOrders(){
       Array.isArray(data)
         ? data
         : [];
+
+
+    console.log(
+      "Số đơn được tải:",
+      allOrders.length
+    );
 
 
     updateSummary();
