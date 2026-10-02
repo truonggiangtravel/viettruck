@@ -1829,231 +1829,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   /* =======================================================
-     TẢI XE TRỐNG THẬT
-     ======================================================= */
+   TẢI XE TRỐNG THẬT - MỚI NHẤT LÊN ĐẦU
+   ======================================================= */
 
-  async function loadLatestTrucks() {
+async function loadLatestTrucks() {
+  try {
+    const { data: vehicles, error } = await client
+      .from("vehicles")
+      .select("*")
+      .eq("status", "available")
+      .order("created_at", { ascending: false })
+      .limit(6);
 
-    try {
-
-      /*
-        Dùng select("*") để giữ tương thích
-        với cấu trúc bảng vehicles hiện tại.
-      */
-
-      const { data: vehicles, error } = await client
-  .from("vehicles")
-  .select("*")
-  .limit(6);
-
-
-      if (error) {
-
-        console.error(
-          "VietTruck - lỗi lấy vehicles:",
-          error
-        );
-
-        truckList.innerHTML = `
-          <div class="vt-home-empty">
-            Chưa tải được thông tin xe trống.
-          </div>
-        `;
-
-        return;
-      }
-
-
-      const validVehicles = (vehicles || [])
-        .map(vehicle => {
-
-          /*
-            Giữ cách dò nhiều tên cột như code cũ,
-            tránh ảnh hưởng dữ liệu vehicles hiện tại.
-          */
-
-          const location =
-            vehicle.current_location ||
-            vehicle.location ||
-            vehicle.pickup_location ||
-            vehicle.province ||
-            "";
-
-
-          const destination =
-            vehicle.destination ||
-            vehicle.delivery_location ||
-            vehicle.route_to ||
-            "";
-
-
-          const type =
-            vehicle.vehicle_type ||
-            vehicle.type ||
-            vehicle.truck_type ||
-            "";
-
-
-          const plate =
-            vehicle.license_plate ||
-            vehicle.plate_number ||
-            vehicle.plate ||
-            "";
-
-
-          return {
-            vehicle,
-            location,
-            destination,
-            type,
-            plate
-          };
-
-        })
-        .filter(item => {
-
-          return (
-            String(item.location).trim() ||
-            String(item.destination).trim() ||
-            String(item.type).trim()
-          );
-
-        });
-
-
-      if (!validVehicles.length) {
-
-        truckList.innerHTML = `
-          <div class="vt-home-empty">
-            Hiện chưa có xe trống mới.
-          </div>
-        `;
-
-        return;
-      }
-
-
-      truckList.innerHTML = validVehicles
-        .map(item => {
-
-          const vehicle = item.vehicle;
-
-          const from = shortText(
-            item.location,
-            35
-          );
-
-          const to = shortText(
-            item.destination,
-            35
-          );
-
-          const type = shortText(
-            item.type,
-            30
-          );
-
-          const plate = maskPlate(
-            item.plate
-          );
-
-
-          const createdDate = formatDate(
-            vehicle.created_at
-          );
-
-
-          const details = [];
-
-          if (type) {
-            details.push(
-              `<span>${escapeHTML(type)}</span>`
-            );
-          }
-
-          if (plate) {
-            details.push(
-              `<span>Xe ${escapeHTML(plate)}</span>`
-            );
-          }
-
-
-          return `
-            <a
-  class="vt-home-card"
-  href="#"
-  onclick="event.preventDefault(); openVehicleDetail('${vehicle.id}')"
-  title="Xem chi tiết xe"
->
-
-              <div class="vt-home-card-top">
-
-                <span class="vt-home-badge truck">
-                  🚚 XE TRỐNG
-                </span>
-
-                ${
-                  createdDate
-                    ? `
-                      <span class="vt-home-date">
-                        ${escapeHTML(createdDate)}
-                      </span>
-                    `
-                    : ""
-                }
-
-              </div>
-
-
-              <div class="vt-home-route">
-
-                <span class="vt-home-route-from">
-                  ${
-                    escapeHTML(
-                      from ||
-                      "Xe đang sẵn sàng"
-                    )
-                  }
-                </span>
-
-                ${
-                  to
-                    ? `
-                      <span class="vt-home-arrow">
-                        →
-                      </span>
-
-                      <span class="vt-home-route-to">
-                        ${escapeHTML(to)}
-                      </span>
-                    `
-                    : ""
-                }
-
-              </div>
-
-
-              ${
-                details.length
-                  ? `
-                    <div class="vt-home-detail">
-                      ${details.join("")}
-                    </div>
-                  `
-                  : ""
-              }
-
-            </a>
-          `;
-
-        })
-        .join("");
-
-
-    } catch (error) {
-
+    if (error) {
       console.error(
-        "VietTruck loadLatestTrucks Error:",
+        "VietTruck - lỗi lấy vehicles:",
         error
       );
 
@@ -2063,9 +1853,202 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
       `;
 
+      return;
     }
-  }
 
+    console.log(
+      "VietTruck - Xe trống mới nhất:",
+      vehicles
+    );
+
+    const validVehicles = (vehicles || [])
+      .map(vehicle => {
+
+        const location =
+          vehicle.current_location ||
+          vehicle.location ||
+          vehicle.pickup_location ||
+          vehicle.province ||
+          "";
+
+        const destination =
+          vehicle.destination ||
+          vehicle.delivery_location ||
+          vehicle.route_to ||
+          "";
+
+        const type =
+          vehicle.vehicle_type ||
+          vehicle.type ||
+          vehicle.truck_type ||
+          "";
+
+        const plate =
+          vehicle.license_plate ||
+          vehicle.plate_number ||
+          vehicle.plate ||
+          "";
+
+        return {
+          vehicle,
+          location,
+          destination,
+          type,
+          plate
+        };
+      })
+      .filter(item => {
+        return (
+          String(item.location).trim() ||
+          String(item.destination).trim() ||
+          String(item.type).trim()
+        );
+      });
+
+    if (!validVehicles.length) {
+      truckList.innerHTML = `
+        <div class="vt-home-empty">
+          Hiện chưa có xe trống mới.
+        </div>
+      `;
+
+      return;
+    }
+
+    truckList.innerHTML = validVehicles
+      .map(item => {
+
+        const vehicle = item.vehicle;
+
+        const from = shortText(
+          item.location,
+          35
+        );
+
+        const to = shortText(
+          item.destination,
+          35
+        );
+
+        const type = shortText(
+          item.type,
+          30
+        );
+
+        const plate = maskPlate(
+          item.plate
+        );
+
+        const createdDate = formatDate(
+          vehicle.created_at
+        );
+
+        const details = [];
+
+        if (type) {
+          details.push(
+            `<span>${escapeHTML(type)}</span>`
+          );
+        }
+
+        if (
+          vehicle.capacity !== null &&
+          vehicle.capacity !== undefined &&
+          vehicle.capacity !== ""
+        ) {
+          details.push(
+            `<span>${escapeHTML(formatWeight(vehicle.capacity))} tấn</span>`
+          );
+        }
+
+        if (plate) {
+          details.push(
+            `<span>Xe ${escapeHTML(plate)}</span>`
+          );
+        }
+
+        return `
+          <a
+            class="vt-home-card"
+            href="#"
+            onclick="event.preventDefault(); openVehicleDetail('${vehicle.id}')"
+            title="Xem chi tiết xe"
+          >
+
+            <div class="vt-home-card-top">
+
+              <span class="vt-home-badge truck">
+                🚚 XE TRỐNG
+              </span>
+
+              ${
+                createdDate
+                  ? `
+                    <span class="vt-home-date">
+                      ${escapeHTML(createdDate)}
+                    </span>
+                  `
+                  : ""
+              }
+
+            </div>
+
+            <div class="vt-home-route">
+
+              <span class="vt-home-route-from">
+                ${
+                  escapeHTML(
+                    from ||
+                    "Xe đang sẵn sàng"
+                  )
+                }
+              </span>
+
+              ${
+                to
+                  ? `
+                    <span class="vt-home-arrow">
+                      →
+                    </span>
+
+                    <span class="vt-home-route-to">
+                      ${escapeHTML(to)}
+                    </span>
+                  `
+                  : ""
+              }
+
+            </div>
+
+            ${
+              details.length
+                ? `
+                  <div class="vt-home-detail">
+                    ${details.join("")}
+                  </div>
+                `
+                : ""
+            }
+
+          </a>
+        `;
+      })
+      .join("");
+
+  } catch (error) {
+
+    console.error(
+      "VietTruck loadLatestTrucks Error:",
+      error
+    );
+
+    truckList.innerHTML = `
+      <div class="vt-home-empty">
+        Chưa tải được thông tin xe trống.
+      </div>
+    `;
+  }
+}
 
   /* =======================================================
      TẢI CẢ 2 BẢNG
