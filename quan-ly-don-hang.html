@@ -13,344 +13,383 @@
 *{box-sizing:border-box}
 
 body{
-margin:0;
-font-family:"Be Vietnam Pro",sans-serif;
-background:#f4f7f5;
-color:#14231b;
+  margin:0;
+  font-family:"Be Vietnam Pro",sans-serif;
+  background:#f4f7f5;
+  color:#14231b;
 }
 
 .container{
-max-width:1220px;
-margin:auto;
-padding:0 20px;
+  max-width:1220px;
+  margin:auto;
+  padding:0 20px;
 }
 
 .header{
-background:#fff;
-border-bottom:1px solid #e1e8e4;
+  background:#fff;
+  border-bottom:1px solid #e1e8e4;
 }
 
 .nav{
-height:74px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:20px;
+  min-height:74px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
 }
 
 .logo{
-display:flex;
-align-items:center;
-gap:10px;
-text-decoration:none;
-color:#087d43;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:#087d43;
 }
 
 .logo-icon{font-size:32px}
-
-.logo strong{
-font-size:24px;
-}
+.logo strong{font-size:24px}
 
 .logo small{
-display:block;
-font-size:11px;
-color:#69766f;
+  display:block;
+  font-size:11px;
+  color:#69766f;
 }
 
 .menu{
-display:flex;
-gap:22px;
+  display:flex;
+  gap:22px;
+  align-items:center;
+  flex-wrap:wrap;
 }
 
 .menu a{
-text-decoration:none;
-color:#17231d;
-font-size:13px;
-font-weight:600;
+  text-decoration:none;
+  color:#17231d;
+  font-size:13px;
+  font-weight:600;
 }
 
 .menu a:hover,
 .menu a.active{
-color:#078c4b;
+  color:#078c4b;
 }
 
 .page-head{
-padding:28px 0 18px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:20px;
+  padding:28px 0 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
 }
 
 .page-head h1{
-margin:0 0 5px;
-font-size:27px;
+  margin:0 0 5px;
+  font-size:27px;
 }
 
 .page-head p{
-margin:0;
-font-size:13px;
-color:#6c7972;
+  margin:0;
+  font-size:13px;
+  color:#6c7972;
 }
 
 .new-order{
-text-decoration:none;
-background:#078c4b;
-color:#fff;
-padding:12px 17px;
-border-radius:8px;
-font-size:12px;
-font-weight:800;
-white-space:nowrap;
+  text-decoration:none;
+  background:#078c4b;
+  color:#fff;
+  padding:12px 17px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:800;
+  white-space:nowrap;
 }
 
 .summary{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:12px;
-margin-bottom:20px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+  margin-bottom:20px;
 }
 
 .summary-card{
-background:#fff;
-border:1px solid #e0e7e3;
-border-radius:11px;
-padding:16px;
+  background:#fff;
+  border:1px solid #e0e7e3;
+  border-radius:11px;
+  padding:16px;
 }
 
 .summary-card span{
-display:block;
-font-size:10px;
-font-weight:700;
-color:#78847e;
-margin-bottom:7px;
+  display:block;
+  font-size:10px;
+  font-weight:700;
+  color:#78847e;
+  margin-bottom:7px;
 }
 
 .summary-card strong{
-font-size:24px;
+  font-size:24px;
 }
 
 .filters{
-background:#fff;
-border:1px solid #e0e7e3;
-border-radius:11px;
-padding:15px;
-margin-bottom:18px;
-display:flex;
-gap:10px;
-flex-wrap:wrap;
+  background:#fff;
+  border:1px solid #e0e7e3;
+  border-radius:11px;
+  padding:15px;
+  margin-bottom:18px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
 }
 
 .filter-btn{
-border:1px solid #dce5e0;
-background:#fff;
-border-radius:20px;
-padding:9px 13px;
-font-family:inherit;
-font-size:11px;
-font-weight:700;
-cursor:pointer;
+  border:1px solid #dce5e0;
+  background:#fff;
+  border-radius:20px;
+  padding:9px 13px;
+  font-family:inherit;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
 }
 
 .filter-btn.active{
-background:#078c4b;
-color:#fff;
-border-color:#078c4b;
+  background:#078c4b;
+  color:#fff;
+  border-color:#078c4b;
 }
 
 .order-list{
-display:grid;
-gap:15px;
-padding-bottom:50px;
+  display:grid;
+  gap:15px;
+  padding-bottom:50px;
 }
 
 .order-card{
-background:#fff;
-border:1px solid #e0e7e3;
-border-radius:12px;
-padding:18px;
+  background:#fff;
+  border:1px solid #e0e7e3;
+  border-radius:12px;
+  padding:18px;
 }
 
 .order-top{
-display:flex;
-justify-content:space-between;
-gap:15px;
-align-items:flex-start;
-padding-bottom:14px;
-border-bottom:1px solid #edf1ef;
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  align-items:flex-start;
+  padding-bottom:14px;
+  border-bottom:1px solid #edf1ef;
 }
 
 .order-code{
-font-size:11px;
-color:#78847e;
-margin-bottom:6px;
+  font-size:11px;
+  color:#78847e;
+  margin-bottom:6px;
 }
 
 .route{
-font-size:19px;
-font-weight:800;
+  font-size:19px;
+  font-weight:800;
 }
 
 .route span{
-color:#078c4b;
-padding:0 7px;
+  color:#078c4b;
+  padding:0 7px;
 }
 
 .status{
-display:inline-block;
-padding:7px 10px;
-border-radius:20px;
-font-size:10px;
-font-weight:800;
-white-space:nowrap;
+  display:inline-block;
+  padding:7px 10px;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:800;
+  white-space:nowrap;
 }
 
 .waiting{
-background:#fff3d6;
-color:#946707;
+  background:#fff3d6;
+  color:#946707;
 }
 
 .accepted{
-background:#eef0ff;
-color:#5553a6;
+  background:#eef0ff;
+  color:#5553a6;
 }
 
 .running{
-background:#e8f1ff;
-color:#2563ae;
+  background:#e8f1ff;
+  color:#2563ae;
 }
 
 .delivered{
-background:#e9f8ef;
-color:#087d43;
+  background:#e9f8ef;
+  color:#087d43;
 }
 
 .paid{
-background:#daf4e5;
-color:#06713b;
+  background:#daf4e5;
+  color:#06713b;
+}
+
+.cancelled{
+  background:#f3f4f6;
+  color:#6b7280;
 }
 
 .order-body{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:14px;
-padding:16px 0;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  padding:16px 0;
 }
 
 .info span{
-display:block;
-font-size:10px;
-color:#7b8781;
-margin-bottom:5px;
+  display:block;
+  font-size:10px;
+  color:#7b8781;
+  margin-bottom:5px;
 }
 
 .info strong{
-font-size:12px;
+  font-size:12px;
+  word-break:break-word;
 }
 
 .order-bottom{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-flex-wrap:wrap;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
 }
 
 .price{
-font-size:12px;
-color:#69766f;
+  font-size:12px;
+  color:#69766f;
 }
 
 .price strong{
-font-size:18px;
-color:#078c4b;
-margin-left:5px;
+  font-size:18px;
+  color:#078c4b;
+  margin-left:5px;
 }
 
 .actions{
-display:flex;
-gap:8px;
-flex-wrap:wrap;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
 .btn{
-text-decoration:none;
-border-radius:7px;
-padding:9px 12px;
-font-size:10px;
-font-weight:800;
+  text-decoration:none;
+  border-radius:7px;
+  padding:9px 12px;
+  font-size:10px;
+  font-weight:800;
+  cursor:pointer;
+  font-family:inherit;
 }
 
 .btn-outline{
-border:1px solid #d8e2dc;
-color:#1d2b24;
-background:#fff;
+  border:1px solid #d8e2dc;
+  color:#1d2b24;
+  background:#fff;
 }
 
 .btn-green{
-background:#078c4b;
-color:#fff;
+  border:1px solid #078c4b;
+  background:#078c4b;
+  color:#fff;
+}
+
+.btn-red{
+  border:1px solid #efcaca;
+  background:#fff;
+  color:#b42318;
+}
+
+.btn:disabled{
+  opacity:.55;
+  cursor:not-allowed;
 }
 
 .empty{
-display:none;
-background:#fff;
-border:1px solid #e0e7e3;
-border-radius:12px;
-padding:40px 20px;
-text-align:center;
-color:#708078;
-font-size:13px;
+  display:none;
+  background:#fff;
+  border:1px solid #e0e7e3;
+  border-radius:12px;
+  padding:40px 20px;
+  text-align:center;
+  color:#708078;
+  font-size:13px;
+  margin-bottom:50px;
+}
+
+.loading{
+  background:#fff;
+  border:1px solid #e0e7e3;
+  border-radius:12px;
+  padding:35px 20px;
+  text-align:center;
+  color:#708078;
+  font-size:13px;
 }
 
 .footer{
-background:#073c27;
-color:#fff;
-text-align:center;
-padding:26px 0;
+  background:#073c27;
+  color:#fff;
+  text-align:center;
+  padding:26px 0;
 }
 
 .footer p{
-font-size:12px;
-opacity:.8;
+  font-size:12px;
+  opacity:.8;
 }
 
 @media(max-width:950px){
-.summary{
-grid-template-columns:repeat(2,1fr);
-}
+  .summary{
+    grid-template-columns:repeat(2,1fr);
+  }
 
-.order-body{
-grid-template-columns:repeat(2,1fr);
-}
+  .order-body{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 
 @media(max-width:700px){
-.menu{display:none}
+  .menu{display:none}
 
-.page-head{
-align-items:flex-start;
-flex-direction:column;
-}
+  .page-head{
+    align-items:flex-start;
+    flex-direction:column;
+  }
 
-.summary{
-grid-template-columns:1fr 1fr;
-}
+  .summary{
+    grid-template-columns:1fr 1fr;
+  }
 }
 
 @media(max-width:500px){
-.order-body{
-grid-template-columns:1fr;
-}
+  .order-body{
+    grid-template-columns:1fr;
+  }
 
-.summary{
-grid-template-columns:1fr;
-}
+  .summary{
+    grid-template-columns:1fr;
+  }
 
-.order-top{
-flex-direction:column;
-}
+  .order-top{
+    flex-direction:column;
+  }
+
+  .actions{
+    width:100%;
+  }
+
+  .btn{
+    flex:1;
+    text-align:center;
+  }
 }
 </style>
 </head>
@@ -386,7 +425,7 @@ flex-direction:column;
 
 <div>
 <h1>Quản lý đơn hàng</h1>
-<p>Theo dõi toàn bộ đơn vận chuyển của bạn theo từng trạng thái</p>
+<p>Xem và quản lý toàn bộ đơn hàng bạn đã đăng trên VietTruck</p>
 </div>
 
 <a href="dang-hang.html" class="new-order">
@@ -395,7 +434,34 @@ flex-direction:column;
 
 </section>
 
+<section class="summary">
 
+<div class="summary-card">
+<span>TẤT CẢ ĐƠN</span>
+<strong id="countAll">0</strong>
+</div>
+
+<div class="summary-card">
+<span>ĐANG TÌM XE</span>
+<strong id="countWaiting">0</strong>
+</div>
+
+<div class="summary-card">
+<span>ĐÃ CÓ NHÀ XE</span>
+<strong id="countAccepted">0</strong>
+</div>
+
+<div class="summary-card">
+<span>ĐANG VẬN CHUYỂN</span>
+<strong id="countRunning">0</strong>
+</div>
+
+<div class="summary-card">
+<span>ĐÃ HOÀN THÀNH</span>
+<strong id="countDone">0</strong>
+</div>
+
+</section>
 
 <section class="filters">
 
@@ -427,7 +493,9 @@ Chờ tài xế
 
 <section class="order-list" id="orderList">
 
-
+<div class="loading">
+Đang tải đơn hàng của bạn...
+</div>
 
 </section>
 
@@ -444,7 +512,736 @@ Không có đơn hàng nào ở trạng thái này.
 </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="auth.js"></script>
 
+<script>
+(function(){
+
+"use strict";
+
+const supabaseClient = window.supabaseClient;
+
+const orderList =
+  document.getElementById("orderList");
+
+const emptyBox =
+  document.getElementById("emptyBox");
+
+let allOrders = [];
+let currentFilter = "all";
+let currentUser = null;
+
+
+/* ========================================
+   AN TOÀN HTML
+======================================== */
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* ========================================
+   TIỀN
+======================================== */
+
+function formatMoney(value){
+
+  const number = Number(value);
+
+  if(
+    value === null ||
+    value === undefined ||
+    value === "" ||
+    !Number.isFinite(number) ||
+    number <= 0
+  ){
+    return "Thỏa thuận";
+  }
+
+  return number.toLocaleString("vi-VN") + " đ";
+
+}
+
+
+/* ========================================
+   NGÀY
+======================================== */
+
+function formatDate(value){
+
+  if(!value){
+    return "Chưa cập nhật";
+  }
+
+  try{
+
+    return new Date(
+      value + "T00:00:00"
+    ).toLocaleDateString("vi-VN");
+
+  }catch(error){
+
+    return value;
+
+  }
+
+}
+
+
+/* ========================================
+   TRẠNG THÁI
+======================================== */
+
+function getStatusInfo(order){
+
+  const status =
+    String(order.status || "")
+      .toLowerCase();
+
+  if(
+    status === "pending" ||
+    status === "open" ||
+    status === "waiting"
+  ){
+    return {
+      filter:"waiting",
+      className:"waiting",
+      text:"Đang tìm xe"
+    };
+  }
+
+  if(status === "accepted"){
+    return {
+      filter:"accepted",
+      className:"accepted",
+      text:"Đã có nhà xe"
+    };
+  }
+
+  if(
+    status === "running" ||
+    status === "in_transit" ||
+    status === "shipping"
+  ){
+    return {
+      filter:"running",
+      className:"running",
+      text:"Đang vận chuyển"
+    };
+  }
+
+  if(
+    status === "delivered" ||
+    status === "completed"
+  ){
+    return {
+      filter:"delivered",
+      className:"delivered",
+      text:"Đã giao"
+    };
+  }
+
+  if(status === "paid"){
+    return {
+      filter:"paid",
+      className:"paid",
+      text:"Đã thanh toán"
+    };
+  }
+
+  if(
+    status === "cancelled" ||
+    status === "canceled"
+  ){
+    return {
+      filter:"cancelled",
+      className:"cancelled",
+      text:"Đã hủy"
+    };
+  }
+
+  return {
+    filter:"waiting",
+    className:"waiting",
+    text:order.status || "Đang xử lý"
+  };
+
+}
+
+
+/* ========================================
+   THỐNG KÊ
+======================================== */
+
+function updateSummary(){
+
+  let waiting = 0;
+  let accepted = 0;
+  let running = 0;
+  let done = 0;
+
+  allOrders.forEach(function(order){
+
+    const info =
+      getStatusInfo(order);
+
+    if(info.filter === "waiting"){
+      waiting++;
+    }
+
+    if(info.filter === "accepted"){
+      accepted++;
+    }
+
+    if(info.filter === "running"){
+      running++;
+    }
+
+    if(
+      info.filter === "delivered" ||
+      info.filter === "paid"
+    ){
+      done++;
+    }
+
+  });
+
+  document.getElementById(
+    "countAll"
+  ).textContent = allOrders.length;
+
+  document.getElementById(
+    "countWaiting"
+  ).textContent = waiting;
+
+  document.getElementById(
+    "countAccepted"
+  ).textContent = accepted;
+
+  document.getElementById(
+    "countRunning"
+  ).textContent = running;
+
+  document.getElementById(
+    "countDone"
+  ).textContent = done;
+
+}
+
+
+/* ========================================
+   HIỂN THỊ ĐƠN
+======================================== */
+
+function renderOrders(){
+
+  const orders =
+    currentFilter === "all"
+      ? allOrders
+      : allOrders.filter(function(order){
+
+          return (
+            getStatusInfo(order).filter ===
+            currentFilter
+          );
+
+        });
+
+  orderList.innerHTML = "";
+
+  if(!orders.length){
+
+    emptyBox.style.display = "block";
+    return;
+
+  }
+
+  emptyBox.style.display = "none";
+
+  orders.forEach(function(order){
+
+    const statusInfo =
+      getStatusInfo(order);
+
+    const card =
+      document.createElement("article");
+
+    card.className = "order-card";
+
+    const code =
+      order.id
+        ? order.id.substring(0,8).toUpperCase()
+        : "—";
+
+    const canEdit =
+      statusInfo.filter === "waiting";
+
+    const canCancel =
+      statusInfo.filter === "waiting";
+
+    card.innerHTML = `
+
+      <div class="order-top">
+
+        <div>
+
+          <div class="order-code">
+            Mã đơn: ${escapeHtml(code)}
+          </div>
+
+          <div class="route">
+            ${escapeHtml(
+              order.pickup_location ||
+              "Chưa cập nhật điểm lấy"
+            )}
+
+            <span>→</span>
+
+            ${escapeHtml(
+              order.delivery_location ||
+              "Chưa cập nhật điểm giao"
+            )}
+          </div>
+
+        </div>
+
+        <span class="status ${statusInfo.className}">
+          ${escapeHtml(statusInfo.text)}
+        </span>
+
+      </div>
+
+
+      <div class="order-body">
+
+        <div class="info">
+          <span>LOẠI HÀNG</span>
+
+          <strong>
+            ${escapeHtml(
+              order.cargo_type ||
+              "Chưa cập nhật"
+            )}
+          </strong>
+        </div>
+
+
+        <div class="info">
+          <span>TRỌNG LƯỢNG</span>
+
+          <strong>
+            ${
+              order.weight !== null &&
+              order.weight !== undefined &&
+              order.weight !== ""
+                ? escapeHtml(order.weight) + " tấn"
+                : "Chưa cập nhật"
+            }
+          </strong>
+        </div>
+
+
+        <div class="info">
+          <span>LOẠI XE</span>
+
+          <strong>
+            ${escapeHtml(
+              order.vehicle_type ||
+              "Không yêu cầu"
+            )}
+          </strong>
+        </div>
+
+
+        <div class="info">
+          <span>NGÀY LẤY HÀNG</span>
+
+          <strong>
+            ${escapeHtml(
+              formatDate(
+                order.pickup_date
+              )
+            )}
+          </strong>
+        </div>
+
+      </div>
+
+
+      <div class="order-bottom">
+
+        <div class="price">
+          Giá cước:
+
+          <strong>
+            ${escapeHtml(
+              formatMoney(order.price)
+            )}
+          </strong>
+        </div>
+
+
+        <div class="actions">
+
+          <a
+            class="btn btn-outline"
+            href="chi-tiet-don-hang.html?order_id=${encodeURIComponent(order.id)}"
+          >
+            Xem chi tiết
+          </a>
+
+
+          <a
+            class="btn btn-green"
+            href="trung-tam-bao-gia.html?order_id=${encodeURIComponent(order.id)}"
+          >
+            Xem báo giá
+          </a>
+
+
+          ${
+            canEdit
+              ? `
+                <a
+                  class="btn btn-outline"
+                  href="dang-hang.html?edit=${encodeURIComponent(order.id)}"
+                >
+                  Chỉnh sửa
+                </a>
+              `
+              : ""
+          }
+
+
+          ${
+            canCancel
+              ? `
+                <button
+                  type="button"
+                  class="btn btn-red cancel-order"
+                  data-order-id="${escapeHtml(order.id)}"
+                >
+                  Hủy đơn
+                </button>
+              `
+              : ""
+          }
+
+        </div>
+
+      </div>
+
+    `;
+
+    orderList.appendChild(card);
+
+  });
+
+  bindCancelButtons();
+
+}
+
+
+/* ========================================
+   HỦY ĐƠN
+======================================== */
+
+function bindCancelButtons(){
+
+  document
+    .querySelectorAll(".cancel-order")
+    .forEach(function(button){
+
+      button.addEventListener(
+        "click",
+        async function(){
+
+          const orderId =
+            this.dataset.orderId;
+
+          const ok =
+            window.confirm(
+              "Anh có chắc muốn hủy đơn hàng này?"
+            );
+
+          if(!ok){
+            return;
+          }
+
+          const oldText =
+            this.textContent;
+
+          this.disabled = true;
+          this.textContent =
+            "Đang hủy...";
+
+          try{
+
+            const {
+              data,
+              error
+            } =
+            await supabaseClient
+              .from("orders")
+              .update({
+                status:"cancelled",
+                updated_at:
+                  new Date().toISOString()
+              })
+              .eq("id",orderId)
+              .eq(
+                "user_id",
+                currentUser.id
+              )
+              .select("id");
+
+            if(error){
+              throw error;
+            }
+
+            if(!data || !data.length){
+
+              throw new Error(
+                "Không thể hủy đơn hoặc đơn không còn ở trạng thái cho phép."
+              );
+
+            }
+
+            alert(
+              "Đã hủy đơn hàng."
+            );
+
+            await loadOrders();
+
+          }catch(error){
+
+            console.error(
+              "Lỗi hủy đơn:",
+              error
+            );
+
+            alert(
+              "Không thể hủy đơn: " +
+              (
+                error.message ||
+                "Lỗi không xác định"
+              )
+            );
+
+            this.disabled = false;
+            this.textContent =
+              oldText;
+
+          }
+
+        }
+      );
+
+    });
+
+}
+
+
+/* ========================================
+   FILTER
+======================================== */
+
+document
+  .querySelectorAll(".filter-btn")
+  .forEach(function(button){
+
+    button.addEventListener(
+      "click",
+      function(){
+
+        document
+          .querySelectorAll(
+            ".filter-btn"
+          )
+          .forEach(function(item){
+
+            item.classList.remove(
+              "active"
+            );
+
+          });
+
+        this.classList.add(
+          "active"
+        );
+
+        currentFilter =
+          this.dataset.filter;
+
+        renderOrders();
+
+      }
+    );
+
+  });
+
+
+/* ========================================
+   LOAD ORDERS
+======================================== */
+
+async function loadOrders(){
+
+  orderList.innerHTML = `
+    <div class="loading">
+      Đang tải đơn hàng của bạn...
+    </div>
+  `;
+
+  emptyBox.style.display =
+    "none";
+
+  try{
+
+    if(!supabaseClient){
+
+      throw new Error(
+        "Không kết nối được Supabase."
+      );
+
+    }
+
+
+    /* ------------------------------
+       KIỂM TRA ĐĂNG NHẬP
+    ------------------------------ */
+
+    const {
+      data:sessionData,
+      error:sessionError
+    } =
+    await supabaseClient
+      .auth
+      .getSession();
+
+
+    if(sessionError){
+
+      throw sessionError;
+
+    }
+
+
+    const session =
+      sessionData &&
+      sessionData.session
+        ? sessionData.session
+        : null;
+
+
+    if(
+      !session ||
+      !session.user
+    ){
+
+      window.location.href =
+        "dang-nhap.html?redirect=" +
+        encodeURIComponent(
+          "quan-ly-don-hang.html"
+        );
+
+      return;
+
+    }
+
+
+    currentUser =
+      session.user;
+
+
+    /* ------------------------------
+       CHỈ LẤY ĐƠN CỦA CHÍNH USER
+       MỚI NHẤT LÊN ĐẦU
+    ------------------------------ */
+
+    const {
+      data,
+      error
+    } =
+    await supabaseClient
+      .from("orders")
+      .select(
+        "id,user_id,pickup_location,delivery_location,cargo_type,weight,vehicle_type,price,status,pickup_date,accepted_by,accepted_at,created_at,updated_at"
+      )
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+    if(error){
+
+      throw error;
+
+    }
+
+
+    allOrders =
+      Array.isArray(data)
+        ? data
+        : [];
+
+
+    updateSummary();
+
+    renderOrders();
+
+
+  }catch(error){
+
+    console.error(
+      "Lỗi tải đơn hàng:",
+      error
+    );
+
+    allOrders = [];
+
+    updateSummary();
+
+    orderList.innerHTML = `
+      <div class="loading">
+        Không tải được đơn hàng:
+        ${escapeHtml(
+          error.message ||
+          "Lỗi không xác định"
+        )}
+      </div>
+    `;
+
+  }
+
+}
+
+
+/* ========================================
+   KHỞI ĐỘNG
+======================================== */
+
+loadOrders();
+
+})();
+</script>
 
 </body>
 </html>
