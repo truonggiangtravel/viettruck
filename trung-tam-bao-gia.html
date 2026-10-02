@@ -10,419 +10,469 @@
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
-margin:0;
-font-family:"Be Vietnam Pro",sans-serif;
-background:#f4f7f5;
-color:#14231b;
+  margin:0;
+  font-family:"Be Vietnam Pro",sans-serif;
+  background:#f4f7f5;
+  color:#14231b;
 }
 
 .container{
-max-width:1220px;
-margin:auto;
-padding:0 20px;
+  max-width:1220px;
+  margin:auto;
+  padding:0 20px;
 }
 
 .header{
-background:#fff;
-border-bottom:1px solid #e1e8e4;
+  background:#fff;
+  border-bottom:1px solid #e1e8e4;
 }
 
 .nav{
-height:74px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:20px;
+  min-height:74px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
 }
 
 .logo{
-display:flex;
-align-items:center;
-gap:10px;
-text-decoration:none;
-color:#087d43;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:#087d43;
 }
 
-.logo-icon{font-size:32px}
+.logo-icon{
+  font-size:32px;
+}
 
-.logo strong{font-size:24px}
+.logo strong{
+  font-size:24px;
+}
 
 .logo small{
-display:block;
-font-size:11px;
-color:#69766f;
+  display:block;
+  font-size:11px;
+  color:#69766f;
 }
 
 .menu{
-display:flex;
-gap:22px;
+  display:flex;
+  gap:22px;
+  align-items:center;
+  flex-wrap:wrap;
 }
 
 .menu a{
-text-decoration:none;
-color:#17231d;
-font-size:13px;
-font-weight:600;
+  text-decoration:none;
+  color:#17231d;
+  font-size:13px;
+  font-weight:600;
 }
 
 .menu a:hover,
 .menu a.active{
-color:#078c4b;
+  color:#078c4b;
 }
 
 .page-head{
-padding:28px 0 18px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:20px;
+  padding:28px 0 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
 }
 
 .page-head h1{
-margin:0 0 5px;
-font-size:27px;
+  margin:0 0 5px;
+  font-size:27px;
 }
 
 .page-head p{
-margin:0;
-font-size:13px;
-color:#6c7972;
+  margin:0;
+  font-size:13px;
+  color:#6c7972;
 }
 
 .back-btn{
-text-decoration:none;
-background:#fff;
-border:1px solid #dbe5df;
-color:#1e2e25;
-padding:10px 14px;
-border-radius:8px;
-font-size:11px;
-font-weight:700;
-white-space:nowrap;
+  text-decoration:none;
+  background:#fff;
+  border:1px solid #dbe5df;
+  color:#1e2e25;
+  padding:10px 14px;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:700;
+  white-space:nowrap;
 }
 
 .layout{
-display:grid;
-grid-template-columns:1fr 330px;
-gap:20px;
-padding-bottom:50px;
+  display:grid;
+  grid-template-columns:1fr 330px;
+  gap:20px;
+  padding-bottom:50px;
 }
 
 .card{
-background:#fff;
-border:1px solid #e0e7e3;
-border-radius:12px;
-padding:20px;
-margin-bottom:18px;
+  background:#fff;
+  border:1px solid #e0e7e3;
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:18px;
 }
 
 .order-head{
-display:flex;
-justify-content:space-between;
-gap:18px;
-align-items:flex-start;
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  align-items:flex-start;
 }
 
 .order-code{
-font-size:11px;
-color:#77847d;
-margin-bottom:6px;
+  font-size:11px;
+  color:#77847d;
+  margin-bottom:6px;
 }
 
 .route{
-font-size:23px;
-font-weight:800;
+  font-size:23px;
+  font-weight:800;
 }
 
 .route span{
-color:#078c4b;
-padding:0 8px;
+  color:#078c4b;
+  padding:0 8px;
 }
 
 .status{
-display:inline-block;
-background:#e8f5ee;
-color:#078c4b;
-padding:7px 10px;
-border-radius:20px;
-font-size:10px;
-font-weight:800;
+  display:inline-block;
+  background:#e8f5ee;
+  color:#078c4b;
+  padding:7px 10px;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:800;
+  white-space:nowrap;
 }
 
 .order-info{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:14px;
-margin-top:18px;
-padding-top:16px;
-border-top:1px solid #edf1ef;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid #edf1ef;
 }
 
 .info span{
-display:block;
-font-size:10px;
-color:#7b8781;
-margin-bottom:5px;
+  display:block;
+  font-size:10px;
+  color:#7b8781;
+  margin-bottom:5px;
 }
 
 .info strong{
-font-size:12px;
+  font-size:12px;
 }
 
 .section-title{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-margin-bottom:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:15px;
 }
 
 .section-title h2{
-margin:0;
-font-size:19px;
+  margin:0;
+  font-size:19px;
 }
 
 .count{
-font-size:11px;
-font-weight:700;
-color:#6f7d75;
+  font-size:11px;
+  font-weight:700;
+  color:#6f7d75;
 }
 
 .quote{
-border:1px solid #e0e7e3;
-border-radius:11px;
-padding:17px;
-margin-bottom:13px;
+  border:1px solid #e0e7e3;
+  border-radius:11px;
+  padding:17px;
+  margin-bottom:13px;
 }
 
 .quote.best{
-border:2px solid #078c4b;
-background:#fbfffc;
+  border:2px solid #078c4b;
+  background:#fbfffc;
 }
 
 .quote-top{
-display:flex;
-justify-content:space-between;
-align-items:flex-start;
-gap:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:15px;
 }
 
 .driver{
-display:flex;
-gap:12px;
+  display:flex;
+  gap:12px;
 }
 
 .avatar{
-width:45px;
-height:45px;
-border-radius:50%;
-background:#e9f6ee;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:22px;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#e9f6ee;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  flex:0 0 45px;
 }
 
 .driver-name{
-font-size:14px;
-font-weight:800;
-margin-bottom:4px;
+  font-size:14px;
+  font-weight:800;
+  margin-bottom:4px;
 }
 
 .rating{
-font-size:11px;
-color:#727f78;
+  font-size:11px;
+  color:#727f78;
 }
 
 .price{
-text-align:right;
+  text-align:right;
 }
 
 .price strong{
-display:block;
-font-size:21px;
-color:#078c4b;
+  display:block;
+  font-size:21px;
+  color:#078c4b;
 }
 
 .price small{
-font-size:10px;
-color:#77847d;
+  font-size:10px;
+  color:#77847d;
 }
 
 .best-label{
-display:inline-block;
-background:#078c4b;
-color:white;
-padding:5px 8px;
-border-radius:15px;
-font-size:9px;
-font-weight:800;
-margin-top:6px;
+  display:inline-block;
+  background:#078c4b;
+  color:white;
+  padding:5px 8px;
+  border-radius:15px;
+  font-size:9px;
+  font-weight:800;
+  margin-top:6px;
 }
 
 .quote-details{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
-margin:16px 0;
-padding:14px 0;
-border-top:1px solid #edf1ef;
-border-bottom:1px solid #edf1ef;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin:16px 0;
+  padding:14px 0;
+  border-top:1px solid #edf1ef;
+  border-bottom:1px solid #edf1ef;
 }
 
 .quote-note{
-font-size:11px;
-color:#65736b;
-line-height:1.6;
-margin-bottom:14px;
+  font-size:11px;
+  color:#65736b;
+  line-height:1.6;
+  margin-bottom:14px;
 }
 
 .quote-actions{
-display:flex;
-justify-content:flex-end;
-gap:8px;
-flex-wrap:wrap;
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
 .btn{
-border:0;
-border-radius:7px;
-padding:10px 13px;
-font-family:inherit;
-font-size:10px;
-font-weight:800;
-cursor:pointer;
+  border:0;
+  border-radius:7px;
+  padding:10px 13px;
+  font-family:inherit;
+  font-size:10px;
+  font-weight:800;
+  cursor:pointer;
 }
 
 .btn-outline{
-background:#fff;
-border:1px solid #d8e2dc;
-color:#1e2d25;
+  background:#fff;
+  border:1px solid #d8e2dc;
+  color:#1e2d25;
 }
 
 .btn-green{
-background:#078c4b;
-color:#fff;
+  background:#078c4b;
+  color:#fff;
+}
+
+.btn-green:hover{
+  background:#06753f;
 }
 
 .btn-disabled{
-background:#e5ebe8;
-color:#87918c;
-cursor:default;
+  background:#e5ebe8;
+  color:#87918c;
+  cursor:default;
 }
 
 .summary-row{
-display:flex;
-justify-content:space-between;
-gap:15px;
-padding:10px 0;
-border-bottom:1px solid #edf1ef;
-font-size:11px;
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:10px 0;
+  border-bottom:1px solid #edf1ef;
+  font-size:11px;
 }
 
 .summary-row:last-child{
-border-bottom:0;
+  border-bottom:0;
 }
 
 .summary-row span{
-color:#75817b;
+  color:#75817b;
 }
 
 .summary-row strong{
-text-align:right;
+  text-align:right;
 }
 
 .highlight{
-color:#078c4b;
+  color:#078c4b;
 }
 
 .notice{
-background:#edf7f1;
-border:1px solid #c9e5d4;
-border-radius:9px;
-padding:14px;
-font-size:11px;
-line-height:1.7;
-color:#315e46;
+  background:#edf7f1;
+  border:1px solid #c9e5d4;
+  border-radius:9px;
+  padding:14px;
+  font-size:11px;
+  line-height:1.7;
+  color:#315e46;
 }
 
 .success{
-display:none;
-background:#fff;
-border:1px solid #bfe1cc;
-border-radius:12px;
-padding:30px 20px;
-text-align:center;
-margin-bottom:18px;
+  display:none;
+  background:#fff;
+  border:1px solid #bfe1cc;
+  border-radius:12px;
+  padding:30px 20px;
+  text-align:center;
+  margin-bottom:18px;
 }
 
 .success-icon{
-font-size:48px;
+  font-size:48px;
 }
 
 .success h2{
-color:#078c4b;
-margin:8px 0;
+  color:#078c4b;
+  margin:8px 0;
 }
 
 .success p{
-font-size:12px;
-color:#68766e;
-line-height:1.7;
+  font-size:12px;
+  color:#68766e;
+  line-height:1.7;
 }
 
 .success a{
-display:inline-block;
-margin-top:10px;
-text-decoration:none;
-background:#078c4b;
-color:white;
-padding:11px 16px;
-border-radius:8px;
-font-size:11px;
-font-weight:800;
+  display:inline-block;
+  margin-top:10px;
+  text-decoration:none;
+  background:#078c4b;
+  color:white;
+  padding:11px 16px;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.empty{
+  padding:25px 15px;
+  text-align:center;
+  color:#6c7972;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.error-box{
+  padding:16px;
+  border-radius:9px;
+  background:#fff3f3;
+  border:1px solid #ffd1d1;
+  color:#9f2d2d;
+  font-size:12px;
+  line-height:1.6;
 }
 
 .footer{
-background:#073c27;
-color:white;
-text-align:center;
-padding:26px 0;
+  background:#073c27;
+  color:white;
+  text-align:center;
+  padding:26px 0;
 }
 
 .footer p{
-font-size:12px;
-opacity:.8;
+  font-size:12px;
+  opacity:.8;
 }
 
 @media(max-width:950px){
-.layout{grid-template-columns:1fr}
-.order-info,
-.quote-details{
-grid-template-columns:repeat(2,1fr);
-}
+  .layout{
+    grid-template-columns:1fr;
+  }
+
+  .order-info,
+  .quote-details{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 
 @media(max-width:700px){
-.menu{display:none}
-.page-head{
-align-items:flex-start;
-flex-direction:column;
-}
+  .menu{
+    display:none;
+  }
+
+  .page-head{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .order-head{
+    flex-direction:column;
+  }
 }
 
 @media(max-width:520px){
-.order-info,
-.quote-details{
-grid-template-columns:1fr;
-}
-.quote-top{
-flex-direction:column;
-}
-.price{text-align:left}
+  .order-info,
+  .quote-details{
+    grid-template-columns:1fr;
+  }
+
+  .quote-top{
+    flex-direction:column;
+  }
+
+  .price{
+    text-align:left;
+  }
+
+  .route{
+    font-size:19px;
+  }
 }
 </style>
 </head>
@@ -430,171 +480,171 @@ flex-direction:column;
 <body>
 
 <header class="header">
-<div class="container nav">
+  <div class="container nav">
 
-<a href="index.html" class="logo">
-<span class="logo-icon">🚚</span>
+    <a href="index.html" class="logo">
+      <span class="logo-icon">🚚</span>
+      <div>
+        <strong>VietTruck</strong>
+        <small>Kết nối hàng hóa Việt Nam</small>
+      </div>
+    </a>
 
-<div>
-<strong>VietTruck</strong>
-<small>Kết nối hàng hóa Việt Nam</small>
-</div>
-</a>
+    <nav class="menu">
+      <a href="index.html">Trang chủ</a>
+      <a href="tim-hang.html">Tìm hàng</a>
+      <a href="tim-xe.html">Tìm xe</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="quan-ly-don-hang.html">Quản lý đơn</a>
+      <a href="trung-tam-bao-gia.html" class="active">Báo giá</a>
+      <a href="hop-dong-van-tai.html">Hợp đồng vận tải</a>
+    </nav>
 
-<nav class="menu">
-<a href="index.html">Trang chủ</a>
-<a href="tim-hang.html">Tìm hàng</a>
-<a href="tim-xe.html">Tìm xe</a>
-<a href="dashboard.html">Dashboard</a>
-<a href="quan-ly-don-hang.html">Quản lý đơn</a>
-<a href="trung-tam-bao-gia.html" class="active">Báo giá</a>
-  <a href="hop-dong-van-tai.html">Hợp đồng vận tải</a>
-</nav>
-
-</div>
+  </div>
 </header>
 
 <main class="container">
 
-<section class="page-head">
+  <section class="page-head">
+    <div>
+      <h1>Trung tâm báo giá</h1>
+      <p>So sánh báo giá từ tài xế và nhà xe trước khi chọn đơn vị vận chuyển</p>
+    </div>
 
-<div>
-<h1>Trung tâm báo giá</h1>
-<p>So sánh báo giá từ tài xế và nhà xe trước khi chọn đơn vị vận chuyển</p>
-</div>
+    <a href="quan-ly-don-hang.html" class="back-btn">
+      ← Quản lý đơn hàng
+    </a>
+  </section>
 
-<a href="quan-ly-don-hang.html" class="back-btn">
-← Quản lý đơn hàng
-</a>
+  <section class="layout">
 
-</section>
+    <div>
 
-<section class="layout">
+      <div class="card">
 
-<div>
+        <div class="order-head">
 
-<div class="card">
+          <div>
+            <div class="order-code">
+              Mã đơn:
+              <span id="orderCode">Đang tải...</span>
+            </div>
 
-<div class="order-head">
+            <div class="route">
+              <span id="orderPickup">...</span>
+              <span>→</span>
+              <span id="orderDelivery">...</span>
+            </div>
+          </div>
 
-<div>
-<div class="order-code">
-Mã đơn: <span id="orderCode">Đang tải...</span>
-</div>
+          <span class="status" id="orderStatus">
+            Đang nhận báo giá
+          </span>
 
-<div class="route">
-<span id="orderPickup">...</span>
-<span>→</span>
-<span id="orderDelivery">...</span>
-</div>
-</div>
+        </div>
 
-<span class="status">
-Đang nhận báo giá
-</span>
+        <div class="order-info">
 
-<div class="info">
-    <span>LOẠI HÀNG</span>
-    <strong id="orderCargo">Đang tải...</strong>
-  </div>
+          <div class="info">
+            <span>LOẠI HÀNG</span>
+            <strong id="orderCargo">Đang tải...</strong>
+          </div>
 
-  <div class="info">
-    <span>TRỌNG LƯỢNG</span>
-    <strong id="orderWeight">Đang tải...</strong>
-  </div>
+          <div class="info">
+            <span>TRỌNG LƯỢNG</span>
+            <strong id="orderWeight">Đang tải...</strong>
+          </div>
 
-  <div class="info">
-    <span>LOẠI XE</span>
-    <strong id="orderVehicle">Đang tải...</strong>
-  </div>
+          <div class="info">
+            <span>LOẠI XE</span>
+            <strong id="orderVehicle">Đang tải...</strong>
+          </div>
 
-  <div class="info">
-    <span>NGÀY LẤY</span>
-    <strong id="orderPickupDate">Đang tải...</strong>
-  </div>
+          <div class="info">
+            <span>NGÀY LẤY</span>
+            <strong id="orderPickupDate">Đang tải...</strong>
+          </div>
 
-</div>
+        </div>
 
-</div>
+      </div>
 
-</div>
+      <div class="success" id="successBox">
+        <div class="success-icon">✅</div>
 
-<div class="success" id="successBox">
+        <h2>Đã chọn nhà vận chuyển</h2>
 
-<div class="success-icon">✅</div>
+        <p>
+          Báo giá đã được xác nhận. Chuyến vận chuyển đã được tạo trên hệ thống VietTruck.
+        </p>
 
-<h2>Đã chọn nhà vận chuyển</h2>
+        <a href="chuyen-da-nhan.html">
+          Xem chuyến đã nhận
+        </a>
+      </div>
 
-<p>
-Báo giá đã được xác nhận. Chuyến vận chuyển sẽ được chuyển sang trạng thái đã nhận.
-</p>
+      <div class="card" id="quoteList">
 
-<a href="chuyen-da-nhan.html">
-Xem chuyến đã nhận
-</a>
+        <div class="section-title">
+          <h2>Báo giá nhận được</h2>
+          <div class="count" id="quoteCount">0 báo giá</div>
+        </div>
 
-</div>
+        <div id="quotesContainer">
+          <div class="empty">
+            Đang tải báo giá...
+          </div>
+        </div>
 
-<div class="card" id="quoteList">
+      </div>
 
-<div class="section-title">
-  <h2>Báo giá nhận được</h2>
-  <div class="count" id="quoteCount">0 báo giá</div>
-</div>
+    </div>
 
-<div id="quotesContainer">
-  <div class="empty">
-    Đang tải báo giá...
-  </div>
-</div>
+    <aside>
 
-</div>
+      <div class="card">
 
-<aside>
+        <div class="section-title">
+          <h2>So sánh nhanh</h2>
+        </div>
 
-<div class="card">
+        <div class="summary-row">
+          <span>Giá thấp nhất</span>
+          <strong class="highlight" id="minQuotePrice">0 đ</strong>
+        </div>
 
-<div class="section-title">
-<h2>So sánh nhanh</h2>
-</div>
+        <div class="summary-row">
+          <span>Giá trung bình</span>
+          <strong id="avgQuotePrice">0 đ</strong>
+        </div>
 
-<div class="summary-row">
-  <span>Giá thấp nhất</span>
-  <strong class="highlight" id="minQuotePrice">0 đ</strong>
-</div>
+        <div class="summary-row">
+          <span>Báo giá nhận được</span>
+          <strong id="summaryQuoteCount">0</strong>
+        </div>
 
-<div class="summary-row">
-  <span>Giá trung bình</span>
-  <strong id="avgQuotePrice">0 đ</strong>
-</div>
+        <div class="summary-row">
+          <span>Trạng thái</span>
+          <strong id="quoteSummaryStatus">Đang chờ báo giá</strong>
+        </div>
 
-<div class="summary-row">
-  <span>Báo giá nhận được</span>
-  <strong id="summaryQuoteCount">0</strong>
-</div>
+      </div>
 
-<div class="summary-row">
-  <span>Trạng thái</span>
-  <strong id="quoteSummaryStatus">Đang chờ báo giá</strong>
-</div>
+      <div class="notice">
+        💡 Không nên chỉ chọn giá thấp nhất. Hãy xem thêm loại xe, lịch trình và thông tin nhà vận chuyển trước khi xác nhận.
+      </div>
 
-</div>
+    </aside>
 
-<div class="notice">
-💡 Không nên chỉ chọn giá thấp nhất. VietTruck có thể xếp hạng báo giá dựa trên giá, điểm uy tín, số chuyến hoàn thành, loại xe và tỷ lệ giao hàng đúng giờ.
-</div>
-
-</aside>
-
-</section>
+  </section>
 
 </main>
 
 <footer class="footer">
-<div class="container">
-<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
-<p>© 2026 VietTruck. Trung tâm báo giá vận tải.</p>
-</div>
+  <div class="container">
+    <strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+    <p>© 2026 VietTruck. Trung tâm báo giá vận tải.</p>
+  </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -602,344 +652,667 @@ Xem chuyến đã nhận
 <script src="auth.js"></script>
 
 <script>
-const supabaseClient = window.supabaseClient;
+(function () {
+  "use strict";
 
-const quoteList = document.getElementById("quoteList");
-const quotesContainer = document.getElementById("quotesContainer");
-const quoteCount = document.getElementById("quoteCount");
+  const supabaseClient = window.supabaseClient;
 
-function formatMoney(value) {
-    return Number(value || 0).toLocaleString("vi-VN") + " đ";
-}
+  const quotesContainer = document.getElementById("quotesContainer");
+  const quoteCount = document.getElementById("quoteCount");
+  const successBox = document.getElementById("successBox");
 
-async function loadQuotes() {
+  let currentUser = null;
+  let currentOrder = null;
+  let currentQuotes = [];
 
-    quotesContainer.innerHTML =
-        '<div class="empty">Đang tải báo giá...</div>';
+  function formatMoney(value) {
+    const number = Number(value || 0);
 
-    const {
-        data: { session },
-        error: sessionError
-    } = await supabaseClient.auth.getSession();
-
-    if (sessionError || !session) {
-        window.location.href = "dang-nhap.html";
-        return;
+    if (!Number.isFinite(number)) {
+      return "0 đ";
     }
 
-    const userId = session.user.id;
+    return number.toLocaleString("vi-VN") + " đ";
+  }
 
-    const { data: orders, error: orderError } =
-        await supabaseClient
-            .from("orders")
-            .select("id, pickup_location, delivery_location, cargo_type, weight, vehicle_type, pickup_date, status, created_at")
-            .eq("user_id", userId)
-            .order("created_at", { ascending: false });
+  function formatDate(value) {
+    if (!value) return "Chưa cập nhật";
 
-    if (orderError) {
-        console.error("Lỗi tải đơn:", orderError);
-        quotesContainer.innerHTML =
-            '<div class="empty">Không tải được đơn hàng.</div>';
-        return;
+    try {
+      return new Date(value + "T00:00:00").toLocaleDateString("vi-VN");
+    } catch (error) {
+      return value;
     }
+  }
 
-    if (!orders || orders.length === 0) {
-        quoteCount.textContent = "0 báo giá";
-        quotesContainer.innerHTML =
-            '<div class="empty">Bạn chưa có đơn hàng nào.</div>';
-        return;
-    }
-const params = new URLSearchParams(window.location.search);
-const requestedOrderId = params.get("order_id");
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
 
-const currentOrder = requestedOrderId
-  ? orders.find(order => order.id === requestedOrderId)
-  : orders[0];
-
-if (!currentOrder) {
-  quoteCount.textContent = "0 báo giá";
-  quotesContainer.innerHTML =
-    '<div class="empty">Không tìm thấy đơn hàng này hoặc bạn không có quyền xem đơn.</div>';
-  return;
-}
-
-document.getElementById("orderCode").textContent =
-    currentOrder.id
-        ? currentOrder.id.substring(0, 8).toUpperCase()
-        : "Chưa có";
-
-document.getElementById("orderPickup").textContent =
-    currentOrder.pickup_location || "Chưa cập nhật";
-
-document.getElementById("orderDelivery").textContent =
-    currentOrder.delivery_location || "Chưa cập nhật";
-    
-
-document.getElementById("orderCargo").textContent =
-    currentOrder.cargo_type || "Chưa cập nhật";
-
-document.getElementById("orderWeight").textContent =
-    currentOrder.weight
-        ? currentOrder.weight + " tấn"
-        : "Chưa cập nhật";
-
-document.getElementById("orderVehicle").textContent =
-    currentOrder.vehicle_type || "Không yêu cầu";
-
-document.getElementById("orderPickupDate").textContent =
-    currentOrder.pickup_date
-        ? new Date(
-            currentOrder.pickup_date + "T00:00:00"
-          ).toLocaleDateString("vi-VN")
-        : "Chưa cập nhật";
-   const { data: quotes, error: quoteError } = await supabaseClient
-  .from("quotes")
-  .select("id, order_id, user_id, price, message, status, created_at")
-  .eq("order_id", currentOrder.id)
-  .order("created_at", { ascending: false });
-
-if (quoteError) {
-    console.error("Lỗi tải báo giá:", quoteError);
-    quotesContainer.innerHTML =
-        '<div class="empty">Không tải được báo giá.</div>';
-    return;
-}
-
-if (!quotes || quotes.length === 0) {
+  function resetSummary() {
     document.getElementById("minQuotePrice").textContent = "0 đ";
     document.getElementById("avgQuotePrice").textContent = "0 đ";
     document.getElementById("summaryQuoteCount").textContent = "0";
     document.getElementById("quoteSummaryStatus").textContent =
-        "Đang chờ báo giá";
+      "Đang chờ báo giá";
 
     quoteCount.textContent = "0 báo giá";
+  }
 
+  function showError(message) {
     quotesContainer.innerHTML =
-        '<div class="empty">Chưa có nhà xe gửi báo giá.</div>';
+      '<div class="error-box">' +
+      escapeHtml(message) +
+      "</div>";
+  }
 
-    return;
-}
+  function fillOrder(order) {
+    document.getElementById("orderCode").textContent =
+      order.id
+        ? order.id.substring(0, 8).toUpperCase()
+        : "Chưa có";
 
-  
+    document.getElementById("orderPickup").textContent =
+      order.pickup_location || "Chưa cập nhật";
 
-    quoteCount.textContent = quotes.length + " báo giá";
-  const prices = quotes
-    .map(q => Number(q.price))
-    .filter(p => Number.isFinite(p) && p > 0);
+    document.getElementById("orderDelivery").textContent =
+      order.delivery_location || "Chưa cập nhật";
 
-const minPrice =
-    prices.length > 0
-        ? Math.min(...prices)
+    document.getElementById("orderCargo").textContent =
+      order.cargo_type || "Chưa cập nhật";
+
+    document.getElementById("orderWeight").textContent =
+      order.weight !== null &&
+      order.weight !== undefined &&
+      order.weight !== ""
+        ? order.weight + " tấn"
+        : "Chưa cập nhật";
+
+    document.getElementById("orderVehicle").textContent =
+      order.vehicle_type || "Không yêu cầu";
+
+    document.getElementById("orderPickupDate").textContent =
+      formatDate(order.pickup_date);
+
+    const statusElement =
+      document.getElementById("orderStatus");
+
+    if (order.status === "accepted") {
+      statusElement.textContent = "Đã chọn nhà xe";
+    } else if (order.status === "completed") {
+      statusElement.textContent = "Đã hoàn thành";
+    } else {
+      statusElement.textContent = "Đang nhận báo giá";
+    }
+  }
+
+  function updateSummary(quotes) {
+    const prices = quotes
+      .map(function (quote) {
+        return Number(quote.price);
+      })
+      .filter(function (price) {
+        return Number.isFinite(price) && price > 0;
+      });
+
+    const minPrice =
+      prices.length > 0
+        ? Math.min.apply(null, prices)
         : 0;
 
-const avgPrice =
-    prices.length > 0
-        ? prices.reduce((sum, p) => sum + p, 0) / prices.length
+    const avgPrice =
+      prices.length > 0
+        ? prices.reduce(function (sum, price) {
+            return sum + price;
+          }, 0) / prices.length
         : 0;
 
-document.getElementById("minQuotePrice").textContent =
-    formatMoney(minPrice);
+    document.getElementById("minQuotePrice").textContent =
+      formatMoney(minPrice);
 
-document.getElementById("avgQuotePrice").textContent =
-    formatMoney(Math.round(avgPrice));
+    document.getElementById("avgQuotePrice").textContent =
+      formatMoney(Math.round(avgPrice));
 
-document.getElementById("summaryQuoteCount").textContent =
-    quotes.length;
+    document.getElementById("summaryQuoteCount").textContent =
+      String(quotes.length);
 
-document.getElementById("quoteSummaryStatus").textContent =
-    quotes.some(q => q.status === "accepted")
+    document.getElementById("quoteSummaryStatus").textContent =
+      quotes.some(function (quote) {
+        return quote.status === "accepted";
+      })
         ? "Đã chọn nhà xe"
         : "Đang nhận báo giá";
 
+    quoteCount.textContent =
+      quotes.length + " báo giá";
+  }
+
+  function renderQuotes(quotes) {
+    currentQuotes = quotes || [];
+
+    if (!currentQuotes.length) {
+      resetSummary();
+
+      quotesContainer.innerHTML =
+        '<div class="empty">Chưa có nhà xe gửi báo giá.</div>';
+
+      return;
+    }
+
+    updateSummary(currentQuotes);
+
     quotesContainer.innerHTML = "";
 
-    quotes.forEach((quote, index) => {
-
-        const order = orders.find(
-            item => item.id === quote.order_id
+    const validPrices = currentQuotes
+      .filter(function (quote) {
+        return (
+          quote.status === "pending" &&
+          Number(quote.price) > 0
         );
+      })
+      .map(function (quote) {
+        return Number(quote.price);
+      });
 
-        if (!order) return;
+    const lowestPrice =
+      validPrices.length > 0
+        ? Math.min.apply(null, validPrices)
+        : null;
 
-        const card = document.createElement("div");
+    currentQuotes.forEach(function (quote) {
+      const card = document.createElement("div");
 
-        card.className =
-            index === 0 ? "quote best" : "quote";
+      const isBest =
+        quote.status === "pending" &&
+        lowestPrice !== null &&
+        Number(quote.price) === lowestPrice;
 
-        const statusText =
-            quote.status === "accepted"
-                ? "Đã chọn"
-                : quote.status === "rejected"
-                ? "Không được chọn"
-                : "Đang chờ";
+      card.className =
+        isBest ? "quote best" : "quote";
 
-        card.innerHTML = `
-            <div class="quote-top">
+      let statusText = "Đang chờ";
 
-                <div class="driver">
-                    <div class="avatar">🚚</div>
+      if (quote.status === "accepted") {
+        statusText = "Đã chọn";
+      } else if (quote.status === "rejected") {
+        statusText = "Không được chọn";
+      }
 
-                    <div>
-                        <strong>Nhà xe gửi báo giá</strong>
-                        <div>
-                            ${order.pickup_location || ""}
-                            →
-                            ${order.delivery_location || ""}
-                        </div>
-                    </div>
-                </div>
+      let actionHtml = "";
 
-                <div>
-                    <strong>${formatMoney(quote.price)}</strong>
-                </div>
-
-            </div>
-
-            <div class="quote-info">
-                <p>
-                    Hàng: ${order.cargo_type || "Chưa cập nhật"}
-                </p>
-
-                <p>
-                    Ghi chú:
-                    ${quote.message || "Không có"}
-                </p>
-
-                <p>
-                    Trạng thái: ${statusText}
-                </p>
-            </div>
-
-            <div class="quote-actions">
-
-                ${
-                    ${
-    quote.status === "pending"
-    ? `
-        <button
+      if (quote.status === "pending") {
+        actionHtml = `
+          <button
             type="button"
             class="btn btn-green choose-real-quote"
-            data-quote-id="${quote.id}"
-            data-order-id="${quote.order_id}"
-            data-user-id="${quote.user_id}"
-        >
+            data-quote-id="${escapeHtml(quote.id)}"
+          >
             Chọn báo giá
-        </button>
-      `
-    : quote.status === "accepted"
-    ? `
-        <button
+          </button>
+        `;
+      } else if (quote.status === "accepted") {
+        actionHtml = `
+          <button
             type="button"
             class="btn btn-green chat-with-driver"
-            data-quote-id="${quote.id}"
-        >
+            data-quote-id="${escapeHtml(quote.id)}"
+          >
             💬 Nhắn tin với nhà xe
-        </button>
-      `
-    : ""
-}
-
-            </div>
+          </button>
         `;
+      } else {
+        actionHtml = `
+          <button
+            type="button"
+            class="btn btn-disabled"
+            disabled
+          >
+            Không được chọn
+          </button>
+        `;
+      }
 
-        quotesContainer.appendChild(card);
+      card.innerHTML = `
+        <div class="quote-top">
+
+          <div class="driver">
+
+            <div class="avatar">🚚</div>
+
+            <div>
+              <div class="driver-name">
+                Nhà xe gửi báo giá
+              </div>
+
+              <div class="rating">
+                ${escapeHtml(currentOrder.pickup_location || "")}
+                →
+                ${escapeHtml(currentOrder.delivery_location || "")}
+              </div>
+
+              ${
+                isBest
+                  ? '<span class="best-label">GIÁ THẤP NHẤT</span>'
+                  : ""
+              }
+            </div>
+
+          </div>
+
+          <div class="price">
+            <strong>
+              ${formatMoney(quote.price)}
+            </strong>
+
+            <small>Giá báo vận chuyển</small>
+          </div>
+
+        </div>
+
+        <div class="quote-details">
+
+          <div class="info">
+            <span>LOẠI HÀNG</span>
+            <strong>
+              ${escapeHtml(currentOrder.cargo_type || "Chưa cập nhật")}
+            </strong>
+          </div>
+
+          <div class="info">
+            <span>LOẠI XE</span>
+            <strong>
+              ${escapeHtml(currentOrder.vehicle_type || "Không yêu cầu")}
+            </strong>
+          </div>
+
+          <div class="info">
+            <span>NGÀY LẤY</span>
+            <strong>
+              ${escapeHtml(formatDate(currentOrder.pickup_date))}
+            </strong>
+          </div>
+
+          <div class="info">
+            <span>TRẠNG THÁI</span>
+            <strong>
+              ${escapeHtml(statusText)}
+            </strong>
+          </div>
+
+        </div>
+
+        <div class="quote-note">
+          <strong>Ghi chú:</strong>
+          ${escapeHtml(quote.message || "Không có ghi chú")}
+        </div>
+
+        <div class="quote-actions">
+          ${actionHtml}
+        </div>
+      `;
+
+      quotesContainer.appendChild(card);
     });
-  document
-    .querySelectorAll(".chat-with-driver")
-    .forEach(button => {
-        button.addEventListener("click", async function () {
 
-            const quoteId = this.dataset.quoteId;
+    bindQuoteButtons();
+  }
 
-            this.disabled = true;
-            const oldText = this.textContent;
-            this.textContent = "Đang mở chat...";
-
-            const { data: trip, error } = await supabaseClient
-                .from("trips")
-                .select("id")
-                .eq("quote_id", quoteId)
-                .maybeSingle();
-
-            if (error) {
-                console.error("Lỗi tìm chuyến:", error);
-                alert("Không thể mở cuộc trò chuyện: " + error.message);
-
-                this.disabled = false;
-                this.textContent = oldText;
-                return;
-            }
-
-            if (!trip) {
-                alert("Không tìm thấy chuyến vận chuyển tương ứng.");
-
-                this.disabled = false;
-                this.textContent = oldText;
-                return;
-            }
-
-            window.location.href =
-                "tro-chuyen.html?trip_id=" +
-                encodeURIComponent(trip.id);
-        });
-    });
+  function bindQuoteButtons() {
+    document
+      .querySelectorAll(".choose-real-quote")
+      .forEach(function (button) {
+        button.addEventListener(
+          "click",
+          chooseQuote
+        );
+      });
 
     document
-        .querySelectorAll(".choose-real-quote")
-        .forEach(button => {
+      .querySelectorAll(".chat-with-driver")
+      .forEach(function (button) {
+        button.addEventListener(
+          "click",
+          openChat
+        );
+      });
+  }
 
-            button.addEventListener(
-                "click",
-                async function () {
+  async function chooseQuote(event) {
+    const button = event.currentTarget;
+    const quoteId = button.dataset.quoteId;
 
-                    const quoteId =
-                        this.dataset.quoteId;
+    if (!currentUser) {
+      window.location.href =
+        "dang-nhap.html?redirect=" +
+        encodeURIComponent(window.location.href);
 
-                    const orderId =
-                        this.dataset.orderId;
+      return;
+    }
 
-                    const driverId =
-                        this.dataset.userId;
+    const ok = window.confirm(
+      "Bạn xác nhận chọn báo giá này?"
+    );
 
-                    const ok = confirm(
-                        "Bạn xác nhận chọn báo giá này?"
-                    );
+    if (!ok) return;
 
-                    if (!ok) return;
+    const oldText = button.textContent;
 
-                    this.disabled = true;
-                    this.textContent = "Đang xử lý...";
+    button.disabled = true;
+    button.textContent = "Đang xử lý...";
 
-                    const { data: tripId, error: acceptError } =
-  await supabaseClient.rpc("accept_quote", {
-    p_quote_id: quoteId
-  });
+    try {
+      const {
+        data: tripId,
+        error: acceptError
+      } = await supabaseClient.rpc(
+        "accept_quote",
+        {
+          p_quote_id: quoteId
+        }
+      );
 
-if (acceptError) {
-  console.error("Lỗi chấp nhận báo giá:", acceptError);
+      if (acceptError) {
+        throw acceptError;
+      }
 
-  alert(
-    "Không thể chọn báo giá: " +
-    acceptError.message
-  );
+      console.log(
+        "Chọn báo giá thành công. Trip:",
+        tripId
+      );
 
-  this.disabled = false;
-  this.textContent = "Chọn báo giá";
-  return;
-}
+      alert(
+        "Chọn báo giá thành công! Chuyến vận chuyển đã được tạo."
+      );
 
-alert("Chọn báo giá thành công! Chuyến vận chuyển đã được tạo.");
+      successBox.style.display = "block";
 
-this.disabled = true;
-this.textContent = "Đã chọn";
+      await loadQuotes();
 
-await loadQuotes();
-                }
-            );
+    } catch (error) {
+      console.error(
+        "Lỗi chấp nhận báo giá:",
+        error
+      );
+
+      alert(
+        "Không thể chọn báo giá: " +
+        (error.message || "Lỗi không xác định")
+      );
+
+      button.disabled = false;
+      button.textContent = oldText;
+    }
+  }
+
+  async function openChat(event) {
+    const button = event.currentTarget;
+    const quoteId = button.dataset.quoteId;
+
+    if (!currentUser) {
+      window.location.href =
+        "dang-nhap.html?redirect=" +
+        encodeURIComponent(window.location.href);
+
+      return;
+    }
+
+    const oldText = button.textContent;
+
+    button.disabled = true;
+    button.textContent = "Đang mở chat...";
+
+    try {
+      const {
+        data: trip,
+        error
+      } = await supabaseClient
+        .from("trips")
+        .select("id")
+        .eq("quote_id", quoteId)
+        .maybeSingle();
+
+      if (error) {
+        throw error;
+      }
+
+      if (!trip) {
+        alert(
+          "Không tìm thấy chuyến vận chuyển tương ứng."
+        );
+
+        button.disabled = false;
+        button.textContent = oldText;
+        return;
+      }
+
+      window.location.href =
+        "tro-chuyen.html?trip_id=" +
+        encodeURIComponent(trip.id);
+
+    } catch (error) {
+      console.error(
+        "Lỗi mở trò chuyện:",
+        error
+      );
+
+      alert(
+        "Không thể mở cuộc trò chuyện: " +
+        (error.message || "Lỗi không xác định")
+      );
+
+      button.disabled = false;
+      button.textContent = oldText;
+    }
+  }
+
+  async function loadQuotes() {
+    quotesContainer.innerHTML =
+      '<div class="empty">Đang tải báo giá...</div>';
+
+    resetSummary();
+
+    if (!supabaseClient) {
+      showError(
+        "Không kết nối được Supabase. Vui lòng tải lại trang."
+      );
+      return;
+    }
+
+    try {
+      const {
+        data: sessionData,
+        error: sessionError
+      } = await supabaseClient.auth.getSession();
+
+      if (sessionError) {
+        throw sessionError;
+      }
+
+      const session =
+        sessionData && sessionData.session
+          ? sessionData.session
+          : null;
+
+      /*
+       * Trung tâm báo giá là khu vực riêng của chủ hàng.
+       * Khách chưa đăng nhập vẫn xem hàng ở tim-hang.html,
+       * nhưng không được xem báo giá riêng của chủ hàng.
+       */
+      if (!session || !session.user) {
+        window.location.href =
+          "dang-nhap.html?redirect=" +
+          encodeURIComponent(window.location.href);
+
+        return;
+      }
+
+      currentUser = session.user;
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+      const requestedOrderId =
+        params.get("order_id");
+
+      let orderQuery =
+        supabaseClient
+          .from("orders")
+          .select(
+            "id,user_id,pickup_location,delivery_location,cargo_type,weight,vehicle_type,pickup_date,status,accepted_by,created_at"
+          )
+          .eq("user_id", currentUser.id);
+
+      if (requestedOrderId) {
+        orderQuery =
+          orderQuery.eq(
+            "id",
+            requestedOrderId
+          );
+      } else {
+        orderQuery =
+          orderQuery
+            .order(
+              "created_at",
+              { ascending:false }
+            )
+            .limit(1);
+      }
+
+      const {
+        data: orders,
+        error: orderError
+      } = await orderQuery;
+
+      if (orderError) {
+        throw orderError;
+      }
+
+      if (!orders || orders.length === 0) {
+        document.getElementById(
+          "orderCode"
+        ).textContent = "Không có đơn";
+
+        document.getElementById(
+          "orderPickup"
+        ).textContent = "—";
+
+        document.getElementById(
+          "orderDelivery"
+        ).textContent = "—";
+
+        document.getElementById(
+          "orderCargo"
+        ).textContent = "—";
+
+        document.getElementById(
+          "orderWeight"
+        ).textContent = "—";
+
+        document.getElementById(
+          "orderVehicle"
+        ).textContent = "—";
+
+        document.getElementById(
+          "orderPickupDate"
+        ).textContent = "—";
+
+        if (requestedOrderId) {
+          showError(
+            "Không tìm thấy đơn hàng này hoặc tài khoản hiện tại không có quyền xem báo giá của đơn."
+          );
+        } else {
+          quotesContainer.innerHTML =
+            '<div class="empty">Bạn chưa có đơn hàng nào. Hãy đăng hàng để nhận báo giá từ nhà xe.</div>';
+        }
+
+        return;
+      }
+
+      currentOrder = orders[0];
+
+      fillOrder(currentOrder);
+
+      /*
+       * Nếu vào trang không có order_id,
+       * tự bổ sung order_id vào URL để các lần tải sau
+       * luôn xác định đúng đơn.
+       */
+      if (!requestedOrderId && currentOrder.id) {
+        const newUrl =
+          new URL(window.location.href);
+
+        newUrl.searchParams.set(
+          "order_id",
+          currentOrder.id
+        );
+
+        window.history.replaceState(
+          {},
+          "",
+          newUrl.toString()
+        );
+      }
+
+      const {
+        data: quotes,
+        error: quoteError
+      } = await supabaseClient
+        .from("quotes")
+        .select(
+          "id,order_id,user_id,price,message,status,created_at"
+        )
+        .eq(
+          "order_id",
+          currentOrder.id
+        )
+        .order(
+          "created_at",
+          { ascending:false }
+        );
+
+      if (quoteError) {
+        throw quoteError;
+      }
+
+      renderQuotes(quotes || []);
+
+      const acceptedQuote =
+        (quotes || []).find(function (quote) {
+          return quote.status === "accepted";
         });
-}
 
-loadQuotes();
+      if (
+        acceptedQuote ||
+        currentOrder.status === "accepted"
+      ) {
+        successBox.style.display = "block";
+      } else {
+        successBox.style.display = "none";
+      }
+
+    } catch (error) {
+      console.error(
+        "Lỗi Trung tâm báo giá:",
+        error
+      );
+
+      showError(
+        "Không tải được Trung tâm báo giá: " +
+        (error.message || "Lỗi không xác định")
+      );
+    }
+  }
+
+  loadQuotes();
+
+})();
 </script>
 
 </body>
