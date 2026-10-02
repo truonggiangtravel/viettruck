@@ -1805,21 +1805,134 @@ function renderOrders(orders){
 
 /* ================================
    LOAD ORDERS
+   CHỈ NGƯỜI ĐÃ ĐĂNG NHẬP ĐƯỢC XEM
 ================================ */
 
 async function loadOrders(){
 
     orderContainer.innerHTML = `
         <div class="message-box">
-            Đang tải danh sách hàng...
+            Đang kiểm tra tài khoản...
         </div>
     `;
 
-    orderCount.textContent =
-        "Đang tải...";
-
+    orderCount.textContent = "";
 
     try{
+
+        /* =========================
+           KIỂM TRA ĐĂNG NHẬP
+        ========================= */
+
+        const {
+            data:{
+                session
+            },
+            error:sessionError
+        } =
+        await supabaseClient
+            .auth
+            .getSession();
+
+
+        if(
+            sessionError ||
+            !session ||
+            !session.user
+        ){
+
+            allOrders = [];
+
+            orderCount.textContent =
+                "Yêu cầu đăng nhập";
+
+            orderContainer.innerHTML = `
+
+                <div
+                    class="message-box"
+                    style="
+                        text-align:center;
+                        padding:40px 25px;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:42px;
+                            margin-bottom:15px;
+                        "
+                    >
+                        🔒
+                    </div>
+
+                    <h3
+                        style="
+                            margin:0 0 10px;
+                            color:#13221b;
+                        "
+                    >
+                        Đăng nhập để xem thông tin hàng
+                    </h3>
+
+                    <p
+                        style="
+                            margin:0 auto 22px;
+                            max-width:520px;
+                            line-height:1.7;
+                            color:#68736e;
+                        "
+                    >
+                        Thông tin chi tiết hàng hóa,
+                        tuyến vận chuyển, giá cước,
+                        Báo giá và Nhận chuyến chỉ dành
+                        cho thành viên VietTrucks.
+                    </p>
+
+                    <div
+                        style="
+                            display:flex;
+                            justify-content:center;
+                            gap:10px;
+                            flex-wrap:wrap;
+                        "
+                    >
+
+                        <a
+                            href="dang-nhap.html?redirect=tim-hang.html"
+                            class="btn btn-green"
+                        >
+                            Đăng nhập
+                        </a>
+
+                        <a
+                            href="dang-ky.html"
+                            class="btn btn-outline"
+                        >
+                            Đăng ký tài khoản
+                        </a>
+
+                    </div>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        /* =========================
+           ĐÃ ĐĂNG NHẬP
+        ========================= */
+
+        orderContainer.innerHTML = `
+            <div class="message-box">
+                Đang tải danh sách hàng...
+            </div>
+        `;
+
+        orderCount.textContent =
+            "Đang tải...";
+
 
         const {
             data,
@@ -1896,7 +2009,6 @@ async function loadOrders(){
             "0 đơn hàng";
     }
 }
-
 
 /* ================================
    SEARCH BUTTON
