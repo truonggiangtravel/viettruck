@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Khách hàng & Hội thoại | Admin VietTrucks</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      background:#f5f7f8;
+      color:#17202a;
+    }
+
+    .header{
+      background:#087f45;
+      color:#fff;
+      padding:18px 24px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      flex-wrap:wrap;
+      box-shadow:0 2px 10px rgba(0,0,0,.12);
+    }
+
+    .brand{
+      font-size:24px;
+      font-weight:800;
+    }
+
+    .brand small{
+      display:block;
+      font-size:12px;
+      font-weight:400;
+      margin-top:3px;
+      opacity:.9;
+    }
+
+    .header-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .header-btn{
+      display:inline-block;
+      text-decoration:none;
+      background:#fff;
+      color:#087f45;
+      border:1px solid #fff;
+      padding:10px 16px;
+      border-radius:9px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .container{
+      width:min(1500px,96%);
+      margin:25px auto 50px;
+    }
+
+    .page-title{
+      margin-bottom:20px;
+    }
+
+    .page-title h1{
+      font-size:28px;
+      margin-bottom:7px;
+    }
+
+    .page-title p{
+      color:#667085;
+      line-height:1.5;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:14px;
+      margin-bottom:25px;
+    }
+
+    .stat{
+      background:#fff;
+      border:1px solid #e4e7ec;
+      border-radius:14px;
+      padding:18px;
+      box-shadow:0 3px 12px rgba(0,0,0,.04);
+    }
+
+    .stat-label{
+      font-size:13px;
+      color:#667085;
+      margin-bottom:9px;
+    }
+
+    .stat-value{
+      font-size:28px;
+      font-weight:800;
+      color:#087f45;
+    }
+
+    .panel{
+      background:#fff;
+      border:1px solid #e4e7ec;
+      border-radius:14px;
+      margin-bottom:25px;
+      overflow:hidden;
+      box-shadow:0 3px 12px rgba(0,0,0,.04);
+    }
+
+    .panel-head{
+      padding:18px 20px;
+      border-bottom:1px solid #e4e7ec;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      flex-wrap:wrap;
+    }
+
+    .panel-head h2{
+      font-size:20px;
+    }
+
+    .search{
+      width:330px;
+      max-width:100%;
+      padding:11px 13px;
+      border:1px solid #d0d5dd;
+      border-radius:9px;
+      outline:none;
+    }
+
+    .search:focus{
+      border-color:#087f45;
+    }
+
+    .table-wrap{
+      overflow-x:auto;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:1050px;
+    }
+
+    th{
+      background:#f8faf9;
+      color:#475467;
+      text-align:left;
+      font-size:13px;
+      padding:13px 15px;
+      border-bottom:1px solid #e4e7ec;
+      white-space:nowrap;
+    }
+
+    td{
+      padding:14px 15px;
+      border-bottom:1px solid #eef0f2;
+      font-size:14px;
+      vertical-align:top;
+    }
+
+    tbody tr:hover{
+      background:#fafdfb;
+    }
+
+    .name{
+      font-weight:700;
+    }
+
+    .muted{
+      color:#667085;
+      font-size:12px;
+      margin-top:4px;
+    }
+
+    .role{
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:20px;
+      font-size:12px;
+      font-weight:700;
+      background:#eaf7ef;
+      color:#087f45;
+    }
+
+    .role.admin{
+      background:#fff3cd;
+      color:#8a6100;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:24px;
+      height:24px;
+      padding:0 7px;
+      border-radius:20px;
+      background:#e53935;
+      color:#fff;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .btn{
+      border:0;
+      background:#087f45;
+      color:#fff;
+      padding:9px 13px;
+      border-radius:8px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      background:#066d3b;
+    }
+
+    .empty,
+    .loading{
+      padding:30px;
+      text-align:center;
+      color:#667085;
+    }
+
+    .error{
+      margin-bottom:20px;
+      padding:14px 16px;
+      background:#fff1f0;
+      color:#b42318;
+      border:1px solid #fecdca;
+      border-radius:10px;
+      display:none;
+    }
+
+    /* CHAT MODAL */
+
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.48);
+      z-index:9999;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .modal.open{
+      display:flex;
+    }
+
+    .modal-box{
+      background:#fff;
+      width:min(850px,100%);
+      max-height:90vh;
+      border-radius:16px;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .modal-head{
+      padding:17px 20px;
+      border-bottom:1px solid #e4e7ec;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+    }
+
+    .modal-head h3{
+      font-size:18px;
+    }
+
+    .close{
+      border:0;
+      background:#f2f4f7;
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      cursor:pointer;
+      font-size:20px;
+    }
+
+    .chat-meta{
+      background:#f8faf9;
+      border-bottom:1px solid #e4e7ec;
+      padding:12px 20px;
+      color:#667085;
+      font-size:13px;
+    }
+
+    .messages{
+      padding:20px;
+      overflow-y:auto;
+      min-height:300px;
+      max-height:65vh;
+      background:#f8fafc;
+    }
+
+    .message-row{
+      margin-bottom:14px;
+    }
+
+    .message-author{
+      font-size:12px;
+      color:#667085;
+      margin-bottom:5px;
+    }
+
+    .message-bubble{
+      display:inline-block;
+      max-width:78%;
+      background:#fff;
+      border:1px solid #e4e7ec;
+      padding:11px 13px;
+      border-radius:12px;
+      line-height:1.45;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+
+    .message-time{
+      color:#98a2b3;
+      font-size:11px;
+      margin-top:4px;
+    }
+
+    .security{
+      padding:13px 20px;
+      background:#fff8e6;
+      color:#765800;
+      font-size:12px;
+      border-top:1px solid #f5e1a4;
+    }
+
+    @media(max-width:1100px){
+      .stats{
+        grid-template-columns:repeat(3,1fr);
+      }
+    }
+
+    @media(max-width:650px){
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .container{
+        width:94%;
+      }
+
+      .page-title h1{
+        font-size:23px;
+      }
+
+      .header{
+        padding:15px;
+      }
+
+      .brand{
+        font-size:21px;
+      }
+
+      .stat{
+        padding:14px;
+      }
+
+      .stat-value{
+        font-size:24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <div class="brand">
+    🚚 VietTrucks Admin
+    <small>Trung tâm khách hàng & hội thoại</small>
+  </div>
+
+  <div class="header-actions">
+    <a href="admin.html" class="header-btn">
+      ← Admin Dashboard
+    </a>
+
+    <a href="index.html" class="header-btn">
+      Trang chủ
+    </a>
+  </div>
+
+</header>
+
+
+<main class="container">
+
+  <div class="page-title">
+    <h1>Khách hàng & Hội thoại</h1>
+    <p>
+      Theo dõi tài khoản đăng ký, chủ hàng, tài xế/nhà xe
+      và các cuộc trò chuyện trên VietTrucks.
+    </p>
+  </div>
+
+  <div id="errorBox" class="error"></div>
+
+
+  <!-- THỐNG KÊ -->
+
+  <section class="stats">
+
+    <div class="stat">
+      <div class="stat-label">Tổng tài khoản</div>
+      <div id="totalAccounts" class="stat-value">—</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Chủ hàng</div>
+      <div id="totalCustomers" class="stat-value">—</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Tài xế / Nhà xe</div>
+      <div id="totalDrivers" class="stat-value">—</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Hội thoại</div>
+      <div id="totalConversations" class="stat-value">—</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Tin nhắn</div>
+      <div id="totalMessages" class="stat-value">—</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Chưa đọc</div>
+      <div id="unreadMessages" class="stat-value">—</div>
+    </div>
+
+  </section>
+
+
+  <!-- KHÁCH HÀNG -->
+
+  <section class="panel">
+
+    <div class="panel-head">
+
+      <h2>👥 Tài khoản đăng ký</h2>
+
+      <input
+        id="customerSearch"
+        class="search"
+        type="search"
+        placeholder="Tìm tên, email, điện thoại, công ty..."
+      >
+
+    </div>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Khách hàng</th>
+            <th>Vai trò</th>
+            <th>Điện thoại</th>
+            <th>Khu vực</th>
+            <th>Ngày đăng ký</th>
+            <th>Đơn hàng</th>
+            <th>Xe</th>
+            <th>Hội thoại</th>
+          </tr>
+        </thead>
+
+        <tbody id="customerBody">
+          <tr>
+            <td colspan="8" class="loading">
+              Đang tải dữ liệu...
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <!-- HỘI THOẠI -->
+
+  <section class="panel">
+
+    <div class="panel-head">
+
+      <h2>💬 Hội thoại trên VietTrucks</h2>
+
+      <input
+        id="chatSearch"
+        class="search"
+        type="search"
+        placeholder="Tìm người dùng hoặc tin nhắn..."
+      >
+
+    </div>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Người tham gia</th>
+            <th>Tin nhắn cuối</th>
+            <th>Thời gian</th>
+            <th>Tổng tin</th>
+            <th>Chưa đọc</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody id="conversationBody">
+          <tr>
+            <td colspan="6" class="loading">
+              Đang tải hội thoại...
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- MODAL XEM CHAT -->
+
+<div id="chatModal" class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+      <h3 id="chatTitle">Hội thoại</h3>
+
+      <button
+        class="close"
+        onclick="closeChat()"
+        type="button"
+      >
+        ×
+      </button>
+    </div>
+
+    <div id="chatMeta" class="chat-meta"></div>
+
+    <div id="messageList" class="messages">
+      Đang tải...
+    </div>
+
+    <div class="security">
+      Nội dung này chỉ dành cho tài khoản quản trị được cấp quyền.
+      Không công khai thông tin liên hệ hoặc nội dung hội thoại ra ngoài.
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+  /* =====================================================
+     SUPABASE
+     ===================================================== */
+
+  const client = window.supabaseClient;
+
+  let allCustomers = [];
+  let allConversations = [];
+
+
+  /* =====================================================
+     TIỆN ÍCH
+     ===================================================== */
+
+  function esc(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+
+  function formatDate(value) {
+    if (!value) return "—";
+
+    const d = new Date(value);
+
+    if (Number.isNaN(d.getTime())) {
+      return "—";
+    }
+
+    return d.toLocaleString("vi-VN", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
+
+
+  function displayRole(role) {
+    const value = String(role || "").toLowerCase();
+
+    if (value === "admin") {
+      return "Admin";
+    }
+
+    if (value === "driver") {
+      return "Tài xế / Nhà xe";
+    }
+
+    if (value === "customer") {
+      return "Chủ hàng";
+    }
+
+    return role || "Chưa xác định";
+  }
+
+
+  function showError(message) {
+    const box = document.getElementById("errorBox");
+
+    box.textContent = message;
+    box.style.display = "block";
+  }
+
+
+  /* =====================================================
+     KIỂM TRA ĐĂNG NHẬP + ADMIN
+     ===================================================== */
+
+  async function guardAdmin() {
+
+    if (!client) {
+      throw new Error(
+        "Không tìm thấy Supabase Client."
+      );
+    }
+
+    const {
+      data: { session },
+      error
+    } = await client.auth.getSession();
+
+    if (error) {
+      throw error;
+    }
+
+    if (!session?.user) {
+      window.location.href =
+        "dang-nhap.html?redirect=admin-khach-hang.html";
+
+      return false;
+    }
+
+    const { data, error: adminError } =
+      await client.rpc(
+        "is_viettruck_admin"
+      );
+
+    if (adminError) {
+      throw adminError;
+    }
+
+    if (data !== true) {
+      document.body.innerHTML = `
+        <div style="
+          max-width:650px;
+          margin:80px auto;
+          padding:30px;
+          font-family:Arial;
+          text-align:center;
+        ">
+          <h2 style="color:#b42318">
+            Không có quyền truy cập
+          </h2>
+
+          <p style="
+            margin:15px 0;
+            color:#667085;
+            line-height:1.6;
+          ">
+            Trang này chỉ dành cho tài khoản Admin VietTrucks.
+          </p>
+
+          <a
+            href="index.html"
+            style="
+              display:inline-block;
+              padding:11px 18px;
+              background:#087f45;
+              color:white;
+              text-decoration:none;
+              border-radius:8px;
+              font-weight:bold;
+            "
+          >
+            Về trang chủ
+          </a>
+        </div>
+      `;
+
+      return false;
+    }
+
+    return true;
+  }
+
+
+  /* =====================================================
+     THỐNG KÊ
+     ===================================================== */
+
+  async function loadStats() {
+
+    const { data, error } =
+      await client.rpc(
+        "admin_get_customer_stats"
+      );
+
+    if (error) {
+      throw error;
+    }
+
+    const stats = data?.[0] || {};
+
+    document.getElementById(
+      "totalAccounts"
+    ).textContent =
+      stats.total_accounts ?? 0;
+
+    document.getElementById(
+      "totalCustomers"
+    ).textContent =
+      stats.total_customers ?? 0;
+
+    document.getElementById(
+      "totalDrivers"
+    ).textContent =
+      stats.total_drivers ?? 0;
+
+    document.getElementById(
+      "totalConversations"
+    ).textContent =
+      stats.total_conversations ?? 0;
+
+    document.getElementById(
+      "totalMessages"
+    ).textContent =
+      stats.total_messages ?? 0;
+
+    document.getElementById(
+      "unreadMessages"
+    ).textContent =
+      stats.unread_messages ?? 0;
+  }
+
+
+  /* =====================================================
+     KHÁCH HÀNG
+     ===================================================== */
+
+  async function loadCustomers() {
+
+    const { data, error } =
+      await client.rpc(
+        "admin_get_customers"
+      );
+
+    if (error) {
+      throw error;
+    }
+
+    allCustomers = data || [];
+
+    renderCustomers(
+      allCustomers
+    );
+  }
+
+
+  function renderCustomers(rows) {
+
+    const body =
+      document.getElementById(
+        "customerBody"
+      );
+
+    if (!rows.length) {
+      body.innerHTML = `
+        <tr>
+          <td colspan="8" class="empty">
+            Chưa có tài khoản.
+          </td>
+        </tr>
+      `;
+
+      return;
+    }
+
+    body.innerHTML = rows.map(item => {
+
+      const name =
+        item.full_name ||
+        item.company_name ||
+        item.email ||
+        item.phone ||
+        "Người dùng";
+
+      const secondary =
+        item.company_name &&
+        item.company_name !== name
+          ? item.company_name
+          : item.email || "";
+
+      const role =
+        String(
+          item.role || ""
+        ).toLowerCase();
+
+      return `
+        <tr>
+
+          <td>
+            <div class="name">
+              ${esc(name)}
+            </div>
+
+            ${
+              secondary
+                ? `
+                  <div class="muted">
+                    ${esc(secondary)}
+                  </div>
+                `
+                : ""
+            }
+          </td>
+
+          <td>
+            <span class="role ${role === "admin" ? "admin" : ""}">
+              ${esc(displayRole(item.role))}
+            </span>
+          </td>
+
+          <td>
+            ${esc(item.phone || "—")}
+          </td>
+
+          <td>
+            ${esc(item.city || "—")}
+          </td>
+
+          <td>
+            ${esc(formatDate(item.created_at))}
+          </td>
+
+          <td>
+            ${Number(item.total_orders || 0)}
+          </td>
+
+          <td>
+            ${Number(item.total_vehicles || 0)}
+          </td>
+
+          <td>
+            ${Number(item.total_conversations || 0)}
+          </td>
+
+        </tr>
+      `;
+
+    }).join("");
+  }
+
+
+  /* =====================================================
+     HỘI THOẠI
+     ===================================================== */
+
+  async function loadConversations() {
+
+    const { data, error } =
+      await client.rpc(
+        "admin_get_conversations"
+      );
+
+    if (error) {
+      throw error;
+    }
+
+    allConversations =
+      data || [];
+
+    renderConversations(
+      allConversations
+    );
+  }
+
+
+  function renderConversations(rows) {
+
+    const body =
+      document.getElementById(
+        "conversationBody"
+      );
+
+    if (!rows.length) {
+      body.innerHTML = `
+        <tr>
+          <td colspan="6" class="empty">
+            Chưa có hội thoại.
+          </td>
+        </tr>
+      `;
+
+      return;
+    }
+
+    body.innerHTML = rows.map(item => {
+
+      const user1 =
+        item.user1_name ||
+        "Người dùng 1";
+
+      const user2 =
+        item.user2_name ||
+        "Người dùng 2";
+
+      const unread =
+        Number(
+          item.unread_messages || 0
+        );
+
+      return `
+        <tr>
+
+          <td>
+
+            <div class="name">
+              ${esc(user1)}
+              ↔
+              ${esc(user2)}
+            </div>
+
+            <div class="muted">
+              ${esc(displayRole(item.user1_role))}
+              ↔
+              ${esc(displayRole(item.user2_role))}
+            </div>
+
+          </td>
+
+          <td>
+            ${
+              item.last_message
+                ? esc(item.last_message)
+                : "Chưa có tin nhắn"
+            }
+          </td>
+
+          <td>
+            ${esc(
+              formatDate(
+                item.last_message_at ||
+                item.conversation_created_at
+              )
+            )}
+          </td>
+
+          <td>
+            ${Number(
+              item.total_messages || 0
+            )}
+          </td>
+
+          <td>
+            ${
+              unread > 0
+                ? `<span class="badge">${unread}</span>`
+                : "0"
+            }
+          </td>
+
+          <td>
+            <button
+              type="button"
+              class="btn"
+              onclick="openChat('${esc(item.conversation_id)}')"
+            >
+              Xem hội thoại
+            </button>
+          </td>
+
+        </tr>
+      `;
+
+    }).join("");
+  }
+
+
+  /* =====================================================
+     XEM CHI TIẾT CHAT
+     ===================================================== */
+
+  async function openChat(
+    conversationId
+  ) {
+
+    const conversation =
+      allConversations.find(
+        item =>
+          item.conversation_id ===
+          conversationId
+      );
+
+    const modal =
+      document.getElementById(
+        "chatModal"
+      );
+
+    const title =
+      document.getElementById(
+        "chatTitle"
+      );
+
+    const meta =
+      document.getElementById(
+        "chatMeta"
+      );
+
+    const list =
+      document.getElementById(
+        "messageList"
+      );
+
+    title.textContent =
+      conversation
+        ? `${conversation.user1_name || "Người dùng"} ↔ ${conversation.user2_name || "Người dùng"}`
+        : "Hội thoại";
+
+    meta.textContent =
+      conversation?.vehicle_id
+        ? `Mã xe liên quan: ${conversation.vehicle_id}`
+        : "Hội thoại VietTrucks";
+
+    list.innerHTML =
+      `<div class="loading">Đang tải tin nhắn...</div>`;
+
+    modal.classList.add(
+      "open"
+    );
+
+    const { data, error } =
+      await client.rpc(
+        "admin_get_chat_messages",
+        {
+          p_conversation_id:
+            conversationId
+        }
+      );
+
+    if (error) {
+
+      console.error(
+        "Lỗi tải chat:",
+        error
+      );
+
+      list.innerHTML = `
+        <div class="empty">
+          Không tải được nội dung hội thoại.
+        </div>
+      `;
+
+      return;
+    }
+
+    const messages =
+      data || [];
+
+    if (!messages.length) {
+
+      list.innerHTML = `
+        <div class="empty">
+          Hội thoại chưa có tin nhắn.
+        </div>
+      `;
+
+      return;
+    }
+
+    list.innerHTML =
+      messages.map(message => {
+
+        return `
+          <div class="message-row">
+
+            <div class="message-author">
+              ${esc(
+                message.sender_name ||
+                "Người dùng"
+              )}
+              ·
+              ${esc(
+                displayRole(
+                  message.sender_role
+                )
+              )}
+            </div>
+
+            <div class="message-bubble">
+              ${esc(message.message || "")}
+            </div>
+
+            <div class="message-time">
+              ${esc(
+                formatDate(
+                  message.created_at
+                )
+              )}
+
+              ${
+                message.is_read
+                  ? " · Đã đọc"
+                  : " · Chưa đọc"
+              }
+            </div>
+
+          </div>
+        `;
+
+      }).join("");
+
+    list.scrollTop =
+      list.scrollHeight;
+  }
+
+
+  function closeChat() {
+    document
+      .getElementById(
+        "chatModal"
+      )
+      .classList.remove(
+        "open"
+      );
+  }
+
+
+  /* =====================================================
+     TÌM KIẾM KHÁCH
+     ===================================================== */
+
+  document
+    .getElementById(
+      "customerSearch"
+    )
+    .addEventListener(
+      "input",
+      function() {
+
+        const q =
+          this.value
+            .trim()
+            .toLowerCase();
+
+        if (!q) {
+          renderCustomers(
+            allCustomers
+          );
+
+          return;
+        }
+
+        const filtered =
+          allCustomers.filter(item => {
+
+            const text = [
+              item.full_name,
+              item.email,
+              item.phone,
+              item.role,
+              item.city,
+              item.company_name
+            ]
+              .filter(Boolean)
+              .join(" ")
+              .toLowerCase();
+
+            return text.includes(q);
+          });
+
+        renderCustomers(
+          filtered
+        );
+      }
+    );
+
+
+  /* =====================================================
+     TÌM KIẾM CHAT
+     ===================================================== */
+
+  document
+    .getElementById(
+      "chatSearch"
+    )
+    .addEventListener(
+      "input",
+      function() {
+
+        const q =
+          this.value
+            .trim()
+            .toLowerCase();
+
+        if (!q) {
+          renderConversations(
+            allConversations
+          );
+
+          return;
+        }
+
+        const filtered =
+          allConversations.filter(
+            item => {
+
+              const text = [
+                item.user1_name,
+                item.user1_role,
+                item.user2_name,
+                item.user2_role,
+                item.last_message
+              ]
+                .filter(Boolean)
+                .join(" ")
+                .toLowerCase();
+
+              return text.includes(q);
+            }
+          );
+
+        renderConversations(
+          filtered
+        );
+      }
+    );
+
+
+  /* =====================================================
+     ĐÓNG MODAL
+     ===================================================== */
+
+  document
+    .getElementById(
+      "chatModal"
+    )
+    .addEventListener(
+      "click",
+      function(event) {
+
+        if (
+          event.target === this
+        ) {
+          closeChat();
+        }
+      }
+    );
+
+
+  document.addEventListener(
+    "keydown",
+    function(event) {
+
+      if (
+        event.key === "Escape"
+      ) {
+        closeChat();
+      }
+    }
+  );
+
+
+  /* =====================================================
+     KHỞI ĐỘNG
+     ===================================================== */
+
+  async function init() {
+
+    try {
+
+      const allowed =
+        await guardAdmin();
+
+      if (!allowed) {
+        return;
+      }
+
+      await Promise.all([
+        loadStats(),
+        loadCustomers(),
+        loadConversations()
+      ]);
+
+    } catch (error) {
+
+      console.error(
+        "VietTrucks Admin Error:",
+        error
+      );
+
+      showError(
+        "Không tải được Trung tâm khách hàng. " +
+        (
+          error?.message ||
+          "Vui lòng kiểm tra quyền Admin hoặc Supabase."
+        )
+      );
+    }
+  }
+
+  init();
+</script>
+
+</body>
+</html>
