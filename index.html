@@ -796,7 +796,11 @@ async function loadActiveOrdersCount() {
     return;
   }
 
-  document.getElementById("activeOrders").textContent = count ?? 0;
+  const activeOrdersEl = document.getElementById("activeOrders");
+
+if (activeOrdersEl) {
+  activeOrdersEl.textContent = count ?? 0;
+}
 }
 
 loadActiveOrdersCount();
