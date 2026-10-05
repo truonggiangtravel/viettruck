@@ -589,14 +589,18 @@ button{
 <script src="auth.js"></script>
 
 <script>
-
 /* =========================================================
-   VIETTRUCKS PRODUCTION GPS
-   KHÔNG DỮ LIỆU DEMO
+   VIETTRUCKS - TAI XE HANH TRINH PRODUCTION
+   3 RPC BAO MAT:
+   - start_trip()
+   - update_trip_location()
+   - complete_trip()
+
+   KHONG DU LIEU DEMO
+   KHONG UPDATE TRIPS TRUC TIEP TU FRONTEND
 ========================================================= */
 
 const db = window.supabaseClient;
-
 const app = document.getElementById("app");
 
 let user = null;
@@ -609,10 +613,6 @@ let saving = false;
 let lastSave = 0;
 let latestPosition = null;
 
-/*
- * Giới hạn tần suất ghi DB.
- * GPS có thể callback rất nhiều lần.
- */
 const SAVE_INTERVAL = 10000;
 
 
@@ -621,7 +621,6 @@ const SAVE_INTERVAL = 10000;
 ========================================================= */
 
 function esc(value){
-
     return String(value ?? "")
         .replaceAll("&","&amp;")
         .replaceAll("<","&lt;")
@@ -630,9 +629,7 @@ function esc(value){
         .replaceAll("'","&#039;");
 }
 
-
 function money(value){
-
     const n = Number(value);
 
     if(!Number.isFinite(n)){
@@ -643,15 +640,12 @@ function money(value){
         .format(n) + " đ";
 }
 
-
 function dateTime(value){
-
     if(!value){
         return "Chưa có";
     }
 
     try{
-
         return new Intl.DateTimeFormat(
             "vi-VN",
             {
@@ -659,16 +653,12 @@ function dateTime(value){
                 timeStyle:"medium"
             }
         ).format(new Date(value));
-
     }catch{
-
         return "Không xác định";
     }
 }
 
-
 function coordinate(value){
-
     const n = Number(value);
 
     if(!Number.isFinite(n)){
@@ -678,37 +668,22 @@ function coordinate(value){
     return n.toFixed(6);
 }
 
-
 function statusText(value){
-
-    const status =
-        String(value || "")
-        .toLowerCase();
+    const status = String(value || "").toLowerCase();
 
     const map = {
-
         pending:"Chờ xử lý",
-
         accepted:"Đã nhận chuyến",
-
+        waiting_pickup:"Chờ lấy hàng",
         confirmed:"Đã xác nhận",
-
         started:"Đã bắt đầu",
-
         moving:"Đang vận chuyển",
-
         in_progress:"Đang vận chuyển",
-
         delivering:"Đang giao hàng",
-
         delivered:"Đã giao hàng",
-
         completed:"Hoàn thành",
-
         cancelled:"Đã hủy",
-
         canceled:"Đã hủy"
-
     };
 
     return map[status] || value || "Chưa xác định";
@@ -716,72 +691,44 @@ function statusText(value){
 
 
 /* =========================================================
-   FATAL STATE
+   FATAL
 ========================================================= */
 
 function fatal(icon,title,message,html=""){
-
     app.innerHTML = `
-
         <div class="card state">
-
-            <div class="state-icon">
-                ${icon}
-            </div>
-
-            <h3>
-                ${esc(title)}
-            </h3>
-
-            <p>
-                ${esc(message)}
-            </p>
-
+            <div class="state-icon">${icon}</div>
+            <h3>${esc(title)}</h3>
+            <p>${esc(message)}</p>
             ${html}
-
         </div>
     `;
 }
 
 
 /* =========================================================
-   LOAD REAL TRIP
+   LOAD TRIP THẬT
 ========================================================= */
 
 async function loadTrip(){
 
-    const {
-        data,
-        error
-    } =
-    await db
+    const {data,error} = await db
         .from("trips")
         .select("*")
         .eq("driver_id",user.id)
-        .order(
-            "created_at",
-            {ascending:false}
-        )
+        .order("created_at",{ascending:false})
         .limit(50);
-
 
     if(error){
         throw new Error(
-            "Không đọc được bảng trips: " +
+            "Không đọc được chuyến vận chuyển: " +
             error.message
         );
     }
 
-
     if(!data || data.length === 0){
         return null;
     }
-
-
-    /*
-     * Chỉ lấy chuyến CHƯA kết thúc.
-     * Không lấy chuyến hoàn thành cũ làm chuyến hiện tại.
-     */
 
     const closedStatuses = [
         "completed",
@@ -790,95 +737,66 @@ async function loadTrip(){
         "canceled"
     ];
 
+    return data.find(item => {
+        const status =
+            String(item.status || "").toLowerCase();
 
-    const activeTrip =
-        data.find(item => {
-
-            const s =
-                String(
-                    item.status || ""
-                ).toLowerCase();
-
-            return !closedStatuses.includes(s);
-
-        });
-
-
-    return activeTrip || null;
+        return !closedStatuses.includes(status);
+    }) || null;
 }
 
 
 /* =========================================================
-   LOAD REAL ORDER
+   LOAD ORDER THẬT
+   DÙNG ĐÚNG CỘT DATABASE HIỆN TẠI:
+   delivery_location
 ========================================================= */
 
 async function loadRealOrder(orderId){
 
     if(!orderId){
-
         throw new Error(
             "Chuyến vận chuyển không có order_id."
         );
     }
 
-
-    /*
-     * DÙNG ĐÚNG CẤU TRÚC ORDERS CỦA VIETTRUCKS:
-     *
-     * pickup_location
-     * dropoff_location
-     * cargo_type
-     * weight
-     * vehicle_type
-     * price
-     * pickup_date
-     */
-
-    const {
-        data,
-        error
-    } =
-    await db
+    const {data,error} = await db
         .from("orders")
-        .select(
-            "id,pickup_location,dropoff_location,cargo_type,weight,vehicle_type,price,status,pickup_date"
-        )
+        .select(`
+            id,
+            pickup_location,
+            delivery_location,
+            cargo_type,
+            weight,
+            vehicle_type,
+            price,
+            status,
+            pickup_date
+        `)
         .eq("id",orderId)
         .maybeSingle();
 
-
     if(error){
-
         throw new Error(
-            "Không đọc được đơn hàng thật: " +
+            "Không đọc được đơn hàng: " +
             error.message
         );
     }
 
-
     if(!data){
-
         throw new Error(
-            "Không tìm thấy đơn hàng tương ứng với chuyến này."
+            "Không tìm thấy đơn hàng tương ứng."
         );
     }
-
-
-    /*
-     * Production-only:
-     * thiếu tuyến thật thì KHÔNG tự tạo tên giả.
-     */
 
     if(
         !data.pickup_location ||
-        !data.dropoff_location
+        !data.delivery_location
     ){
-
         throw new Error(
-            "Đơn hàng chưa có đầy đủ điểm lấy hàng và điểm giao hàng."
+            "Đơn hàng chưa có đầy đủ điểm lấy và giao hàng."
         );
     }
-
 
     return data;
 }
@@ -890,19 +808,14 @@ async function loadRealOrder(orderId){
 
 function render(){
 
-    const completed =
-        [
-            "completed",
-            "delivered"
-        ].includes(
-            String(
-                trip.status || ""
-            ).toLowerCase()
-        );
-
+    const completed = [
+        "completed",
+        "delivered"
+    ].includes(
+        String(trip.status || "").toLowerCase()
+    );
 
     app.innerHTML = `
-
     <div class="layout">
 
         <section>
@@ -910,10 +823,7 @@ function render(){
             <div class="card">
 
                 <div class="card-head">
-
-                    <h2>
-                        🚛 Chuyến vận chuyển
-                    </h2>
+                    <h2>🚛 Chuyến vận chuyển</h2>
 
                     <span
                         id="tripBadge"
@@ -922,17 +832,9 @@ function render(){
                             ? "badge-blue"
                             : "badge-green"
                         }">
-
-                        ${esc(
-                            statusText(
-                                trip.status
-                            )
-                        )}
-
+                        ${esc(statusText(trip.status))}
                     </span>
-
                 </div>
-
 
                 <div class="route">
 
@@ -942,45 +844,34 @@ function render(){
                         →
                     </span>
 
-                    ${esc(order.dropoff_location)}
+                    ${esc(order.delivery_location)}
 
                 </div>
-
 
                 <div class="info-grid">
 
                     <div class="info">
-
                         <span class="info-label">
                             Mã chuyến
                         </span>
-
                         <span class="info-value">
                             ${esc(trip.id)}
                         </span>
-
                     </div>
 
-
                     <div class="info">
-
                         <span class="info-label">
                             Mã đơn hàng
                         </span>
-
                         <span class="info-value">
                             ${esc(order.id)}
                         </span>
-
                     </div>
 
-
                     <div class="info">
-
                         <span class="info-label">
                             Hàng hóa
                         </span>
-
                         <span class="info-value">
                             ${
                                 order.cargo_type
@@ -988,16 +879,12 @@ function render(){
                                 : "Chưa cập nhật"
                             }
                         </span>
-
                     </div>
 
-
                     <div class="info">
-
                         <span class="info-label">
                             Trọng lượng
                         </span>
-
                         <span class="info-value">
                             ${
                                 order.weight !== null &&
@@ -1006,16 +893,12 @@ function render(){
                                 : "Chưa cập nhật"
                             }
                         </span>
-
                     </div>
 
-
                     <div class="info">
-
                         <span class="info-label">
                             Loại xe
                         </span>
-
                         <span class="info-value">
                             ${
                                 order.vehicle_type
@@ -1023,52 +906,33 @@ function render(){
                                 : "Chưa cập nhật"
                             }
                         </span>
-
                     </div>
 
-
                     <div class="info">
-
                         <span class="info-label">
                             Giá cước chuyến
                         </span>
-
                         <span class="info-value">
-
                             ${
                                 trip.agreed_price !== null &&
                                 trip.agreed_price !== undefined
-                                ? esc(
-                                    money(
-                                        trip.agreed_price
-                                    )
-                                )
+                                ? esc(money(trip.agreed_price))
                                 :
                                 (
                                     order.price !== null &&
                                     order.price !== undefined
-                                    ? esc(
-                                        money(
-                                            order.price
-                                        )
-                                    )
+                                    ? esc(money(order.price))
                                     : "Thỏa thuận"
                                 )
                             }
-
                         </span>
-
                     </div>
 
-
                     <div class="info">
-
                         <span class="info-label">
                             Ngày lấy hàng
                         </span>
-
                         <span class="info-value">
-
                             ${
                                 order.pickup_date
                                 ? esc(
@@ -1082,14 +946,10 @@ function render(){
                                 )
                                 : "Chưa cập nhật"
                             }
-
                         </span>
-
                     </div>
 
-
                     <div class="info">
-
                         <span class="info-label">
                             Bắt đầu hành trình
                         </span>
@@ -1105,7 +965,6 @@ function render(){
                             )}
 
                         </span>
-
                     </div>
 
                 </div>
@@ -1124,22 +983,17 @@ function render(){
                     <span
                         id="gpsBadge"
                         class="badge">
-
                         Chưa bật
-
                     </span>
 
                 </div>
 
-
                 <div class="notice notice-info">
-
-                    Vị trí hiển thị tại đây được lấy trực tiếp
-                    từ GPS của thiết bị tài xế.
-                    VietTrucks không tạo tọa độ mô phỏng.
-
+                    Vị trí được lấy trực tiếp từ GPS
+                    của thiết bị tài xế và gửi lên
+                    VietTrucks qua kết nối bảo mật.
+                    Hệ thống không sử dụng tọa độ mô phỏng.
                 </div>
-
 
                 <div class="gps-status">
 
@@ -1162,15 +1016,10 @@ function render(){
 
                 </div>
 
-
                 <div class="location-grid">
 
                     <div class="location">
-
-                        <small>
-                            Vĩ độ
-                        </small>
-
+                        <small>Vĩ độ</small>
                         <strong id="lat">
                             ${esc(
                                 coordinate(
@@ -1178,16 +1027,10 @@ function render(){
                                 )
                             )}
                         </strong>
-
                     </div>
 
-
                     <div class="location">
-
-                        <small>
-                            Kinh độ
-                        </small>
-
+                        <small>Kinh độ</small>
                         <strong id="lng">
                             ${esc(
                                 coordinate(
@@ -1195,29 +1038,19 @@ function render(){
                                 )
                             )}
                         </strong>
-
                     </div>
 
-
                     <div class="location">
-
-                        <small>
-                            Độ chính xác
-                        </small>
-
+                        <small>Độ chính xác</small>
                         <strong id="accuracy">
                             Chưa có dữ liệu
                         </strong>
-
                     </div>
 
-
                     <div class="location">
-
                         <small>
                             GPS cập nhật gần nhất
                         </small>
-
                         <strong id="lastLocation">
                             ${esc(
                                 dateTime(
@@ -1225,11 +1058,9 @@ function render(){
                                 )
                             )}
                         </strong>
-
                     </div>
 
                 </div>
-
 
                 <div class="actions">
 
@@ -1237,30 +1068,22 @@ function render(){
                         id="startBtn"
                         class="action-btn start-btn"
                         type="button">
-
                         ▶ Bắt đầu hành trình
-
                     </button>
-
 
                     <button
                         id="stopBtn"
                         class="action-btn stop-btn"
                         type="button"
                         disabled>
-
                         ■ Dừng chia sẻ GPS
-
                     </button>
-
 
                     <button
                         id="completeBtn"
                         class="action-btn complete-btn"
                         type="button">
-
                         ✓ Hoàn thành chuyến
-
                     </button>
 
                 </div>
@@ -1275,49 +1098,35 @@ function render(){
             <div class="card">
 
                 <div class="card-head">
-
-                    <h2>
-                        Nhật ký hành trình
-                    </h2>
-
+                    <h2>Nhật ký hành trình</h2>
                 </div>
 
-
                 <div class="notice notice-warning">
-
                     Khi đang vận chuyển, tài xế nên giữ
                     quyền vị trí của trình duyệt ở trạng thái
                     cho phép.
-
                 </div>
-
 
                 <ul
                     id="log"
                     class="log-list">
 
                     <li class="log-item">
-
                         <div class="log-time">
                             Hệ thống
                         </div>
-
                         <div class="log-message">
                             Đã tải chuyến thật từ VietTrucks.
                         </div>
-
                     </li>
 
                 </ul>
-
 
                 <button
                     id="refreshBtn"
                     type="button"
                     class="action-btn refresh-btn">
-
                     ↻ Tải lại dữ liệu
-
                 </button>
 
             </div>
@@ -1335,7 +1144,6 @@ function render(){
             startTracking
         );
 
-
     document
         .getElementById("stopBtn")
         .addEventListener(
@@ -1343,14 +1151,12 @@ function render(){
             stopTracking
         );
 
-
     document
         .getElementById("completeBtn")
         .addEventListener(
             "click",
             completeTrip
         );
-
 
     document
         .getElementById("refreshBtn")
@@ -1374,12 +1180,10 @@ function addLog(message){
         return;
     }
 
-
     const li =
         document.createElement("li");
 
     li.className = "log-item";
-
 
     const time =
         new Intl.DateTimeFormat(
@@ -1391,24 +1195,18 @@ function addLog(message){
             }
         ).format(new Date());
 
-
     li.innerHTML = `
-
         <div class="log-time">
             ${esc(time)}
         </div>
-
         <div class="log-message">
             ${esc(message)}
         </div>
     `;
 
-
     list.prepend(li);
 
-
     while(list.children.length > 10){
-
         list.removeChild(
             list.lastElementChild
         );
@@ -1428,7 +1226,6 @@ function gpsUI(type,title,description){
     const badge =
         document.getElementById("gpsBadge");
 
-
     if(dot){
 
         dot.className = "gps-dot";
@@ -1441,7 +1238,6 @@ function gpsUI(type,title,description){
             dot.classList.add("error");
         }
     }
-
 
     if(badge){
 
@@ -1472,7 +1268,6 @@ function gpsUI(type,title,description){
         }
     }
 
-
     const titleEl =
         document.getElementById(
             "gpsTitle"
@@ -1482,7 +1277,6 @@ function gpsUI(type,title,description){
         document.getElementById(
             "gpsDescription"
         );
-
 
     if(titleEl){
         titleEl.textContent = title;
@@ -1495,39 +1289,117 @@ function gpsUI(type,title,description){
 
 
 /* =========================================================
-   UPDATE SCREEN POSITION
+   HIỂN THỊ VỊ TRÍ
 ========================================================= */
 
 function showPosition(position){
 
     const c = position.coords;
 
+    const latEl =
+        document.getElementById("lat");
 
-    document.getElementById("lat")
-        .textContent =
-        coordinate(c.latitude);
+    const lngEl =
+        document.getElementById("lng");
 
+    const accuracyEl =
+        document.getElementById("accuracy");
 
-    document.getElementById("lng")
-        .textContent =
-        coordinate(c.longitude);
+    const lastEl =
+        document.getElementById("lastLocation");
 
+    if(latEl){
+        latEl.textContent =
+            coordinate(c.latitude);
+    }
 
-    document.getElementById("accuracy")
-        .textContent =
-        Number.isFinite(c.accuracy)
-        ? Math.round(c.accuracy) + " m"
-        : "Không xác định";
+    if(lngEl){
+        lngEl.textContent =
+            coordinate(c.longitude);
+    }
 
+    if(accuracyEl){
 
-    document.getElementById("lastLocation")
-        .textContent =
-        dateTime(new Date());
+        accuracyEl.textContent =
+            Number.isFinite(c.accuracy)
+            ? Math.round(c.accuracy) + " m"
+            : "Không xác định";
+    }
+
+    if(lastEl){
+        lastEl.textContent =
+            dateTime(new Date());
+    }
 }
 
 
 /* =========================================================
-   SAVE REAL GPS
+   RPC 1:
+   START TRIP
+========================================================= */
+
+async function markStarted(){
+
+    const {data,error} =
+        await db.rpc(
+            "start_trip",
+            {
+                p_trip_id:trip.id
+            }
+        );
+
+    if(error){
+
+        throw new Error(
+            "Không thể bắt đầu chuyến: " +
+            error.message
+        );
+    }
+
+    if(data !== true){
+
+        throw new Error(
+            "Không thể bắt đầu chuyến. " +
+            "Chuyến có thể đã kết thúc hoặc tài khoản " +
+            "không phải tài xế được giao."
+        );
+    }
+
+    if(!trip.started_at){
+        trip.started_at =
+            new Date().toISOString();
+    }
+
+    trip.status = "started";
+
+    const startedAt =
+        document.getElementById(
+            "startedAt"
+        );
+
+    if(startedAt){
+        startedAt.textContent =
+            dateTime(trip.started_at);
+    }
+
+    const badge =
+        document.getElementById(
+            "tripBadge"
+        );
+
+    if(badge){
+        badge.className =
+            "badge badge-green";
+
+        badge.textContent =
+            "Đã bắt đầu";
+    }
+}
+
+
+/* =========================================================
+   RPC 2:
+   UPDATE GPS
 ========================================================= */
 
 async function saveGPS(position){
@@ -1540,9 +1412,7 @@ async function saveGPS(position){
         return;
     }
 
-
     const now = Date.now();
-
 
     if(
         now - lastSave <
@@ -1551,129 +1421,72 @@ async function saveGPS(position){
         return;
     }
 
-
     saving = true;
-
 
     try{
 
         const c = position.coords;
 
-        const lat = Number(c.latitude);
-        const lng = Number(c.longitude);
+        const lat =
+            Number(c.latitude);
 
+        const lng =
+            Number(c.longitude);
 
         if(
             !Number.isFinite(lat) ||
             !Number.isFinite(lng)
         ){
-
             throw new Error(
                 "Thiết bị trả về tọa độ không hợp lệ."
             );
         }
 
-
-        const recordedAt =
-            new Date().toISOString();
-
-
         /*
-         * GHI ĐIỂM GPS THẬT VÀO trip_tracking
+         * QUAN TRỌNG:
+         * KHÔNG INSERT trip_tracking.
+         * KHÔNG UPDATE trips trực tiếp.
+         *
+         * Chỉ RPC được quyền cập nhật 3 trường GPS.
          */
 
-        const {
-            error:trackingError
-        } =
-        await db
-            .from("trip_tracking")
-            .insert({
+        const {data,error} =
+            await db.rpc(
+                "update_trip_location",
+                {
+                    p_trip_id:trip.id,
+                    p_latitude:lat,
+                    p_longitude:lng
+                }
+            );
 
-                trip_id:trip.id,
-
-                driver_id:user.id,
-
-                latitude:lat,
-
-                longitude:lng,
-
-                accuracy:
-                    Number.isFinite(c.accuracy)
-                    ? c.accuracy
-                    : null,
-
-                speed:
-                    Number.isFinite(c.speed)
-                    ? c.speed
-                    : null,
-
-                heading:
-                    Number.isFinite(c.heading)
-                    ? c.heading
-                    : null,
-
-                status:"moving",
-
-                recorded_at:recordedAt
-
-            });
-
-
-        if(trackingError){
+        if(error){
 
             throw new Error(
-                "Không ghi được trip_tracking: " +
-                trackingError.message
+                "Không gửi được GPS: " +
+                error.message
             );
         }
 
-
-        /*
-         * CẬP NHẬT VỊ TRÍ MỚI NHẤT
-         * TRÊN CHUYẾN THẬT
-         */
-
-        const {
-            error:tripError
-        } =
-        await db
-            .from("trips")
-            .update({
-
-                current_latitude:lat,
-
-                current_longitude:lng,
-
-                last_location_at:recordedAt,
-
-                status:"moving",
-
-                updated_at:recordedAt
-
-            })
-            .eq("id",trip.id)
-            .eq("driver_id",user.id);
-
-
-        if(tripError){
-
+        if(
+            data &&
+            data.success === false
+        ){
             throw new Error(
-                "Không cập nhật được vị trí chuyến: " +
-                tripError.message
+                "Hệ thống từ chối cập nhật GPS."
             );
         }
-
 
         trip.current_latitude = lat;
         trip.current_longitude = lng;
-        trip.last_location_at = recordedAt;
-        trip.status = "moving";
+
+        trip.last_location_at =
+            data?.last_location_at ||
+            new Date().toISOString();
 
         lastSave = Date.now();
 
-
         showPosition(position);
-
 
         gpsUI(
             "live",
@@ -1681,32 +1494,13 @@ async function saveGPS(position){
             "Vị trí thật đã được gửi lên VietTrucks."
         );
 
-
-        const tripBadge =
-            document.getElementById(
-                "tripBadge"
-            );
-
-
-        if(tripBadge){
-
-            tripBadge.textContent =
-                "Đang vận chuyển";
-
-            tripBadge.className =
-                "badge badge-green";
-        }
-
-
         addLog(
             "Đã gửi vị trí GPS lên hệ thống."
         );
 
-
     }catch(error){
 
         console.error(error);
-
 
         gpsUI(
             "error",
@@ -1714,11 +1508,10 @@ async function saveGPS(position){
             error.message
         );
 
-
         addLog(
-            "Lỗi: " + error.message
+            "Lỗi GPS: " +
+            error.message
         );
-
 
     }finally{
 
@@ -1746,7 +1539,6 @@ function positionError(error){
     let message =
         "Không lấy được vị trí GPS.";
 
-
     if(error.code === 1){
 
         message =
@@ -1763,100 +1555,18 @@ function positionError(error){
             "GPS phản hồi quá thời gian cho phép.";
     }
 
-
     gpsUI(
         "error",
         "GPS không hoạt động",
         message
     );
 
-
     addLog(message);
 }
 
 
 /* =========================================================
-   MARK STARTED
-========================================================= */
-
-async function markStarted(){
-
-    const now =
-        new Date().toISOString();
-
-
-    const update = {
-        updated_at:now
-    };
-
-
-    if(!trip.started_at){
-
-        update.started_at = now;
-    }
-
-
-    const currentStatus =
-        String(
-            trip.status || ""
-        ).toLowerCase();
-
-
-    if(
-        ![
-            "moving",
-            "in_progress",
-            "delivering"
-        ].includes(currentStatus)
-    ){
-
-        update.status =
-            "started";
-    }
-
-
-    const {
-        error
-    } =
-    await db
-        .from("trips")
-        .update(update)
-        .eq("id",trip.id)
-        .eq("driver_id",user.id);
-
-
-    if(error){
-
-        throw new Error(
-            "Không cập nhật được trạng thái chuyến: " +
-            error.message
-        );
-    }
-
-
-    if(update.started_at){
-
-        trip.started_at =
-            update.started_at;
-
-
-        document
-            .getElementById("startedAt")
-            .textContent =
-            dateTime(trip.started_at);
-    }
-
-
-    if(update.status){
-
-        trip.status =
-            update.status;
-    }
-}
-
-
-/* =========================================================
-   START GPS
+   START TRACKING
 ========================================================= */
 
 async function startTracking(){
@@ -1864,7 +1574,6 @@ async function startTracking(){
     if(tracking){
         return;
     }
-
 
     if(!navigator.geolocation){
 
@@ -1875,30 +1584,32 @@ async function startTracking(){
         return;
     }
 
-
     const startBtn =
         document.getElementById(
             "startBtn"
         );
-
 
     const stopBtn =
         document.getElementById(
             "stopBtn"
         );
 
-
     startBtn.disabled = true;
 
     startBtn.textContent =
         "Đang bật GPS...";
 
-
     try{
 
+        /*
+         * Đầu tiên database xác nhận
+         * tài xế có quyền bắt đầu chuyến.
+         */
         await markStarted();
 
-
+        /*
+         * Sau đó mới xin GPS thiết bị.
+         */
         navigator.geolocation
             .getCurrentPosition(
 
@@ -1909,11 +1620,9 @@ async function startTracking(){
 
                     lastSave = 0;
 
-
                     await saveGPS(
                         position
                     );
-
 
                     watchId =
                         navigator.geolocation
@@ -1928,12 +1637,9 @@ async function startTracking(){
                                 maximumAge:5000,
                                 timeout:20000
                             }
-
                         );
 
-
                     tracking = true;
-
 
                     startBtn.disabled =
                         true;
@@ -1941,24 +1647,19 @@ async function startTracking(){
                     startBtn.textContent =
                         "GPS đang hoạt động";
 
-
                     stopBtn.disabled =
                         false;
-
 
                     gpsUI(
                         "live",
                         "GPS đang hoạt động",
-                        "VietTrucks đang nhận vị trí của xe."
+                        "VietTrucks đang nhận vị trí thật của xe."
                     );
-
 
                     addLog(
-                        "Tài xế bắt đầu hành trình."
+                        "Tài xế bắt đầu chia sẻ GPS."
                     );
-
                 },
-
 
                 error => {
 
@@ -1969,26 +1670,23 @@ async function startTracking(){
                         "▶ Bắt đầu hành trình";
 
                     positionError(error);
-
                 },
-
 
                 {
                     enableHighAccuracy:true,
                     maximumAge:0,
                     timeout:20000
                 }
-
             );
 
-
     }catch(error){
+
+        console.error(error);
 
         startBtn.disabled = false;
 
         startBtn.textContent =
             "▶ Bắt đầu hành trình";
-
 
         alert(error.message);
 
@@ -2002,6 +1700,8 @@ async function startTracking(){
 
 /* =========================================================
    STOP GPS
+   CHỈ DỪNG CHIA SẺ GPS TRÊN THIẾT BỊ.
+   KHÔNG KẾT THÚC TRIP.
 ========================================================= */
 
 function stopTracking(){
@@ -2014,37 +1714,30 @@ function stopTracking(){
         watchId = null;
     }
 
-
     tracking = false;
-
 
     const startBtn =
         document.getElementById(
             "startBtn"
         );
 
-
     const stopBtn =
         document.getElementById(
             "stopBtn"
         );
-
 
     startBtn.disabled = false;
 
     startBtn.textContent =
         "▶ Tiếp tục chia sẻ GPS";
 
-
     stopBtn.disabled = true;
-
 
     gpsUI(
         "stopped",
         "Đã dừng chia sẻ GPS",
-        "Chuyến vẫn đang hoạt động."
+        "Chuyến vận chuyển vẫn đang hoạt động."
     );
-
 
     addLog(
         "Tài xế đã dừng chia sẻ GPS."
@@ -2053,7 +1746,8 @@ function stopTracking(){
 
 
 /* =========================================================
-   COMPLETE REAL TRIP
+   RPC 3:
+   COMPLETE TRIP
 ========================================================= */
 
 async function completeTrip(){
@@ -2065,30 +1759,26 @@ async function completeTrip(){
             "Bạn có chắc chắn muốn hoàn thành chuyến này?"
         );
 
-
     if(!ok){
         return;
     }
-
 
     const completeBtn =
         document.getElementById(
             "completeBtn"
         );
 
-
     completeBtn.disabled = true;
 
     completeBtn.textContent =
         "Đang xử lý...";
 
-
     try{
 
         /*
-         * Nếu vừa có GPS thì cố lưu điểm cuối.
+         * Nếu thiết bị vừa có GPS,
+         * cố gửi điểm cuối trước.
          */
-
         if(latestPosition){
 
             lastSave = 0;
@@ -2098,28 +1788,16 @@ async function completeTrip(){
             );
         }
 
-
-        const now =
-            new Date().toISOString();
-
-
-        const {
-            error
-        } =
-        await db
-            .from("trips")
-            .update({
-
-                status:"completed",
-
-                completed_at:now,
-
-                updated_at:now
-
-            })
-            .eq("id",trip.id)
-            .eq("driver_id",user.id);
-
+        /*
+         * Không UPDATE trips trực tiếp.
+         */
+        const {data,error} =
+            await db.rpc(
+                "complete_trip",
+                {
+                    p_trip_id:trip.id
+                }
+            );
 
         if(error){
 
@@ -2129,13 +1807,20 @@ async function completeTrip(){
             );
         }
 
+        if(data !== true){
+
+            throw new Error(
+                "Không thể hoàn thành chuyến. " +
+                "Chuyến có thể đã kết thúc hoặc tài khoản " +
+                "không phải tài xế được giao."
+            );
+        }
 
         trip.status =
             "completed";
 
         trip.completed_at =
-            now;
-
+            new Date().toISOString();
 
         if(watchId !== null){
 
@@ -2145,38 +1830,39 @@ async function completeTrip(){
             watchId = null;
         }
 
-
         tracking = false;
 
+        const startBtn =
+            document.getElementById(
+                "startBtn"
+            );
 
-        document
-            .getElementById("startBtn")
-            .disabled = true;
+        const stopBtn =
+            document.getElementById(
+                "stopBtn"
+            );
 
-
-        document
-            .getElementById("stopBtn")
-            .disabled = true;
-
+        startBtn.disabled = true;
+        stopBtn.disabled = true;
 
         completeBtn.disabled = true;
 
         completeBtn.textContent =
             "✓ Chuyến đã hoàn thành";
 
-
         const badge =
             document.getElementById(
                 "tripBadge"
             );
 
+        if(badge){
 
-        badge.className =
-            "badge badge-blue";
+            badge.className =
+                "badge badge-blue";
 
-        badge.textContent =
-            "Hoàn thành";
-
+            badge.textContent =
+                "Hoàn thành";
+        }
 
         gpsUI(
             "stopped",
@@ -2184,24 +1870,22 @@ async function completeTrip(){
             "Chuyến vận chuyển đã được hoàn thành."
         );
 
-
         addLog(
             "Chuyến vận chuyển đã hoàn thành."
         );
-
 
         alert(
             "Đã hoàn thành chuyến vận chuyển."
         );
 
-
     }catch(error){
+
+        console.error(error);
 
         completeBtn.disabled = false;
 
         completeBtn.textContent =
             "✓ Hoàn thành chuyến";
-
 
         alert(error.message);
 
@@ -2216,11 +1900,6 @@ async function completeTrip(){
 
 async function init(){
 
-    /*
-     * Không có Supabase thật -> DỪNG.
-     * Không tạo dữ liệu thay thế.
-     */
-
     if(!db){
 
         fatal(
@@ -2232,19 +1911,13 @@ async function init(){
         return;
     }
 
-
     try{
-
-        /*
-         * SESSION THẬT
-         */
 
         const {
             data:{session},
             error
         } =
         await db.auth.getSession();
-
 
         if(error){
 
@@ -2254,27 +1927,20 @@ async function init(){
             );
         }
 
-
         if(
             !session ||
             !session.user
         ){
 
             fatal(
-
                 "🔒",
-
                 "Yêu cầu đăng nhập",
-
                 "Tài xế phải đăng nhập tài khoản VietTrucks trước khi sử dụng theo dõi hành trình.",
-
                 `
                 <a
                     href="dang-nhap.html?redirect=tai-xe-hanh-trinh.html"
                     class="header-btn btn-green">
-
                     Đăng nhập VietTrucks
-
                 </a>
                 `
             );
@@ -2282,82 +1948,50 @@ async function init(){
             return;
         }
 
-
         user = session.user;
-
-
-        /*
-         * TRIP THẬT
-         */
 
         trip =
             await loadTrip();
 
-
         if(!trip){
 
             fatal(
-
                 "🚚",
-
                 "Không có chuyến đang hoạt động",
-
                 "Tài khoản tài xế này hiện không có chuyến vận chuyển đang hoạt động trên VietTrucks.",
-
                 `
                 <a
                     href="tim-hang.html"
                     class="header-btn btn-green">
-
                     Tìm chuyến hàng
-
                 </a>
                 `
             );
 
             return;
         }
-
-
-        /*
-         * ORDER THẬT
-         */
 
         order =
             await loadRealOrder(
                 trip.order_id
             );
 
-
-        /*
-         * CHỈ RENDER KHI
-         * SESSION + TRIP + ORDER ĐỀU THẬT.
-         */
-
         render();
-
 
     }catch(error){
 
         console.error(error);
 
-
         fatal(
-
             "⚠️",
-
             "Không thể mở hành trình",
-
             error.message,
-
             `
             <button
                 type="button"
                 class="action-btn refresh-btn"
                 onclick="location.reload()">
-
                 Thử lại
-
             </button>
             `
         );
@@ -2378,7 +2012,6 @@ window.addEventListener(
             navigator.geolocation
                 .clearWatch(watchId);
         }
-
     }
 );
 
@@ -2391,6 +2024,7 @@ document.addEventListener(
     "DOMContentLoaded",
     init
 );
+</script>
 
 </script>
 
