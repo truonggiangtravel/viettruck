@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Tìm Xe Tải Chở Hàng Toàn Quốc | VietTrucks</title>
 
 <meta name="description" content="Tìm xe tải chở hàng trên VietTrucks. Tìm xe trống phù hợp theo tuyến đường, loại hàng và kết nối với tài xế, nhà xe trên toàn quốc.">
-
 <meta name="robots" content="index, follow">
-
 <link rel="canonical" href="https://viettrucks.com/tim-xe.html">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,130 +15,522 @@
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:"Be Vietnam Pro",sans-serif;background:#f6f8f7;color:#13221b}
-.container{max-width:1180px;margin:auto;padding:0 20px}
+*{
+    box-sizing:border-box;
+}
 
-/* HEADER */
-.header{background:#fff;border-bottom:1px solid #e5e9e7}
-.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:22px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#087b40}
-.logo-icon{font-size:34px}
-.logo strong{font-size:25px}
-.logo small{display:block;font-size:11px;color:#65736c}
-.menu{display:flex;gap:24px}
-.menu a{text-decoration:none;color:#17221d;font-weight:600;font-size:14px}
-.menu a.active,.menu a:hover{color:#078c4b}
-.nav-buttons{display:flex;gap:10px}
-.btn{padding:12px 20px;border-radius:8px;font-weight:700;text-decoration:none}
-.btn-outline{color:#078c4b;border:1px solid #078c4b}
-.btn-green{background:#078c4b;color:white}
+html,body{
+    margin:0;
+    padding:0;
+}
 
-/* TITLE */
-.page-head{background:linear-gradient(135deg,#087d45,#0aa45a);color:#fff;padding:36px 0}
-.page-head h1{margin:0 0 8px;font-size:30px}
-.page-head p{margin:0;opacity:.9}
+body{
+    font-family:"Be Vietnam Pro",sans-serif;
+    background:#f6f8f7;
+    color:#13221b;
+}
 
-/* SEARCH */
-.search-box{background:#fff;margin-top:25px;padding:24px;border-radius:12px;border:1px solid #e1e7e4}
-.search-grid{display:grid;grid-template-columns:1.2fr 1.2fr 1fr 1fr auto;gap:12px;align-items:end}
-.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}
-.field input,.field select{width:100%;height:48px;border:1px solid #d9e1dd;border-radius:8px;padding:0 12px;font-family:inherit;background:white}
-.search-btn{height:48px;padding:0 25px;background:#078c4b;color:#fff;border:0;border-radius:8px;font-weight:700;cursor:pointer}
+button,
+input,
+select{
+    font-family:inherit;
+}
 
-/* CONTENT */
-.layout{display:grid;grid-template-columns:240px 1fr;gap:22px;margin-top:24px;margin-bottom:50px}
-.filter{background:#fff;border:1px solid #e2e7e5;border-radius:10px;padding:20px;height:max-content}
-.filter h3{margin-top:0}
-.filter-group{border-top:1px solid #eee;padding:17px 0}
-.filter-group strong{display:block;margin-bottom:12px;font-size:14px}
-.filter label{display:block;margin:9px 0;font-size:13px;color:#56635d}
+.container{
+    max-width:1180px;
+    margin:auto;
+    padding:0 20px;
+}
 
-.results-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.results-head h2{margin:0;font-size:21px}
-.results-head span{font-size:13px;color:#6d7772}
+/* =========================
+   HEADER
+========================= */
 
-/* TRUCK CARDS */
+.header{
+    background:#fff;
+    border-bottom:1px solid #e5e9e7;
+}
+
+.nav{
+    min-height:76px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:22px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+    color:#087b40;
+}
+
+.logo-icon{
+    font-size:34px;
+}
+
+.logo strong{
+    font-size:25px;
+}
+
+.logo small{
+    display:block;
+    font-size:11px;
+    color:#65736c;
+}
+
+.menu{
+    display:flex;
+    gap:24px;
+}
+
+.menu a{
+    text-decoration:none;
+    color:#17221d;
+    font-weight:600;
+    font-size:14px;
+}
+
+.menu a.active,
+.menu a:hover{
+    color:#078c4b;
+}
+
+.nav-buttons{
+    display:flex;
+    gap:10px;
+}
+
+.btn{
+    padding:12px 20px;
+    border-radius:8px;
+    font-weight:700;
+    text-decoration:none;
+    cursor:pointer;
+    font-family:inherit;
+    font-size:14px;
+}
+
+.btn-outline{
+    color:#078c4b;
+    border:1px solid #078c4b;
+    background:#fff;
+}
+
+.btn-green{
+    background:#078c4b;
+    color:#fff;
+    border:1px solid #078c4b;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.page-head{
+    background:linear-gradient(135deg,#087d45,#0aa45a);
+    color:#fff;
+    padding:36px 0;
+}
+
+.page-head h1{
+    margin:0 0 8px;
+    font-size:30px;
+}
+
+.page-head p{
+    margin:0;
+    opacity:.9;
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box{
+    background:#fff;
+    margin-top:25px;
+    padding:24px;
+    border-radius:12px;
+    border:1px solid #e1e7e4;
+}
+
+.search-grid{
+    display:grid;
+    grid-template-columns:1.2fr 1.2fr 1fr 1fr auto;
+    gap:12px;
+    align-items:end;
+}
+
+.field label{
+    display:block;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    height:48px;
+    border:1px solid #d9e1dd;
+    border-radius:8px;
+    padding:0 12px;
+    font-family:inherit;
+    background:white;
+}
+
+.search-btn{
+    height:48px;
+    padding:0 25px;
+    background:#078c4b;
+    color:#fff;
+    border:0;
+    border-radius:8px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.layout{
+    display:grid;
+    grid-template-columns:240px minmax(0,1fr);
+    gap:22px;
+    margin-top:24px;
+    margin-bottom:50px;
+}
+
+.filter{
+    background:#fff;
+    border:1px solid #e2e7e5;
+    border-radius:10px;
+    padding:20px;
+    height:max-content;
+}
+
+.filter h3{
+    margin-top:0;
+}
+
+.filter-group{
+    border-top:1px solid #eee;
+    padding:17px 0;
+}
+
+.filter-group strong{
+    display:block;
+    margin-bottom:12px;
+    font-size:14px;
+}
+
+.filter label{
+    display:block;
+    margin:9px 0;
+    font-size:13px;
+    color:#56635d;
+}
+
+.results-section{
+    min-width:0;
+}
+
+.results-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:14px;
+}
+
+.results-head h2{
+    margin:0;
+    font-size:21px;
+}
+
+.results-head span{
+    font-size:13px;
+    color:#6d7772;
+}
+
+/* =========================
+   TRUCK CARDS
+========================= */
+
 .truck-card{
-  width:100%;
-  box-sizing:border-box;
-  background:#fff;
-  border:1px solid #e1e6e4;
-  border-radius:10px;
-  padding:20px;
-  margin-bottom:16px;
+    width:100%;
+    background:#fff;
+    border:1px solid #e1e6e4;
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:16px;
 
-  display:grid;
-  grid-template-columns:75px minmax(0,1fr) 180px;
-  gap:16px;
-  align-items:center;
+    display:grid;
+    grid-template-columns:75px minmax(0,1fr) 180px;
+    gap:16px;
+    align-items:center;
+}
+
+.truck-card:hover{
+    box-shadow:0 5px 18px rgba(0,0,0,.07);
+    border-color:#b9dccc;
+}
+
+.truck-icon{
+    width:64px;
+    height:64px;
+    background:#e5f3eb;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:35px;
 }
 
 .truck-info{
-  min-width:0;
+    min-width:0;
 }
 
 .truck-name{
-  font-size:18px;
-  font-weight:800;
-  margin-bottom:6px;
-  line-height:1.4;
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:6px;
+    line-height:1.4;
 }
 
 .route{
-  font-size:15px;
-  color:#53635b;
-  margin-bottom:10px;
-  line-height:1.5;
-  word-break:normal;
-  overflow-wrap:break-word;
+    font-size:14px;
+    color:#53635b;
+    margin-bottom:8px;
+    line-height:1.5;
+    overflow-wrap:break-word;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin:8px 0;
+}
+
+.tag{
+    background:#edf7f1;
+    color:#087a43;
+    padding:6px 9px;
+    border-radius:5px;
+    font-size:12px;
+}
+
+.details{
+    font-size:13px;
+    color:#69756f;
+    line-height:1.7;
 }
 
 .status-box{
-  width:180px;
-  text-align:right;
+    width:180px;
+    text-align:right;
 }
-.truck-card:hover{box-shadow:0 5px 18px rgba(0,0,0,.07);border-color:#b9dccc}
-.truck-icon{
-width:64px;height:64px;
-background:#e5f3eb;
-border-radius:10px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:35px;
-}
-.truck-name{font-size:18px;font-weight:800;margin-bottom:5px}
-.route{font-size:14px;color:#53635b;margin-bottom:8px}
-.tags{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
-.tag{background:#edf7f1;color:#087a43;padding:6px 9px;border-radius:5px;font-size:12px}
-.details{font-size:13px;color:#69756f;line-height:1.7}
-.status-box{text-align:right}
-.status{color:#078c4b;font-weight:800;margin-bottom:5px}
-.available{font-size:12px;color:#777;margin-bottom:12px}
-.view-btn{display:inline-block;background:#078c4b;color:#fff;text-decoration:none;padding:10px 16px;border-radius:7px;font-size:13px;font-weight:700}
 
-/* FOOTER */
-.footer{background:#073c27;color:white;padding:30px 0;text-align:center}
-.footer p{font-size:13px;opacity:.8}
+.status{
+    color:#078c4b;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.available{
+    font-size:12px;
+    color:#777;
+    margin-bottom:12px;
+}
+
+.view-btn{
+    display:inline-block;
+    background:#078c4b;
+    color:#fff;
+    text-decoration:none;
+    padding:10px 16px;
+    border-radius:7px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.message-box{
+    background:#fff;
+    border:1px solid #e1e6e4;
+    border-radius:10px;
+    padding:24px;
+    color:#69756f;
+}
+
+/* =========================
+   PHÂN TRANG
+========================= */
+
+.pagination{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:7px;
+    flex-wrap:wrap;
+    margin:24px 0 8px;
+}
+
+.page-btn{
+    min-width:40px;
+    height:40px;
+    padding:0 12px;
+    border:1px solid #d6e0db;
+    border-radius:7px;
+    background:#fff;
+    color:#26362e;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.page-btn:hover{
+    border-color:#078c4b;
+    color:#078c4b;
+}
+
+.page-btn.active{
+    background:#078c4b;
+    border-color:#078c4b;
+    color:#fff;
+}
+
+.page-btn:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    background:#073c27;
+    color:white;
+    padding:30px 0;
+    text-align:center;
+}
+
+.footer p{
+    font-size:13px;
+    opacity:.8;
+}
+
+/* =========================
+   TABLET
+========================= */
 
 @media(max-width:900px){
-.menu{display:none}
-.search-grid{grid-template-columns:1fr 1fr}
-.layout{grid-template-columns:1fr}
-.filter{display:none}
-}
-@media(max-width:600px){
-.search-grid{grid-template-columns:1fr}
-.truck-card{
-  grid-template-columns:60px minmax(0,1fr);
+
+    .menu{
+        display:none;
+    }
+
+    .search-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .filter{
+        display:none;
+    }
 }
 
-.status-box{
-  grid-column:1 / -1;
-  width:100%;
-  text-align:left;
-}
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    .container{
+        padding-left:14px;
+        padding-right:14px;
+    }
+
+    .nav{
+        flex-wrap:wrap;
+        padding:12px 0;
+    }
+
+    .logo strong{
+        font-size:21px;
+    }
+
+    .logo-icon{
+        font-size:29px;
+    }
+
+    .nav-buttons{
+        width:100%;
+    }
+
+    .nav-buttons .btn{
+        flex:1;
+    }
+
+    .page-head{
+        padding:28px 0;
+    }
+
+    .page-head h1{
+        font-size:24px;
+    }
+
+    .search-box{
+        padding:16px;
+        margin-top:16px;
+    }
+
+    .search-grid{
+        grid-template-columns:1fr;
+    }
+
+    .search-btn{
+        width:100%;
+    }
+
+    .results-head{
+        flex-wrap:wrap;
+    }
+
+    .truck-card{
+        grid-template-columns:60px minmax(0,1fr);
+        padding:16px;
+    }
+
+    .truck-icon{
+        width:55px;
+        height:55px;
+        font-size:30px;
+    }
+
+    .status-box{
+        grid-column:1 / -1;
+        width:100%;
+        text-align:left;
+    }
+
+    .pagination{
+        gap:5px;
+    }
+
+    .page-btn{
+        min-width:36px;
+        height:38px;
+        padding:0 9px;
+        font-size:13px;
+    }
 }
 </style>
 </head>
@@ -150,23 +541,24 @@ font-size:35px;
 <div class="container nav">
 
 <a href="index.html" class="logo">
-<span class="logo-icon">🚚</span>
-<div>
-<strong>VietTruck</strong>
-<small>Kết nối hàng hóa Việt Nam</small>
-</div>
+    <span class="logo-icon">🚚</span>
+
+    <div>
+        <strong>VietTruck</strong>
+        <small>Kết nối hàng hóa Việt Nam</small>
+    </div>
 </a>
 
 <nav class="menu">
-<a href="index.html">Trang chủ</a>
-<a href="tim-hang.html">Tìm hàng</a>
-<a href="tim-xe.html" class="active">Tìm xe</a>
+    <a href="index.html">Trang chủ</a>
+    <a href="tim-hang.html">Tìm hàng</a>
+    <a href="tim-xe.html" class="active">Tìm xe</a>
     <a href="dang-xe.html">Đăng xe</a>
-<a href="dang-hang.html">Đăng hàng</a>
-<a href="bang-gia.html">Bảng giá</a>
-<a href="dich-vu.html">Dịch vụ</a>
-<a href="tin-tuc.html">Tin tức</a>
-<a href="lien-he.html">Liên hệ</a>
+    <a href="dang-hang.html">Đăng hàng</a>
+    <a href="bang-gia.html">Bảng giá</a>
+    <a href="dich-vu.html">Dịch vụ</a>
+    <a href="tin-tuc.html">Tin tức</a>
+    <a href="lien-he.html">Liên hệ</a>
 </nav>
 
 <div class="nav-buttons">
@@ -190,241 +582,1193 @@ font-size:35px;
 </div>
 </header>
 
+
 <section class="page-head">
 <div class="container">
-<h1>Tìm xe tải chở hàng toàn quốc</h1>
-<p>Tìm xe trống phù hợp với tuyến đường và loại hàng của bạn</p>
+
+    <h1>Tìm xe tải chở hàng toàn quốc</h1>
+
+    <p>
+        Tìm xe trống phù hợp với tuyến đường và loại hàng của bạn
+    </p>
+
 </div>
 </section>
+
 
 <main class="container">
 
 <section class="search-box">
+
 <div class="search-grid">
 
-<div class="field">
-<label>Xe đang ở</label>
-<input type="text" placeholder="Tỉnh / Thành phố">
+    <div class="field">
+        <label>Xe đang ở</label>
+        <input
+            type="text"
+            id="currentLocationSearch"
+            placeholder="Tỉnh / Thành phố">
+    </div>
+
+    <div class="field">
+        <label>Đi đến</label>
+        <input
+            type="text"
+            id="destinationSearch"
+            placeholder="Tỉnh / Thành phố">
+    </div>
+
+    <div class="field">
+        <label>Loại xe</label>
+
+        <select id="vehicleTypeSearch">
+            <option value="">Tất cả loại xe</option>
+            <option value="Xe tải thùng">Xe tải thùng</option>
+            <option value="Xe container">Xe container</option>
+            <option value="Xe tải lạnh">Xe tải lạnh</option>
+            <option value="Xe đầu kéo">Xe đầu kéo</option>
+            <option value="Xe van">Xe van</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>Ngày cần xe</label>
+        <input
+            type="date"
+            id="vehicleDateSearch">
+    </div>
+
+    <button
+        type="button"
+        class="search-btn"
+        id="vehicleSearchButton">
+        🔍 Tìm xe
+    </button>
+
 </div>
 
-<div class="field">
-<label>Đi đến</label>
-<input type="text" placeholder="Tỉnh / Thành phố">
-</div>
-
-<div class="field">
-<label>Loại xe</label>
-<select>
-<option>Tất cả loại xe</option>
-<option>Xe tải thùng</option>
-<option>Xe container</option>
-<option>Xe tải lạnh</option>
-<option>Xe đầu kéo</option>
-<option>Xe van</option>
-</select>
-</div>
-
-<div class="field">
-<label>Ngày cần xe</label>
-<input type="date">
-</div>
-
-<button class="search-btn">🔍 Tìm xe</button>
-
-</div>
 </section>
+
 
 <div class="layout">
 
 <aside class="filter">
-<h3>Bộ lọc</h3>
 
-<div class="filter-group">
-<strong>Tải trọng</strong>
-<label><input type="checkbox"> Dưới 1 tấn</label>
-<label><input type="checkbox"> 1 – 3.5 tấn</label>
-<label><input type="checkbox"> 3.5 – 8 tấn</label>
-<label><input type="checkbox"> 8 – 15 tấn</label>
-<label><input type="checkbox"> Trên 15 tấn</label>
-</div>
+    <h3>Bộ lọc</h3>
 
-<div class="filter-group">
-<strong>Loại xe</strong>
-<label><input type="checkbox"> Xe tải thùng</label>
-<label><input type="checkbox"> Container</label>
-<label><input type="checkbox"> Xe lạnh</label>
-<label><input type="checkbox"> Đầu kéo</label>
-</div>
+    <div class="filter-group">
 
-<div class="filter-group">
-<strong>Trạng thái</strong>
-<label><input type="checkbox"> Sẵn sàng ngay</label>
-<label><input type="checkbox"> Xe chiều về</label>
-</div>
+        <strong>Tải trọng</strong>
+
+        <label>
+            <input type="checkbox" class="capacity-filter" value="under1">
+            Dưới 1 tấn
+        </label>
+
+        <label>
+            <input type="checkbox" class="capacity-filter" value="1to3.5">
+            1 – 3.5 tấn
+        </label>
+
+        <label>
+            <input type="checkbox" class="capacity-filter" value="3.5to8">
+            3.5 – 8 tấn
+        </label>
+
+        <label>
+            <input type="checkbox" class="capacity-filter" value="8to15">
+            8 – 15 tấn
+        </label>
+
+        <label>
+            <input type="checkbox" class="capacity-filter" value="over15">
+            Trên 15 tấn
+        </label>
+
+    </div>
+
+
+    <div class="filter-group">
+
+        <strong>Loại xe</strong>
+
+        <label>
+            <input type="checkbox" class="type-filter" value="Xe tải thùng">
+            Xe tải thùng
+        </label>
+
+        <label>
+            <input type="checkbox" class="type-filter" value="container">
+            Container
+        </label>
+
+        <label>
+            <input type="checkbox" class="type-filter" value="lạnh">
+            Xe lạnh
+        </label>
+
+        <label>
+            <input type="checkbox" class="type-filter" value="đầu kéo">
+            Đầu kéo
+        </label>
+
+    </div>
+
+
+    <div class="filter-group">
+
+        <strong>Trạng thái</strong>
+
+        <label>
+            <input type="checkbox" class="status-filter" value="available">
+            Sẵn sàng ngay
+        </label>
+
+        <label>
+            <input type="checkbox" class="status-filter" value="return">
+            Xe chiều về
+        </label>
+
+    </div>
 
 </aside>
 
-<section>
 
-<div class="results-head">
-<h2>Xe trống mới nhất</h2>
-<span><strong id="vehicleCount">0</strong> xe đang sẵn sàng</span>
-</div>
+<section class="results-section">
 
-<div id="vehicleList">
-  <p>Đang tải xe sẵn sàng...</p>
-</div>
+    <div class="results-head">
+
+        <h2>Xe trống mới nhất</h2>
+
+        <span>
+            <strong id="vehicleCount">0</strong>
+            xe đang sẵn sàng
+        </span>
+
+    </div>
+
+
+    <div id="vehicleList">
+
+        <div class="message-box">
+            Đang tải xe sẵn sàng...
+        </div>
+
+    </div>
+
+
+    <!-- PHÂN TRANG 10 XE / TRANG -->
+    <div
+        id="vehiclePagination"
+        class="pagination"
+        aria-label="Phân trang xe">
+    </div>
 
 </section>
+
 </div>
 
 </main>
 
+
 <footer class="footer">
+
 <div class="container">
-<strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
-<p>Nền tảng kết nối chủ hàng và tài xế trên toàn quốc</p>
+
+    <strong>
+        VietTruck – Kết nối hàng hóa Việt Nam
+    </strong>
+
+    <p>
+        Nền tảng kết nối chủ hàng và tài xế trên toàn quốc
+    </p>
+
 </div>
+
 </footer>
+
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.101.0"></script>
 <script src="supabase-config.js"></script>
 <script src="auth.js"></script>
 
+
 <script>
+/* ========================================
+   TÀI KHOẢN
+======================================== */
 
-async function updateLoginButtons() {
-  const {
-    data: { session }
-  } = await supabaseClient.auth.getSession();
+async function updateLoginButtons(){
 
-  const navButtons = document.querySelector(".nav-buttons");
+    const {
+        data:{
+            session
+        }
+    } =
+    await supabaseClient.auth.getSession();
 
-  if (!navButtons) return;
 
-  if (session) {
-    navButtons.innerHTML = `
-      <button
-        type="button"
-        class="btn btn-outline"
-        onclick="window.location.href='dashboard.html'">
-        Tài khoản
-      </button>
+    const navButtons =
+        document.querySelector(".nav-buttons");
 
-      <button
-        type="button"
-        class="btn btn-green"
-        id="logoutBtn">
-        Đăng xuất
-      </button>
-    `;
 
-    document.getElementById("logoutBtn").addEventListener("click", async function () {
-    await logout();
-});
-  }
+    if(!navButtons){
+        return;
+    }
+
+
+    if(session){
+
+        navButtons.innerHTML = `
+
+            <button
+                type="button"
+                class="btn btn-outline"
+                onclick="window.location.href='dashboard.html'">
+                Tài khoản
+            </button>
+
+            <button
+                type="button"
+                class="btn btn-green"
+                id="logoutBtn">
+                Đăng xuất
+            </button>
+        `;
+
+
+        document
+        .getElementById("logoutBtn")
+        .addEventListener(
+            "click",
+            async function(){
+
+                await logout();
+
+            }
+        );
+    }
 }
+
 
 updateLoginButtons();
 </script>
-    <script>
-async function loadAvailableVehicles() {
-  const vehicleList = document.getElementById("vehicleList");
-  const vehicleCount = document.getElementById("vehicleCount");
 
-  const { data, error } = await supabaseClient
-  .from("vehicles")
-  .select(`
-    id,
-    plate_number,
-    vehicle_type,
-    capacity,
-    current_location,
-    destination,
-    available_date,
-    current_province,
-    current_district,
-    destination_province,
-    destination_district,
-    available_from,
-    available_to,
-    driver_name,
-    driver_phone,
-    description,
-    status,
-    created_at
-  `)
-  .eq("status", "available")
-  .order("created_at", { ascending: false });
 
-  if (error) {
-    console.error("Không tải được danh sách xe:", error);
-    vehicleList.innerHTML = "<p>Không tải được danh sách xe.</p>";
-    vehicleCount.textContent = "0";
-    return;
-  }
+<script>
+/* ========================================
+   CẤU HÌNH PHÂN TRANG
+======================================== */
 
-  vehicleCount.textContent = data.length;
+const VEHICLES_PER_PAGE = 10;
 
-  if (!data.length) {
-    vehicleList.innerHTML = "<p>Hiện chưa có xe sẵn sàng.</p>";
-    return;
-  }
+let allAvailableVehicles = [];
 
-  vehicleList.innerHTML = data.map(vehicle => `
-  <div class="truck-card">
+let filteredAvailableVehicles = [];
 
-    <div class="truck-icon">🚚</div>
+let currentVehiclePage = 1;
 
-    <div class="truck-info">
 
-      <div class="truck-name">
-        ${vehicle.vehicle_type || "Xe tải"}
-      </div>
+/* ========================================
+   DOM
+======================================== */
 
-      <div class="route">
-        ${vehicle.current_province || vehicle.current_location || "Chưa cập nhật"}
-        ${vehicle.current_district ? " - " + vehicle.current_district : ""}
-        →
-        ${vehicle.destination_province || vehicle.destination || "Chưa cập nhật"}
-        ${vehicle.destination_district ? " - " + vehicle.destination_district : ""}
-      </div>
+const vehicleList =
+    document.getElementById("vehicleList");
 
-      <div class="tags">
-        ${vehicle.capacity ? `<span class="tag">${vehicle.capacity} tấn</span>` : ""}
-        ${vehicle.vehicle_type ? `<span class="tag">${vehicle.vehicle_type}</span>` : ""}
-        ${vehicle.plate_number ? `<span class="tag">${vehicle.plate_number}</span>` : ""}
-      </div>
+const vehicleCount =
+    document.getElementById("vehicleCount");
 
-      <div class="details">
-        📍 Hiện tại:
-        ${vehicle.current_province || vehicle.current_location || "Chưa cập nhật"}
-        ${vehicle.current_district ? " - " + vehicle.current_district : ""}
-        <br>
+const vehiclePagination =
+    document.getElementById("vehiclePagination");
 
-        🏁 Đi đến:
-        ${vehicle.destination_province || vehicle.destination || "Chưa cập nhật"}
-        ${vehicle.destination_district ? " - " + vehicle.destination_district : ""}
-        <br>
+const currentLocationSearch =
+    document.getElementById("currentLocationSearch");
 
-        🚚 Biển số:
-        ${vehicle.plate_number || "Chưa cập nhật"}
-      </div>
+const destinationSearch =
+    document.getElementById("destinationSearch");
 
-    </div>
+const vehicleTypeSearch =
+    document.getElementById("vehicleTypeSearch");
 
-    <div class="status-box">
-      <div class="status">● Sẵn sàng</div>
-      <div class="available">Có thể nhận hàng ngay</div>
-      <a href="chi-tiet-xe.html?id=${vehicle.id}" class="view-btn">
-        Xem xe
-      </a>
-    </div>
+const vehicleDateSearch =
+    document.getElementById("vehicleDateSearch");
 
-  </div>
-`).join("");
+const vehicleSearchButton =
+    document.getElementById("vehicleSearchButton");
+
+
+/* ========================================
+   CHUẨN HÓA TEXT
+======================================== */
+
+function normalizeText(value){
+
+    return String(value || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"")
+        .trim();
 }
 
+
+/* ========================================
+   ESCAPE HTML
+======================================== */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+
+/* ========================================
+   FORMAT NGÀY
+======================================== */
+
+function formatDate(value){
+
+    if(!value){
+        return "";
+    }
+
+    const date =
+        String(value).substring(0,10);
+
+    const parts =
+        date.split("-");
+
+    if(parts.length !== 3){
+        return escapeHTML(value);
+    }
+
+    return (
+        Number(parts[2]) +
+        "/" +
+        Number(parts[1]) +
+        "/" +
+        parts[0]
+    );
+}
+
+
+/* ========================================
+   LỌC TẢI TRỌNG
+======================================== */
+
+function matchCapacity(vehicle){
+
+    const checked =
+        Array.from(
+            document.querySelectorAll(
+                ".capacity-filter:checked"
+            )
+        )
+        .map(item => item.value);
+
+
+    if(!checked.length){
+        return true;
+    }
+
+
+    const capacity =
+        Number(vehicle.capacity);
+
+
+    if(!Number.isFinite(capacity)){
+        return false;
+    }
+
+
+    return checked.some(function(type){
+
+        if(type === "under1"){
+            return capacity < 1;
+        }
+
+        if(type === "1to3.5"){
+            return capacity >= 1 &&
+                   capacity <= 3.5;
+        }
+
+        if(type === "3.5to8"){
+            return capacity > 3.5 &&
+                   capacity <= 8;
+        }
+
+        if(type === "8to15"){
+            return capacity > 8 &&
+                   capacity <= 15;
+        }
+
+        if(type === "over15"){
+            return capacity > 15;
+        }
+
+        return false;
+
+    });
+}
+
+
+/* ========================================
+   LỌC LOẠI XE
+======================================== */
+
+function matchVehicleType(vehicle){
+
+    const checked =
+        Array.from(
+            document.querySelectorAll(
+                ".type-filter:checked"
+            )
+        )
+        .map(
+            item =>
+            normalizeText(item.value)
+        );
+
+
+    if(!checked.length){
+        return true;
+    }
+
+
+    const vehicleType =
+        normalizeText(
+            vehicle.vehicle_type
+        );
+
+
+    return checked.some(
+        type =>
+        vehicleType.includes(type)
+    );
+}
+
+
+/* ========================================
+   ÁP DỤNG TÌM KIẾM + BỘ LỌC
+======================================== */
+
+function filterVehicles(){
+
+    const currentLocation =
+        normalizeText(
+            currentLocationSearch.value
+        );
+
+    const destination =
+        normalizeText(
+            destinationSearch.value
+        );
+
+    const vehicleType =
+        normalizeText(
+            vehicleTypeSearch.value
+        );
+
+    const selectedDate =
+        vehicleDateSearch.value;
+
+
+    filteredAvailableVehicles =
+        allAvailableVehicles.filter(
+            function(vehicle){
+
+                const currentValue =
+                    normalizeText(
+                        (
+                            vehicle.current_province ||
+                            vehicle.current_location ||
+                            ""
+                        ) +
+                        " " +
+                        (
+                            vehicle.current_district ||
+                            ""
+                        )
+                    );
+
+
+                const destinationValue =
+                    normalizeText(
+                        (
+                            vehicle.destination_province ||
+                            vehicle.destination ||
+                            ""
+                        ) +
+                        " " +
+                        (
+                            vehicle.destination_district ||
+                            ""
+                        )
+                    );
+
+
+                const typeValue =
+                    normalizeText(
+                        vehicle.vehicle_type
+                    );
+
+
+                const availableDate =
+                    vehicle.available_date
+                    ? String(
+                        vehicle.available_date
+                      ).substring(0,10)
+                    : "";
+
+
+                if(
+                    currentLocation &&
+                    !currentValue.includes(
+                        currentLocation
+                    )
+                ){
+                    return false;
+                }
+
+
+                if(
+                    destination &&
+                    !destinationValue.includes(
+                        destination
+                    )
+                ){
+                    return false;
+                }
+
+
+                if(
+                    vehicleType &&
+                    !typeValue.includes(
+                        vehicleType
+                    )
+                ){
+                    return false;
+                }
+
+
+                if(
+                    selectedDate &&
+                    availableDate &&
+                    availableDate !== selectedDate
+                ){
+                    return false;
+                }
+
+
+                if(!matchCapacity(vehicle)){
+                    return false;
+                }
+
+
+                if(!matchVehicleType(vehicle)){
+                    return false;
+                }
+
+
+                return true;
+            }
+        );
+
+
+    currentVehiclePage = 1;
+
+    renderVehicles();
+}
+
+
+/* ========================================
+   RENDER 10 XE / TRANG
+======================================== */
+
+function renderVehicles(){
+
+    vehicleList.innerHTML = "";
+
+    vehicleCount.textContent =
+        filteredAvailableVehicles.length;
+
+
+    if(!filteredAvailableVehicles.length){
+
+        vehicleList.innerHTML = `
+            <div class="message-box">
+                Hiện chưa có xe phù hợp.
+            </div>
+        `;
+
+        vehiclePagination.innerHTML = "";
+
+        return;
+    }
+
+
+    const totalPages =
+        Math.ceil(
+            filteredAvailableVehicles.length /
+            VEHICLES_PER_PAGE
+        );
+
+
+    if(currentVehiclePage > totalPages){
+
+        currentVehiclePage =
+            totalPages || 1;
+    }
+
+
+    const startIndex =
+        (
+            currentVehiclePage - 1
+        ) *
+        VEHICLES_PER_PAGE;
+
+
+    const pageVehicles =
+        filteredAvailableVehicles.slice(
+            startIndex,
+            startIndex + VEHICLES_PER_PAGE
+        );
+
+
+    vehicleList.innerHTML =
+        pageVehicles.map(
+            function(vehicle){
+
+                const currentProvince =
+                    escapeHTML(
+                        vehicle.current_province ||
+                        vehicle.current_location ||
+                        "Chưa cập nhật"
+                    );
+
+
+                const currentDistrict =
+                    vehicle.current_district
+                    ? " - " +
+                      escapeHTML(
+                        vehicle.current_district
+                      )
+                    : "";
+
+
+                const destinationProvince =
+                    escapeHTML(
+                        vehicle.destination_province ||
+                        vehicle.destination ||
+                        "Chưa cập nhật"
+                    );
+
+
+                const destinationDistrict =
+                    vehicle.destination_district
+                    ? " - " +
+                      escapeHTML(
+                        vehicle.destination_district
+                      )
+                    : "";
+
+
+                const vehicleType =
+                    escapeHTML(
+                        vehicle.vehicle_type ||
+                        "Xe tải"
+                    );
+
+
+                const capacity =
+                    vehicle.capacity
+                    ? escapeHTML(
+                        vehicle.capacity
+                      ) + " tấn"
+                    : "";
+
+
+                const plate =
+                    escapeHTML(
+                        vehicle.plate_number ||
+                        "Chưa cập nhật"
+                    );
+
+
+                const availableDate =
+                    formatDate(
+                        vehicle.available_date
+                    );
+
+
+                return `
+
+                    <div class="truck-card">
+
+                        <div class="truck-icon">
+                            🚚
+                        </div>
+
+
+                        <div class="truck-info">
+
+                            <div class="truck-name">
+                                ${vehicleType}
+                            </div>
+
+
+                            <div class="route">
+
+                                ${currentProvince}
+                                ${currentDistrict}
+
+                                →
+
+                                ${destinationProvince}
+                                ${destinationDistrict}
+
+                            </div>
+
+
+                            <div class="tags">
+
+                                ${
+                                    capacity
+                                    ? `
+                                        <span class="tag">
+                                            ${capacity}
+                                        </span>
+                                      `
+                                    : ""
+                                }
+
+                                ${
+                                    vehicle.vehicle_type
+                                    ? `
+                                        <span class="tag">
+                                            ${vehicleType}
+                                        </span>
+                                      `
+                                    : ""
+                                }
+
+                                ${
+                                    vehicle.plate_number
+                                    ? `
+                                        <span class="tag">
+                                            ${plate}
+                                        </span>
+                                      `
+                                    : ""
+                                }
+
+                            </div>
+
+
+                            <div class="details">
+
+                                📍 Hiện tại:
+                                ${currentProvince}
+                                ${currentDistrict}
+
+                                <br>
+
+                                🏁 Đi đến:
+                                ${destinationProvince}
+                                ${destinationDistrict}
+
+                                <br>
+
+                                🚚 Biển số:
+                                ${plate}
+
+                                ${
+                                    availableDate
+                                    ? `
+                                        <br>
+                                        📅 Ngày sẵn sàng:
+                                        ${availableDate}
+                                      `
+                                    : ""
+                                }
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="status-box">
+
+                            <div class="status">
+                                ● Sẵn sàng
+                            </div>
+
+                            <div class="available">
+                                Có thể nhận hàng ngay
+                            </div>
+
+                            <a
+                                href="chi-tiet-xe.html?id=${encodeURIComponent(vehicle.id)}"
+                                class="view-btn">
+                                Xem xe
+                            </a>
+
+                        </div>
+
+                    </div>
+                `;
+
+            }
+        )
+        .join("");
+
+
+    renderVehiclePagination(
+        totalPages
+    );
+}
+
+
+/* ========================================
+   TẠO NÚT PHÂN TRANG
+======================================== */
+
+function renderVehiclePagination(
+    totalPages
+){
+
+    if(
+        !vehiclePagination ||
+        totalPages <= 1
+    ){
+
+        if(vehiclePagination){
+            vehiclePagination.innerHTML = "";
+        }
+
+        return;
+    }
+
+
+    function makeButton(
+        text,
+        page,
+        active = false,
+        disabled = false
+    ){
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+        button.type =
+            "button";
+
+
+        button.className =
+            "page-btn" +
+            (
+                active
+                ? " active"
+                : ""
+            );
+
+
+        button.textContent =
+            text;
+
+
+        button.disabled =
+            disabled;
+
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                if(
+                    disabled ||
+                    page === currentVehiclePage
+                ){
+                    return;
+                }
+
+
+                currentVehiclePage =
+                    page;
+
+
+                renderVehicles();
+
+
+                const results =
+                    document.querySelector(
+                        ".results-section"
+                    );
+
+
+                if(results){
+
+                    results.scrollIntoView({
+                        behavior:"smooth",
+                        block:"start"
+                    });
+
+                }
+            }
+        );
+
+
+        return button;
+    }
+
+
+    vehiclePagination.innerHTML = "";
+
+
+    vehiclePagination.appendChild(
+        makeButton(
+            "‹ Trước",
+            Math.max(
+                1,
+                currentVehiclePage - 1
+            ),
+            false,
+            currentVehiclePage === 1
+        )
+    );
+
+
+    let start =
+        Math.max(
+            1,
+            currentVehiclePage - 2
+        );
+
+
+    let end =
+        Math.min(
+            totalPages,
+            start + 4
+        );
+
+
+    start =
+        Math.max(
+            1,
+            end - 4
+        );
+
+
+    for(
+        let page = start;
+        page <= end;
+        page++
+    ){
+
+        vehiclePagination.appendChild(
+            makeButton(
+                String(page),
+                page,
+                page === currentVehiclePage
+            )
+        );
+    }
+
+
+    vehiclePagination.appendChild(
+        makeButton(
+            "Sau ›",
+            Math.min(
+                totalPages,
+                currentVehiclePage + 1
+            ),
+            false,
+            currentVehiclePage === totalPages
+        )
+    );
+}
+
+
+/* ========================================
+   LOAD XE TỪ SUPABASE
+======================================== */
+
+async function loadAvailableVehicles(){
+
+    vehicleList.innerHTML = `
+        <div class="message-box">
+            Đang tải xe sẵn sàng...
+        </div>
+    `;
+
+
+    vehiclePagination.innerHTML = "";
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("vehicles")
+        .select(`
+            id,
+            plate_number,
+            vehicle_type,
+            capacity,
+            current_location,
+            destination,
+            available_date,
+            current_province,
+            current_district,
+            destination_province,
+            destination_district,
+            available_from,
+            available_to,
+            driver_name,
+            driver_phone,
+            description,
+            status,
+            created_at
+        `)
+        .eq(
+            "status",
+            "available"
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        console.error(
+            "Không tải được danh sách xe:",
+            error
+        );
+
+
+        allAvailableVehicles = [];
+
+        filteredAvailableVehicles = [];
+
+
+        vehicleList.innerHTML = `
+            <div class="message-box">
+                Không tải được danh sách xe.
+            </div>
+        `;
+
+
+        vehicleCount.textContent =
+            "0";
+
+
+        return;
+    }
+
+
+    allAvailableVehicles =
+        Array.isArray(data)
+        ? data
+        : [];
+
+
+    filteredAvailableVehicles =
+        [...allAvailableVehicles];
+
+
+    currentVehiclePage = 1;
+
+
+    renderVehicles();
+}
+
+
+/* ========================================
+   SỰ KIỆN TÌM KIẾM
+======================================== */
+
+vehicleSearchButton.addEventListener(
+    "click",
+    filterVehicles
+);
+
+
+currentLocationSearch.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+            filterVehicles();
+        }
+
+    }
+);
+
+
+destinationSearch.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+            filterVehicles();
+        }
+
+    }
+);
+
+
+vehicleTypeSearch.addEventListener(
+    "change",
+    filterVehicles
+);
+
+
+vehicleDateSearch.addEventListener(
+    "change",
+    filterVehicles
+);
+
+
+/* ========================================
+   BỘ LỌC CHECKBOX
+======================================== */
+
+document
+.querySelectorAll(
+    ".capacity-filter, .type-filter, .status-filter"
+)
+.forEach(
+    function(item){
+
+        item.addEventListener(
+            "change",
+            filterVehicles
+        );
+
+    }
+);
+
+
+/* ========================================
+   CHẠY
+======================================== */
+
 loadAvailableVehicles();
+
 </script>
+
 </body>
 </html>
