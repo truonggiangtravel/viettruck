@@ -1,0 +1,2737 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hành trình tài xế | VietTrucks</title>
+
+<meta name="robots" content="noindex,nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:"Be Vietnam Pro",Arial,sans-serif;
+    background:#f4f7f5;
+    color:#15231c;
+}
+
+a{
+    text-decoration:none;
+}
+
+button{
+    font-family:inherit;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    background:#fff;
+    border-bottom:1px solid #e4e9e6;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.header-inner{
+    width:100%;
+    max-width:1100px;
+    min-height:72px;
+    margin:auto;
+    padding:0 18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#087d45;
+}
+
+.logo-icon{
+    font-size:32px;
+}
+
+.logo strong{
+    display:block;
+    font-size:24px;
+    line-height:1.1;
+}
+
+.logo small{
+    display:block;
+    margin-top:2px;
+    color:#68766f;
+    font-size:11px;
+}
+
+.header-actions{
+    display:flex;
+    gap:10px;
+}
+
+.header-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:42px;
+    padding:0 16px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.header-btn-outline{
+    border:1px solid #078c4b;
+    color:#078c4b;
+    background:#fff;
+}
+
+.header-btn-green{
+    border:1px solid #078c4b;
+    color:#fff;
+    background:#078c4b;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    background:
+        linear-gradient(
+            135deg,
+            #076c3c,
+            #0aa158
+        );
+    color:#fff;
+    padding:32px 18px;
+}
+
+.hero-inner{
+    max-width:1100px;
+    margin:auto;
+}
+
+.hero h1{
+    margin:0 0 8px;
+    font-size:28px;
+}
+
+.hero p{
+    margin:0;
+    opacity:.92;
+    line-height:1.6;
+    font-size:14px;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.container{
+    width:100%;
+    max-width:1100px;
+    margin:24px auto 60px;
+    padding:0 18px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);
+    gap:20px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid #e0e7e3;
+    border-radius:14px;
+    padding:22px;
+    box-shadow:0 5px 18px rgba(0,0,0,.035);
+}
+
+.card + .card{
+    margin-top:18px;
+}
+
+.card-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.card-title h2{
+    margin:0;
+    font-size:19px;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:29px;
+    padding:0 10px;
+    border-radius:999px;
+    background:#edf3ef;
+    color:#506159;
+    font-size:11px;
+    font-weight:700;
+}
+
+.badge.active{
+    background:#e5f7ed;
+    color:#087d45;
+}
+
+.badge.warning{
+    background:#fff5dd;
+    color:#9a6500;
+}
+
+.badge.completed{
+    background:#e9f1ff;
+    color:#255ca7;
+}
+
+/* =========================
+   TRIP
+========================= */
+
+.route{
+    font-size:21px;
+    font-weight:800;
+    line-height:1.5;
+    margin-bottom:18px;
+}
+
+.route-arrow{
+    color:#078c4b;
+}
+
+.trip-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.info-box{
+    background:#f7f9f8;
+    border:1px solid #e7ece9;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-label{
+    display:block;
+    color:#75827b;
+    font-size:11px;
+    margin-bottom:6px;
+}
+
+.info-value{
+    display:block;
+    font-size:14px;
+    font-weight:700;
+    overflow-wrap:anywhere;
+}
+
+/* =========================
+   GPS
+========================= */
+
+.gps-state{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px;
+    background:#f7f9f8;
+    border-radius:10px;
+    margin-bottom:18px;
+}
+
+.gps-dot{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:#a9b2ad;
+    flex-shrink:0;
+}
+
+.gps-dot.live{
+    background:#0ba458;
+    box-shadow:0 0 0 5px rgba(11,164,88,.12);
+}
+
+.gps-dot.error{
+    background:#d84242;
+}
+
+.gps-state strong{
+    display:block;
+    font-size:14px;
+}
+
+.gps-state small{
+    display:block;
+    color:#6c7872;
+    margin-top:3px;
+    line-height:1.4;
+}
+
+.location-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.location-box{
+    border:1px solid #e1e8e4;
+    border-radius:10px;
+    padding:13px;
+}
+
+.location-box small{
+    display:block;
+    color:#77837d;
+    margin-bottom:5px;
+}
+
+.location-box strong{
+    font-size:14px;
+    overflow-wrap:anywhere;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.action-btn{
+    min-height:50px;
+    border-radius:9px;
+    font-size:14px;
+    font-weight:800;
+    cursor:pointer;
+    border:0;
+    padding:0 15px;
+}
+
+.action-btn:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
+.btn-start{
+    background:#078c4b;
+    color:#fff;
+}
+
+.btn-stop{
+    background:#fff;
+    color:#b32626;
+    border:1px solid #d85b5b;
+}
+
+.btn-complete{
+    background:#155eef;
+    color:#fff;
+    grid-column:1 / -1;
+}
+
+.btn-refresh{
+    background:#fff;
+    color:#078c4b;
+    border:1px solid #078c4b;
+    width:100%;
+    margin-top:10px;
+}
+
+/* =========================
+   NOTICE
+========================= */
+
+.notice{
+    border-radius:10px;
+    padding:14px 15px;
+    font-size:13px;
+    line-height:1.65;
+    margin-bottom:16px;
+}
+
+.notice-info{
+    background:#eef8f3;
+    border:1px solid #cce8da;
+    color:#245f43;
+}
+
+.notice-warning{
+    background:#fff7e6;
+    border:1px solid #f0deb3;
+    color:#725414;
+}
+
+.notice-error{
+    background:#fff0f0;
+    border:1px solid #efcaca;
+    color:#8c2929;
+}
+
+/* =========================
+   EMPTY / LOADING
+========================= */
+
+.state-box{
+    text-align:center;
+    padding:38px 20px;
+}
+
+.state-icon{
+    font-size:43px;
+    margin-bottom:12px;
+}
+
+.state-box h3{
+    margin:0 0 8px;
+}
+
+.state-box p{
+    margin:0 auto 18px;
+    max-width:500px;
+    color:#69756f;
+    line-height:1.7;
+    font-size:13px;
+}
+
+/* =========================
+   GPS LOG
+========================= */
+
+.log-list{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+.log-item{
+    padding:12px 0;
+    border-bottom:1px solid #edf0ee;
+    font-size:12px;
+    line-height:1.55;
+}
+
+.log-item:last-child{
+    border-bottom:0;
+}
+
+.log-time{
+    color:#79857f;
+    margin-bottom:3px;
+}
+
+.log-message{
+    font-weight:600;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    background:#073c27;
+    color:#fff;
+    padding:28px 18px;
+    text-align:center;
+}
+
+.footer strong{
+    display:block;
+    margin-bottom:8px;
+}
+
+.footer p{
+    margin:4px 0;
+    opacity:.8;
+    font-size:12px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:800px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .header-inner{
+        flex-wrap:wrap;
+        padding-top:11px;
+        padding-bottom:11px;
+    }
+
+    .header-actions{
+        width:100%;
+    }
+
+    .header-btn{
+        flex:1;
+    }
+}
+
+@media(max-width:550px){
+
+    .hero h1{
+        font-size:23px;
+    }
+
+    .card{
+        padding:17px;
+    }
+
+    .trip-grid{
+        grid-template-columns:1fr;
+    }
+
+    .location-grid{
+        grid-template-columns:1fr;
+    }
+
+    .actions{
+        grid-template-columns:1fr;
+    }
+
+    .btn-complete{
+        grid-column:auto;
+    }
+
+    .route{
+        font-size:18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="header-inner">
+
+        <a href="index.html" class="logo">
+            <span class="logo-icon">🚚</span>
+
+            <div>
+                <strong>VietTruck</strong>
+                <small>Kết nối hàng hóa Việt Nam</small>
+            </div>
+        </a>
+
+        <div class="header-actions">
+
+            <a
+                href="dashboard.html"
+                class="header-btn header-btn-outline">
+                Dashboard
+            </a>
+
+            <a
+                href="tai-khoan.html"
+                class="header-btn header-btn-green">
+                Tài khoản
+            </a>
+
+        </div>
+    </div>
+</header>
+
+
+<section class="hero">
+    <div class="hero-inner">
+
+        <h1>📍 Hành trình tài xế</h1>
+
+        <p>
+            Chia sẻ vị trí GPS trong thời gian thực để chủ hàng
+            và VietTrucks theo dõi tiến độ vận chuyển.
+        </p>
+
+    </div>
+</section>
+
+
+<main class="container">
+
+    <div id="mainState">
+
+        <div class="card state-box">
+            <div class="state-icon">⏳</div>
+
+            <h3>Đang tải chuyến vận chuyển...</h3>
+
+            <p>
+                VietTrucks đang kiểm tra tài khoản và tìm chuyến
+                được giao cho bạn.
+            </p>
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+
+    <strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+
+    <p>
+        CÔNG TY TNHH ĐẦU TƯ THƯƠNG MẠI DỊCH VỤ TRƯỜNG GIANG
+    </p>
+
+    <p>
+        Hotline: 0388134999 - 0898877111
+    </p>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="auth.js"></script>
+
+<script>
+
+/* =========================================================
+   VIETTRUCKS - GPS TÀI XẾ
+========================================================= */
+
+const supabaseClient = window.supabaseClient;
+
+const mainState =
+    document.getElementById("mainState");
+
+
+let currentUser = null;
+
+let currentTrip = null;
+
+let currentOrder = null;
+
+let watchId = null;
+
+let isTracking = false;
+
+let isSavingLocation = false;
+
+let lastSavedAt = 0;
+
+let latestPosition = null;
+
+
+/*
+ * Không ghi DB quá dày.
+ * Tối đa khoảng 1 điểm / 10 giây.
+ */
+const MIN_SAVE_INTERVAL = 10000;
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+
+/* =========================================================
+   FORMAT
+========================================================= */
+
+function formatMoney(value){
+
+    const number = Number(value);
+
+    if(
+        !Number.isFinite(number) ||
+        number <= 0
+    ){
+        return "Thỏa thuận";
+    }
+
+    return new Intl.NumberFormat(
+        "vi-VN"
+    ).format(number) + " đ";
+}
+
+
+function formatDateTime(value){
+
+    if(!value){
+        return "Chưa có";
+    }
+
+    try{
+
+        return new Intl.DateTimeFormat(
+            "vi-VN",
+            {
+                dateStyle:"short",
+                timeStyle:"medium"
+            }
+        ).format(
+            new Date(value)
+        );
+
+    }catch{
+
+        return String(value);
+    }
+}
+
+
+function formatCoordinate(value){
+
+    const number = Number(value);
+
+    if(!Number.isFinite(number)){
+        return "--";
+    }
+
+    return number.toFixed(6);
+}
+
+
+function tripStatusText(status){
+
+    const map = {
+
+        pending:
+            "Chờ bắt đầu",
+
+        accepted:
+            "Đã nhận chuyến",
+
+        confirmed:
+            "Đã xác nhận",
+
+        started:
+            "Đã bắt đầu",
+
+        moving:
+            "Đang vận chuyển",
+
+        in_progress:
+            "Đang vận chuyển",
+
+        delivering:
+            "Đang giao hàng",
+
+        delivered:
+            "Đã giao hàng",
+
+        completed:
+            "Hoàn thành",
+
+        cancelled:
+            "Đã hủy"
+    };
+
+    return map[status] ||
+        status ||
+        "Chưa xác định";
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+function showFatal(
+    icon,
+    title,
+    message,
+    buttonHTML = ""
+){
+
+    mainState.innerHTML = `
+
+        <div class="card state-box">
+
+            <div class="state-icon">
+                ${icon}
+            </div>
+
+            <h3>
+                ${escapeHTML(title)}
+            </h3>
+
+            <p>
+                ${escapeHTML(message)}
+            </p>
+
+            ${buttonHTML}
+
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   TÌM CHUYẾN CỦA TÀI XẾ
+========================================================= */
+
+async function findDriverTrip(){
+
+    /*
+     * Không khóa cứng status ở query vì hệ thống VietTrucks
+     * hiện có thể đang dùng các tên trạng thái khác nhau.
+     *
+     * Lấy các chuyến của tài xế mới nhất trước, sau đó JS
+     * ưu tiên chuyến chưa hoàn thành.
+     */
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("trips")
+        .select("*")
+        .eq(
+            "driver_id",
+            currentUser.id
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        )
+        .limit(20);
+
+
+    if(error){
+        throw error;
+    }
+
+
+    const trips =
+        Array.isArray(data)
+        ? data
+        : [];
+
+
+    if(!trips.length){
+        return null;
+    }
+
+
+    const finishedStatuses =
+        [
+            "completed",
+            "delivered",
+            "cancelled",
+            "canceled"
+        ];
+
+
+    const active =
+        trips.find(
+            trip =>
+            !finishedStatuses.includes(
+                String(
+                    trip.status || ""
+                ).toLowerCase()
+            )
+        );
+
+
+    return active || trips[0];
+}
+
+
+/* =========================================================
+   LẤY THÔNG TIN ĐƠN HÀNG
+========================================================= */
+
+async function loadOrder(orderId){
+
+    if(!orderId){
+        return null;
+    }
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("orders")
+        .select(
+            "id,pickup_location,delivery_location,cargo_type,weight,vehicle_type,pickup_date"
+        )
+        .eq(
+            "id",
+            orderId
+        )
+        .maybeSingle();
+
+
+    if(error){
+
+        /*
+         * Không chặn GPS nếu policy orders hiện tại
+         * không cho tài xế đọc đơn.
+         */
+
+        console.warn(
+            "Không tải được thông tin orders:",
+            error
+        );
+
+        return null;
+    }
+
+
+    return data || null;
+}
+
+
+/* =========================================================
+   RENDER GIAO DIỆN
+========================================================= */
+
+function renderTrip(){
+
+    const pickup =
+        currentOrder?.pickup_location ||
+        "Điểm lấy hàng";
+
+
+    const delivery =
+        currentOrder?.delivery_location ||
+        "Điểm giao hàng";
+
+
+    const cargo =
+        currentOrder?.cargo_type ||
+        "Chưa có thông tin";
+
+
+    const vehicle =
+        currentOrder?.vehicle_type ||
+        "Chưa có thông tin";
+
+
+    const weight =
+        currentOrder?.weight ??
+        "Chưa có thông tin";
+
+
+    const completed =
+        [
+            "completed",
+            "delivered"
+        ].includes(
+            String(
+                currentTrip.status || ""
+            ).toLowerCase()
+        );
+
+
+    mainState.innerHTML = `
+
+        <div class="grid">
+
+            <section>
+
+                <div class="card">
+
+                    <div class="card-title">
+
+                        <h2>
+                            🚛 Chuyến đang thực hiện
+                        </h2>
+
+                        <span
+                            id="tripStatusBadge"
+                            class="badge ${
+                                completed
+                                ? "completed"
+                                : "active"
+                            }">
+
+                            ${escapeHTML(
+                                tripStatusText(
+                                    currentTrip.status
+                                )
+                            )}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="route">
+
+                        ${escapeHTML(pickup)}
+
+                        <span class="route-arrow">
+                            →
+                        </span>
+
+                        ${escapeHTML(delivery)}
+
+                    </div>
+
+
+                    <div class="trip-grid">
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Mã chuyến
+                            </span>
+
+                            <span class="info-value">
+                                ${escapeHTML(
+                                    currentTrip.id
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Giá cước
+                            </span>
+
+                            <span class="info-value">
+                                ${escapeHTML(
+                                    formatMoney(
+                                        currentTrip.agreed_price
+                                    )
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Hàng hóa
+                            </span>
+
+                            <span class="info-value">
+                                ${escapeHTML(cargo)}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Trọng lượng
+                            </span>
+
+                            <span class="info-value">
+                                ${escapeHTML(weight)}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Loại xe
+                            </span>
+
+                            <span class="info-value">
+                                ${escapeHTML(vehicle)}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Bắt đầu lúc
+                            </span>
+
+                            <span
+                                class="info-value"
+                                id="startedAtText">
+
+                                ${escapeHTML(
+                                    formatDateTime(
+                                        currentTrip.started_at
+                                    )
+                                )}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-title">
+
+                        <h2>
+                            📡 Chia sẻ GPS
+                        </h2>
+
+                        <span
+                            id="gpsBadge"
+                            class="badge">
+                            Chưa bật
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="gpsNotice"
+                        class="notice notice-info">
+
+                        Khi bắt đầu hành trình, điện thoại sẽ
+                        yêu cầu quyền truy cập vị trí.
+                        Hãy chọn <strong>Cho phép</strong> để
+                        VietTrucks cập nhật hành trình.
+
+                    </div>
+
+
+                    <div class="gps-state">
+
+                        <div
+                            class="gps-dot"
+                            id="gpsDot">
+                        </div>
+
+                        <div>
+
+                            <strong id="gpsTitle">
+                                GPS chưa hoạt động
+                            </strong>
+
+                            <small id="gpsDescription">
+                                Nhấn “Bắt đầu hành trình” để chia sẻ vị trí.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="location-grid">
+
+                        <div class="location-box">
+
+                            <small>
+                                Vĩ độ
+                            </small>
+
+                            <strong id="latitudeText">
+                                ${formatCoordinate(
+                                    currentTrip.current_latitude
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="location-box">
+
+                            <small>
+                                Kinh độ
+                            </small>
+
+                            <strong id="longitudeText">
+                                ${formatCoordinate(
+                                    currentTrip.current_longitude
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="location-box">
+
+                            <small>
+                                Độ chính xác GPS
+                            </small>
+
+                            <strong id="accuracyText">
+                                --
+                            </strong>
+
+                        </div>
+
+
+                        <div class="location-box">
+
+                            <small>
+                                Cập nhật gần nhất
+                            </small>
+
+                            <strong id="lastLocationText">
+
+                                ${escapeHTML(
+                                    formatDateTime(
+                                        currentTrip.last_location_at
+                                    )
+                                )}
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <button
+                            type="button"
+                            class="action-btn btn-start"
+                            id="startTrackingBtn"
+                            ${completed ? "disabled" : ""}>
+
+                            ▶ Bắt đầu hành trình
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="action-btn btn-stop"
+                            id="stopTrackingBtn"
+                            disabled>
+
+                            ■ Dừng chia sẻ GPS
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="action-btn btn-complete"
+                            id="completeTripBtn"
+                            ${completed ? "disabled" : ""}>
+
+                            ✓ Hoàn thành chuyến
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <aside>
+
+                <div class="card">
+
+                    <div class="card-title">
+
+                        <h2>
+                            Trạng thái GPS
+                        </h2>
+
+                    </div>
+
+
+                    <div class="notice notice-warning">
+
+                        <strong>Lưu ý:</strong>
+                        trong khi vận chuyển, nên giữ trình duyệt
+                        hoạt động và không tắt quyền vị trí của
+                        VietTrucks.
+
+                    </div>
+
+
+                    <ul
+                        class="log-list"
+                        id="gpsLog">
+
+                        <li class="log-item">
+
+                            <div class="log-time">
+                                Hệ thống
+                            </div>
+
+                            <div class="log-message">
+                                Sẵn sàng theo dõi hành trình.
+                            </div>
+
+                        </li>
+
+                    </ul>
+
+
+                    <button
+                        type="button"
+                        class="action-btn btn-refresh"
+                        id="refreshBtn">
+
+                        ↻ Tải lại chuyến
+
+                    </button>
+
+                </div>
+
+            </aside>
+
+        </div>
+    `;
+
+
+    bindTripButtons();
+}
+
+
+/* =========================================================
+   LOG
+========================================================= */
+
+function addLog(message){
+
+    const list =
+        document.getElementById(
+            "gpsLog"
+        );
+
+
+    if(!list){
+        return;
+    }
+
+
+    const li =
+        document.createElement("li");
+
+
+    li.className =
+        "log-item";
+
+
+    const now =
+        new Intl.DateTimeFormat(
+            "vi-VN",
+            {
+                hour:"2-digit",
+                minute:"2-digit",
+                second:"2-digit"
+            }
+        ).format(
+            new Date()
+        );
+
+
+    li.innerHTML = `
+
+        <div class="log-time">
+            ${escapeHTML(now)}
+        </div>
+
+        <div class="log-message">
+            ${escapeHTML(message)}
+        </div>
+    `;
+
+
+    list.prepend(li);
+
+
+    /*
+     * Chỉ giữ 8 log gần nhất trên giao diện.
+     */
+
+    while(
+        list.children.length > 8
+    ){
+        list.removeChild(
+            list.lastElementChild
+        );
+    }
+}
+
+
+/* =========================================================
+   UI GPS
+========================================================= */
+
+function setGpsState(
+    state,
+    title,
+    description
+){
+
+    const dot =
+        document.getElementById(
+            "gpsDot"
+        );
+
+
+    const badge =
+        document.getElementById(
+            "gpsBadge"
+        );
+
+
+    const titleEl =
+        document.getElementById(
+            "gpsTitle"
+        );
+
+
+    const descriptionEl =
+        document.getElementById(
+            "gpsDescription"
+        );
+
+
+    if(dot){
+
+        dot.className =
+            "gps-dot";
+
+
+        if(state === "live"){
+            dot.classList.add("live");
+        }
+
+
+        if(state === "error"){
+            dot.classList.add("error");
+        }
+    }
+
+
+    if(badge){
+
+        badge.className =
+            "badge";
+
+
+        if(state === "live"){
+
+            badge.classList.add(
+                "active"
+            );
+
+            badge.textContent =
+                "Đang chia sẻ";
+
+        }else if(state === "error"){
+
+            badge.classList.add(
+                "warning"
+            );
+
+            badge.textContent =
+                "Lỗi GPS";
+
+        }else{
+
+            badge.textContent =
+                "Đã dừng";
+        }
+    }
+
+
+    if(titleEl){
+        titleEl.textContent = title;
+    }
+
+
+    if(descriptionEl){
+        descriptionEl.textContent =
+            description;
+    }
+}
+
+
+/* =========================================================
+   UPDATE LOCATION UI
+========================================================= */
+
+function updateLocationUI(position){
+
+    const coords =
+        position.coords;
+
+
+    const latitudeText =
+        document.getElementById(
+            "latitudeText"
+        );
+
+
+    const longitudeText =
+        document.getElementById(
+            "longitudeText"
+        );
+
+
+    const accuracyText =
+        document.getElementById(
+            "accuracyText"
+        );
+
+
+    const lastLocationText =
+        document.getElementById(
+            "lastLocationText"
+        );
+
+
+    if(latitudeText){
+
+        latitudeText.textContent =
+            formatCoordinate(
+                coords.latitude
+            );
+    }
+
+
+    if(longitudeText){
+
+        longitudeText.textContent =
+            formatCoordinate(
+                coords.longitude
+            );
+    }
+
+
+    if(accuracyText){
+
+        accuracyText.textContent =
+            Number.isFinite(
+                coords.accuracy
+            )
+            ? Math.round(
+                coords.accuracy
+              ) + " m"
+            : "--";
+    }
+
+
+    if(lastLocationText){
+
+        lastLocationText.textContent =
+            formatDateTime(
+                new Date()
+            );
+    }
+}
+
+
+/* =========================================================
+   GHI GPS VÀO SUPABASE
+========================================================= */
+
+async function savePosition(position){
+
+    if(
+        !currentTrip ||
+        !currentUser
+    ){
+        return;
+    }
+
+
+    if(isSavingLocation){
+        return;
+    }
+
+
+    const now =
+        Date.now();
+
+
+    if(
+        now - lastSavedAt <
+        MIN_SAVE_INTERVAL
+    ){
+        return;
+    }
+
+
+    isSavingLocation = true;
+
+
+    try{
+
+        const coords =
+            position.coords;
+
+
+        const latitude =
+            Number(
+                coords.latitude
+            );
+
+
+        const longitude =
+            Number(
+                coords.longitude
+            );
+
+
+        if(
+            !Number.isFinite(latitude) ||
+            !Number.isFinite(longitude)
+        ){
+
+            throw new Error(
+                "Tọa độ GPS không hợp lệ."
+            );
+        }
+
+
+        /*
+         * 1. GHI LỊCH SỬ GPS
+         */
+
+        const {
+            error:trackingError
+        } =
+        await supabaseClient
+            .from("trip_tracking")
+            .insert({
+
+                trip_id:
+                    currentTrip.id,
+
+                driver_id:
+                    currentUser.id,
+
+                latitude:
+                    latitude,
+
+                longitude:
+                    longitude,
+
+                accuracy:
+                    Number.isFinite(
+                        coords.accuracy
+                    )
+                    ? coords.accuracy
+                    : null,
+
+                speed:
+                    Number.isFinite(
+                        coords.speed
+                    )
+                    ? coords.speed
+                    : null,
+
+                heading:
+                    Number.isFinite(
+                        coords.heading
+                    )
+                    ? coords.heading
+                    : null,
+
+                status:
+                    "moving",
+
+                recorded_at:
+                    new Date().toISOString()
+
+            });
+
+
+        if(trackingError){
+
+            throw trackingError;
+        }
+
+
+        /*
+         * 2. CẬP NHẬT VỊ TRÍ MỚI NHẤT
+         * TRONG trips
+         */
+
+        const tripUpdate = {
+
+            current_latitude:
+                latitude,
+
+            current_longitude:
+                longitude,
+
+            last_location_at:
+                new Date().toISOString(),
+
+            updated_at:
+                new Date().toISOString()
+        };
+
+
+        /*
+         * Nếu status đang là trạng thái trước khi chạy,
+         * chuyển thành moving.
+         */
+
+        const currentStatus =
+            String(
+                currentTrip.status || ""
+            ).toLowerCase();
+
+
+        if(
+            ![
+                "moving",
+                "in_progress",
+                "delivering"
+            ].includes(
+                currentStatus
+            )
+        ){
+
+            tripUpdate.status =
+                "moving";
+        }
+
+
+        const {
+            error:tripError
+        } =
+        await supabaseClient
+            .from("trips")
+            .update(
+                tripUpdate
+            )
+            .eq(
+                "id",
+                currentTrip.id
+            )
+            .eq(
+                "driver_id",
+                currentUser.id
+            );
+
+
+        if(tripError){
+
+            throw tripError;
+        }
+
+
+        currentTrip.current_latitude =
+            latitude;
+
+
+        currentTrip.current_longitude =
+            longitude;
+
+
+        currentTrip.last_location_at =
+            tripUpdate.last_location_at;
+
+
+        if(tripUpdate.status){
+
+            currentTrip.status =
+                tripUpdate.status;
+
+
+            const badge =
+                document.getElementById(
+                    "tripStatusBadge"
+                );
+
+
+            if(badge){
+
+                badge.textContent =
+                    tripStatusText(
+                        currentTrip.status
+                    );
+            }
+        }
+
+
+        lastSavedAt =
+            Date.now();
+
+
+        updateLocationUI(
+            position
+        );
+
+
+        setGpsState(
+            "live",
+            "GPS đang hoạt động",
+            "Vị trí đã được gửi lên VietTrucks."
+        );
+
+
+        addLog(
+            "Đã cập nhật vị trí GPS."
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Lỗi lưu GPS:",
+            error
+        );
+
+
+        setGpsState(
+            "error",
+            "Không gửi được GPS",
+            error.message ||
+            "Có lỗi khi lưu vị trí."
+        );
+
+
+        addLog(
+            "Lỗi gửi GPS: " +
+            (
+                error.message ||
+                "Không xác định"
+            )
+        );
+
+
+    }finally{
+
+        isSavingLocation =
+            false;
+    }
+}
+
+
+/* =========================================================
+   GPS SUCCESS
+========================================================= */
+
+function onPositionSuccess(position){
+
+    latestPosition =
+        position;
+
+
+    updateLocationUI(
+        position
+    );
+
+
+    savePosition(
+        position
+    );
+}
+
+
+/* =========================================================
+   GPS ERROR
+========================================================= */
+
+function onPositionError(error){
+
+    console.error(
+        "GPS error:",
+        error
+    );
+
+
+    let message =
+        "Không lấy được vị trí.";
+
+
+    if(error.code === 1){
+
+        message =
+            "Bạn chưa cho phép VietTrucks truy cập vị trí.";
+
+    }else if(error.code === 2){
+
+        message =
+            "Điện thoại hiện không xác định được vị trí.";
+
+    }else if(error.code === 3){
+
+        message =
+            "GPS phản hồi quá lâu. Hãy thử lại.";
+    }
+
+
+    setGpsState(
+        "error",
+        "GPS gặp lỗi",
+        message
+    );
+
+
+    addLog(message);
+}
+
+
+/* =========================================================
+   ĐÁNH DẤU CHUYẾN BẮT ĐẦU
+========================================================= */
+
+async function markTripStarted(){
+
+    if(!currentTrip){
+        return;
+    }
+
+
+    const now =
+        new Date().toISOString();
+
+
+    const updateData = {
+
+        updated_at:
+            now
+    };
+
+
+    if(!currentTrip.started_at){
+
+        updateData.started_at =
+            now;
+    }
+
+
+    /*
+     * Chỉ chuyển status sang started nếu chưa chạy.
+     */
+
+    const currentStatus =
+        String(
+            currentTrip.status || ""
+        ).toLowerCase();
+
+
+    if(
+        ![
+            "moving",
+            "in_progress",
+            "delivering"
+        ].includes(
+            currentStatus
+        )
+    ){
+
+        updateData.status =
+            "started";
+    }
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .from("trips")
+        .update(
+            updateData
+        )
+        .eq(
+            "id",
+            currentTrip.id
+        )
+        .eq(
+            "driver_id",
+            currentUser.id
+        );
+
+
+    if(error){
+        throw error;
+    }
+
+
+    if(updateData.started_at){
+
+        currentTrip.started_at =
+            updateData.started_at;
+
+
+        const startedAtText =
+            document.getElementById(
+                "startedAtText"
+            );
+
+
+        if(startedAtText){
+
+            startedAtText.textContent =
+                formatDateTime(
+                    currentTrip.started_at
+                );
+        }
+    }
+
+
+    if(updateData.status){
+
+        currentTrip.status =
+            updateData.status;
+    }
+
+
+    const badge =
+        document.getElementById(
+            "tripStatusBadge"
+        );
+
+
+    if(badge){
+
+        badge.textContent =
+            tripStatusText(
+                currentTrip.status
+            );
+    }
+}
+
+
+/* =========================================================
+   BẮT ĐẦU GPS
+========================================================= */
+
+async function startTracking(){
+
+    if(isTracking){
+        return;
+    }
+
+
+    if(!navigator.geolocation){
+
+        alert(
+            "Thiết bị hoặc trình duyệt này không hỗ trợ GPS."
+        );
+
+        return;
+    }
+
+
+    const startButton =
+        document.getElementById(
+            "startTrackingBtn"
+        );
+
+
+    const stopButton =
+        document.getElementById(
+            "stopTrackingBtn"
+        );
+
+
+    try{
+
+        startButton.disabled =
+            true;
+
+
+        startButton.textContent =
+            "Đang bật GPS...";
+
+
+        await markTripStarted();
+
+
+        /*
+         * getCurrentPosition trước để kích hoạt
+         * hộp xin quyền GPS ngay.
+         */
+
+        navigator.geolocation.getCurrentPosition(
+
+            async function(position){
+
+                latestPosition =
+                    position;
+
+
+                /*
+                 * Cho phép lần đầu ghi ngay lập tức.
+                 */
+
+                lastSavedAt = 0;
+
+
+                await savePosition(
+                    position
+                );
+
+
+                /*
+                 * Sau đó theo dõi liên tục.
+                 */
+
+                watchId =
+                    navigator.geolocation.watchPosition(
+
+                        onPositionSuccess,
+
+                        onPositionError,
+
+                        {
+                            enableHighAccuracy:
+                                true,
+
+                            maximumAge:
+                                5000,
+
+                            timeout:
+                                20000
+                        }
+
+                    );
+
+
+                isTracking =
+                    true;
+
+
+                startButton.disabled =
+                    true;
+
+
+                startButton.textContent =
+                    "GPS đang hoạt động";
+
+
+                stopButton.disabled =
+                    false;
+
+
+                setGpsState(
+                    "live",
+                    "GPS đang hoạt động",
+                    "VietTrucks đang nhận vị trí của xe."
+                );
+
+
+                addLog(
+                    "Đã bắt đầu hành trình."
+                );
+
+            },
+
+
+            function(error){
+
+                startButton.disabled =
+                    false;
+
+
+                startButton.textContent =
+                    "▶ Bắt đầu hành trình";
+
+
+                onPositionError(
+                    error
+                );
+
+            },
+
+
+            {
+                enableHighAccuracy:
+                    true,
+
+                maximumAge:
+                    0,
+
+                timeout:
+                    20000
+            }
+
+        );
+
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+
+        startButton.disabled =
+            false;
+
+
+        startButton.textContent =
+            "▶ Bắt đầu hành trình";
+
+
+        alert(
+            "Không thể bắt đầu hành trình: " +
+            (
+                error.message ||
+                "Lỗi không xác định"
+            )
+        );
+    }
+}
+
+
+/* =========================================================
+   DỪNG GPS
+========================================================= */
+
+function stopTracking(){
+
+    if(
+        watchId !== null
+    ){
+
+        navigator.geolocation
+            .clearWatch(
+                watchId
+            );
+
+
+        watchId =
+            null;
+    }
+
+
+    isTracking =
+        false;
+
+
+    const startButton =
+        document.getElementById(
+            "startTrackingBtn"
+        );
+
+
+    const stopButton =
+        document.getElementById(
+            "stopTrackingBtn"
+        );
+
+
+    if(startButton){
+
+        startButton.disabled =
+            false;
+
+
+        startButton.textContent =
+            "▶ Tiếp tục chia sẻ GPS";
+    }
+
+
+    if(stopButton){
+
+        stopButton.disabled =
+            true;
+    }
+
+
+    setGpsState(
+        "stopped",
+        "Đã dừng chia sẻ GPS",
+        "Chuyến chưa được đánh dấu hoàn thành."
+    );
+
+
+    addLog(
+        "Đã dừng chia sẻ GPS."
+    );
+}
+
+
+/* =========================================================
+   HOÀN THÀNH CHUYẾN
+========================================================= */
+
+async function completeTrip(){
+
+    if(!currentTrip){
+        return;
+    }
+
+
+    const ok =
+        confirm(
+            "Xác nhận hàng đã được giao và hoàn thành chuyến?\n\n" +
+            "Thao tác này KHÁC với Dừng chia sẻ GPS."
+        );
+
+
+    if(!ok){
+        return;
+    }
+
+
+    const button =
+        document.getElementById(
+            "completeTripBtn"
+        );
+
+
+    try{
+
+        button.disabled =
+            true;
+
+
+        button.textContent =
+            "Đang hoàn thành...";
+
+
+        /*
+         * Nếu đang bật GPS, lưu vị trí cuối trước.
+         */
+
+        if(latestPosition){
+
+            lastSavedAt = 0;
+
+            await savePosition(
+                latestPosition
+            );
+        }
+
+
+        const now =
+            new Date().toISOString();
+
+
+        const {
+            error
+        } =
+        await supabaseClient
+            .from("trips")
+            .update({
+
+                status:
+                    "completed",
+
+                completed_at:
+                    now,
+
+                updated_at:
+                    now
+
+            })
+            .eq(
+                "id",
+                currentTrip.id
+            )
+            .eq(
+                "driver_id",
+                currentUser.id
+            );
+
+
+        if(error){
+            throw error;
+        }
+
+
+        currentTrip.status =
+            "completed";
+
+
+        currentTrip.completed_at =
+            now;
+
+
+        stopTracking();
+
+
+        const badge =
+            document.getElementById(
+                "tripStatusBadge"
+            );
+
+
+        if(badge){
+
+            badge.className =
+                "badge completed";
+
+
+            badge.textContent =
+                "Hoàn thành";
+        }
+
+
+        const startButton =
+            document.getElementById(
+                "startTrackingBtn"
+            );
+
+
+        const stopButton =
+            document.getElementById(
+                "stopTrackingBtn"
+            );
+
+
+        if(startButton){
+
+            startButton.disabled =
+                true;
+
+
+            startButton.textContent =
+                "Chuyến đã hoàn thành";
+        }
+
+
+        if(stopButton){
+
+            stopButton.disabled =
+                true;
+        }
+
+
+        button.disabled =
+            true;
+
+
+        button.textContent =
+            "✓ Đã hoàn thành chuyến";
+
+
+        addLog(
+            "Chuyến đã được đánh dấu hoàn thành."
+        );
+
+
+        alert(
+            "Hoàn thành chuyến thành công."
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Lỗi hoàn thành chuyến:",
+            error
+        );
+
+
+        button.disabled =
+            false;
+
+
+        button.textContent =
+            "✓ Hoàn thành chuyến";
+
+
+        alert(
+            "Không thể hoàn thành chuyến: " +
+            (
+                error.message ||
+                "Lỗi không xác định"
+            )
+        );
+    }
+}
+
+
+/* =========================================================
+   BUTTON EVENTS
+========================================================= */
+
+function bindTripButtons(){
+
+    const startButton =
+        document.getElementById(
+            "startTrackingBtn"
+        );
+
+
+    const stopButton =
+        document.getElementById(
+            "stopTrackingBtn"
+        );
+
+
+    const completeButton =
+        document.getElementById(
+            "completeTripBtn"
+        );
+
+
+    const refreshButton =
+        document.getElementById(
+            "refreshBtn"
+        );
+
+
+    if(startButton){
+
+        startButton.addEventListener(
+            "click",
+            startTracking
+        );
+    }
+
+
+    if(stopButton){
+
+        stopButton.addEventListener(
+            "click",
+            stopTracking
+        );
+    }
+
+
+    if(completeButton){
+
+        completeButton.addEventListener(
+            "click",
+            completeTrip
+        );
+    }
+
+
+    if(refreshButton){
+
+        refreshButton.addEventListener(
+            "click",
+            function(){
+
+                window.location.reload();
+
+            }
+        );
+    }
+}
+
+
+/* =========================================================
+   AUTH + LOAD
+========================================================= */
+
+async function initialize(){
+
+    if(!supabaseClient){
+
+        showFatal(
+            "⚠️",
+            "Không kết nối được hệ thống",
+            "Không tìm thấy cấu hình Supabase của VietTrucks."
+        );
+
+        return;
+    }
+
+
+    try{
+
+        /*
+         * 1. KIỂM TRA ĐĂNG NHẬP
+         */
+
+        const {
+            data:{
+                session
+            },
+            error:sessionError
+        } =
+        await supabaseClient
+            .auth
+            .getSession();
+
+
+        if(
+            sessionError ||
+            !session ||
+            !session.user
+        ){
+
+            showFatal(
+
+                "🔒",
+
+                "Bạn chưa đăng nhập",
+
+                "Tài xế cần đăng nhập VietTrucks trước khi chia sẻ hành trình.",
+
+                `
+                <a
+                    href="dang-nhap.html?redirect=tai-xe-hanh-trinh.html"
+                    class="header-btn header-btn-green">
+                    Đăng nhập
+                </a>
+                `
+            );
+
+            return;
+        }
+
+
+        currentUser =
+            session.user;
+
+
+        /*
+         * 2. TÌM CHUYẾN
+         */
+
+        currentTrip =
+            await findDriverTrip();
+
+
+        if(!currentTrip){
+
+            showFatal(
+
+                "🚚",
+
+                "Chưa có chuyến được giao",
+
+                "Tài khoản này hiện chưa có chuyến vận chuyển nào trong bảng trips.",
+
+                `
+                <a
+                    href="tim-hang.html"
+                    class="header-btn header-btn-green">
+                    Tìm hàng
+                </a>
+                `
+            );
+
+            return;
+        }
+
+
+        /*
+         * 3. LẤY THÔNG TIN HÀNG
+         */
+
+        currentOrder =
+            await loadOrder(
+                currentTrip.order_id
+            );
+
+
+        /*
+         * 4. RENDER
+         */
+
+        renderTrip();
+
+
+    }catch(error){
+
+        console.error(
+            "Khởi tạo hành trình lỗi:",
+            error
+        );
+
+
+        showFatal(
+
+            "⚠️",
+
+            "Không tải được hành trình",
+
+            error.message ||
+            "Có lỗi khi tải dữ liệu chuyến vận chuyển.",
+
+            `
+            <button
+                type="button"
+                class="action-btn btn-refresh"
+                onclick="window.location.reload()">
+                Thử lại
+            </button>
+            `
+        );
+    }
+}
+
+
+/* =========================================================
+   DỪNG WATCH KHI RỜI TRANG
+========================================================= */
+
+window.addEventListener(
+    "beforeunload",
+    function(){
+
+        if(
+            watchId !== null
+        ){
+
+            navigator.geolocation
+                .clearWatch(
+                    watchId
+                );
+        }
+    }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    initialize
+);
+
+</script>
+
+</body>
+</html>
