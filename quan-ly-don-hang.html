@@ -1749,21 +1749,22 @@ async function loadOrders(){
 
 
     allOrders =
-      Array.isArray(data)
-        ? data
-        : [];
+  Array.isArray(data)
+    ? data
+    : [];
 
 
-    console.log(
-      "Số đơn được tải:",
-      allOrders.length
-    );
+/*
+  Tải trips + POD thật
+  trước khi render đơn.
+*/
+
+await loadTripsAndPods();
 
 
-    updateSummary();
+updateSummary();
 
-    renderOrders();
-
+renderOrders();
 
   }catch(error){
 
