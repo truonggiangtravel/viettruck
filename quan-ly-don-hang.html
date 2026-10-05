@@ -391,6 +391,67 @@ body{
     text-align:center;
   }
 }
+  /* ========================================
+   XÁC NHẬN NHẬN HÀNG
+======================================== */
+
+.delivery-confirm-box{
+  width:100%;
+  margin-top:12px;
+  padding:12px 14px;
+  border-radius:9px;
+  border:1px solid #dfe8e3;
+  background:#f8faf9;
+  font-size:11px;
+  line-height:1.6;
+}
+
+.delivery-confirm-box.waiting-pod{
+  background:#fff8e6;
+  border-color:#f2dda5;
+  color:#8a6500;
+}
+
+.delivery-confirm-box.ready{
+  background:#edf8f1;
+  border-color:#bfe0cb;
+  color:#086b3b;
+}
+
+.delivery-confirm-box.confirmed{
+  background:#e7f7ed;
+  border-color:#a9d8ba;
+  color:#06713b;
+  font-weight:700;
+}
+
+.delivery-confirm-box.rejected{
+  background:#fff0f0;
+  border-color:#efcaca;
+  color:#a51d1d;
+}
+
+.confirm-delivery-btn{
+  border:0;
+  background:#078c4b;
+  color:#fff;
+  padding:10px 14px;
+  border-radius:7px;
+  font-family:inherit;
+  font-size:11px;
+  font-weight:800;
+  cursor:pointer;
+  margin-top:8px;
+}
+
+.confirm-delivery-btn:hover{
+  background:#066d3c;
+}
+
+.confirm-delivery-btn:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
 </style>
 </head>
 
