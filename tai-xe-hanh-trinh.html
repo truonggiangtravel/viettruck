@@ -1336,12 +1336,14 @@ function render(){
             stopTracking
         );
 
-    document
-        .getElementById("completeBtn")
+        document
+        .getElementById("podUploadBtn")
         .addEventListener(
             "click",
-            completeTrip
+            uploadPod
         );
+
+    updatePodUI();
 
     document
         .getElementById("refreshBtn")
