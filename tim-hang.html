@@ -2498,22 +2498,36 @@ async function loadOrders(){
             error
         } =
         await supabaseClient
-            .from("orders")
-            .select("*")
-            .eq(
-                "status",
-                "pending"
-            )
-            .is(
-                "accepted_by",
-                null
-            )
-            .order(
-                "created_at",
-                {
-                    ascending:false
-                }
-            );
+    .from("orders")
+    .select(`
+        id,
+        user_id,
+        pickup_location,
+        delivery_location,
+        dropoff_location,
+        cargo_type,
+        weight,
+        vehicle_type,
+        price,
+        pickup_date,
+        status,
+        accepted_by,
+        created_at
+    `)
+    .eq(
+        "status",
+        "pending"
+    )
+    .is(
+        "accepted_by",
+        null
+    )
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
 
 
         if(error){
