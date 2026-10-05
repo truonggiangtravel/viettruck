@@ -2104,30 +2104,33 @@ function showPosition(position){
 
 async function markStarted(){
 
-    const {data,error} =
-        await db.rpc(
-            "start_trip",
-            {
-                p_trip_id:trip.id
-            }
-        );
+            /*
+         * complete_trip() production trả về VOID.
+         *
+         * Thành công = không có error.
+         * Database tự kiểm tra:
+         * - đúng tài xế
+         * - trip = in_transit
+         * - có POD
+         * - POD pending/approved
+         * - POD rejected sẽ bị chặn
+         */
 
-    if(error){
+        const {error} =
+            await db.rpc(
+                "complete_trip",
+                {
+                    p_trip_id:trip.id
+                }
+            );
 
-        throw new Error(
-            "Không thể bắt đầu chuyến: " +
-            error.message
-        );
-    }
+        if(error){
 
-    if(data !== true){
-
-        throw new Error(
-            "Không thể bắt đầu chuyến. " +
-            "Chuyến có thể đã kết thúc hoặc tài khoản " +
-            "không phải tài xế được giao."
-        );
-    }
+            throw new Error(
+                "Không hoàn thành được chuyến: " +
+                error.message
+            );
+        }
 
     if(!trip.started_at){
         trip.started_at =
