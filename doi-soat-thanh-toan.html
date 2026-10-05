@@ -1,599 +1,1051 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Đối soát thanh toán | VietTruck</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      font-family:Arial,Helvetica,sans-serif;
-    }
+<title>Đối soát & Thanh toán | VietTrucks Admin</title>
 
-    body{
-      background:#f5f7fa;
-      color:#1f2937;
-    }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    .header{
-      background:#fff;
-      border-bottom:1px solid #e5e7eb;
-      padding:16px 28px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      position:sticky;
-      top:0;
-      z-index:10;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    .logo{
-      font-size:24px;
-      font-weight:700;
-      color:#16a34a;
-      text-decoration:none;
-    }
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f7f5;
+  color:#17231d;
+}
 
-    .header-links{
-      display:flex;
-      gap:16px;
-      flex-wrap:wrap;
-    }
+button,
+input,
+textarea{
+  font-family:inherit;
+}
 
-    .header-links a{
-      color:#4b5563;
-      text-decoration:none;
-      font-size:14px;
-    }
+a{
+  text-decoration:none;
+}
 
-    .container{
-      max-width:1220px;
-      margin:30px auto;
-      padding:0 20px;
-    }
+/* =========================================================
+   HEADER
+========================================================= */
 
-    .title-row{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:16px;
-      margin-bottom:22px;
-    }
+.header{
+  background:#fff;
+  border-bottom:1px solid #e1e8e4;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
 
-    .title h1{
-      font-size:28px;
-      margin-bottom:8px;
-    }
+.header-inner{
+  max-width:1500px;
+  margin:auto;
+  padding:0 20px;
+  min-height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
 
-    .title p{
-      color:#6b7280;
-    }
+.logo{
+  color:#078c4b;
+  font-size:23px;
+  font-weight:900;
+  white-space:nowrap;
+}
 
-    .add-btn{
-      background:#16a34a;
-      color:#fff;
-      border:none;
-      padding:11px 16px;
-      border-radius:8px;
-      font-weight:bold;
-      cursor:pointer;
-    }
+.logo span{
+  color:#17231d;
+}
 
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:16px;
-      margin-bottom:22px;
-    }
+.header-nav{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
 
-    .stat{
-      background:#fff;
-      padding:20px;
-      border-radius:12px;
-      box-shadow:0 2px 10px rgba(0,0,0,.05);
-    }
+.header-nav a,
+.header-nav button{
+  border:1px solid #dce6e0;
+  background:#fff;
+  color:#334139;
+  padding:9px 12px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
 
-    .stat small{
-      color:#6b7280;
-    }
+.header-nav a:hover,
+.header-nav button:hover{
+  border-color:#078c4b;
+  color:#078c4b;
+}
 
-    .stat strong{
-      display:block;
-      font-size:27px;
-      margin-top:8px;
-    }
+.header-nav .admin-btn{
+  background:#078c4b;
+  border-color:#078c4b;
+  color:#fff;
+}
 
-    .green{color:#16a34a;}
-    .orange{color:#d97706;}
-    .red{color:#dc2626;}
+/* =========================================================
+   LAYOUT
+========================================================= */
 
-    .filters{
-      background:#fff;
-      padding:18px;
-      border-radius:12px;
-      display:grid;
-      grid-template-columns:2fr 1fr 1fr 1fr auto;
-      gap:12px;
-      margin-bottom:20px;
-      box-shadow:0 2px 10px rgba(0,0,0,.05);
-    }
+.container{
+  max-width:1500px;
+  margin:0 auto;
+  padding:26px 20px 60px;
+}
 
-    input,select{
-      width:100%;
-      border:1px solid #d1d5db;
-      border-radius:8px;
-      padding:11px 12px;
-      outline:none;
-    }
+.page-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:22px;
+}
 
-    .search-btn{
-      border:none;
-      background:#16a34a;
-      color:#fff;
-      border-radius:8px;
-      padding:0 18px;
-      font-weight:bold;
-      cursor:pointer;
-    }
+.page-head h1{
+  font-size:27px;
+  margin-bottom:7px;
+}
 
-    .table-wrap{
-      background:#fff;
-      border-radius:12px;
-      overflow:auto;
-      box-shadow:0 2px 10px rgba(0,0,0,.05);
-      margin-bottom:22px;
-    }
+.page-head p{
+  color:#6b7871;
+  font-size:13px;
+  line-height:1.6;
+}
 
-    table{
-      width:100%;
-      border-collapse:collapse;
-      min-width:1150px;
-    }
+.refresh-btn{
+  border:0;
+  background:#078c4b;
+  color:#fff;
+  padding:11px 15px;
+  border-radius:8px;
+  font-weight:800;
+  cursor:pointer;
+  white-space:nowrap;
+}
 
-    th{
-      background:#f8fafc;
-      padding:14px 16px;
-      text-align:left;
-      font-size:13px;
-      color:#4b5563;
-      border-bottom:1px solid #e5e7eb;
-    }
+.refresh-btn:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
 
-    td{
-      padding:15px 16px;
-      border-bottom:1px solid #eef2f7;
-      font-size:14px;
-      vertical-align:top;
-    }
+/* =========================================================
+   SECURITY NOTICE
+========================================================= */
 
-    tr:hover{
-      background:#fafafa;
-    }
+.security-box{
+  background:#edf8f1;
+  border:1px solid #c7e4d2;
+  color:#235e40;
+  border-radius:11px;
+  padding:13px 15px;
+  margin-bottom:20px;
+  font-size:12px;
+  line-height:1.7;
+}
 
-    .status{
-      display:inline-block;
-      padding:5px 9px;
-      border-radius:20px;
-      font-size:11px;
-      font-weight:bold;
-      white-space:nowrap;
-    }
+/* =========================================================
+   SUMMARY
+========================================================= */
 
-    .waiting{
-      background:#fef3c7;
-      color:#b45309;
-    }
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-bottom:24px;
+}
 
-    .approved{
-      background:#dbeafe;
-      color:#1d4ed8;
-    }
+.summary-card{
+  background:#fff;
+  border:1px solid #e0e7e3;
+  border-radius:12px;
+  padding:17px;
+}
 
-    .paid{
-      background:#dcfce7;
-      color:#15803d;
-    }
+.summary-label{
+  color:#6f7d75;
+  font-size:11px;
+  font-weight:700;
+  margin-bottom:8px;
+}
 
-    .problem{
-      background:#fee2e2;
-      color:#b91c1c;
-    }
+.summary-value{
+  font-size:26px;
+  font-weight:900;
+  color:#17231d;
+}
 
-    .action{
-      color:#16a34a;
-      text-decoration:none;
-      font-weight:bold;
-      font-size:13px;
-    }
+.summary-money{
+  margin-top:6px;
+  color:#078c4b;
+  font-size:12px;
+  font-weight:800;
+}
 
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:20px;
-    }
+/* =========================================================
+   PANEL
+========================================================= */
 
-    .panel{
-      background:#fff;
-      border-radius:12px;
-      padding:20px;
-      box-shadow:0 2px 10px rgba(0,0,0,.05);
-    }
+.panel{
+  background:#fff;
+  border:1px solid #e0e7e3;
+  border-radius:12px;
+  margin-bottom:22px;
+  overflow:hidden;
+}
 
-    .panel h2{
-      font-size:18px;
-      margin-bottom:16px;
-    }
+.panel-head{
+  padding:17px 18px;
+  border-bottom:1px solid #e7ece9;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
 
-    .summary-row{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      padding:11px 0;
-      border-bottom:1px solid #eef2f7;
-      font-size:14px;
-    }
+.panel-head h2{
+  font-size:17px;
+  margin-bottom:4px;
+}
 
-    .summary-row:last-child{
-      border-bottom:none;
-    }
+.panel-subtitle{
+  font-size:11px;
+  color:#748078;
+  line-height:1.5;
+}
 
-    .summary-row span{
-      color:#6b7280;
-    }
+.count-badge{
+  min-width:34px;
+  text-align:center;
+  background:#edf7f1;
+  color:#078c4b;
+  padding:6px 9px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:900;
+}
 
-    .flow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:8px;
-    }
+/* =========================================================
+   TABLE
+========================================================= */
 
-    .flow-item{
-      background:#f8fafc;
-      border:1px solid #e5e7eb;
-      padding:12px;
-      border-radius:10px;
-      text-align:center;
-      flex:1;
-      min-width:110px;
-      font-size:13px;
-    }
+.table-wrap{
+  overflow-x:auto;
+}
 
-    .arrow{
-      color:#9ca3af;
-      font-weight:bold;
-    }
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1100px;
+}
 
-    .modal{
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.45);
-      z-index:100;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-    }
+th{
+  background:#f8faf9;
+  color:#59675f;
+  font-size:10px;
+  text-align:left;
+  padding:11px 12px;
+  border-bottom:1px solid #e7ece9;
+  white-space:nowrap;
+}
 
-    .modal-box{
-      background:#fff;
-      width:100%;
-      max-width:650px;
-      border-radius:14px;
-      padding:24px;
-    }
+td{
+  font-size:11px;
+  padding:12px;
+  border-bottom:1px solid #edf1ef;
+  vertical-align:top;
+}
 
-    .modal-box h2{
-      margin-bottom:18px;
-    }
+tr:last-child td{
+  border-bottom:0;
+}
 
-    .form-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
+.loading-row,
+.empty-row{
+  text-align:center;
+  color:#7b8780;
+  padding:25px;
+}
 
-    .form-group{
-      margin-bottom:12px;
-    }
+.route{
+  min-width:180px;
+}
 
-    .form-group label{
-      display:block;
-      font-size:13px;
-      font-weight:bold;
-      margin-bottom:6px;
-    }
+.route strong{
+  display:block;
+  margin-bottom:4px;
+}
 
-    textarea{
-      width:100%;
-      min-height:90px;
-      border:1px solid #d1d5db;
-      border-radius:8px;
-      padding:11px;
-      resize:vertical;
-    }
+.money{
+  color:#078c4b;
+  font-weight:900;
+  white-space:nowrap;
+}
 
-    .modal-actions{
-      display:flex;
-      justify-content:flex-end;
-      gap:10px;
-      margin-top:18px;
-    }
+.muted{
+  color:#7b8780;
+}
 
-    .cancel{
-      border:1px solid #d1d5db;
-      background:#fff;
-      padding:10px 16px;
-      border-radius:8px;
-      cursor:pointer;
-    }
+.small{
+  font-size:10px;
+}
 
-    .save{
-      border:none;
-      background:#16a34a;
-      color:#fff;
-      padding:10px 16px;
-      border-radius:8px;
-      cursor:pointer;
-      font-weight:bold;
-    }
+.bank{
+  min-width:170px;
+  line-height:1.6;
+}
 
-    @media(max-width:900px){
-      .stats{
-        grid-template-columns:repeat(2,1fr);
-      }
+/* =========================================================
+   STATUS
+========================================================= */
 
-      .filters{
-        grid-template-columns:1fr 1fr;
-      }
+.status{
+  display:inline-flex;
+  align-items:center;
+  border-radius:999px;
+  padding:5px 8px;
+  font-size:10px;
+  font-weight:800;
+  white-space:nowrap;
+}
 
-      .grid{
-        grid-template-columns:1fr;
-      }
-    }
+.status.ready{
+  background:#fff3cd;
+  color:#856404;
+}
 
-    @media(max-width:560px){
-      .stats,
-      .filters,
-      .form-grid{
-        grid-template-columns:1fr;
-      }
+.status.reconciled{
+  background:#e7f3ff;
+  color:#075985;
+}
 
-      .title-row{
-        flex-direction:column;
-        align-items:flex-start;
-      }
-    }
-  </style>
+.status.pending{
+  background:#fff3cd;
+  color:#856404;
+}
+
+.status.approved{
+  background:#e0f2fe;
+  color:#075985;
+}
+
+.status.paid{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.status.rejected{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.status.approved-pod{
+  background:#dcfce7;
+  color:#166534;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.action-group{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  min-width:150px;
+}
+
+.btn{
+  border:0;
+  border-radius:7px;
+  padding:7px 9px;
+  font-size:10px;
+  font-weight:800;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+.btn-green{
+  background:#078c4b;
+  color:#fff;
+}
+
+.btn-blue{
+  background:#e0f2fe;
+  color:#075985;
+}
+
+.btn-red{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.btn-dark{
+  background:#17231d;
+  color:#fff;
+}
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.message{
+  display:none;
+  margin-bottom:18px;
+  border-radius:9px;
+  padding:12px 14px;
+  font-size:12px;
+  line-height:1.6;
+}
+
+.message.show{
+  display:block;
+}
+
+.message.success{
+  background:#dcfce7;
+  color:#166534;
+  border:1px solid #bbdfc6;
+}
+
+.message.error{
+  background:#fee2e2;
+  color:#991b1b;
+  border:1px solid #efc4c4;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.48);
+  z-index:1000;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-card{
+  width:100%;
+  max-width:520px;
+  background:#fff;
+  border-radius:14px;
+  padding:22px;
+  box-shadow:0 25px 80px rgba(0,0,0,.25);
+}
+
+.modal-card h3{
+  margin-bottom:7px;
+}
+
+.modal-card p{
+  color:#6b7871;
+  font-size:12px;
+  line-height:1.6;
+  margin-bottom:15px;
+}
+
+.modal-card textarea{
+  width:100%;
+  min-height:100px;
+  border:1px solid #d7e0db;
+  border-radius:8px;
+  padding:11px;
+  resize:vertical;
+  outline:none;
+}
+
+.modal-card textarea:focus{
+  border-color:#078c4b;
+}
+
+.modal-actions{
+  margin-top:14px;
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+}
+
+.modal-actions button{
+  border:0;
+  border-radius:7px;
+  padding:9px 13px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1000px){
+
+  .summary-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+@media(max-width:650px){
+
+  .header-inner{
+    align-items:flex-start;
+    flex-direction:column;
+    padding-top:14px;
+    padding-bottom:14px;
+  }
+
+  .header-nav{
+    justify-content:flex-start;
+  }
+
+  .page-head{
+    flex-direction:column;
+  }
+
+  .summary-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .summary-value{
+    font-size:21px;
+  }
+
+}
+
+@media(max-width:420px){
+
+  .summary-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+</style>
 </head>
 
 <body>
 
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
 <header class="header">
 
-  <a href="index.html" class="logo">🚚 VietTruck</a>
+  <div class="header-inner">
 
-  <div class="header-links">
-  <a href="chung-tu-van-tai.html">Chứng từ</a>
-  <a href="hoa-don-van-tai.html">Hóa đơn</a>
-  <a href="cong-no-van-tai.html">Công nợ</a>
-  <a href="vi-viettruck.html">Ví VietTruck</a>
-  <a href="chi-phi-van-tai.html">Chi phí</a>
-  <a href="dashboard.html">Dashboard</a>
-</div>
+    <a href="admin.html" class="logo">
+      🚚 Viet<span>Trucks</span>
+    </a>
+
+    <div class="header-nav">
+
+      <a href="admin.html">
+        Trung tâm điều hành
+      </a>
+
+      <a href="quan-ly-don-hang.html">
+        Đơn hàng
+      </a>
+
+      <a href="phan-quyen-tai-khoan.html">
+        Phân quyền
+      </a>
+
+      <a href="doi-soat-thanh-toan.html"
+         class="admin-btn">
+        Đối soát
+      </a>
+
+      <button
+        type="button"
+        onclick="logout()"
+      >
+        Đăng xuất
+      </button>
+
+    </div>
+
+  </div>
 
 </header>
 
-<div class="container">
 
-  <div class="title-row">
+<main class="container">
 
-    <div class="title">
-      <h1>Đối soát & thanh toán</h1>
-      <p>Đối chiếu chuyến hàng, cước phí, phụ phí, công nợ và thanh toán giữa các bên.</p>
+  <div class="page-head">
+
+    <div>
+
+      <h1>
+        Đối soát & Thanh toán
+      </h1>
+
+      <p>
+        Quản lý cước vận chuyển sau khi giao hàng,
+        xác nhận đối soát và thanh toán cho tài xế/nhà xe.
+      </p>
+
     </div>
 
-    <button class="add-btn" onclick="openModal()">
-      + Tạo phiên đối soát
+    <button
+      id="refreshBtn"
+      type="button"
+      class="refresh-btn"
+      onclick="refreshDashboard()"
+    >
+      ↻ Làm mới dữ liệu
     </button>
 
   </div>
 
-  <div class="stats">
 
-    <div class="stat">
-      <small>Chờ đối soát</small>
-      <strong class="orange">0 đ</strong>
-    </div>
-
-    <div class="stat">
-      <small>Đã xác nhận</small>
-      <strong>0 đ</strong>
-    </div>
-
-    <div class="stat">
-      <small>Đã thanh toán</small>
-      <strong class="green">0 đ</strong>
-    </div>
-
-    <div class="stat">
-      <small>Đang có tranh chấp</small>
-      <strong class="red">0 đ</strong>
-    </div>
-
+  <div class="security-box">
+    🔒 Trang này chỉ dành cho Admin VietTrucks.
+    Các thao tác đối soát và thanh toán đều gọi RPC bảo mật tại database;
+    giao diện không cập nhật trực tiếp trạng thái giao dịch.
   </div>
 
-  <div class="filters">
 
-    <input type="text" placeholder="Tìm mã đối soát, chuyến, khách hàng hoặc nhà xe">
+  <div
+    id="messageBox"
+    class="message"
+  ></div>
 
-    <select>
-      <option>Tất cả đối tượng</option>
-      <option>Chủ hàng</option>
-      <option>Nhà xe</option>
-      <option>Tài xế</option>
-    </select>
 
-    <select>
-      <option>Tất cả trạng thái</option>
-      <option>Chờ đối soát</option>
-      <option>Đã xác nhận</option>
-      <option>Đã thanh toán</option>
-      <option>Có tranh chấp</option>
-    </select>
+  <!-- =======================================================
+       SUMMARY
+  ======================================================== -->
 
-    <select>
-      <option>Tháng 09/2026</option>
-      <option>Tháng 08/2026</option>
-      <option>Quý III/2026</option>
-    </select>
+  <section class="summary-grid">
 
-    <button class="search-btn">Tìm kiếm</button>
+    <div class="summary-card">
 
-  </div>
+      <div class="summary-label">
+        CHỜ ĐỐI SOÁT
+      </div>
 
-  <div class="table-wrap">
+      <div
+        id="sumReadyCount"
+        class="summary-value"
+      >
+        0
+      </div>
 
-    <table>
-
-      <thead>
-        <tr>
-          <th>Mã đối soát</th>
-          <th>Đối tác</th>
-          <th>Mã chuyến</th>
-          <th>Cước vận chuyển</th>
-          <th>Phụ phí</th>
-          <th>Khấu trừ</th>
-          <th>Thực thanh toán</th>
-          <th>Hạn thanh toán</th>
-          <th>Trạng thái</th>
-          <th>Thao tác</th>
-        </tr>
-      </thead>
-
-      <tbody>
-
-        
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-  <div class="grid">
-
-    <div class="panel">
-
-      <h2>Quy trình đối soát</h2>
-
-      <div class="flow">
-
-        <div class="flow-item">
-          🚚<br><strong>Hoàn thành chuyến</strong>
-        </div>
-
-        <div class="arrow">→</div>
-
-        <div class="flow-item">
-          📄<br><strong>Kiểm tra POD</strong>
-        </div>
-
-        <div class="arrow">→</div>
-
-        <div class="flow-item">
-          🧾<br><strong>Đối soát cước</strong>
-        </div>
-
-        <div class="arrow">→</div>
-
-        <div class="flow-item">
-          💳<br><strong>Thanh toán</strong>
-        </div>
-
+      <div
+        id="sumReadyMoney"
+        class="summary-money"
+      >
+        0 ₫
       </div>
 
     </div>
 
-    
 
-</div>
+    <div class="summary-card">
 
-<div class="modal" id="reconcileModal">
-
-  <div class="modal-box">
-
-    <h2>Tạo phiên đối soát</h2>
-
-    <div class="form-grid">
-
-      <div class="form-group">
-        <label>Đối tượng</label>
-        <select>
-          <option>Chủ hàng</option>
-          <option>Nhà xe</option>
-          <option>Tài xế</option>
-        </select>
+      <div class="summary-label">
+        ĐÃ ĐỐI SOÁT
       </div>
 
-      <div class="form-group">
-        <label>Tên đối tác</label>
-        <input type="text" placeholder="Nhập tên khách hàng / nhà xe">
+      <div
+        id="sumReconciledCount"
+        class="summary-value"
+      >
+        0
       </div>
 
-      <div class="form-group">
-        <label>Mã chuyến</label>
-        <input type="text" placeholder="Nhập mã chuyến">
-      </div>
-
-      <div class="form-group">
-        <label>Cước vận chuyển</label>
-        <input type="number" placeholder="Nhập số tiền">
-      </div>
-
-      <div class="form-group">
-        <label>Phụ phí</label>
-        <input type="number" placeholder="0">
-      </div>
-
-      <div class="form-group">
-        <label>Khấu trừ</label>
-        <input type="number" placeholder="0">
-      </div>
-
-      <div class="form-group">
-        <label>Hạn thanh toán</label>
-        <input type="date">
-      </div>
-
-      <div class="form-group">
-        <label>Trạng thái</label>
-        <select>
-          <option>Chờ đối soát</option>
-          <option>Đã xác nhận</option>
-        </select>
+      <div
+        id="sumReconciledMoney"
+        class="summary-money"
+      >
+        0 ₫
       </div>
 
     </div>
 
-    <div class="form-group">
-      <label>Ghi chú đối soát</label>
-      <textarea placeholder="Phụ phí, chứng từ, POD, lý do khấu trừ..."></textarea>
+
+    <div class="summary-card">
+
+      <div class="summary-label">
+        YÊU CẦU CHỜ DUYỆT
+      </div>
+
+      <div
+        id="sumPendingCount"
+        class="summary-value"
+      >
+        0
+      </div>
+
+      <div
+        id="sumPendingMoney"
+        class="summary-money"
+      >
+        0 ₫
+      </div>
+
     </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-label">
+        ĐÃ THANH TOÁN
+      </div>
+
+      <div
+        id="sumPaidCount"
+        class="summary-value"
+      >
+        0
+      </div>
+
+      <div
+        id="sumPaidMoney"
+        class="summary-money"
+      >
+        0 ₫
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       1. CHỜ ĐỐI SOÁT
+  ======================================================== -->
+
+  <section class="panel">
+
+    <div class="panel-head">
+
+      <div>
+
+        <h2>
+          1. Chờ đối soát
+        </h2>
+
+        <div class="panel-subtitle">
+          Chỉ hiển thị chuyến đã hoàn thành + POD approved +
+          chủ hàng đã xác nhận nhận hàng.
+        </div>
+
+      </div>
+
+      <div
+        id="readyBadge"
+        class="count-badge"
+      >
+        0
+      </div>
+
+    </div>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Mã chuyến</th>
+            <th>Tuyến vận chuyển</th>
+            <th>Tài xế / Nhà xe</th>
+            <th>Cước vận chuyển</th>
+            <th>POD</th>
+            <th>Chủ hàng xác nhận</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+          </tr>
+        </thead>
+
+        <tbody id="readyTable">
+
+          <tr>
+            <td
+              colspan="8"
+              class="loading-row"
+            >
+              Đang tải...
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       2. ĐÃ ĐỐI SOÁT
+  ======================================================== -->
+
+  <section class="panel">
+
+    <div class="panel-head">
+
+      <div>
+
+        <h2>
+          2. Đã đối soát
+        </h2>
+
+        <div class="panel-subtitle">
+          Giao dịch đã được Admin đối soát và đủ điều kiện
+          để tài xế/nhà xe tạo yêu cầu thanh toán.
+        </div>
+
+      </div>
+
+      <div
+        id="reconciledBadge"
+        class="count-badge"
+      >
+        0
+      </div>
+
+    </div>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Mã chuyến</th>
+            <th>Tuyến</th>
+            <th>Người nhận tiền</th>
+            <th>Số tiền</th>
+            <th>Đối soát lúc</th>
+            <th>Ghi chú</th>
+            <th>Yêu cầu thanh toán</th>
+          </tr>
+        </thead>
+
+        <tbody id="reconciledTable">
+
+          <tr>
+            <td
+              colspan="7"
+              class="loading-row"
+            >
+              Đang tải...
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       3. YÊU CẦU THANH TOÁN
+  ======================================================== -->
+
+  <section class="panel">
+
+    <div class="panel-head">
+
+      <div>
+
+        <h2>
+          3. Yêu cầu thanh toán
+        </h2>
+
+        <div class="panel-subtitle">
+          Yêu cầu rút tiền do tài xế/nhà xe gửi sau khi
+          giao dịch đã được đối soát.
+        </div>
+
+      </div>
+
+      <div
+        id="paymentBadge"
+        class="count-badge"
+      >
+        0
+      </div>
+
+    </div>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Mã yêu cầu</th>
+            <th>Người nhận</th>
+            <th>Chuyến</th>
+            <th>Số tiền</th>
+            <th>Ngân hàng</th>
+            <th>Ngày yêu cầu</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+          </tr>
+        </thead>
+
+        <tbody id="paymentTable">
+
+          <tr>
+            <td
+              colspan="8"
+              class="loading-row"
+            >
+              Đang tải...
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       4. LỊCH SỬ THANH TOÁN
+  ======================================================== -->
+
+  <section class="panel">
+
+    <div class="panel-head">
+
+      <div>
+
+        <h2>
+          4. Đã thanh toán
+        </h2>
+
+        <div class="panel-subtitle">
+          Lịch sử yêu cầu đã hoàn tất thanh toán.
+        </div>
+
+      </div>
+
+      <div
+        id="paidBadge"
+        class="count-badge"
+      >
+        0
+      </div>
+
+    </div>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Mã yêu cầu</th>
+            <th>Người nhận</th>
+            <th>Chuyến</th>
+            <th>Số tiền</th>
+            <th>Ngân hàng</th>
+            <th>Ngày thanh toán</th>
+            <th>Mã thanh toán</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+
+        <tbody id="paidTable">
+
+          <tr>
+            <td
+              colspan="8"
+              class="loading-row"
+            >
+              Đang tải...
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- =========================================================
+     MODAL ĐỐI SOÁT
+========================================================= -->
+
+<div
+  id="reconcileModal"
+  class="modal"
+>
+
+  <div class="modal-card">
+
+    <h3>
+      Duyệt đối soát
+    </h3>
+
+    <p>
+      Kiểm tra giá cước, POD và xác nhận của chủ hàng
+      trước khi duyệt giao dịch.
+    </p>
+
+    <textarea
+      id="reconcileNote"
+      placeholder="Ghi chú đối soát (có thể để trống)..."
+    ></textarea>
 
     <div class="modal-actions">
 
-      <button class="cancel" onclick="closeModal()">
+      <button
+        type="button"
+        onclick="closeReconcileModal()"
+      >
         Hủy
       </button>
 
-      <button class="save" onclick="saveReconcile()">
-        Tạo đối soát
+      <button
+        type="button"
+        class="btn-green"
+        onclick="submitReconciliation()"
+      >
+        ✓ Duyệt đối soát
       </button>
 
     </div>
@@ -602,19 +1054,2113 @@
 
 </div>
 
+
 <script>
-  function openModal(){
-    document.getElementById("reconcileModal").style.display="flex";
+
+/* ============================================================
+   SUPABASE
+============================================================ */
+
+/*
+  Dùng cùng Project URL + anon key với các trang VietTrucks
+  production hiện tại.
+
+  Nếu project hiện tại của anh đang dùng đúng 2 giá trị này
+  trong admin.html thì giữ nguyên.
+
+  Nếu admin.html của anh khai báo khác, thay đúng 2 giá trị
+  dưới đây bằng chính URL + anon key đang dùng ở admin.html.
+*/
+
+const SUPABASE_URL =
+  "https://gdxqndnrwulxohxbqfhh.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "sb_publishable_YOUR_KEY_HERE";
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+
+/* ============================================================
+   STATE
+============================================================ */
+
+let currentUser = null;
+let currentProfile = null;
+
+let transactions = [];
+let paymentRequests = [];
+
+let tripMap = new Map();
+let orderMap = new Map();
+let profileMap = new Map();
+let podMap = new Map();
+
+let currentReconcileTransactionId = null;
+
+
+/* ============================================================
+   HELPERS
+============================================================ */
+
+function esc(value){
+
+  return String(
+    value ?? ""
+  )
+  .replaceAll("&","&amp;")
+  .replaceAll("<","&lt;")
+  .replaceAll(">","&gt;")
+  .replaceAll('"',"&quot;")
+  .replaceAll("'","&#039;");
+
+}
+
+
+function normalizeStatus(value){
+
+  return String(
+    value || ""
+  )
+  .trim()
+  .toLowerCase();
+
+}
+
+
+function shortId(value){
+
+  if(!value){
+    return "—";
   }
 
-  function closeModal(){
-    document.getElementById("reconcileModal").style.display="none";
+  return String(value)
+    .slice(0,8)
+    .toUpperCase();
+
+}
+
+
+function moneyVN(value){
+
+  const number =
+    Number(value || 0);
+
+  return new Intl.NumberFormat(
+    "vi-VN"
+  ).format(number) + " ₫";
+
+}
+
+
+function dateTimeVN(value){
+
+  if(!value){
+    return "—";
   }
 
-  function saveReconcile(){
-    alert("Đã tạo phiên đối soát.");
-    closeModal();
+  const date =
+    new Date(value);
+
+  if(
+    Number.isNaN(
+      date.getTime()
+    )
+  ){
+    return "—";
   }
+
+  return date.toLocaleString(
+    "vi-VN"
+  );
+
+}
+
+
+function emptyRow(
+  colspan,
+  text
+){
+
+  return `
+    <tr>
+      <td
+        colspan="${colspan}"
+        class="empty-row"
+      >
+        ${esc(text)}
+      </td>
+    </tr>
+  `;
+
+}
+
+
+function showMessage(
+  text,
+  type = "success"
+){
+
+  const box =
+    document.getElementById(
+      "messageBox"
+    );
+
+  box.className =
+    "message show " + type;
+
+  box.textContent =
+    text;
+
+
+  window.clearTimeout(
+    showMessage.timer
+  );
+
+
+  showMessage.timer =
+    window.setTimeout(
+      function(){
+
+        box.className =
+          "message";
+
+      },
+      6000
+    );
+
+}
+
+
+function setLoading(
+  loading
+){
+
+  const button =
+    document.getElementById(
+      "refreshBtn"
+    );
+
+  if(!button){
+    return;
+  }
+
+  button.disabled =
+    loading;
+
+  button.textContent =
+    loading
+      ? "Đang tải..."
+      : "↻ Làm mới dữ liệu";
+
+}
+
+
+/* ============================================================
+   AUTH / ADMIN
+============================================================ */
+
+async function requireAdmin(){
+
+  const {
+    data:{
+      session
+    },
+    error
+  } =
+    await supabaseClient.auth
+      .getSession();
+
+
+  if(
+    error ||
+    !session?.user
+  ){
+
+    window.location.href =
+      "dang-nhap.html";
+
+    return false;
+  }
+
+
+  currentUser =
+    session.user;
+
+
+  const {
+    data:profile,
+    error:profileError
+  } =
+    await supabaseClient
+
+      .from("profiles")
+
+      .select(
+        "id,email,full_name,role,phone,company_name"
+      )
+
+      .eq(
+        "id",
+        currentUser.id
+      )
+
+      .maybeSingle();
+
+
+  if(profileError){
+
+    console.error(
+      "Profile:",
+      profileError
+    );
+
+    alert(
+      "Không kiểm tra được quyền tài khoản."
+    );
+
+    return false;
+  }
+
+
+  currentProfile =
+    profile || null;
+
+
+  const role =
+    normalizeStatus(
+      currentProfile?.role
+    );
+
+
+  if(role !== "admin"){
+
+    alert(
+      "Trang này chỉ dành cho Admin VietTrucks."
+    );
+
+    window.location.href =
+      "dashboard.html";
+
+    return false;
+  }
+
+
+  return true;
+}
+
+
+/* ============================================================
+   LOGOUT
+============================================================ */
+
+async function logout(){
+
+  await supabaseClient.auth
+    .signOut();
+
+  window.location.href =
+    "dang-nhap.html";
+
+}
+
+
+/* ============================================================
+   REFRESH RECONCILIATION QUEUE
+============================================================ */
+
+async function refreshReconciliationQueue(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.rpc(
+      "refresh_reconciliation_queue"
+    );
+
+
+  if(error){
+
+    console.error(
+      "refresh_reconciliation_queue:",
+      error
+    );
+
+    throw error;
+  }
+
+
+  return Number(
+    data || 0
+  );
+}
+
+
+/* ============================================================
+   LOAD PROFILES
+============================================================ */
+
+async function loadProfiles(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+
+      .from("profiles")
+
+      .select(
+        "id,email,full_name,phone,company_name,role"
+      );
+
+
+  if(error){
+    throw error;
+  }
+
+
+  profileMap =
+    new Map();
+
+
+  (data || [])
+    .forEach(function(profile){
+
+      profileMap.set(
+        profile.id,
+        profile
+      );
+
+    });
+
+}
+
+
+/* ============================================================
+   LOAD TRIPS
+============================================================ */
+
+async function loadTrips(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+
+      .from("trips")
+
+      .select(`
+        id,
+        order_id,
+        shipper_id,
+        driver_id,
+        agreed_price,
+        status,
+        completed_at,
+        delivery_confirmed_at,
+        delivery_confirmed_by
+      `)
+
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+  if(error){
+    throw error;
+  }
+
+
+  tripMap =
+    new Map();
+
+
+  (data || [])
+    .forEach(function(trip){
+
+      tripMap.set(
+        trip.id,
+        trip
+      );
+
+    });
+
+}
+
+
+/* ============================================================
+   LOAD ORDERS
+============================================================ */
+
+async function loadOrders(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+
+      .from("orders")
+
+      .select(`
+        id,
+        pickup_location,
+        delivery_location,
+        cargo_type,
+        vehicle_type,
+        weight,
+        status
+      `);
+
+
+  if(error){
+    throw error;
+  }
+
+
+  orderMap =
+    new Map();
+
+
+  (data || [])
+    .forEach(function(order){
+
+      orderMap.set(
+        order.id,
+        order
+      );
+
+    });
+
+}
+
+
+/* ============================================================
+   LOAD POD
+============================================================ */
+
+async function loadPods(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+
+      .from("trip_pods")
+
+      .select(`
+        id,
+        trip_id,
+        status,
+        reviewed_at,
+        review_note
+      `);
+
+
+  if(error){
+    throw error;
+  }
+
+
+  podMap =
+    new Map();
+
+
+  (data || [])
+    .forEach(function(pod){
+
+      podMap.set(
+        pod.trip_id,
+        pod
+      );
+
+    });
+
+}
+
+
+/* ============================================================
+   LOAD TRANSACTIONS
+============================================================ */
+
+async function loadTransactions(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+
+      .from("transactions")
+
+      .select(`
+        id,
+        user_id,
+        trip_id,
+        order_id,
+        type,
+        amount,
+        status,
+        description,
+        created_at,
+        updated_at,
+        reconciliation_status,
+        reconciled_at,
+        reconciled_by,
+        reconciliation_note
+      `)
+
+      .eq(
+        "type",
+        "trip_income"
+      )
+
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+  if(error){
+    throw error;
+  }
+
+
+  transactions =
+    data || [];
+
+}
+
+
+/* ============================================================
+   LOAD PAYMENT REQUESTS
+============================================================ */
+
+async function loadPaymentRequests(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+
+      .from("payment_requests")
+
+      .select(`
+        id,
+        user_id,
+        transaction_id,
+        trip_id,
+        order_id,
+        amount,
+        request_type,
+        status,
+        bank_name,
+        bank_account_number,
+        bank_account_name,
+        note,
+        created_at,
+        updated_at,
+        approved_at,
+        paid_at,
+        payment_code,
+        sepay_transaction_id,
+        sepay_reference_code,
+        paid_amount
+      `)
+
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+  if(error){
+    throw error;
+  }
+
+
+  paymentRequests =
+    data || [];
+
+}
+
+
+/* ============================================================
+   PROFILE NAME
+============================================================ */
+
+function profileName(
+  userId
+){
+
+  const profile =
+    profileMap.get(
+      userId
+    );
+
+
+  if(!profile){
+    return shortId(userId);
+  }
+
+
+  return (
+    profile.company_name ||
+    profile.full_name ||
+    profile.phone ||
+    profile.email ||
+    shortId(userId)
+  );
+
+}
+
+
+/* ============================================================
+   ROUTE
+============================================================ */
+
+function routeHtml(
+  transaction
+){
+
+  const trip =
+    tripMap.get(
+      transaction.trip_id
+    );
+
+
+  const order =
+    orderMap.get(
+      transaction.order_id ||
+      trip?.order_id
+    );
+
+
+  if(!order){
+
+    return `
+      <span class="muted">
+        Không có dữ liệu tuyến
+      </span>
+    `;
+  }
+
+
+  return `
+    <div class="route">
+
+      <strong>
+        ${esc(
+          order.pickup_location ||
+          "—"
+        )}
+        →
+        ${esc(
+          order.delivery_location ||
+          "—"
+        )}
+      </strong>
+
+      <span class="muted small">
+        ${esc(
+          order.cargo_type ||
+          "Hàng hóa"
+        )}
+      </span>
+
+    </div>
+  `;
+
+}
+
+
+/* ============================================================
+   PAYMENT REQUEST THEO TRANSACTION
+============================================================ */
+
+function getPaymentRequestForTransaction(
+  transactionId
+){
+
+  return paymentRequests
+    .find(function(request){
+
+      return (
+        request.transaction_id ===
+        transactionId
+      );
+
+    }) || null;
+
+}
+
+
+/* ============================================================
+   RENDER CHỜ ĐỐI SOÁT
+============================================================ */
+
+function renderReady(){
+
+  const table =
+    document.getElementById(
+      "readyTable"
+    );
+
+
+  const list =
+    transactions.filter(
+      function(transaction){
+
+        return (
+          normalizeStatus(
+            transaction.reconciliation_status
+          ) === "ready"
+          &&
+          normalizeStatus(
+            transaction.status
+          ) === "pending"
+        );
+
+      }
+    );
+
+
+  document.getElementById(
+    "readyBadge"
+  ).textContent =
+    list.length;
+
+
+  if(!list.length){
+
+    table.innerHTML =
+      emptyRow(
+        8,
+        "Không có giao dịch chờ đối soát."
+      );
+
+    return;
+  }
+
+
+  table.innerHTML =
+    list.map(
+      function(transaction){
+
+        const trip =
+          tripMap.get(
+            transaction.trip_id
+          );
+
+
+        const pod =
+          podMap.get(
+            transaction.trip_id
+          );
+
+
+        return `
+          <tr>
+
+            <td>
+              <strong>
+                ${shortId(
+                  transaction.trip_id
+                )}
+              </strong>
+            </td>
+
+            <td>
+              ${routeHtml(transaction)}
+            </td>
+
+            <td>
+              ${esc(
+                profileName(
+                  transaction.user_id
+                )
+              )}
+            </td>
+
+            <td class="money">
+              ${moneyVN(
+                transaction.amount
+              )}
+            </td>
+
+            <td>
+
+              ${
+                normalizeStatus(
+                  pod?.status
+                ) === "approved"
+
+                  ? `
+                    <span class="status approved-pod">
+                      ✓ Approved
+                    </span>
+                  `
+
+                  : `
+                    <span class="status rejected">
+                      Chưa approved
+                    </span>
+                  `
+              }
+
+            </td>
+
+            <td>
+              ${dateTimeVN(
+                trip?.delivery_confirmed_at
+              )}
+            </td>
+
+            <td>
+              <span class="status ready">
+                Chờ đối soát
+              </span>
+            </td>
+
+            <td>
+
+              <div class="action-group">
+
+                <button
+                  type="button"
+                  class="btn btn-green"
+                  onclick="openReconcileModal('${transaction.id}')"
+                >
+                  ✓ Duyệt đối soát
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+        `;
+
+      }
+    )
+    .join("");
+
+}
+
+
+/* ============================================================
+   RENDER ĐÃ ĐỐI SOÁT
+============================================================ */
+
+function renderReconciled(){
+
+  const table =
+    document.getElementById(
+      "reconciledTable"
+    );
+
+
+  const list =
+    transactions.filter(
+      function(transaction){
+
+        return (
+          normalizeStatus(
+            transaction.reconciliation_status
+          ) === "reconciled"
+        );
+
+      }
+    );
+
+
+  document.getElementById(
+    "reconciledBadge"
+  ).textContent =
+    list.length;
+
+
+  if(!list.length){
+
+    table.innerHTML =
+      emptyRow(
+        7,
+        "Chưa có giao dịch đã đối soát."
+      );
+
+    return;
+  }
+
+
+  table.innerHTML =
+    list.map(
+      function(transaction){
+
+        const request =
+          getPaymentRequestForTransaction(
+            transaction.id
+          );
+
+
+        let requestHtml =
+          `
+            <span class="muted">
+              Chưa yêu cầu
+            </span>
+          `;
+
+
+        if(request){
+
+          const status =
+            normalizeStatus(
+              request.status
+            );
+
+
+          requestHtml =
+            `
+              <span class="status ${esc(status)}">
+                ${esc(
+                  paymentStatusText(
+                    status
+                  )
+                )}
+              </span>
+            `;
+
+        }
+
+
+        return `
+          <tr>
+
+            <td>
+              <strong>
+                ${shortId(
+                  transaction.trip_id
+                )}
+              </strong>
+            </td>
+
+            <td>
+              ${routeHtml(transaction)}
+            </td>
+
+            <td>
+              ${esc(
+                profileName(
+                  transaction.user_id
+                )
+              )}
+            </td>
+
+            <td class="money">
+              ${moneyVN(
+                transaction.amount
+              )}
+            </td>
+
+            <td>
+              ${dateTimeVN(
+                transaction.reconciled_at
+              )}
+            </td>
+
+            <td>
+              ${esc(
+                transaction.reconciliation_note ||
+                "—"
+              )}
+            </td>
+
+            <td>
+              ${requestHtml}
+            </td>
+
+          </tr>
+        `;
+
+      }
+    )
+    .join("");
+
+}
+
+
+/* ============================================================
+   PAYMENT STATUS
+============================================================ */
+
+function paymentStatusText(
+  status
+){
+
+  switch(status){
+
+    case "pending":
+      return "Chờ duyệt";
+
+    case "approved":
+      return "Chờ thanh toán";
+
+    case "paid":
+      return "Đã thanh toán";
+
+    case "rejected":
+      return "Đã từ chối";
+
+    default:
+      return status || "—";
+
+  }
+
+}
+
+
+/* ============================================================
+   RENDER PAYMENT REQUESTS
+============================================================ */
+
+function renderPayments(){
+
+  const table =
+    document.getElementById(
+      "paymentTable"
+    );
+
+
+  const list =
+    paymentRequests.filter(
+      function(request){
+
+        return (
+          normalizeStatus(
+            request.status
+          ) !== "paid"
+        );
+
+      }
+    );
+
+
+  document.getElementById(
+    "paymentBadge"
+  ).textContent =
+    list.length;
+
+
+  if(!list.length){
+
+    table.innerHTML =
+      emptyRow(
+        8,
+        "Không có yêu cầu thanh toán đang xử lý."
+      );
+
+    return;
+  }
+
+
+  table.innerHTML =
+    list.map(
+      function(request){
+
+        const status =
+          normalizeStatus(
+            request.status
+          );
+
+
+        let actions = "";
+
+
+        if(status === "pending"){
+
+          actions = `
+            <div class="action-group">
+
+              <button
+                type="button"
+                class="btn btn-green"
+                onclick="approvePayment('${request.id}')"
+              >
+                ✓ Duyệt
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-red"
+                onclick="rejectPayment('${request.id}')"
+              >
+                ✕ Từ chối
+              </button>
+
+            </div>
+          `;
+
+        }
+
+
+        if(status === "approved"){
+
+          actions = `
+            <div class="action-group">
+
+              <button
+                type="button"
+                class="btn btn-dark"
+                onclick="markPaid('${request.id}')"
+              >
+                ₫ Đã thanh toán
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-red"
+                onclick="rejectPayment('${request.id}')"
+              >
+                ✕ Từ chối
+              </button>
+
+            </div>
+          `;
+
+        }
+
+
+        if(status === "rejected"){
+
+          actions = `
+            <span class="muted">
+              Không còn thao tác
+            </span>
+          `;
+
+        }
+
+
+        return `
+          <tr>
+
+            <td>
+              <strong>
+                ${shortId(
+                  request.id
+                )}
+              </strong>
+            </td>
+
+            <td>
+              ${esc(
+                profileName(
+                  request.user_id
+                )
+              )}
+            </td>
+
+            <td>
+              ${shortId(
+                request.trip_id
+              )}
+            </td>
+
+            <td class="money">
+              ${moneyVN(
+                request.amount
+              )}
+            </td>
+
+            <td class="bank">
+
+              <strong>
+                ${esc(
+                  request.bank_name ||
+                  "—"
+                )}
+              </strong>
+
+              <br>
+
+              ${esc(
+                request.bank_account_number ||
+                "—"
+              )}
+
+              <br>
+
+              <span class="muted">
+                ${esc(
+                  request.bank_account_name ||
+                  "—"
+                )}
+              </span>
+
+            </td>
+
+            <td>
+              ${dateTimeVN(
+                request.created_at
+              )}
+            </td>
+
+            <td>
+
+              <span class="status ${esc(status)}">
+                ${esc(
+                  paymentStatusText(
+                    status
+                  )
+                )}
+              </span>
+
+            </td>
+
+            <td>
+              ${actions}
+            </td>
+
+          </tr>
+        `;
+
+      }
+    )
+    .join("");
+
+}
+
+
+/* ============================================================
+   RENDER PAID
+============================================================ */
+
+function renderPaid(){
+
+  const table =
+    document.getElementById(
+      "paidTable"
+    );
+
+
+  const list =
+    paymentRequests.filter(
+      function(request){
+
+        return (
+          normalizeStatus(
+            request.status
+          ) === "paid"
+        );
+
+      }
+    );
+
+
+  document.getElementById(
+    "paidBadge"
+  ).textContent =
+    list.length;
+
+
+  if(!list.length){
+
+    table.innerHTML =
+      emptyRow(
+        8,
+        "Chưa có khoản thanh toán hoàn tất."
+      );
+
+    return;
+  }
+
+
+  table.innerHTML =
+    list.map(
+      function(request){
+
+        return `
+          <tr>
+
+            <td>
+              <strong>
+                ${shortId(
+                  request.id
+                )}
+              </strong>
+            </td>
+
+            <td>
+              ${esc(
+                profileName(
+                  request.user_id
+                )
+              )}
+            </td>
+
+            <td>
+              ${shortId(
+                request.trip_id
+              )}
+            </td>
+
+            <td class="money">
+
+              ${moneyVN(
+                request.paid_amount ??
+                request.amount
+              )}
+
+            </td>
+
+            <td class="bank">
+
+              <strong>
+                ${esc(
+                  request.bank_name ||
+                  "—"
+                )}
+              </strong>
+
+              <br>
+
+              ${esc(
+                request.bank_account_number ||
+                "—"
+              )}
+
+              <br>
+
+              <span class="muted">
+                ${esc(
+                  request.bank_account_name ||
+                  "—"
+                )}
+              </span>
+
+            </td>
+
+            <td>
+              ${dateTimeVN(
+                request.paid_at
+              )}
+            </td>
+
+            <td>
+
+              ${
+                esc(
+                  request.payment_code ||
+                  request.sepay_reference_code ||
+                  request.sepay_transaction_id ||
+                  "—"
+                )
+              }
+
+            </td>
+
+            <td>
+              <span class="status paid">
+                ✓ Đã thanh toán
+              </span>
+            </td>
+
+          </tr>
+        `;
+
+      }
+    )
+    .join("");
+
+}
+
+
+/* ============================================================
+   SUMMARY
+============================================================ */
+
+function updateSummary(){
+
+  const ready =
+    transactions.filter(
+      function(transaction){
+
+        return (
+          normalizeStatus(
+            transaction.reconciliation_status
+          ) === "ready"
+          &&
+          normalizeStatus(
+            transaction.status
+          ) === "pending"
+        );
+
+      }
+    );
+
+
+  const reconciled =
+    transactions.filter(
+      function(transaction){
+
+        return (
+          normalizeStatus(
+            transaction.reconciliation_status
+          ) === "reconciled"
+        );
+
+      }
+    );
+
+
+  const pendingRequests =
+    paymentRequests.filter(
+      function(request){
+
+        return (
+          normalizeStatus(
+            request.status
+          ) === "pending"
+        );
+
+      }
+    );
+
+
+  const paidRequests =
+    paymentRequests.filter(
+      function(request){
+
+        return (
+          normalizeStatus(
+            request.status
+          ) === "paid"
+        );
+
+      }
+    );
+
+
+  const sum =
+    function(list, field){
+
+      return list.reduce(
+        function(total,item){
+
+          return (
+            total +
+            Number(
+              item[field] || 0
+            )
+          );
+
+        },
+        0
+      );
+
+    };
+
+
+  document.getElementById(
+    "sumReadyCount"
+  ).textContent =
+    ready.length;
+
+
+  document.getElementById(
+    "sumReadyMoney"
+  ).textContent =
+    moneyVN(
+      sum(
+        ready,
+        "amount"
+      )
+    );
+
+
+  document.getElementById(
+    "sumReconciledCount"
+  ).textContent =
+    reconciled.length;
+
+
+  document.getElementById(
+    "sumReconciledMoney"
+  ).textContent =
+    moneyVN(
+      sum(
+        reconciled,
+        "amount"
+      )
+    );
+
+
+  document.getElementById(
+    "sumPendingCount"
+  ).textContent =
+    pendingRequests.length;
+
+
+  document.getElementById(
+    "sumPendingMoney"
+  ).textContent =
+    moneyVN(
+      sum(
+        pendingRequests,
+        "amount"
+      )
+    );
+
+
+  document.getElementById(
+    "sumPaidCount"
+  ).textContent =
+    paidRequests.length;
+
+
+  document.getElementById(
+    "sumPaidMoney"
+  ).textContent =
+    moneyVN(
+      paidRequests.reduce(
+        function(total,request){
+
+          return (
+            total +
+            Number(
+              request.paid_amount ??
+              request.amount ??
+              0
+            )
+          );
+
+        },
+        0
+      )
+    );
+
+}
+
+
+/* ============================================================
+   RENDER ALL
+============================================================ */
+
+function renderAll(){
+
+  updateSummary();
+
+  renderReady();
+
+  renderReconciled();
+
+  renderPayments();
+
+  renderPaid();
+
+}
+
+
+/* ============================================================
+   MODAL ĐỐI SOÁT
+============================================================ */
+
+function openReconcileModal(
+  transactionId
+){
+
+  currentReconcileTransactionId =
+    transactionId;
+
+
+  document.getElementById(
+    "reconcileNote"
+  ).value =
+    "";
+
+
+  document.getElementById(
+    "reconcileModal"
+  ).classList.add(
+    "show"
+  );
+
+}
+
+
+function closeReconcileModal(){
+
+  currentReconcileTransactionId =
+    null;
+
+
+  document.getElementById(
+    "reconcileModal"
+  ).classList.remove(
+    "show"
+  );
+
+}
+
+
+/* ============================================================
+   DUYỆT ĐỐI SOÁT
+============================================================ */
+
+async function submitReconciliation(){
+
+  if(
+    !currentReconcileTransactionId
+  ){
+    return;
+  }
+
+
+  const note =
+    document.getElementById(
+      "reconcileNote"
+    ).value.trim();
+
+
+  const confirmed =
+    window.confirm(
+      "Xác nhận duyệt đối soát giao dịch này?"
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.rpc(
+        "approve_trip_reconciliation",
+        {
+          p_transaction_id:
+            currentReconcileTransactionId,
+
+          p_note:
+            note || null
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    if(data !== true){
+
+      throw new Error(
+        "Database không xác nhận đối soát."
+      );
+    }
+
+
+    closeReconcileModal();
+
+
+    showMessage(
+      "Đã duyệt đối soát thành công.",
+      "success"
+    );
+
+
+    await loadDashboard();
+
+  }
+  catch(error){
+
+    console.error(
+      "approve_trip_reconciliation:",
+      error
+    );
+
+
+    showMessage(
+      "Không thể duyệt đối soát: " +
+      (
+        error?.message ||
+        "Lỗi không xác định"
+      ),
+      "error"
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   DUYỆT PAYMENT REQUEST
+============================================================ */
+
+async function approvePayment(
+  requestId
+){
+
+  const confirmed =
+    window.confirm(
+      "Xác nhận duyệt yêu cầu thanh toán này?"
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  try{
+
+    const {
+      error
+    } =
+      await supabaseClient.rpc(
+        "approve_payment_request",
+        {
+          p_request_id:
+            requestId
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    showMessage(
+      "Đã duyệt yêu cầu thanh toán.",
+      "success"
+    );
+
+
+    await loadDashboard();
+
+  }
+  catch(error){
+
+    console.error(
+      "approve_payment_request:",
+      error
+    );
+
+
+    showMessage(
+      "Không thể duyệt thanh toán: " +
+      (
+        error?.message ||
+        "Lỗi không xác định"
+      ),
+      "error"
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   TỪ CHỐI PAYMENT REQUEST
+============================================================ */
+
+async function rejectPayment(
+  requestId
+){
+
+  const confirmed =
+    window.confirm(
+      "Xác nhận từ chối yêu cầu thanh toán này?"
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  try{
+
+    const {
+      error
+    } =
+      await supabaseClient.rpc(
+        "reject_payment_request",
+        {
+          p_request_id:
+            requestId
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    showMessage(
+      "Đã từ chối yêu cầu thanh toán.",
+      "success"
+    );
+
+
+    await loadDashboard();
+
+  }
+  catch(error){
+
+    console.error(
+      "reject_payment_request:",
+      error
+    );
+
+
+    showMessage(
+      "Không thể từ chối yêu cầu: " +
+      (
+        error?.message ||
+        "Lỗi không xác định"
+      ),
+      "error"
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   MARK PAID
+============================================================ */
+
+async function markPaid(
+  requestId
+){
+
+  const confirmed =
+    window.confirm(
+      "Chỉ bấm OK khi VietTrucks đã thực sự chuyển tiền.\n\nXác nhận khoản này đã thanh toán?"
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  try{
+
+    const {
+      error
+    } =
+      await supabaseClient.rpc(
+        "mark_payment_request_paid",
+        {
+          p_request_id:
+            requestId
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    showMessage(
+      "Đã ghi nhận thanh toán thành công.",
+      "success"
+    );
+
+
+    await loadDashboard();
+
+  }
+  catch(error){
+
+    console.error(
+      "mark_payment_request_paid:",
+      error
+    );
+
+
+    showMessage(
+      "Không thể xác nhận đã thanh toán: " +
+      (
+        error?.message ||
+        "Lỗi không xác định"
+      ),
+      "error"
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   LOAD DASHBOARD
+============================================================ */
+
+async function loadDashboard(){
+
+  setLoading(true);
+
+
+  try{
+
+    /*
+      Đồng bộ các trip_income đủ điều kiện
+      từ not_ready -> ready.
+
+      RPC tự kiểm tra Admin.
+    */
+
+    await refreshReconciliationQueue();
+
+
+    /*
+      Tải song song dữ liệu thật.
+    */
+
+    await Promise.all([
+
+      loadProfiles(),
+
+      loadTrips(),
+
+      loadOrders(),
+
+      loadPods(),
+
+      loadTransactions(),
+
+      loadPaymentRequests()
+
+    ]);
+
+
+    renderAll();
+
+  }
+  catch(error){
+
+    console.error(
+      "Đối soát:",
+      error
+    );
+
+
+    showMessage(
+      "Không tải được dữ liệu đối soát: " +
+      (
+        error?.message ||
+        "Lỗi không xác định"
+      ),
+      "error"
+    );
+
+  }
+  finally{
+
+    setLoading(false);
+
+  }
+
+}
+
+
+/* ============================================================
+   REFRESH
+============================================================ */
+
+async function refreshDashboard(){
+
+  await loadDashboard();
+
+}
+
+
+/* ============================================================
+   CLOSE MODAL
+============================================================ */
+
+document
+  .getElementById(
+    "reconcileModal"
+  )
+  .addEventListener(
+    "click",
+    function(event){
+
+      if(
+        event.target === this
+      ){
+
+        closeReconcileModal();
+
+      }
+
+    }
+  );
+
+
+/* ============================================================
+   START
+============================================================ */
+
+(async function(){
+
+  const allowed =
+    await requireAdmin();
+
+
+  if(!allowed){
+    return;
+  }
+
+
+  await loadDashboard();
+
+
+  /*
+    Tự làm mới mỗi 30 giây.
+  */
+
+  window.setInterval(
+    function(){
+
+      loadDashboard();
+
+    },
+    30000
+  );
+
+})();
+
 </script>
 
 </body>
