@@ -2498,7 +2498,7 @@ async function loadOrders(){
             error
         } =
         await supabaseClient
-    .from("orders")
+    .from("orders_public")
     .select(`
         id,
         user_id,
