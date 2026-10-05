@@ -12,96 +12,275 @@ a{text-decoration:none;color:inherit}
 .app{display:flex;min-height:100vh}
 
 .sidebar{
-  width:250px;background:#0f5132;color:#fff;padding:24px 16px;
-  position:fixed;left:0;top:0;bottom:0;overflow-y:auto
+  width:250px;
+  background:#0f5132;
+  color:#fff;
+  padding:24px 16px;
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  overflow-y:auto;
 }
-.logo{font-size:28px;font-weight:800;text-align:center;margin-bottom:28px}
-.logo span{color:#ffc107}
-.menu-title{font-size:12px;text-transform:uppercase;opacity:.7;margin:20px 12px 8px}
-.menu-item{display:block;padding:12px 14px;border-radius:10px;margin-bottom:6px}
-.menu-item:hover,.menu-item.active{background:rgba(255,255,255,.15)}
 
-.main{margin-left:250px;width:calc(100% - 250px)}
-.topbar{
-  min-height:72px;background:#fff;border-bottom:1px solid #e5e7eb;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 28px;position:sticky;top:0;z-index:10;gap:15px
+.logo{
+  font-size:28px;
+  font-weight:800;
+  text-align:center;
+  margin-bottom:28px;
 }
-.topbar h1{font-size:22px;color:#0f5132}
-.content{padding:28px;max-width:1350px;margin:auto}
+.logo span{color:#ffc107}
+
+.menu-title{
+  font-size:12px;
+  text-transform:uppercase;
+  opacity:.7;
+  margin:20px 12px 8px;
+}
+
+.menu-item{
+  display:block;
+  padding:12px 14px;
+  border-radius:10px;
+  margin-bottom:6px;
+}
+.menu-item:hover,
+.menu-item.active{
+  background:rgba(255,255,255,.15);
+}
+
+.main{
+  margin-left:250px;
+  width:calc(100% - 250px);
+}
+
+.topbar{
+  min-height:72px;
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 28px;
+  position:sticky;
+  top:0;
+  z-index:10;
+  gap:15px;
+}
+
+.topbar h1{
+  font-size:22px;
+  color:#0f5132;
+}
+
+.content{
+  padding:28px;
+  max-width:1350px;
+  margin:auto;
+}
 
 .btn{
-  border:none;border-radius:10px;padding:11px 16px;
-  cursor:pointer;font-weight:700;font-size:14px
+  border:none;
+  border-radius:10px;
+  padding:11px 16px;
+  cursor:pointer;
+  font-weight:700;
+  font-size:14px;
 }
-.btn-primary{background:#198754;color:#fff}
+
+.btn-primary{
+  background:#198754;
+  color:#fff;
+}
 .btn-primary:hover{background:#146c43}
-.btn-light{background:#eef3f0;color:#0f5132}
-.btn:disabled{opacity:.6;cursor:not-allowed}
+
+.btn-light{
+  background:#eef3f0;
+  color:#0f5132;
+}
+
+.btn-danger{
+  background:#dc2626;
+  color:#fff;
+}
+
+.btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
 
 .message{
-  display:none;margin-bottom:18px;padding:13px 15px;
-  border-radius:10px;font-size:13px;line-height:1.6
+  display:none;
+  margin-bottom:18px;
+  padding:13px 15px;
+  border-radius:10px;
+  font-size:13px;
+  line-height:1.6;
 }
-.message.success{display:block;background:#dcfce7;border:1px solid #86efac;color:#166534}
-.message.error{display:block;background:#fee2e2;border:1px solid #fecaca;color:#991b1b}
-.message.info{display:block;background:#dbeafe;border:1px solid #bfdbfe;color:#1e40af}
+
+.message.success{
+  display:block;
+  background:#dcfce7;
+  border:1px solid #86efac;
+  color:#166534;
+}
+
+.message.error{
+  display:block;
+  background:#fee2e2;
+  border:1px solid #fecaca;
+  color:#991b1b;
+}
+
+.message.info{
+  display:block;
+  background:#dbeafe;
+  border:1px solid #bfdbfe;
+  color:#1e40af;
+}
 
 .overview{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:16px;margin-bottom:22px
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:22px;
 }
+
 .stat{
-  background:#fff;border-radius:14px;padding:20px;
-  border:1px solid #eceff1;box-shadow:0 4px 16px rgba(0,0,0,.05)
+  background:#fff;
+  border-radius:14px;
+  padding:20px;
+  border:1px solid #eceff1;
+  box-shadow:0 4px 16px rgba(0,0,0,.05);
 }
-.stat .icon{font-size:26px;margin-bottom:10px}
-.stat strong{display:block;font-size:26px;color:#0f5132;margin-bottom:4px}
-.stat span{font-size:13px;color:#6b7280}
+
+.stat .icon{
+  font-size:26px;
+  margin-bottom:10px;
+}
+
+.stat strong{
+  display:block;
+  font-size:26px;
+  color:#0f5132;
+  margin-bottom:4px;
+}
+
+.stat span{
+  font-size:13px;
+  color:#6b7280;
+}
 
 .card{
-  background:#fff;border-radius:16px;border:1px solid #eceff1;
-  box-shadow:0 4px 18px rgba(0,0,0,.05);overflow:hidden
+  background:#fff;
+  border-radius:16px;
+  border:1px solid #eceff1;
+  box-shadow:0 4px 18px rgba(0,0,0,.05);
+  overflow:hidden;
 }
+
 .card-head{
-  padding:20px;display:flex;justify-content:space-between;
-  gap:14px;align-items:center;border-bottom:1px solid #edf0f2;
-  flex-wrap:wrap
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  align-items:center;
+  border-bottom:1px solid #edf0f2;
+  flex-wrap:wrap;
 }
-.card-head h2{font-size:18px;color:#0f5132}
-.filters{display:flex;gap:10px;flex-wrap:wrap}
-.input,.select{
-  padding:10px 12px;border:1px solid #d1d5db;
-  border-radius:9px;outline:none;background:#fff
+
+.card-head h2{
+  font-size:18px;
+  color:#0f5132;
 }
+
+.filters{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.input,
+.select{
+  padding:10px 12px;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  outline:none;
+  background:#fff;
+}
+
 .input{min-width:230px}
-.input:focus,.select:focus{
+
+.input:focus,
+.select:focus{
   border-color:#198754;
-  box-shadow:0 0 0 3px rgba(25,135,84,.08)
+  box-shadow:0 0 0 3px rgba(25,135,84,.08);
 }
 
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:950px}
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:950px;
+}
+
 th,td{
-  padding:14px 16px;border-bottom:1px solid #edf0f2;
-  text-align:left;font-size:14px;vertical-align:middle
+  padding:14px 16px;
+  border-bottom:1px solid #edf0f2;
+  text-align:left;
+  font-size:14px;
+  vertical-align:middle;
 }
-th{background:#f8faf9;color:#374151;font-size:13px}
-tr:hover td{background:#fbfdfc}
 
-.employee{display:flex;align-items:center;gap:11px}
-.avatar{
-  width:42px;height:42px;border-radius:50%;display:flex;
-  align-items:center;justify-content:center;background:#dff3e7;
-  color:#0f5132;font-weight:800;flex-shrink:0
+th{
+  background:#f8faf9;
+  color:#374151;
+  font-size:13px;
 }
-.employee strong{display:block;margin-bottom:3px}
-.employee small{color:#6b7280}
+
+tr:hover td{
+  background:#fbfdfc;
+}
+
+.employee{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.avatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#dff3e7;
+  color:#0f5132;
+  font-weight:800;
+  flex-shrink:0;
+}
+
+.employee strong{
+  display:block;
+  margin-bottom:3px;
+}
+
+.employee small{
+  color:#6b7280;
+}
 
 .badge{
-  display:inline-block;border-radius:999px;padding:6px 10px;
-  font-size:12px;font-weight:700
+  display:inline-block;
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:12px;
+  font-weight:700;
 }
+
 .badge-admin{background:#ede9fe;color:#5b21b6}
 .badge-sales{background:#e0f2fe;color:#075985}
 .badge-dispatch{background:#dbeafe;color:#1d4ed8}
@@ -110,79 +289,214 @@ tr:hover td{background:#fbfdfc}
 .badge-staff{background:#e5e7eb;color:#374151}
 .active-status{background:#d1fae5;color:#065f46}
 
-.actions{display:flex;gap:7px;flex-wrap:wrap}
-.action-btn{
-  padding:7px 10px;border:1px solid #d1d5db;
-  background:#fff;border-radius:8px;cursor:pointer;font-size:13px
+.actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
 }
-.action-btn:hover{background:#f3f4f6}
 
-.empty{display:none;padding:35px;text-align:center;color:#6b7280}
+.action-btn{
+  padding:7px 10px;
+  border:1px solid #d1d5db;
+  background:#fff;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.action-btn:hover{
+  background:#f3f4f6;
+}
+
+.empty{
+  display:none;
+  padding:35px;
+  text-align:center;
+  color:#6b7280;
+}
 
 .loading{
-  padding:35px;text-align:center;color:#6b7280
+  padding:35px;
+  text-align:center;
+  color:#6b7280;
 }
 
 .production-note{
-  margin-top:18px;padding:14px;border-radius:10px;
-  background:#ecfdf5;border:1px solid #bbf7d0;
-  color:#166534;font-size:13px;line-height:1.6
+  margin-top:18px;
+  padding:14px;
+  border-radius:10px;
+  background:#ecfdf5;
+  border:1px solid #bbf7d0;
+  color:#166534;
+  font-size:13px;
+  line-height:1.6;
 }
 
 /* MODAL */
+
 .modal{
-  position:fixed;inset:0;background:rgba(0,0,0,.45);
-  display:none;align-items:center;justify-content:center;
-  padding:20px;z-index:999
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:999;
 }
-.modal.show{display:flex}
+
+.modal.show{
+  display:flex;
+}
+
 .modal-box{
-  width:100%;max-width:620px;background:#fff;border-radius:16px;
-  overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.2)
+  width:100%;
+  max-width:650px;
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 20px 50px rgba(0,0,0,.2);
+  max-height:92vh;
+  overflow-y:auto;
 }
+
 .modal-head{
-  padding:18px 20px;border-bottom:1px solid #e5e7eb;
-  display:flex;justify-content:space-between;align-items:center
+  padding:18px 20px;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
-.modal-head h3{color:#0f5132}
-.close{border:none;background:none;font-size:24px;cursor:pointer}
-.modal-body{padding:20px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.form-group{margin-bottom:14px}
-.form-group.full{grid-column:1/-1}
+
+.modal-head h3{
+  color:#0f5132;
+}
+
+.close{
+  border:none;
+  background:none;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.modal-body{
+  padding:20px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.form-group{
+  margin-bottom:14px;
+}
+
+.form-group.full{
+  grid-column:1/-1;
+}
+
 .form-group label{
-  display:block;font-size:13px;font-weight:700;margin-bottom:6px
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:6px;
 }
+
 .form-control{
-  width:100%;padding:11px 12px;border:1px solid #d1d5db;
-  border-radius:9px;outline:none
+  width:100%;
+  padding:11px 12px;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  outline:none;
 }
+
 .form-control:focus{
   border-color:#198754;
-  box-shadow:0 0 0 3px rgba(25,135,84,.08)
+  box-shadow:0 0 0 3px rgba(25,135,84,.08);
 }
-.form-control[readonly]{background:#f3f4f6;color:#6b7280}
-.help{font-size:11px;color:#6b7280;margin-top:6px;line-height:1.5}
+
+.form-control[readonly]{
+  background:#f3f4f6;
+  color:#6b7280;
+}
+
+.help{
+  font-size:11px;
+  color:#6b7280;
+  margin-top:6px;
+  line-height:1.5;
+}
+
+.create-warning{
+  background:#fffbeb;
+  border:1px solid #fde68a;
+  color:#92400e;
+  padding:12px;
+  border-radius:9px;
+  margin-bottom:18px;
+  font-size:12px;
+  line-height:1.6;
+}
+
 .modal-foot{
-  padding:16px 20px;border-top:1px solid #e5e7eb;
-  display:flex;justify-content:flex-end;gap:10px
+  padding:16px 20px;
+  border-top:1px solid #e5e7eb;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
 }
 
 @media(max-width:1000px){
-  .overview{grid-template-columns:repeat(2,1fr)}
+  .overview{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
+
 @media(max-width:700px){
-  .sidebar{position:static;width:100%}
-  .app{display:block}
-  .main{margin-left:0;width:100%}
-  .content{padding:16px}
-  .overview{grid-template-columns:1fr 1fr}
-  .topbar{padding:14px 16px;align-items:flex-start;flex-direction:column}
-  .form-grid{grid-template-columns:1fr}
-  .form-group.full{grid-column:auto}
+
+  .sidebar{
+    position:static;
+    width:100%;
+  }
+
+  .app{
+    display:block;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+  }
+
+  .content{
+    padding:16px;
+  }
+
+  .overview{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .topbar{
+    padding:14px 16px;
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-group.full{
+    grid-column:auto;
+  }
 }
+
 @media(max-width:450px){
-  .overview{grid-template-columns:1fr}
+  .overview{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
@@ -193,26 +507,61 @@ tr:hover td{background:#fbfdfc}
 
 <aside class="sidebar">
 
-  <div class="logo">Viet<span>Trucks</span></div>
+  <div class="logo">
+    Viet<span>Trucks</span>
+  </div>
 
-  <div class="menu-title">Hệ thống</div>
+  <div class="menu-title">
+    Hệ thống
+  </div>
 
-  <a class="menu-item" href="dashboard.html">🏠 Dashboard</a>
-  <a class="menu-item" href="quan-ly-don-hang.html">📦 Quản lý đơn hàng</a>
-  <a class="menu-item" href="trung-tam-bao-gia.html">💰 Trung tâm báo giá</a>
-  <a class="menu-item" href="hang-chieu-ve.html">🔄 Hàng chiều về</a>
-  <a class="menu-item" href="quan-ly-doi-xe.html">🚛 Quản lý đội xe</a>
+  <a class="menu-item" href="dashboard.html">
+    🏠 Dashboard
+  </a>
 
-  <div class="menu-title">Doanh nghiệp</div>
+  <a class="menu-item" href="quan-ly-don-hang.html">
+    📦 Quản lý đơn hàng
+  </a>
 
-  <a class="menu-item" href="thong-tin-doanh-nghiep.html">🏢 Thông tin doanh nghiệp</a>
-  <a class="menu-item active" href="quan-ly-nhan-vien.html">👥 Quản lý nhân viên</a>
+  <a class="menu-item" href="trung-tam-bao-gia.html">
+    💰 Trung tâm báo giá
+  </a>
 
-  <div class="menu-title">Tài khoản</div>
+  <a class="menu-item" href="hang-chieu-ve.html">
+    🔄 Hàng chiều về
+  </a>
 
-  <a class="menu-item" href="tai-khoan.html">👤 Tài khoản</a>
-  <a class="menu-item" href="vi-viettruck.html">💳 Ví VietTrucks</a>
-  <a class="menu-item" href="cai-dat.html">⚙️ Cài đặt</a>
+  <a class="menu-item" href="quan-ly-doi-xe.html">
+    🚛 Quản lý đội xe
+  </a>
+
+  <div class="menu-title">
+    Doanh nghiệp
+  </div>
+
+  <a class="menu-item" href="thong-tin-doanh-nghiep.html">
+    🏢 Thông tin doanh nghiệp
+  </a>
+
+  <a class="menu-item active" href="quan-ly-nhan-vien.html">
+    👥 Quản lý nhân viên
+  </a>
+
+  <div class="menu-title">
+    Tài khoản
+  </div>
+
+  <a class="menu-item" href="tai-khoan.html">
+    👤 Tài khoản
+  </a>
+
+  <a class="menu-item" href="vi-viettruck.html">
+    💳 Ví VietTrucks
+  </a>
+
+  <a class="menu-item" href="cai-dat.html">
+    ⚙️ Cài đặt
+  </a>
 
 </aside>
 
@@ -221,7 +570,9 @@ tr:hover td{background:#fbfdfc}
 
 <div class="topbar">
 
-  <h1>Quản lý nhân viên & phân quyền</h1>
+  <h1>
+    Quản lý nhân viên & phân quyền
+  </h1>
 
   <div style="display:flex;gap:10px;flex-wrap:wrap">
 
@@ -233,7 +584,7 @@ tr:hover td{background:#fbfdfc}
 
     <button
       class="btn btn-primary"
-      onclick="showCreateEmployeeInfo()">
+      onclick="openCreateModal()">
       + Thêm nhân viên
     </button>
 
@@ -280,7 +631,9 @@ tr:hover td{background:#fbfdfc}
 
 <div class="card-head">
 
-  <h2>Danh sách nhân viên thật</h2>
+  <h2>
+    Danh sách nhân viên thật
+  </h2>
 
   <div class="filters">
 
@@ -291,15 +644,37 @@ tr:hover td{background:#fbfdfc}
       placeholder="Tìm tên, SĐT, email..."
     >
 
-    <select id="roleFilter" class="select">
+    <select
+      id="roleFilter"
+      class="select">
 
-      <option value="">Tất cả chức vụ</option>
-      <option value="admin">Quản trị viên</option>
-      <option value="staff">Nhân viên</option>
-      <option value="sales">Kinh doanh</option>
-      <option value="dispatcher">Điều phối</option>
-      <option value="accountant">Kế toán</option>
-      <option value="support">CSKH</option>
+      <option value="">
+        Tất cả chức vụ
+      </option>
+
+      <option value="admin">
+        Quản trị viên
+      </option>
+
+      <option value="staff">
+        Nhân viên
+      </option>
+
+      <option value="sales">
+        Kinh doanh
+      </option>
+
+      <option value="dispatcher">
+        Điều phối
+      </option>
+
+      <option value="accountant">
+        Kế toán
+      </option>
+
+      <option value="support">
+        CSKH
+      </option>
 
     </select>
 
@@ -310,7 +685,7 @@ tr:hover td{background:#fbfdfc}
 
 <div class="table-wrap">
 
-<table id="employeeTable">
+<table>
 
 <thead>
 <tr>
@@ -327,11 +702,15 @@ tr:hover td{background:#fbfdfc}
 
 </table>
 
-<div id="loadingMessage" class="loading">
+<div
+  id="loadingMessage"
+  class="loading">
   Đang tải dữ liệu nhân viên từ Supabase...
 </div>
 
-<div id="emptyMessage" class="empty">
+<div
+  id="emptyMessage"
+  class="empty">
   Chưa có nhân viên phù hợp.
 </div>
 
@@ -341,9 +720,9 @@ tr:hover td{background:#fbfdfc}
 
 
 <div class="production-note">
-  ✓ Trang này chỉ hiển thị dữ liệu thật trong bảng
-  <strong>profiles</strong> có vai trò nội bộ VietTrucks.
-  Khách hàng, chủ hàng, tài xế và nhà xe không được tính là nhân viên.
+  ✓ Trang này sử dụng dữ liệu thật từ
+  <strong>Supabase Auth + public.profiles</strong>.
+  Không sử dụng danh sách nhân viên demo.
 </div>
 
 </div>
@@ -353,152 +732,383 @@ tr:hover td{background:#fbfdfc}
 </div>
 
 
-<!-- ==============================
+<!-- ===================================
+     MODAL THÊM NHÂN VIÊN
+==================================== -->
+
+<div id="createEmployeeModal" class="modal">
+
+<div class="modal-box">
+
+<div class="modal-head">
+
+  <h3>
+    + Thêm nhân viên mới
+  </h3>
+
+  <button
+    type="button"
+    class="close"
+    onclick="closeCreateModal()">
+    ×
+  </button>
+
+</div>
+
+
+<div class="modal-body">
+
+<div class="create-warning">
+  Tài khoản này sẽ được tạo thật trong
+  <strong>Supabase Auth</strong> và đồng thời tạo hồ sơ trong
+  <strong>profiles</strong>.
+</div>
+
+
+<div class="form-grid">
+
+<div class="form-group">
+
+  <label>
+    Họ và tên *
+  </label>
+
+  <input
+    id="createName"
+    class="form-control"
+    type="text"
+    maxlength="150"
+    placeholder="Ví dụ: Nguyễn Văn A"
+  >
+
+</div>
+
+
+<div class="form-group">
+
+  <label>
+    Số điện thoại
+  </label>
+
+  <input
+    id="createPhone"
+    class="form-control"
+    type="tel"
+    maxlength="30"
+    placeholder="Ví dụ: 0988123456"
+  >
+
+</div>
+
+
+<div class="form-group full">
+
+  <label>
+    Email đăng nhập *
+  </label>
+
+  <input
+    id="createEmail"
+    class="form-control"
+    type="email"
+    maxlength="200"
+    autocomplete="off"
+    placeholder="nhanvien@viettrucks.com"
+  >
+
+</div>
+
+
+<div class="form-group">
+
+  <label>
+    Mật khẩu ban đầu *
+  </label>
+
+  <input
+    id="createPassword"
+    class="form-control"
+    type="password"
+    minlength="8"
+    autocomplete="new-password"
+    placeholder="Tối thiểu 8 ký tự"
+  >
+
+  <div class="help">
+    Nhân viên dùng mật khẩu này để đăng nhập lần đầu.
+  </div>
+
+</div>
+
+
+<div class="form-group">
+
+  <label>
+    Vai trò *
+  </label>
+
+  <select
+    id="createRole"
+    class="form-control">
+
+    <option value="staff">
+      Nhân viên
+    </option>
+
+    <option value="sales">
+      Kinh doanh
+    </option>
+
+    <option value="dispatcher">
+      Điều phối
+    </option>
+
+    <option value="accountant">
+      Kế toán
+    </option>
+
+    <option value="support">
+      CSKH
+    </option>
+
+    <option value="admin">
+      Quản trị viên
+    </option>
+
+  </select>
+
+</div>
+
+
+<div class="form-group">
+
+  <label>
+    Tỉnh / Thành phố
+  </label>
+
+  <input
+    id="createCity"
+    class="form-control"
+    type="text"
+    maxlength="120"
+    placeholder="Ví dụ: Bắc Ninh"
+  >
+
+</div>
+
+
+<div class="form-group">
+
+  <label>
+    Công ty / Bộ phận
+  </label>
+
+  <input
+    id="createCompany"
+    class="form-control"
+    type="text"
+    maxlength="200"
+    placeholder="Ví dụ: VietTrucks - Điều phối"
+  >
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="modal-foot">
+
+<button
+  type="button"
+  class="btn btn-light"
+  onclick="closeCreateModal()">
+  Hủy
+</button>
+
+<button
+  type="button"
+  id="createEmployeeButton"
+  class="btn btn-primary"
+  onclick="createEmployee()">
+  Tạo nhân viên
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ===================================
      MODAL SỬA NHÂN VIÊN
-================================ -->
+==================================== -->
 
 <div id="employeeModal" class="modal">
 
 <div class="modal-box">
 
-  <div class="modal-head">
+<div class="modal-head">
 
-    <h3>Chỉnh sửa nhân viên</h3>
+  <h3>
+    Chỉnh sửa nhân viên
+  </h3>
 
-    <button
-      class="close"
-      type="button"
-      onclick="closeModal()">
-      ×
-    </button>
+  <button
+    class="close"
+    type="button"
+    onclick="closeEditModal()">
+    ×
+  </button>
 
+</div>
+
+
+<div class="modal-body">
+
+<input
+  type="hidden"
+  id="editEmployeeId"
+>
+
+
+<div class="form-grid">
+
+<div class="form-group">
+
+  <label>Họ và tên</label>
+
+  <input
+    id="editName"
+    class="form-control"
+    type="text"
+    maxlength="150"
+  >
+
+</div>
+
+
+<div class="form-group">
+
+  <label>Số điện thoại</label>
+
+  <input
+    id="editPhone"
+    class="form-control"
+    type="tel"
+    maxlength="30"
+  >
+
+</div>
+
+
+<div class="form-group full">
+
+  <label>Email</label>
+
+  <input
+    id="editEmail"
+    class="form-control"
+    type="email"
+    readonly
+  >
+
+  <div class="help">
+    Email đăng nhập không thay đổi tại màn hình này.
   </div>
 
-  <div class="modal-body">
-
-    <input
-      type="hidden"
-      id="editEmployeeId"
-    >
-
-    <div class="form-grid">
-
-      <div class="form-group">
-
-        <label>Họ và tên</label>
-
-        <input
-          id="editName"
-          class="form-control"
-          type="text"
-          maxlength="150"
-        >
-
-      </div>
+</div>
 
 
-      <div class="form-group">
+<div class="form-group">
 
-        <label>Số điện thoại</label>
+<label>Vai trò</label>
 
-        <input
-          id="editPhone"
-          class="form-control"
-          type="tel"
-          maxlength="30"
-        >
+<select
+  id="editRole"
+  class="form-control">
 
-      </div>
+  <option value="admin">
+    Quản trị viên
+  </option>
 
+  <option value="staff">
+    Nhân viên
+  </option>
 
-      <div class="form-group full">
+  <option value="sales">
+    Kinh doanh
+  </option>
 
-        <label>Email</label>
+  <option value="dispatcher">
+    Điều phối
+  </option>
 
-        <input
-          id="editEmail"
-          class="form-control"
-          type="email"
-          readonly
-        >
+  <option value="accountant">
+    Kế toán
+  </option>
 
-        <div class="help">
-          Email đăng nhập không thay đổi tại màn hình này.
-        </div>
+  <option value="support">
+    CSKH
+  </option>
 
-      </div>
+</select>
 
-
-      <div class="form-group">
-
-        <label>Vai trò</label>
-
-        <select
-          id="editRole"
-          class="form-control">
-
-          <option value="admin">Quản trị viên</option>
-          <option value="staff">Nhân viên</option>
-          <option value="sales">Kinh doanh</option>
-          <option value="dispatcher">Điều phối</option>
-          <option value="accountant">Kế toán</option>
-          <option value="support">CSKH</option>
-
-        </select>
-
-      </div>
+</div>
 
 
-      <div class="form-group">
+<div class="form-group">
 
-        <label>Tỉnh / Thành phố</label>
+<label>Tỉnh / Thành phố</label>
 
-        <input
-          id="editCity"
-          class="form-control"
-          type="text"
-          maxlength="120"
-        >
+<input
+  id="editCity"
+  class="form-control"
+  type="text"
+  maxlength="120"
+>
 
-      </div>
-
-
-      <div class="form-group full">
-
-        <label>Công ty / Bộ phận</label>
-
-        <input
-          id="editCompany"
-          class="form-control"
-          type="text"
-          maxlength="200"
-        >
-
-      </div>
-
-    </div>
-
-  </div>
+</div>
 
 
-  <div class="modal-foot">
+<div class="form-group full">
 
-    <button
-      class="btn btn-light"
-      type="button"
-      onclick="closeModal()">
-      Hủy
-    </button>
+<label>Công ty / Bộ phận</label>
 
-    <button
-      class="btn btn-primary"
-      type="button"
-      id="saveEmployeeButton"
-      onclick="saveEmployee()">
-      Lưu thay đổi
-    </button>
+<input
+  id="editCompany"
+  class="form-control"
+  type="text"
+  maxlength="200"
+>
 
-  </div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="modal-foot">
+
+<button
+  class="btn btn-light"
+  type="button"
+  onclick="closeEditModal()">
+  Hủy
+</button>
+
+<button
+  class="btn btn-primary"
+  type="button"
+  id="saveEmployeeButton"
+  onclick="saveEmployee()">
+  Lưu thay đổi
+</button>
+
+</div>
 
 </div>
 
@@ -509,15 +1119,11 @@ tr:hover td{background:#fbfdfc}
 <script src="supabase-config.js"></script>
 
 <script>
-/* ==========================================================
+
+/* =========================================================
    VIETTRUCKS
-   QUẢN LÝ NHÂN VIÊN - PRODUCTION ONLY
-
-   DỮ LIỆU:
-   public.profiles
-
-   Không có dữ liệu demo.
-========================================================== */
+   QUẢN LÝ NHÂN VIÊN - PRODUCTION
+========================================================= */
 
 const sb = window.supabaseClient;
 
@@ -533,13 +1139,16 @@ const INTERNAL_ROLES = [
 let employees = [];
 let currentAdmin = null;
 
-const modal =
+const editModal =
   document.getElementById("employeeModal");
 
+const createModal =
+  document.getElementById("createEmployeeModal");
 
-/* ==========================================================
+
+/* =========================================================
    HELPER
-========================================================== */
+========================================================= */
 
 function esc(value){
 
@@ -669,9 +1278,9 @@ function clearMessage(){
 }
 
 
-/* ==========================================================
+/* =========================================================
    KIỂM TRA ADMIN
-========================================================== */
+========================================================= */
 
 async function requireAdmin(){
 
@@ -734,9 +1343,9 @@ async function requireAdmin(){
 }
 
 
-/* ==========================================================
-   LOAD NHÂN VIÊN THẬT
-========================================================== */
+/* =========================================================
+   LOAD NHÂN VIÊN
+========================================================= */
 
 async function loadEmployees(){
 
@@ -815,9 +1424,9 @@ async function loadEmployees(){
 }
 
 
-/* ==========================================================
+/* =========================================================
    RENDER
-========================================================== */
+========================================================= */
 
 function renderEmployees(){
 
@@ -880,13 +1489,9 @@ function renderEmployees(){
   if(filtered.length === 0){
 
     body.innerHTML = "";
-
-    empty.style.display =
-      "block";
-
+    empty.style.display = "block";
     return;
   }
-
 
   empty.style.display = "none";
 
@@ -936,95 +1541,84 @@ function renderEmployees(){
         roleBadge(item.role);
 
       return `
-        <tr>
+      <tr>
 
-          <td>
+        <td>
+          <div class="employee">
 
-            <div class="employee">
-
-              <div class="avatar">
-                ${esc(
-                  initials(
-                    item.full_name,
-                    item.email
-                  )
-                )}
-              </div>
-
-              <div>
-                <strong>${name}</strong>
-                <small>${email}</small>
-              </div>
-
+            <div class="avatar">
+              ${esc(
+                initials(
+                  item.full_name,
+                  item.email
+                )
+              )}
             </div>
 
-          </td>
-
-
-          <td>
-            ${phone}
-          </td>
-
-
-          <td>
-
-            <span class="badge ${badge}">
-              ${roleText}
-            </span>
-
-          </td>
-
-
-          <td>
-            <strong>${company}</strong>
-            <br>
-            <small style="color:#6b7280">
-              ${city}
-            </small>
-          </td>
-
-
-          <td>
-
-            <span class="badge active-status">
-              Đang hoạt động
-            </span>
-
-          </td>
-
-
-          <td>
-
-            <div class="actions">
-
-              <button
-                class="action-btn"
-                type="button"
-                onclick="openEditEmployee('${id}')">
-                Sửa
-              </button>
-
-              <button
-                class="action-btn"
-                type="button"
-                onclick="openPermission('${id}')">
-                Phân quyền
-              </button>
-
+            <div>
+              <strong>${name}</strong>
+              <small>${email}</small>
             </div>
 
-          </td>
+          </div>
+        </td>
 
-        </tr>
+        <td>
+          ${phone}
+        </td>
+
+        <td>
+          <span class="badge ${badge}">
+            ${roleText}
+          </span>
+        </td>
+
+        <td>
+          <strong>${company}</strong>
+          <br>
+          <small style="color:#6b7280">
+            ${city}
+          </small>
+        </td>
+
+        <td>
+          <span class="badge active-status">
+            Đang hoạt động
+          </span>
+        </td>
+
+        <td>
+
+          <div class="actions">
+
+            <button
+              class="action-btn"
+              type="button"
+              onclick="openEditEmployee('${id}')">
+              Sửa
+            </button>
+
+            <button
+              class="action-btn"
+              type="button"
+              onclick="openPermission('${id}')">
+              Phân quyền
+            </button>
+
+          </div>
+
+        </td>
+
+      </tr>
       `;
 
     }).join("");
 }
 
 
-/* ==========================================================
-   THỐNG KÊ TỪ DỮ LIỆU THẬT
-========================================================== */
+/* =========================================================
+   THỐNG KÊ
+========================================================= */
 
 function updateStats(){
 
@@ -1052,18 +1646,15 @@ function updateStats(){
 
   document.getElementById(
     "totalEmployee"
-  ).textContent =
-    total;
+  ).textContent = total;
 
   document.getElementById(
     "totalAdmin"
-  ).textContent =
-    admin;
+  ).textContent = admin;
 
   document.getElementById(
     "totalDispatcher"
-  ).textContent =
-    dispatcher;
+  ).textContent = dispatcher;
 
   document.getElementById(
     "totalOther"
@@ -1072,9 +1663,331 @@ function updateStats(){
 }
 
 
-/* ==========================================================
+/* =========================================================
+   THÊM NHÂN VIÊN
+========================================================= */
+
+function openCreateModal(){
+
+  clearMessage();
+
+  document.getElementById(
+    "createName"
+  ).value = "";
+
+  document.getElementById(
+    "createPhone"
+  ).value = "";
+
+  document.getElementById(
+    "createEmail"
+  ).value = "";
+
+  document.getElementById(
+    "createPassword"
+  ).value = "";
+
+  document.getElementById(
+    "createRole"
+  ).value = "staff";
+
+  document.getElementById(
+    "createCity"
+  ).value = "";
+
+  document.getElementById(
+    "createCompany"
+  ).value = "";
+
+  createModal.classList.add("show");
+
+  setTimeout(() => {
+
+    document.getElementById(
+      "createName"
+    ).focus();
+
+  },100);
+}
+
+
+function closeCreateModal(){
+
+  createModal.classList.remove("show");
+}
+
+
+async function createEmployee(){
+
+  clearMessage();
+
+  const button =
+    document.getElementById(
+      "createEmployeeButton"
+    );
+
+  const full_name =
+    String(
+      document.getElementById(
+        "createName"
+      ).value || ""
+    ).trim();
+
+  const email =
+    String(
+      document.getElementById(
+        "createEmail"
+      ).value || ""
+    )
+      .trim()
+      .toLowerCase();
+
+  const password =
+    String(
+      document.getElementById(
+        "createPassword"
+      ).value || ""
+    );
+
+  const phone =
+    clean(
+      document.getElementById(
+        "createPhone"
+      ).value
+    );
+
+  const role =
+    normalizeRole(
+      document.getElementById(
+        "createRole"
+      ).value
+    );
+
+  const city =
+    clean(
+      document.getElementById(
+        "createCity"
+      ).value
+    );
+
+  const company_name =
+    clean(
+      document.getElementById(
+        "createCompany"
+      ).value
+    );
+
+
+  if(!full_name){
+
+    alert(
+      "Vui lòng nhập họ và tên nhân viên."
+    );
+
+    return;
+  }
+
+
+  if(!email){
+
+    alert(
+      "Vui lòng nhập email đăng nhập."
+    );
+
+    return;
+  }
+
+
+  if(password.length < 8){
+
+    alert(
+      "Mật khẩu ban đầu phải có ít nhất 8 ký tự."
+    );
+
+    return;
+  }
+
+
+  if(!INTERNAL_ROLES.includes(role)){
+
+    alert(
+      "Vai trò nhân viên không hợp lệ."
+    );
+
+    return;
+  }
+
+
+  button.disabled = true;
+  button.textContent =
+    "Đang tạo tài khoản...";
+
+
+  try{
+
+    await requireAdmin();
+
+
+    /*
+      Lấy session hiện tại để bảo đảm
+      request gửi bằng tài khoản Admin.
+    */
+
+    const {
+      data:sessionData,
+      error:sessionError
+    } = await sb.auth.getSession();
+
+
+    if(sessionError){
+      throw sessionError;
+    }
+
+
+    const accessToken =
+      sessionData?.session?.access_token;
+
+
+    if(!accessToken){
+
+      throw new Error(
+        "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại."
+      );
+    }
+
+
+    /*
+      GỌI EDGE FUNCTION THẬT
+
+      admin-create-employee
+    */
+
+    const {
+      data,
+      error
+    } = await sb.functions.invoke(
+      "admin-create-employee",
+      {
+        body:{
+          full_name,
+          email,
+          password,
+          phone,
+          role,
+          city,
+          company_name
+        },
+
+        headers:{
+          Authorization:
+            `Bearer ${accessToken}`
+        }
+      }
+    );
+
+
+    if(error){
+
+      let detail = "";
+
+      try{
+
+        if(error.context){
+
+          const responseData =
+            await error.context.json();
+
+          detail =
+            responseData?.error ||
+            responseData?.message ||
+            "";
+        }
+
+      }catch(e){
+        console.warn(e);
+      }
+
+
+      throw new Error(
+        detail ||
+        error.message ||
+        "Edge Function không tạo được nhân viên."
+      );
+    }
+
+
+    if(
+      data &&
+      data.success === false
+    ){
+
+      throw new Error(
+        data.error ||
+        data.message ||
+        "Không tạo được nhân viên."
+      );
+    }
+
+
+    closeCreateModal();
+
+
+    showMessage(
+      "success",
+      "✓ Đã tạo tài khoản nhân viên thật trong Supabase Auth và profiles."
+    );
+
+
+    /*
+      Tải lại profiles để lấy chính
+      dữ liệu vừa tạo từ database.
+    */
+
+    await loadEmployees();
+
+
+    /*
+      loadEmployees clear message đầu hàm,
+      nên hiển thị lại thông báo thành công.
+    */
+
+    showMessage(
+      "success",
+      "✓ Đã tạo nhân viên thành công. Tài khoản đã được lưu vào hệ thống VietTrucks."
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "CREATE EMPLOYEE ERROR:",
+      error
+    );
+
+
+    showMessage(
+      "error",
+      "Không tạo được nhân viên: " +
+      (
+        error.message ||
+        "Lỗi không xác định"
+      )
+    );
+
+
+  }finally{
+
+    button.disabled = false;
+
+    button.textContent =
+      "Tạo nhân viên";
+  }
+}
+
+
+/* =========================================================
    SỬA NHÂN VIÊN
-========================================================== */
+========================================================= */
 
 function openEditEmployee(id){
 
@@ -1130,19 +2043,19 @@ function openEditEmployee(id){
   ).value =
     employee.company_name || "";
 
-  modal.classList.add("show");
+  editModal.classList.add("show");
 }
 
 
-function closeModal(){
+function closeEditModal(){
 
-  modal.classList.remove("show");
+  editModal.classList.remove("show");
 }
 
 
-/* ==========================================================
-   SAVE THẬT
-========================================================== */
+/* =========================================================
+   LƯU NHÂN VIÊN
+========================================================= */
 
 async function saveEmployee(){
 
@@ -1157,6 +2070,7 @@ async function saveEmployee(){
     return;
   }
 
+
   const button =
     document.getElementById(
       "saveEmployeeButton"
@@ -1166,9 +2080,11 @@ async function saveEmployee(){
   button.textContent =
     "Đang lưu...";
 
+
   try{
 
     await requireAdmin();
+
 
     const role =
       normalizeRole(
@@ -1176,6 +2092,7 @@ async function saveEmployee(){
           "editRole"
         ).value
       );
+
 
     if(
       !INTERNAL_ROLES.includes(role)
@@ -1189,7 +2106,7 @@ async function saveEmployee(){
 
     /*
       Không cho Admin đang đăng nhập
-      tự bỏ quyền admin của chính mình.
+      tự xóa quyền admin của chính mình.
     */
 
     if(
@@ -1278,7 +2195,7 @@ async function saveEmployee(){
     }
 
 
-    closeModal();
+    closeEditModal();
 
     renderEmployees();
     updateStats();
@@ -1288,6 +2205,7 @@ async function saveEmployee(){
       "success",
       "✓ Đã cập nhật nhân viên vào dữ liệu thật của VietTrucks."
     );
+
 
   }catch(error){
 
@@ -1302,25 +2220,22 @@ async function saveEmployee(){
       )
     );
 
+
   }finally{
 
     button.disabled = false;
+
     button.textContent =
       "Lưu thay đổi";
   }
 }
 
 
-/* ==========================================================
+/* =========================================================
    PHÂN QUYỀN
-========================================================== */
+========================================================= */
 
 function openPermission(id){
-
-  /*
-    Trang phan-quyen-tai-khoan.html
-    có thể đọc ?id=...
-  */
 
   window.location.href =
     "phan-quyen-tai-khoan.html?id=" +
@@ -1328,25 +2243,9 @@ function openPermission(id){
 }
 
 
-/* ==========================================================
-   THÊM NHÂN VIÊN
-
-   Không giả lập INSERT.
-   Tạo Auth user phải thực hiện phía server.
-========================================================== */
-
-function showCreateEmployeeInfo(){
-
-  showMessage(
-    "info",
-    "Để thêm nhân viên mới chạy thật, VietTrucks cần tạo đồng thời tài khoản Supabase Auth và hồ sơ profiles bằng chức năng Admin phía server. Trang này không tạo nhân viên giả trên trình duyệt."
-  );
-}
-
-
-/* ==========================================================
+/* =========================================================
    FILTER
-========================================================== */
+========================================================= */
 
 document.getElementById(
   "searchInput"
@@ -1354,6 +2253,7 @@ document.getElementById(
   "input",
   renderEmployees
 );
+
 
 document.getElementById(
   "roleFilter"
@@ -1363,25 +2263,46 @@ document.getElementById(
 );
 
 
-/* ==========================================================
-   CLOSE MODAL
-========================================================== */
+/* =========================================================
+   ĐÓNG MODAL KHI CLICK RA NGOÀI
+========================================================= */
 
 window.addEventListener(
   "click",
   function(event){
 
-    if(event.target === modal){
-      closeModal();
+    if(event.target === editModal){
+      closeEditModal();
+    }
+
+    if(event.target === createModal){
+      closeCreateModal();
     }
 
   }
 );
 
 
-/* ==========================================================
+/* =========================================================
+   ESC
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key === "Escape"){
+
+      closeEditModal();
+      closeCreateModal();
+    }
+  }
+);
+
+
+/* =========================================================
    START
-========================================================== */
+========================================================= */
 
 if(
   document.readyState ===
