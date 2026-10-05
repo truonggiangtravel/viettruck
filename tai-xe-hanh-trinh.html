@@ -2738,12 +2738,20 @@ async function init(){
             return;
         }
 
-        order =
+                order =
             await loadRealOrder(
                 trip.order_id
             );
 
+        /*
+         * Đọc POD thật trước khi render.
+         */
+
+        await loadPod();
+
         render();
+
+        updatePodUI();
 
     }catch(error){
 
