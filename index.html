@@ -1658,198 +1658,37 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function loadLatestCargo() {
 
-    try {
+  try {
 
-      const { data: orders, error } = await client
-        .from("orders")
-        .select(`
-          id,
-          pickup_location,
-          delivery_location,
-          cargo_type,
-          weight,
-          vehicle_type,
-          pickup_date,
-          status,
-          created_at
-        `)
-        .in("status", ["pending", "open"])
-        .order("created_at", {
-          ascending: false
-        })
-        .limit(6);
+    console.log("VietTrucks: đang tải Hàng hóa mới nhất...");
 
+    /*
+      PRODUCTION:
+      Chỉ lấy đơn đang tìm xe.
+      Không sửa/xóa dữ liệu.
+      Không ảnh hưởng Live Market chạy ngang.
+    */
+    const { data: orders, error } = await client
+      .from("orders")
+      .select(
+        "id,pickup_location,delivery_location,cargo_type,weight,vehicle_type,pickup_date,status,created_at"
+      )
+      .eq("status", "pending")
+      .order("created_at", {
+        ascending: false
+      })
+      .limit(6);
 
-      if (error) {
+    console.log(
+      "VietTrucks HOME orders:",
+      orders,
+      error
+    );
 
-        console.error(
-          "VietTrucks - lỗi lấy orders:",
-          error
-        );
-
-        cargoList.innerHTML = `
-          <div class="vt-home-empty">
-            Chưa tải được thông tin hàng hóa.
-          </div>
-        `;
-
-        return;
-      }
-
-
-      const validOrders = (orders || []).filter(order => {
-
-        const from = String(
-          order.pickup_location ?? ""
-        ).trim();
-
-        const to = String(
-          order.delivery_location ?? ""
-        ).trim();
-
-        return from || to;
-      });
-
-
-      if (!validOrders.length) {
-
-        cargoList.innerHTML = `
-          <div class="vt-home-empty">
-            Hiện chưa có hàng mới đang tìm xe.
-          </div>
-        `;
-
-        return;
-      }
-
-
-      cargoList.innerHTML = validOrders
-        .map(order => {
-
-          const from = shortText(
-            order.pickup_location,
-            35
-          );
-
-          const to = shortText(
-            order.delivery_location,
-            35
-          );
-
-          const cargo = shortText(
-            order.cargo_type,
-            30
-          );
-
-          const vehicle = shortText(
-            order.vehicle_type,
-            30
-          );
-
-          const weight = formatWeight(
-            order.weight
-          );
-
-          const pickupDate = formatDate(
-            order.pickup_date
-          );
-
-
-          const details = [];
-
-
-          if (cargo) {
-
-            details.push(
-              `<span>${escapeHTML(cargo)}</span>`
-            );
-
-          }
-
-
-          if (weight) {
-
-            details.push(
-              `<span>${escapeHTML(weight)} tấn</span>`
-            );
-
-          }
-
-
-          if (vehicle) {
-
-            details.push(
-              `<span>${escapeHTML(vehicle)}</span>`
-            );
-
-          }
-
-
-          return `
-            <a
-              class="vt-home-card"
-              href="#"
-              onclick="event.preventDefault(); openCargoDetail('${order.id}')"
-              title="Xem chi tiết hàng"
-            >
-
-              <div class="vt-home-card-top">
-
-                <span class="vt-home-badge cargo">
-                  📦 HÀNG
-                </span>
-
-                ${
-                  pickupDate
-                    ? `
-                      <span class="vt-home-date">
-                        ${escapeHTML(pickupDate)}
-                      </span>
-                    `
-                    : ""
-                }
-
-              </div>
-
-
-              <div class="vt-home-route">
-
-                <span class="vt-home-route-from">
-                  ${escapeHTML(from || "Chưa xác định")}
-                </span>
-
-                <span class="vt-home-arrow">
-                  →
-                </span>
-
-                <span class="vt-home-route-to">
-                  ${escapeHTML(to || "Chưa xác định")}
-                </span>
-
-              </div>
-
-
-              ${
-                details.length
-                  ? `
-                    <div class="vt-home-detail">
-                      ${details.join("")}
-                    </div>
-                  `
-                  : ""
-              }
-
-            </a>
-          `;
-
-        })
-        .join("");
-
-
-    } catch (error) {
+    if (error) {
 
       console.error(
-        "VietTrucks loadLatestCargo Error:",
+        "VietTrucks - lỗi lấy orders:",
         error
       );
 
@@ -1859,9 +1698,163 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
       `;
 
+      return;
     }
-  }
 
+
+    /*
+      Không dùng thêm bộ lọc trung gian.
+      Query đã lấy trực tiếp các đơn pending mới nhất.
+    */
+    if (!Array.isArray(orders) || orders.length === 0) {
+
+      cargoList.innerHTML = `
+        <div class="vt-home-empty">
+          Hiện chưa có hàng mới đang tìm xe.
+        </div>
+      `;
+
+      return;
+    }
+
+
+    cargoList.innerHTML = orders
+      .map(order => {
+
+        const from = shortText(
+          order.pickup_location || "Chưa xác định",
+          35
+        );
+
+        const to = shortText(
+          order.delivery_location || "Chưa xác định",
+          35
+        );
+
+        const cargo = shortText(
+          order.cargo_type,
+          30
+        );
+
+        const vehicle = shortText(
+          order.vehicle_type,
+          30
+        );
+
+        const weight = formatWeight(
+          order.weight
+        );
+
+        const pickupDate = formatDate(
+          order.pickup_date
+        );
+
+        const details = [];
+
+
+        if (cargo) {
+
+          details.push(
+            `<span>${escapeHTML(cargo)}</span>`
+          );
+        }
+
+
+        if (weight) {
+
+          details.push(
+            `<span>${escapeHTML(weight)} tấn</span>`
+          );
+        }
+
+
+        if (vehicle) {
+
+          details.push(
+            `<span>${escapeHTML(vehicle)}</span>`
+          );
+        }
+
+
+        return `
+          <a
+            class="vt-home-card"
+            href="#"
+            onclick="event.preventDefault(); openCargoDetail('${order.id}')"
+            title="Xem chi tiết hàng"
+          >
+
+            <div class="vt-home-card-top">
+
+              <span class="vt-home-badge cargo">
+                📦 HÀNG
+              </span>
+
+              ${
+                pickupDate
+                  ? `
+                    <span class="vt-home-date">
+                      ${escapeHTML(pickupDate)}
+                    </span>
+                  `
+                  : ""
+              }
+
+            </div>
+
+
+            <div class="vt-home-route">
+
+              <span class="vt-home-route-from">
+                ${escapeHTML(from)}
+              </span>
+
+              <span class="vt-home-arrow">
+                →
+              </span>
+
+              <span class="vt-home-route-to">
+                ${escapeHTML(to)}
+              </span>
+
+            </div>
+
+
+            ${
+              details.length
+                ? `
+                  <div class="vt-home-detail">
+                    ${details.join("")}
+                  </div>
+                `
+                : ""
+            }
+
+          </a>
+        `;
+
+      })
+      .join("");
+
+
+    console.log(
+      `VietTrucks: đã hiển thị ${orders.length} đơn hàng mới nhất`
+    );
+
+  } catch (error) {
+
+    console.error(
+      "VietTrucks loadLatestCargo Error:",
+      error
+    );
+
+    cargoList.innerHTML = `
+      <div class="vt-home-empty">
+        Chưa tải được thông tin hàng hóa.
+      </div>
+    `;
+  }
+}
 
   /* =======================================================
      XE TRỐNG MỚI NHẤT - VEHICLES THẬT
