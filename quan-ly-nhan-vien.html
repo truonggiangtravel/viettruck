@@ -1,961 +1,1403 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý nhân viên - VietTruck</title>
-
-  <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      font-family:Arial,Helvetica,sans-serif;
-    }
-
-    body{
-      background:#f4f7f8;
-      color:#1f2937;
-    }
-
-    a{
-      text-decoration:none;
-      color:inherit;
-    }
-
-    .app{
-      display:flex;
-      min-height:100vh;
-    }
-
-    .sidebar{
-      width:250px;
-      background:#0f5132;
-      color:white;
-      padding:24px 16px;
-      position:fixed;
-      left:0;
-      top:0;
-      bottom:0;
-      overflow-y:auto;
-    }
-
-    .logo{
-      font-size:28px;
-      font-weight:800;
-      text-align:center;
-      margin-bottom:28px;
-    }
-
-    .logo span{
-      color:#ffc107;
-    }
-
-    .menu-title{
-      font-size:12px;
-      text-transform:uppercase;
-      opacity:.7;
-      margin:20px 12px 8px;
-    }
-
-    .menu-item{
-      display:block;
-      padding:12px 14px;
-      border-radius:10px;
-      margin-bottom:6px;
-      transition:.2s;
-    }
-
-    .menu-item:hover,
-    .menu-item.active{
-      background:rgba(255,255,255,.15);
-    }
-
-    .main{
-      margin-left:250px;
-      width:calc(100% - 250px);
-    }
-
-    .topbar{
-      min-height:72px;
-      background:white;
-      border-bottom:1px solid #e5e7eb;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:16px 28px;
-      position:sticky;
-      top:0;
-      z-index:10;
-    }
-
-    .topbar h1{
-      font-size:22px;
-      color:#0f5132;
-    }
-
-    .btn{
-      border:none;
-      border-radius:10px;
-      padding:11px 16px;
-      cursor:pointer;
-      font-weight:700;
-      font-size:14px;
-    }
-
-    .btn-primary{
-      background:#198754;
-      color:white;
-    }
-
-    .btn-primary:hover{
-      background:#146c43;
-    }
-
-    .btn-light{
-      background:#eef3f0;
-      color:#0f5132;
-    }
-
-    .btn-danger{
-      background:#fee2e2;
-      color:#991b1b;
-    }
-
-    .content{
-      padding:28px;
-      max-width:1350px;
-      margin:auto;
-    }
-
-    .overview{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:16px;
-      margin-bottom:22px;
-    }
-
-    .stat{
-      background:white;
-      border-radius:14px;
-      padding:20px;
-      border:1px solid #eceff1;
-      box-shadow:0 4px 16px rgba(0,0,0,.05);
-    }
-
-    .stat .icon{
-      font-size:26px;
-      margin-bottom:10px;
-    }
-
-    .stat strong{
-      display:block;
-      font-size:26px;
-      color:#0f5132;
-      margin-bottom:4px;
-    }
-
-    .stat span{
-      font-size:13px;
-      color:#6b7280;
-    }
-
-    .card{
-      background:white;
-      border-radius:16px;
-      border:1px solid #eceff1;
-      box-shadow:0 4px 18px rgba(0,0,0,.05);
-      overflow:hidden;
-    }
-
-    .card-head{
-      padding:20px;
-      display:flex;
-      justify-content:space-between;
-      gap:14px;
-      align-items:center;
-      border-bottom:1px solid #edf0f2;
-      flex-wrap:wrap;
-    }
-
-    .card-head h2{
-      font-size:18px;
-      color:#0f5132;
-    }
-
-    .filters{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .input,
-    .select{
-      padding:10px 12px;
-      border:1px solid #d1d5db;
-      border-radius:9px;
-      outline:none;
-      background:white;
-    }
-
-    .input{
-      min-width:230px;
-    }
-
-    .input:focus,
-    .select:focus{
-      border-color:#198754;
-      box-shadow:0 0 0 3px rgba(25,135,84,.08);
-    }
-
-    .table-wrap{
-      overflow-x:auto;
-    }
-
-    table{
-      width:100%;
-      border-collapse:collapse;
-      min-width:950px;
-    }
-
-    th,
-    td{
-      padding:14px 16px;
-      border-bottom:1px solid #edf0f2;
-      text-align:left;
-      font-size:14px;
-      vertical-align:middle;
-    }
-
-    th{
-      background:#f8faf9;
-      color:#374151;
-      font-size:13px;
-    }
-
-    tr:hover td{
-      background:#fbfdfc;
-    }
-
-    .employee{
-      display:flex;
-      align-items:center;
-      gap:11px;
-    }
-
-    .avatar{
-      width:42px;
-      height:42px;
-      border-radius:50%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:#dff3e7;
-      color:#0f5132;
-      font-weight:800;
-      flex-shrink:0;
-    }
-
-    .employee strong{
-      display:block;
-      margin-bottom:3px;
-    }
-
-    .employee small{
-      color:#6b7280;
-    }
-
-    .badge{
-      display:inline-block;
-      border-radius:999px;
-      padding:6px 10px;
-      font-size:12px;
-      font-weight:700;
-    }
-
-    .badge-admin{
-      background:#ede9fe;
-      color:#5b21b6;
-    }
-
-    .badge-dispatch{
-      background:#dbeafe;
-      color:#1d4ed8;
-    }
-
-    .badge-account{
-      background:#fef3c7;
-      color:#92400e;
-    }
-
-    .badge-support{
-      background:#fce7f3;
-      color:#9d174d;
-    }
-
-    .active-status{
-      background:#d1fae5;
-      color:#065f46;
-    }
-
-    .inactive-status{
-      background:#f3f4f6;
-      color:#6b7280;
-    }
-
-    .actions{
-      display:flex;
-      gap:7px;
-    }
-
-    .action-btn{
-      padding:7px 10px;
-      border:1px solid #d1d5db;
-      background:white;
-      border-radius:8px;
-      cursor:pointer;
-      font-size:13px;
-    }
-
-    .action-btn:hover{
-      background:#f3f4f6;
-    }
-
-    .empty{
-      display:none;
-      padding:30px;
-      text-align:center;
-      color:#6b7280;
-    }
-
-    /* MODAL */
-    .modal{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.45);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-      z-index:999;
-    }
-
-    .modal.show{
-      display:flex;
-    }
-
-    .modal-box{
-      width:100%;
-      max-width:650px;
-      background:white;
-      border-radius:16px;
-      overflow:hidden;
-      box-shadow:0 20px 50px rgba(0,0,0,.2);
-    }
-
-    .modal-head{
-      padding:18px 20px;
-      border-bottom:1px solid #e5e7eb;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-
-    .modal-head h3{
-      color:#0f5132;
-    }
-
-    .close{
-      border:none;
-      background:none;
-      font-size:24px;
-      cursor:pointer;
-    }
-
-    .modal-body{
-      padding:20px;
-    }
-
-    .form-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:14px;
-    }
-
-    .form-group{
-      margin-bottom:14px;
-    }
-
-    .form-group.full{
-      grid-column:1 / -1;
-    }
-
-    .form-group label{
-      display:block;
-      font-size:13px;
-      font-weight:700;
-      margin-bottom:6px;
-    }
-
-    .form-control{
-      width:100%;
-      padding:11px 12px;
-      border:1px solid #d1d5db;
-      border-radius:9px;
-      outline:none;
-    }
-
-    .permission-box{
-      background:#f8faf9;
-      border:1px solid #e5e7eb;
-      padding:14px;
-      border-radius:10px;
-    }
-
-    .permission-box label{
-      display:block;
-      margin-bottom:9px;
-      font-weight:normal;
-    }
-
-    .modal-foot{
-      padding:16px 20px;
-      border-top:1px solid #e5e7eb;
-      display:flex;
-      justify-content:flex-end;
-      gap:10px;
-    }
-
-    @media(max-width:1000px){
-      .overview{
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
-
-    @media(max-width:700px){
-      .sidebar{
-        position:static;
-        width:100%;
-      }
-
-      .app{
-        display:block;
-      }
-
-      .main{
-        margin-left:0;
-        width:100%;
-      }
-
-      .content{
-        padding:16px;
-      }
-
-      .overview{
-        grid-template-columns:1fr;
-      }
-
-      .form-grid{
-        grid-template-columns:1fr;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quản lý nhân viên | VietTrucks</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+body{background:#f4f7f8;color:#1f2937}
+a{text-decoration:none;color:inherit}
+.app{display:flex;min-height:100vh}
+
+.sidebar{
+  width:250px;background:#0f5132;color:#fff;padding:24px 16px;
+  position:fixed;left:0;top:0;bottom:0;overflow-y:auto
+}
+.logo{font-size:28px;font-weight:800;text-align:center;margin-bottom:28px}
+.logo span{color:#ffc107}
+.menu-title{font-size:12px;text-transform:uppercase;opacity:.7;margin:20px 12px 8px}
+.menu-item{display:block;padding:12px 14px;border-radius:10px;margin-bottom:6px}
+.menu-item:hover,.menu-item.active{background:rgba(255,255,255,.15)}
+
+.main{margin-left:250px;width:calc(100% - 250px)}
+.topbar{
+  min-height:72px;background:#fff;border-bottom:1px solid #e5e7eb;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 28px;position:sticky;top:0;z-index:10;gap:15px
+}
+.topbar h1{font-size:22px;color:#0f5132}
+.content{padding:28px;max-width:1350px;margin:auto}
+
+.btn{
+  border:none;border-radius:10px;padding:11px 16px;
+  cursor:pointer;font-weight:700;font-size:14px
+}
+.btn-primary{background:#198754;color:#fff}
+.btn-primary:hover{background:#146c43}
+.btn-light{background:#eef3f0;color:#0f5132}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+
+.message{
+  display:none;margin-bottom:18px;padding:13px 15px;
+  border-radius:10px;font-size:13px;line-height:1.6
+}
+.message.success{display:block;background:#dcfce7;border:1px solid #86efac;color:#166534}
+.message.error{display:block;background:#fee2e2;border:1px solid #fecaca;color:#991b1b}
+.message.info{display:block;background:#dbeafe;border:1px solid #bfdbfe;color:#1e40af}
+
+.overview{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:16px;margin-bottom:22px
+}
+.stat{
+  background:#fff;border-radius:14px;padding:20px;
+  border:1px solid #eceff1;box-shadow:0 4px 16px rgba(0,0,0,.05)
+}
+.stat .icon{font-size:26px;margin-bottom:10px}
+.stat strong{display:block;font-size:26px;color:#0f5132;margin-bottom:4px}
+.stat span{font-size:13px;color:#6b7280}
+
+.card{
+  background:#fff;border-radius:16px;border:1px solid #eceff1;
+  box-shadow:0 4px 18px rgba(0,0,0,.05);overflow:hidden
+}
+.card-head{
+  padding:20px;display:flex;justify-content:space-between;
+  gap:14px;align-items:center;border-bottom:1px solid #edf0f2;
+  flex-wrap:wrap
+}
+.card-head h2{font-size:18px;color:#0f5132}
+.filters{display:flex;gap:10px;flex-wrap:wrap}
+.input,.select{
+  padding:10px 12px;border:1px solid #d1d5db;
+  border-radius:9px;outline:none;background:#fff
+}
+.input{min-width:230px}
+.input:focus,.select:focus{
+  border-color:#198754;
+  box-shadow:0 0 0 3px rgba(25,135,84,.08)
+}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:950px}
+th,td{
+  padding:14px 16px;border-bottom:1px solid #edf0f2;
+  text-align:left;font-size:14px;vertical-align:middle
+}
+th{background:#f8faf9;color:#374151;font-size:13px}
+tr:hover td{background:#fbfdfc}
+
+.employee{display:flex;align-items:center;gap:11px}
+.avatar{
+  width:42px;height:42px;border-radius:50%;display:flex;
+  align-items:center;justify-content:center;background:#dff3e7;
+  color:#0f5132;font-weight:800;flex-shrink:0
+}
+.employee strong{display:block;margin-bottom:3px}
+.employee small{color:#6b7280}
+
+.badge{
+  display:inline-block;border-radius:999px;padding:6px 10px;
+  font-size:12px;font-weight:700
+}
+.badge-admin{background:#ede9fe;color:#5b21b6}
+.badge-sales{background:#e0f2fe;color:#075985}
+.badge-dispatch{background:#dbeafe;color:#1d4ed8}
+.badge-account{background:#fef3c7;color:#92400e}
+.badge-support{background:#fce7f3;color:#9d174d}
+.badge-staff{background:#e5e7eb;color:#374151}
+.active-status{background:#d1fae5;color:#065f46}
+
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.action-btn{
+  padding:7px 10px;border:1px solid #d1d5db;
+  background:#fff;border-radius:8px;cursor:pointer;font-size:13px
+}
+.action-btn:hover{background:#f3f4f6}
+
+.empty{display:none;padding:35px;text-align:center;color:#6b7280}
+
+.loading{
+  padding:35px;text-align:center;color:#6b7280
+}
+
+.production-note{
+  margin-top:18px;padding:14px;border-radius:10px;
+  background:#ecfdf5;border:1px solid #bbf7d0;
+  color:#166534;font-size:13px;line-height:1.6
+}
+
+/* MODAL */
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.45);
+  display:none;align-items:center;justify-content:center;
+  padding:20px;z-index:999
+}
+.modal.show{display:flex}
+.modal-box{
+  width:100%;max-width:620px;background:#fff;border-radius:16px;
+  overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.2)
+}
+.modal-head{
+  padding:18px 20px;border-bottom:1px solid #e5e7eb;
+  display:flex;justify-content:space-between;align-items:center
+}
+.modal-head h3{color:#0f5132}
+.close{border:none;background:none;font-size:24px;cursor:pointer}
+.modal-body{padding:20px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{margin-bottom:14px}
+.form-group.full{grid-column:1/-1}
+.form-group label{
+  display:block;font-size:13px;font-weight:700;margin-bottom:6px
+}
+.form-control{
+  width:100%;padding:11px 12px;border:1px solid #d1d5db;
+  border-radius:9px;outline:none
+}
+.form-control:focus{
+  border-color:#198754;
+  box-shadow:0 0 0 3px rgba(25,135,84,.08)
+}
+.form-control[readonly]{background:#f3f4f6;color:#6b7280}
+.help{font-size:11px;color:#6b7280;margin-top:6px;line-height:1.5}
+.modal-foot{
+  padding:16px 20px;border-top:1px solid #e5e7eb;
+  display:flex;justify-content:flex-end;gap:10px
+}
+
+@media(max-width:1000px){
+  .overview{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:700px){
+  .sidebar{position:static;width:100%}
+  .app{display:block}
+  .main{margin-left:0;width:100%}
+  .content{padding:16px}
+  .overview{grid-template-columns:1fr 1fr}
+  .topbar{padding:14px 16px;align-items:flex-start;flex-direction:column}
+  .form-grid{grid-template-columns:1fr}
+  .form-group.full{grid-column:auto}
+}
+@media(max-width:450px){
+  .overview{grid-template-columns:1fr}
+}
+</style>
 </head>
 
 <body>
 
 <div class="app">
 
-  <aside class="sidebar">
-    <div class="logo">Viet<span>Truck</span></div>
+<aside class="sidebar">
 
-    <div class="menu-title">Hệ thống</div>
-    <a class="menu-item" href="dashboard.html">🏠 Dashboard</a>
-    <a class="menu-item" href="quan-ly-don-hang.html">📦 Quản lý đơn hàng</a>
-    <a class="menu-item" href="trung-tam-bao-gia.html">💰 Trung tâm báo giá</a>
-    <a class="menu-item" href="hang-chieu-ve.html">🔄 Hàng chiều về</a>
-    <a class="menu-item" href="quan-ly-doi-xe.html">🚛 Quản lý đội xe</a>
+  <div class="logo">Viet<span>Trucks</span></div>
 
-    <div class="menu-title">Doanh nghiệp</div>
-    <a class="menu-item" href="thong-tin-doanh-nghiep.html">🏢 Thông tin doanh nghiệp</a>
-    <a class="menu-item active" href="quan-ly-nhan-vien.html">👥 Quản lý nhân viên</a>
+  <div class="menu-title">Hệ thống</div>
 
-    <div class="menu-title">Tài khoản</div>
-    <a class="menu-item" href="tai-khoan.html">👤 Tài khoản</a>
-    <a class="menu-item" href="vi-viettruck.html">💳 Ví VietTruck</a>
-    <a class="menu-item" href="cai-dat.html">⚙️ Cài đặt</a>
-  </aside>
+  <a class="menu-item" href="dashboard.html">🏠 Dashboard</a>
+  <a class="menu-item" href="quan-ly-don-hang.html">📦 Quản lý đơn hàng</a>
+  <a class="menu-item" href="trung-tam-bao-gia.html">💰 Trung tâm báo giá</a>
+  <a class="menu-item" href="hang-chieu-ve.html">🔄 Hàng chiều về</a>
+  <a class="menu-item" href="quan-ly-doi-xe.html">🚛 Quản lý đội xe</a>
 
-  <main class="main">
+  <div class="menu-title">Doanh nghiệp</div>
 
-    <div class="topbar">
-      <h1>Quản lý nhân viên & phân quyền</h1>
+  <a class="menu-item" href="thong-tin-doanh-nghiep.html">🏢 Thông tin doanh nghiệp</a>
+  <a class="menu-item active" href="quan-ly-nhan-vien.html">👥 Quản lý nhân viên</a>
 
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-  <button
-    class="btn btn-light"
-    onclick="location.href='nhat-ky-hoat-dong.html'">
-    📋 Nhật ký hoạt động
-  </button>
+  <div class="menu-title">Tài khoản</div>
 
-  <button
-    class="btn btn-primary"
-    onclick="openModal()">
-    + Thêm nhân viên
-  </button>
-</div>
-    </div>
+  <a class="menu-item" href="tai-khoan.html">👤 Tài khoản</a>
+  <a class="menu-item" href="vi-viettruck.html">💳 Ví VietTrucks</a>
+  <a class="menu-item" href="cai-dat.html">⚙️ Cài đặt</a>
 
-    <div class="content">
+</aside>
 
-      <div class="overview">
 
-        <div class="stat">
-          <div class="icon">👥</div>
-          <strong id="totalEmployee">5</strong>
-          <span>Tổng nhân viên</span>
-        </div>
+<main class="main">
 
-        <div class="stat">
-          <div class="icon">✅</div>
-          <strong>4</strong>
-          <span>Đang hoạt động</span>
-        </div>
+<div class="topbar">
 
-        <div class="stat">
-          <div class="icon">🛡️</div>
-          <strong>1</strong>
-          <span>Quản trị viên</span>
-        </div>
+  <h1>Quản lý nhân viên & phân quyền</h1>
 
-        <div class="stat">
-          <div class="icon">🚛</div>
-          <strong>2</strong>
-          <span>Điều phối vận tải</span>
-        </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
 
-      </div>
+    <button
+      class="btn btn-light"
+      onclick="location.href='nhat-ky-hoat-dong.html'">
+      📋 Nhật ký hoạt động
+    </button>
 
-      <section class="card">
-
-        <div class="card-head">
-          <h2>Danh sách nhân viên</h2>
-
-          <div class="filters">
-            <input
-              id="searchInput"
-              class="input"
-              type="text"
-              placeholder="Tìm tên, SĐT, email..."
-              onkeyup="filterEmployees()"
-            >
-
-            <select id="roleFilter" class="select" onchange="filterEmployees()">
-              <option value="">Tất cả chức vụ</option>
-              <option value="Quản trị viên">Quản trị viên</option>
-              <option value="Điều phối">Điều phối</option>
-              <option value="Kế toán">Kế toán</option>
-              <option value="CSKH">CSKH</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="table-wrap">
-
-          <table id="employeeTable">
-            <thead>
-              <tr>
-                <th>Nhân viên</th>
-                <th>Số điện thoại</th>
-                <th>Chức vụ</th>
-                <th>Quyền chính</th>
-                <th>Trạng thái</th>
-                <th>Thao tác</th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              <tr>
-                <td>
-                  <div class="employee">
-                    <div class="avatar">NA</div>
-                    <div>
-                      <strong>Nguyễn Văn A</strong>
-                      <small>admin@viettruck.vn</small>
-                    </div>
-                  </div>
-                </td>
-
-                <td>0901 234 567</td>
-
-                <td>
-                  <span class="badge badge-admin">Quản trị viên</span>
-                </td>
-
-                <td>Toàn quyền hệ thống</td>
-
-                <td>
-                  <span class="badge active-status">Đang hoạt động</span>
-                </td>
-
-                <td>
-                  <div class="actions">
-                    <button class="action-btn" onclick="editEmployee(this)">Sửa</button>
-                    <button class="action-btn" onclick="permissionAlert()">Phân quyền</button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <div class="employee">
-                    <div class="avatar">TH</div>
-                    <div>
-                      <strong>Trần Văn Hùng</strong>
-                      <small>hung@viettruck.vn</small>
-                    </div>
-                  </div>
-                </td>
-
-                <td>0988 111 222</td>
-
-                <td>
-                  <span class="badge badge-dispatch">Điều phối</span>
-                </td>
-
-                <td>Đơn hàng, xe, tài xế</td>
-
-                <td>
-                  <span class="badge active-status">Đang hoạt động</span>
-                </td>
-
-                <td>
-                  <div class="actions">
-                    <button class="action-btn" onclick="editEmployee(this)">Sửa</button>
-                    <button class="action-btn" onclick="permissionAlert()">Phân quyền</button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <div class="employee">
-                    <div class="avatar">LM</div>
-                    <div>
-                      <strong>Lê Thị Mai</strong>
-                      <small>mai@viettruck.vn</small>
-                    </div>
-                  </div>
-                </td>
-
-                <td>0966 333 444</td>
-
-                <td>
-                  <span class="badge badge-account">Kế toán</span>
-                </td>
-
-                <td>Ví, thanh toán, đối soát</td>
-
-                <td>
-                  <span class="badge active-status">Đang hoạt động</span>
-                </td>
-
-                <td>
-                  <div class="actions">
-                    <button class="action-btn" onclick="editEmployee(this)">Sửa</button>
-                    <button class="action-btn" onclick="permissionAlert()">Phân quyền</button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <div class="employee">
-                    <div class="avatar">PL</div>
-                    <div>
-                      <strong>Phạm Thị Lan</strong>
-                      <small>lan@viettruck.vn</small>
-                    </div>
-                  </div>
-                </td>
-
-                <td>0912 555 666</td>
-
-                <td>
-                  <span class="badge badge-support">CSKH</span>
-                </td>
-
-                <td>Hỗ trợ & khiếu nại</td>
-
-                <td>
-                  <span class="badge active-status">Đang hoạt động</span>
-                </td>
-
-                <td>
-                  <div class="actions">
-                    <button class="action-btn" onclick="editEmployee(this)">Sửa</button>
-                    <button class="action-btn" onclick="permissionAlert()">Phân quyền</button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <div class="employee">
-                    <div class="avatar">DV</div>
-                    <div>
-                      <strong>Đỗ Văn Việt</strong>
-                      <small>viet@viettruck.vn</small>
-                    </div>
-                  </div>
-                </td>
-
-                <td>0977 888 999</td>
-
-                <td>
-                  <span class="badge badge-dispatch">Điều phối</span>
-                </td>
-
-                <td>Quản lý chuyến</td>
-
-                <td>
-                  <span class="badge inactive-status">Tạm khóa</span>
-                </td>
-
-                <td>
-                  <div class="actions">
-                    <button class="action-btn" onclick="editEmployee(this)">Sửa</button>
-                    <button class="action-btn" onclick="permissionAlert()">Phân quyền</button>
-                  </div>
-                </td>
-              </tr>
-
-            </tbody>
-          </table>
-
-          <div id="emptyMessage" class="empty">
-            Không tìm thấy nhân viên phù hợp.
-          </div>
-
-        </div>
-
-      </section>
-
-    </div>
-  </main>
-
-</div>
-
-<!-- MODAL THÊM NHÂN VIÊN -->
-<div id="employeeModal" class="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-head">
-      <h3>Thêm nhân viên</h3>
-      <button class="close" onclick="closeModal()">×</button>
-    </div>
-
-    <div class="modal-body">
-
-      <div class="form-grid">
-
-        <div class="form-group">
-          <label>Họ và tên</label>
-          <input id="employeeName" class="form-control" type="text" placeholder="Nhập họ tên">
-        </div>
-
-        <div class="form-group">
-          <label>Số điện thoại</label>
-          <input id="employeePhone" class="form-control" type="tel" placeholder="Nhập số điện thoại">
-        </div>
-
-        <div class="form-group">
-          <label>Email</label>
-          <input id="employeeEmail" class="form-control" type="email" placeholder="Nhập email">
-        </div>
-
-        <div class="form-group">
-          <label>Chức vụ</label>
-          <select id="employeeRole" class="form-control">
-            <option>Điều phối</option>
-            <option>Kế toán</option>
-            <option>CSKH</option>
-            <option>Quản trị viên</option>
-          </select>
-        </div>
-
-        <div class="form-group full">
-          <label>Phân quyền</label>
-
-          <div class="permission-box">
-            <label><input type="checkbox" checked> Quản lý đơn hàng</label>
-            <label><input type="checkbox"> Quản lý đội xe</label>
-            <label><input type="checkbox"> Quản lý tài xế</label>
-            <label><input type="checkbox"> Thanh toán & đối soát</label>
-            <label><input type="checkbox"> Hỗ trợ & khiếu nại</label>
-            <label><input type="checkbox"> Quản trị nhân viên</label>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="modal-foot">
-      <button class="btn btn-light" onclick="closeModal()">Hủy</button>
-      <button class="btn btn-primary" onclick="addEmployee()">Lưu nhân viên</button>
-    </div>
+    <button
+      class="btn btn-primary"
+      onclick="showCreateEmployeeInfo()">
+      + Thêm nhân viên
+    </button>
 
   </div>
 
 </div>
 
+
+<div class="content">
+
+<div id="message" class="message"></div>
+
+
+<div class="overview">
+
+  <div class="stat">
+    <div class="icon">👥</div>
+    <strong id="totalEmployee">0</strong>
+    <span>Tổng nhân viên</span>
+  </div>
+
+  <div class="stat">
+    <div class="icon">🛡️</div>
+    <strong id="totalAdmin">0</strong>
+    <span>Quản trị viên</span>
+  </div>
+
+  <div class="stat">
+    <div class="icon">🚛</div>
+    <strong id="totalDispatcher">0</strong>
+    <span>Điều phối</span>
+  </div>
+
+  <div class="stat">
+    <div class="icon">💼</div>
+    <strong id="totalOther">0</strong>
+    <span>Nhân viên khác</span>
+  </div>
+
+</div>
+
+
+<section class="card">
+
+<div class="card-head">
+
+  <h2>Danh sách nhân viên thật</h2>
+
+  <div class="filters">
+
+    <input
+      id="searchInput"
+      class="input"
+      type="text"
+      placeholder="Tìm tên, SĐT, email..."
+    >
+
+    <select id="roleFilter" class="select">
+
+      <option value="">Tất cả chức vụ</option>
+      <option value="admin">Quản trị viên</option>
+      <option value="staff">Nhân viên</option>
+      <option value="sales">Kinh doanh</option>
+      <option value="dispatcher">Điều phối</option>
+      <option value="accountant">Kế toán</option>
+      <option value="support">CSKH</option>
+
+    </select>
+
+  </div>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table id="employeeTable">
+
+<thead>
+<tr>
+  <th>Nhân viên</th>
+  <th>Số điện thoại</th>
+  <th>Chức vụ</th>
+  <th>Công ty / Khu vực</th>
+  <th>Trạng thái</th>
+  <th>Thao tác</th>
+</tr>
+</thead>
+
+<tbody id="employeeBody"></tbody>
+
+</table>
+
+<div id="loadingMessage" class="loading">
+  Đang tải dữ liệu nhân viên từ Supabase...
+</div>
+
+<div id="emptyMessage" class="empty">
+  Chưa có nhân viên phù hợp.
+</div>
+
+</div>
+
+</section>
+
+
+<div class="production-note">
+  ✓ Trang này chỉ hiển thị dữ liệu thật trong bảng
+  <strong>profiles</strong> có vai trò nội bộ VietTrucks.
+  Khách hàng, chủ hàng, tài xế và nhà xe không được tính là nhân viên.
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+
+<!-- ==============================
+     MODAL SỬA NHÂN VIÊN
+================================ -->
+
+<div id="employeeModal" class="modal">
+
+<div class="modal-box">
+
+  <div class="modal-head">
+
+    <h3>Chỉnh sửa nhân viên</h3>
+
+    <button
+      class="close"
+      type="button"
+      onclick="closeModal()">
+      ×
+    </button>
+
+  </div>
+
+  <div class="modal-body">
+
+    <input
+      type="hidden"
+      id="editEmployeeId"
+    >
+
+    <div class="form-grid">
+
+      <div class="form-group">
+
+        <label>Họ và tên</label>
+
+        <input
+          id="editName"
+          class="form-control"
+          type="text"
+          maxlength="150"
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>Số điện thoại</label>
+
+        <input
+          id="editPhone"
+          class="form-control"
+          type="tel"
+          maxlength="30"
+        >
+
+      </div>
+
+
+      <div class="form-group full">
+
+        <label>Email</label>
+
+        <input
+          id="editEmail"
+          class="form-control"
+          type="email"
+          readonly
+        >
+
+        <div class="help">
+          Email đăng nhập không thay đổi tại màn hình này.
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>Vai trò</label>
+
+        <select
+          id="editRole"
+          class="form-control">
+
+          <option value="admin">Quản trị viên</option>
+          <option value="staff">Nhân viên</option>
+          <option value="sales">Kinh doanh</option>
+          <option value="dispatcher">Điều phối</option>
+          <option value="accountant">Kế toán</option>
+          <option value="support">CSKH</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>Tỉnh / Thành phố</label>
+
+        <input
+          id="editCity"
+          class="form-control"
+          type="text"
+          maxlength="120"
+        >
+
+      </div>
+
+
+      <div class="form-group full">
+
+        <label>Công ty / Bộ phận</label>
+
+        <input
+          id="editCompany"
+          class="form-control"
+          type="text"
+          maxlength="200"
+        >
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="modal-foot">
+
+    <button
+      class="btn btn-light"
+      type="button"
+      onclick="closeModal()">
+      Hủy
+    </button>
+
+    <button
+      class="btn btn-primary"
+      type="button"
+      id="saveEmployeeButton"
+      onclick="saveEmployee()">
+      Lưu thay đổi
+    </button>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
 <script>
-  const modal = document.getElementById("employeeModal");
+/* ==========================================================
+   VIETTRUCKS
+   QUẢN LÝ NHÂN VIÊN - PRODUCTION ONLY
 
-  function openModal(){
-    modal.classList.add("show");
-  }
+   DỮ LIỆU:
+   public.profiles
 
-  function closeModal(){
-    modal.classList.remove("show");
-  }
+   Không có dữ liệu demo.
+========================================================== */
 
-  function addEmployee(){
+const sb = window.supabaseClient;
 
-    const name = document.getElementById("employeeName").value.trim();
-    const phone = document.getElementById("employeePhone").value.trim();
-    const email = document.getElementById("employeeEmail").value.trim();
-    const role = document.getElementById("employeeRole").value;
+const INTERNAL_ROLES = [
+  "admin",
+  "staff",
+  "sales",
+  "dispatcher",
+  "accountant",
+  "support"
+];
 
-    if(!name || !phone || !email){
-      alert("Vui lòng nhập đầy đủ họ tên, số điện thoại và email.");
-      return;
-    }
+let employees = [];
+let currentAdmin = null;
 
-    let badgeClass = "badge-dispatch";
+const modal =
+  document.getElementById("employeeModal");
 
-    if(role === "Quản trị viên"){
-      badgeClass = "badge-admin";
-    }
 
-    if(role === "Kế toán"){
-      badgeClass = "badge-account";
-    }
+/* ==========================================================
+   HELPER
+========================================================== */
 
-    if(role === "CSKH"){
-      badgeClass = "badge-support";
-    }
+function esc(value){
 
-    const initials = name
-      .split(" ")
-      .slice(-2)
-      .map(word => word.charAt(0).toUpperCase())
-      .join("");
-
-    const tbody = document.querySelector("#employeeTable tbody");
-
-    const row = document.createElement("tr");
-
-    row.innerHTML = `
-      <td>
-        <div class="employee">
-          <div class="avatar">${initials}</div>
-          <div>
-            <strong>${name}</strong>
-            <small>${email}</small>
-          </div>
-        </div>
-      </td>
-
-      <td>${phone}</td>
-
-      <td>
-        <span class="badge ${badgeClass}">${role}</span>
-      </td>
-
-      <td>Quyền theo chức vụ</td>
-
-      <td>
-        <span class="badge active-status">Đang hoạt động</span>
-      </td>
-
-      <td>
-        <div class="actions">
-          <button class="action-btn" onclick="editEmployee(this)">Sửa</button>
-          <button class="action-btn" onclick="permissionAlert()">Phân quyền</button>
-        </div>
-      </td>
-    `;
-
-    tbody.appendChild(row);
-
-    document.getElementById("totalEmployee").textContent =
-      tbody.querySelectorAll("tr").length;
-
-    document.getElementById("employeeName").value = "";
-    document.getElementById("employeePhone").value = "";
-    document.getElementById("employeeEmail").value = "";
-
-    closeModal();
-
-    alert("Đã thêm nhân viên thành công.");
-  }
-
-  function permissionAlert(){
-  window.location.href = "phan-quyen-tai-khoan.html";
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 }
 
-  function editEmployee(button){
-    const row = button.closest("tr");
-    const name = row.querySelector(".employee strong").textContent;
 
-    alert("Đang mở chỉnh sửa nhân viên: " + name);
+function clean(value){
+
+  const text =
+    String(value ?? "").trim();
+
+  return text || null;
+}
+
+
+function normalizeRole(role){
+
+  return String(role || "")
+    .trim()
+    .toLowerCase();
+}
+
+
+function roleLabel(role){
+
+  const labels = {
+    admin:"Quản trị viên",
+    staff:"Nhân viên",
+    sales:"Kinh doanh",
+    dispatcher:"Điều phối",
+    accountant:"Kế toán",
+    support:"CSKH"
+  };
+
+  return labels[
+    normalizeRole(role)
+  ] || role || "Chưa xác định";
+}
+
+
+function roleBadge(role){
+
+  const value =
+    normalizeRole(role);
+
+  if(value === "admin"){
+    return "badge-admin";
   }
 
-  function filterEmployees(){
+  if(value === "dispatcher"){
+    return "badge-dispatch";
+  }
 
-    const search =
-      document.getElementById("searchInput").value.toLowerCase();
+  if(value === "accountant"){
+    return "badge-account";
+  }
 
-    const role =
-      document.getElementById("roleFilter").value.toLowerCase();
+  if(value === "support"){
+    return "badge-support";
+  }
 
-    const rows =
-      document.querySelectorAll("#employeeTable tbody tr");
+  if(value === "sales"){
+    return "badge-sales";
+  }
 
-    let visibleCount = 0;
+  return "badge-staff";
+}
 
-    rows.forEach(row => {
 
-      const text = row.textContent.toLowerCase();
+function initials(name,email){
+
+  const source =
+    String(name || "").trim() ||
+    String(email || "")
+      .split("@")[0] ||
+    "VT";
+
+  const words =
+    source
+      .split(/\s+/)
+      .filter(Boolean);
+
+  if(words.length >= 2){
+
+    return (
+      words[0][0] +
+      words[words.length - 1][0]
+    ).toUpperCase();
+  }
+
+  return source
+    .substring(0,2)
+    .toUpperCase();
+}
+
+
+function showMessage(type,text){
+
+  const box =
+    document.getElementById("message");
+
+  box.className =
+    "message " + type;
+
+  box.textContent = text;
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+function clearMessage(){
+
+  const box =
+    document.getElementById("message");
+
+  box.className = "message";
+  box.textContent = "";
+}
+
+
+/* ==========================================================
+   KIỂM TRA ADMIN
+========================================================== */
+
+async function requireAdmin(){
+
+  if(!sb){
+
+    throw new Error(
+      "Không tìm thấy kết nối Supabase."
+    );
+  }
+
+  const {
+    data:{user},
+    error:userError
+  } = await sb.auth.getUser();
+
+  if(userError){
+    throw userError;
+  }
+
+  if(!user){
+
+    window.location.replace(
+      "dang-nhap.html"
+    );
+
+    return null;
+  }
+
+  const {
+    data:profile,
+    error:profileError
+  } = await sb
+    .from("profiles")
+    .select(`
+      id,
+      email,
+      full_name,
+      role
+    `)
+    .eq("id",user.id)
+    .maybeSingle();
+
+  if(profileError){
+    throw profileError;
+  }
+
+  if(
+    !profile ||
+    normalizeRole(profile.role) !== "admin"
+  ){
+
+    throw new Error(
+      "Tài khoản này không có quyền quản trị nhân viên."
+    );
+  }
+
+  currentAdmin = profile;
+
+  return profile;
+}
+
+
+/* ==========================================================
+   LOAD NHÂN VIÊN THẬT
+========================================================== */
+
+async function loadEmployees(){
+
+  clearMessage();
+
+  const loading =
+    document.getElementById(
+      "loadingMessage"
+    );
+
+  const empty =
+    document.getElementById(
+      "emptyMessage"
+    );
+
+  loading.style.display = "block";
+  empty.style.display = "none";
+
+  try{
+
+    await requireAdmin();
+
+    const {
+      data,
+      error
+    } = await sb
+      .from("profiles")
+      .select(`
+        id,
+        created_at,
+        email,
+        full_name,
+        role,
+        phone,
+        city,
+        company_name,
+        updated_at
+      `)
+      .in("role",INTERNAL_ROLES)
+      .order(
+        "created_at",
+        {ascending:true}
+      );
+
+    if(error){
+      throw error;
+    }
+
+    employees =
+      Array.isArray(data)
+        ? data
+        : [];
+
+    renderEmployees();
+    updateStats();
+
+  }catch(error){
+
+    console.error(error);
+
+    employees = [];
+
+    renderEmployees();
+    updateStats();
+
+    showMessage(
+      "error",
+      error.message ||
+      "Không tải được dữ liệu nhân viên."
+    );
+
+  }finally{
+
+    loading.style.display = "none";
+  }
+}
+
+
+/* ==========================================================
+   RENDER
+========================================================== */
+
+function renderEmployees(){
+
+  const body =
+    document.getElementById(
+      "employeeBody"
+    );
+
+  const empty =
+    document.getElementById(
+      "emptyMessage"
+    );
+
+  const search =
+    document.getElementById(
+      "searchInput"
+    ).value
+      .trim()
+      .toLowerCase();
+
+  const role =
+    normalizeRole(
+      document.getElementById(
+        "roleFilter"
+      ).value
+    );
+
+  const filtered =
+    employees.filter(item => {
+
+      const itemRole =
+        normalizeRole(item.role);
+
+      const text = [
+        item.full_name,
+        item.email,
+        item.phone,
+        item.city,
+        item.company_name,
+        roleLabel(item.role)
+      ]
+        .join(" ")
+        .toLowerCase();
 
       const matchSearch =
+        !search ||
         text.includes(search);
 
       const matchRole =
-        role === "" || text.includes(role);
+        !role ||
+        itemRole === role;
 
-      if(matchSearch && matchRole){
-        row.style.display = "";
-        visibleCount++;
-      }else{
-        row.style.display = "none";
-      }
-
+      return (
+        matchSearch &&
+        matchRole
+      );
     });
 
-    document.getElementById("emptyMessage").style.display =
-      visibleCount === 0 ? "block" : "none";
+
+  if(filtered.length === 0){
+
+    body.innerHTML = "";
+
+    empty.style.display =
+      "block";
+
+    return;
   }
 
-  window.onclick = function(event){
+
+  empty.style.display = "none";
+
+
+  body.innerHTML =
+    filtered.map(item => {
+
+      const id =
+        esc(item.id);
+
+      const name =
+        esc(
+          item.full_name ||
+          "Chưa cập nhật tên"
+        );
+
+      const email =
+        esc(
+          item.email ||
+          "Chưa có email"
+        );
+
+      const phone =
+        esc(
+          item.phone ||
+          "Chưa cập nhật"
+        );
+
+      const company =
+        esc(
+          item.company_name ||
+          "Chưa cập nhật"
+        );
+
+      const city =
+        esc(
+          item.city ||
+          "Chưa cập nhật"
+        );
+
+      const roleText =
+        esc(
+          roleLabel(item.role)
+        );
+
+      const badge =
+        roleBadge(item.role);
+
+      return `
+        <tr>
+
+          <td>
+
+            <div class="employee">
+
+              <div class="avatar">
+                ${esc(
+                  initials(
+                    item.full_name,
+                    item.email
+                  )
+                )}
+              </div>
+
+              <div>
+                <strong>${name}</strong>
+                <small>${email}</small>
+              </div>
+
+            </div>
+
+          </td>
+
+
+          <td>
+            ${phone}
+          </td>
+
+
+          <td>
+
+            <span class="badge ${badge}">
+              ${roleText}
+            </span>
+
+          </td>
+
+
+          <td>
+            <strong>${company}</strong>
+            <br>
+            <small style="color:#6b7280">
+              ${city}
+            </small>
+          </td>
+
+
+          <td>
+
+            <span class="badge active-status">
+              Đang hoạt động
+            </span>
+
+          </td>
+
+
+          <td>
+
+            <div class="actions">
+
+              <button
+                class="action-btn"
+                type="button"
+                onclick="openEditEmployee('${id}')">
+                Sửa
+              </button>
+
+              <button
+                class="action-btn"
+                type="button"
+                onclick="openPermission('${id}')">
+                Phân quyền
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+      `;
+
+    }).join("");
+}
+
+
+/* ==========================================================
+   THỐNG KÊ TỪ DỮ LIỆU THẬT
+========================================================== */
+
+function updateStats(){
+
+  const total =
+    employees.length;
+
+  const admin =
+    employees.filter(
+      item =>
+        normalizeRole(item.role) ===
+        "admin"
+    ).length;
+
+  const dispatcher =
+    employees.filter(
+      item =>
+        normalizeRole(item.role) ===
+        "dispatcher"
+    ).length;
+
+  const other =
+    total -
+    admin -
+    dispatcher;
+
+  document.getElementById(
+    "totalEmployee"
+  ).textContent =
+    total;
+
+  document.getElementById(
+    "totalAdmin"
+  ).textContent =
+    admin;
+
+  document.getElementById(
+    "totalDispatcher"
+  ).textContent =
+    dispatcher;
+
+  document.getElementById(
+    "totalOther"
+  ).textContent =
+    Math.max(other,0);
+}
+
+
+/* ==========================================================
+   SỬA NHÂN VIÊN
+========================================================== */
+
+function openEditEmployee(id){
+
+  clearMessage();
+
+  const employee =
+    employees.find(
+      item => item.id === id
+    );
+
+  if(!employee){
+
+    showMessage(
+      "error",
+      "Không tìm thấy nhân viên."
+    );
+
+    return;
+  }
+
+  document.getElementById(
+    "editEmployeeId"
+  ).value =
+    employee.id;
+
+  document.getElementById(
+    "editName"
+  ).value =
+    employee.full_name || "";
+
+  document.getElementById(
+    "editPhone"
+  ).value =
+    employee.phone || "";
+
+  document.getElementById(
+    "editEmail"
+  ).value =
+    employee.email || "";
+
+  document.getElementById(
+    "editRole"
+  ).value =
+    normalizeRole(employee.role);
+
+  document.getElementById(
+    "editCity"
+  ).value =
+    employee.city || "";
+
+  document.getElementById(
+    "editCompany"
+  ).value =
+    employee.company_name || "";
+
+  modal.classList.add("show");
+}
+
+
+function closeModal(){
+
+  modal.classList.remove("show");
+}
+
+
+/* ==========================================================
+   SAVE THẬT
+========================================================== */
+
+async function saveEmployee(){
+
+  clearMessage();
+
+  const id =
+    document.getElementById(
+      "editEmployeeId"
+    ).value;
+
+  if(!id){
+    return;
+  }
+
+  const button =
+    document.getElementById(
+      "saveEmployeeButton"
+    );
+
+  button.disabled = true;
+  button.textContent =
+    "Đang lưu...";
+
+  try{
+
+    await requireAdmin();
+
+    const role =
+      normalizeRole(
+        document.getElementById(
+          "editRole"
+        ).value
+      );
+
+    if(
+      !INTERNAL_ROLES.includes(role)
+    ){
+
+      throw new Error(
+        "Vai trò nhân viên không hợp lệ."
+      );
+    }
+
+
+    /*
+      Không cho Admin đang đăng nhập
+      tự bỏ quyền admin của chính mình.
+    */
+
+    if(
+      currentAdmin &&
+      currentAdmin.id === id &&
+      role !== "admin"
+    ){
+
+      throw new Error(
+        "Không thể tự xóa quyền Admin của chính tài khoản đang đăng nhập."
+      );
+    }
+
+
+    const payload = {
+
+      full_name:
+        clean(
+          document.getElementById(
+            "editName"
+          ).value
+        ),
+
+      phone:
+        clean(
+          document.getElementById(
+            "editPhone"
+          ).value
+        ),
+
+      role:role,
+
+      city:
+        clean(
+          document.getElementById(
+            "editCity"
+          ).value
+        ),
+
+      company_name:
+        clean(
+          document.getElementById(
+            "editCompany"
+          ).value
+        ),
+
+      updated_at:
+        new Date().toISOString()
+    };
+
+
+    const {
+      data,
+      error
+    } = await sb
+      .from("profiles")
+      .update(payload)
+      .eq("id",id)
+      .select(`
+        id,
+        created_at,
+        email,
+        full_name,
+        role,
+        phone,
+        city,
+        company_name,
+        updated_at
+      `)
+      .single();
+
+
+    if(error){
+      throw error;
+    }
+
+
+    const index =
+      employees.findIndex(
+        item => item.id === id
+      );
+
+
+    if(index !== -1){
+      employees[index] = data;
+    }
+
+
+    closeModal();
+
+    renderEmployees();
+    updateStats();
+
+
+    showMessage(
+      "success",
+      "✓ Đã cập nhật nhân viên vào dữ liệu thật của VietTrucks."
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "error",
+      "Không lưu được nhân viên: " +
+      (
+        error.message ||
+        "Lỗi không xác định"
+      )
+    );
+
+  }finally{
+
+    button.disabled = false;
+    button.textContent =
+      "Lưu thay đổi";
+  }
+}
+
+
+/* ==========================================================
+   PHÂN QUYỀN
+========================================================== */
+
+function openPermission(id){
+
+  /*
+    Trang phan-quyen-tai-khoan.html
+    có thể đọc ?id=...
+  */
+
+  window.location.href =
+    "phan-quyen-tai-khoan.html?id=" +
+    encodeURIComponent(id);
+}
+
+
+/* ==========================================================
+   THÊM NHÂN VIÊN
+
+   Không giả lập INSERT.
+   Tạo Auth user phải thực hiện phía server.
+========================================================== */
+
+function showCreateEmployeeInfo(){
+
+  showMessage(
+    "info",
+    "Để thêm nhân viên mới chạy thật, VietTrucks cần tạo đồng thời tài khoản Supabase Auth và hồ sơ profiles bằng chức năng Admin phía server. Trang này không tạo nhân viên giả trên trình duyệt."
+  );
+}
+
+
+/* ==========================================================
+   FILTER
+========================================================== */
+
+document.getElementById(
+  "searchInput"
+).addEventListener(
+  "input",
+  renderEmployees
+);
+
+document.getElementById(
+  "roleFilter"
+).addEventListener(
+  "change",
+  renderEmployees
+);
+
+
+/* ==========================================================
+   CLOSE MODAL
+========================================================== */
+
+window.addEventListener(
+  "click",
+  function(event){
+
     if(event.target === modal){
       closeModal();
     }
+
   }
+);
+
+
+/* ==========================================================
+   START
+========================================================== */
+
+if(
+  document.readyState ===
+  "loading"
+){
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    loadEmployees
+  );
+
+}else{
+
+  loadEmployees();
+}
+
 </script>
 
 </body>
