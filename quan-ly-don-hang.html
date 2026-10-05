@@ -781,7 +781,293 @@ function updateSummary(){
 
 }
 
+/* ========================================
+   TẢI CHUYẾN + POD CỦA CHỦ HÀNG
+======================================== */
 
+async function loadTripsAndPods(){
+
+  tripMap = new Map();
+  podMap = new Map();
+
+  if(!currentUser){
+    return;
+  }
+
+  /*
+    Admin vào trang này chỉ để xem đơn.
+    Nút xác nhận giao hàng chỉ dành cho
+    đúng chủ hàng của chuyến.
+  */
+
+  if(currentRole === "admin"){
+    return;
+  }
+
+
+  const {
+    data:trips,
+    error:tripError
+  } = await supabaseClient
+    .from("trips")
+    .select(
+      "id,order_id,shipper_id,driver_id,status,completed_at,delivery_confirmed_at,delivery_confirmed_by"
+    )
+    .eq(
+      "shipper_id",
+      currentUser.id
+    );
+
+
+  if(tripError){
+    throw tripError;
+  }
+
+
+  (trips || []).forEach(function(trip){
+
+    if(trip.order_id){
+      tripMap.set(
+        trip.order_id,
+        trip
+      );
+    }
+
+  });
+
+
+  const tripIds =
+    (trips || [])
+      .map(function(trip){
+        return trip.id;
+      })
+      .filter(Boolean);
+
+
+  if(!tripIds.length){
+    return;
+  }
+
+
+  const {
+    data:pods,
+    error:podError
+  } = await supabaseClient
+    .from("trip_pods")
+    .select(
+      "id,trip_id,status,review_note,submitted_at,reviewed_at"
+    )
+    .in(
+      "trip_id",
+      tripIds
+    );
+
+
+  if(podError){
+    throw podError;
+  }
+
+
+  (pods || []).forEach(function(pod){
+
+    if(pod.trip_id){
+      podMap.set(
+        pod.trip_id,
+        pod
+      );
+    }
+
+  });
+
+}
+
+
+/* ========================================
+   TRẠNG THÁI XÁC NHẬN GIAO HÀNG
+======================================== */
+
+function getDeliveryConfirmationHtml(order){
+
+  if(
+    !currentUser ||
+    currentRole === "admin"
+  ){
+    return "";
+  }
+
+
+  const trip =
+    tripMap.get(order.id);
+
+
+  /*
+    Chưa hình thành chuyến thật.
+  */
+
+  if(!trip){
+    return "";
+  }
+
+
+  /*
+    Chỉ chính chủ hàng của chuyến.
+  */
+
+  if(
+    trip.shipper_id !==
+    currentUser.id
+  ){
+    return "";
+  }
+
+
+  /*
+    Chủ hàng đã xác nhận.
+  */
+
+  if(trip.delivery_confirmed_at){
+
+    const confirmedTime =
+      new Date(
+        trip.delivery_confirmed_at
+      ).toLocaleString("vi-VN");
+
+
+    return `
+      <div class="delivery-confirm-box confirmed">
+
+        ✓ Đã xác nhận nhận hàng
+
+        <div style="margin-top:3px;font-weight:500;">
+          ${escapeHtml(confirmedTime)}
+        </div>
+
+      </div>
+    `;
+  }
+
+
+  /*
+    Chuyến chưa completed.
+  */
+
+  if(
+    String(
+      trip.status || ""
+    ).toLowerCase() !==
+    "completed"
+  ){
+
+    return "";
+  }
+
+
+  const pod =
+    podMap.get(trip.id);
+
+
+  /*
+    Chưa có POD.
+  */
+
+  if(!pod){
+
+    return `
+      <div class="delivery-confirm-box waiting-pod">
+        ⏳ Tài xế chưa gửi chứng từ giao nhận (POD).
+      </div>
+    `;
+  }
+
+
+  const podStatus =
+    String(
+      pod.status || ""
+    )
+      .trim()
+      .toLowerCase();
+
+
+  /*
+    POD đang chờ Admin/chủ hàng duyệt.
+  */
+
+  if(podStatus === "pending"){
+
+    return `
+      <div class="delivery-confirm-box waiting-pod">
+        ⏳ Chứng từ giao nhận đang chờ xác nhận.
+      </div>
+    `;
+  }
+
+
+  /*
+    POD bị từ chối.
+  */
+
+  if(podStatus === "rejected"){
+
+    return `
+      <div class="delivery-confirm-box rejected">
+
+        ✕ Chứng từ giao nhận đã bị từ chối.
+
+        ${
+          pod.review_note
+            ? `
+              <div style="margin-top:4px;">
+                Lý do:
+                ${escapeHtml(
+                  pod.review_note
+                )}
+              </div>
+            `
+            : ""
+        }
+
+      </div>
+    `;
+  }
+
+
+  /*
+    Chỉ POD approved mới cho xác nhận.
+  */
+
+  if(podStatus !== "approved"){
+
+    return `
+      <div class="delivery-confirm-box waiting-pod">
+        ⏳ POD chưa đủ điều kiện xác nhận nhận hàng.
+      </div>
+    `;
+  }
+
+
+  return `
+    <div class="delivery-confirm-box ready">
+
+      <strong>
+        ✓ Chứng từ giao nhận đã được xác nhận
+      </strong>
+
+      <div style="margin-top:4px;">
+        Nếu hàng đã được giao đầy đủ,
+        vui lòng xác nhận đã nhận hàng.
+      </div>
+
+      <button
+        type="button"
+        class="confirm-delivery-btn"
+        data-trip-id="${escapeHtml(trip.id)}"
+      >
+        ✓ Xác nhận đã nhận hàng
+      </button>
+
+    </div>
+  `;
+}
 /* ========================================
    HIỂN THỊ ĐƠN
 ======================================== */
