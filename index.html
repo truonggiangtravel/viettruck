@@ -26,16 +26,42 @@
 
   <!-- CSS VietTruck phải tải trước -->
   <link rel="stylesheet" href="assets/css/style.css?v=20260930-1">
-<link rel="stylesheet" href="mobile.css?v=20260930-1">
+  <link rel="stylesheet" href="mobile.css?v=20260930-1">
 
-  <!-- Font tải sau CSS chính -->
+  <!-- FONT TIẾNG VIỆT -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   >
-  <style>
+
+  <style id="viettrucks-font-fix">
+    html,
+    body,
+    button,
+    input,
+    select,
+    textarea,
+    a,
+    div,
+    span,
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    label,
+    small,
+    strong,
+    b {
+      font-family:"Be Vietnam Pro",Arial,Helvetica,sans-serif !important;
+    }
+  </style>
+
+<style>
 .vt-live-market{
   width:100%;
   display:flex;
@@ -156,7 +182,8 @@
   }
 }
 </style>
-  <style>
+
+<style>
 /* =====================================================
    FIX DỮ LIỆU VẬN TẢI CHẠY NGANG TRÊN MOBILE
    ===================================================== */
@@ -219,11 +246,6 @@
   }
 }
 
-
-/* =========================
-   ĐIỆN THOẠI
-   ========================= */
-
 @media(max-width:768px){
 
   #vtLiveMarket{
@@ -256,16 +278,15 @@
   }
 
   #vtLiveTrack{
-  display:flex !important;
-  width:max-content !important;
-  min-width:max-content !important;
-  flex-wrap:nowrap !important;
-  white-space:nowrap !important;
-
-  animation:none !important;
-  transform:translate3d(0,0,0);
-  will-change:transform;
-}
+    display:flex !important;
+    width:max-content !important;
+    min-width:max-content !important;
+    flex-wrap:nowrap !important;
+    white-space:nowrap !important;
+    animation:none !important;
+    transform:translate3d(0,0,0);
+    will-change:transform;
+  }
 
   #vtLiveTrack .vt-live-item{
     display:flex !important;
@@ -287,22 +308,132 @@
   #vtLiveTrack span{
     white-space:nowrap !important;
   }
-
 }
 </style>
-</head>
-  
-<body>
-  <header class="site-header"><div class="container nav"><a class="brand" href="#"><div class="brand-mark">🚚</div><div><strong>VietTruck</strong><span>Kết nối hàng hóa Việt Nam</span></div></a><nav class="menu" id="menu"><a href="#home">Trang chủ</a><a href="tim-hang.html">Tìm hàng</a><a href="tim-xe.html">Tìm xe</a><a href="dang-xe.html">Đăng xe</a><a href="dang-hang.html">Đăng hàng</a><a href="bang-gia.html">Bảng giá</a><a href="#dich-vu">Dịch vụ</a><a href="#tin-tuc">Tin tức</a><a href="#lien-he">Liên hệ</a></nav><div class="header-actions"><a class="btn btn-outline" href="dang-nhap.html">Đăng nhập</a><a class="btn btn-primary" href="dang-ky.html">Đăng ký</a><button class="menu-btn" id="menuBtn">☰</button></div></div></header>
-<main id="home"><section class="hero"><div class="hero-overlay"></div><div class="container hero-inner"><div class="hero-copy"><div class="eyebrow">NỀN TẢNG VẬN TẢI HÀNG HÓA</div><h1>Tìm xe tải chở hàng toàn quốc<br>Đăng hàng miễn phí</h1><p>Giúp chủ hàng tìm xe nhanh, tài xế tìm hàng dễ, giảm xe chạy rỗng và tối ưu chi phí vận chuyển.</p></div><div class="search-card"><div class="search-tabs mobile-action-tabs">
-  <a class="tab active" href="tim-xe.html">Tìm xe</a>
-  <a class="tab" href="dang-hang.html">Đăng hàng</a>
-  <a class="tab" href="tim-hang.html">Tìm hàng</a>
-  <a class="tab" href="dang-xe.html">Đăng xe</a>
-</div><div class="search-grid"><label>Nơi đi<input id="from" placeholder="Chọn tỉnh/thành"></label><label>Nơi đến<input id="to" placeholder="Chọn tỉnh/thành"></label><label>Loại hàng<select id="cargoType"><option>Chọn loại hàng</option><option>Hàng tiêu dùng</option><option>Điện tử</option><option>Nông sản</option><option>Vật liệu xây dựng</option></select></label><label>Thời gian<input type="date" id="date"></label><button class="btn btn-primary big" id="searchBtn">Tìm xe ngay</button></div><div class="popular">Tìm kiếm phổ biến: <button>Hà Nội → Hồ Chí Minh</button><button>Hà Nội → Đà Nẵng</button><button>Bắc Ninh → Hải Phòng</button><button>Đồng Nai → Bình Dương</button></div></div></div></section>
 
-  <!-- ===== VIETTRUCK LIVE MARKET ===== -->
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+
+    <a class="brand" href="#">
+      <div class="brand-mark">🚚</div>
+      <div>
+        <strong>VietTruck</strong>
+        <span>Kết nối hàng hóa Việt Nam</span>
+      </div>
+    </a>
+
+    <nav class="menu" id="menu">
+      <a href="#home">Trang chủ</a>
+      <a href="tim-hang.html">Tìm hàng</a>
+      <a href="tim-xe.html">Tìm xe</a>
+      <a href="dang-xe.html">Đăng xe</a>
+      <a href="dang-hang.html">Đăng hàng</a>
+      <a href="bang-gia.html">Bảng giá</a>
+      <a href="#dich-vu">Dịch vụ</a>
+      <a href="#tin-tuc">Tin tức</a>
+      <a href="#lien-he">Liên hệ</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn btn-outline" href="dang-nhap.html">Đăng nhập</a>
+      <a class="btn btn-primary" href="dang-ky.html">Đăng ký</a>
+      <button class="menu-btn" id="menuBtn">☰</button>
+    </div>
+
+  </div>
+</header>
+
+<main id="home">
+
+<section class="hero">
+
+  <div class="hero-overlay"></div>
+
+  <div class="container hero-inner">
+
+    <div class="hero-copy">
+
+      <div class="eyebrow">
+        NỀN TẢNG VẬN TẢI HÀNG HÓA
+      </div>
+
+      <h1>
+        Tìm xe tải chở hàng toàn quốc<br>
+        Đăng hàng miễn phí
+      </h1>
+
+      <p>
+        Giúp chủ hàng tìm xe nhanh, tài xế tìm hàng dễ,
+        giảm xe chạy rỗng và tối ưu chi phí vận chuyển.
+      </p>
+
+    </div>
+
+    <div class="search-card">
+
+      <div class="search-tabs mobile-action-tabs">
+        <a class="tab active" href="tim-xe.html">Tìm xe</a>
+        <a class="tab" href="dang-hang.html">Đăng hàng</a>
+        <a class="tab" href="tim-hang.html">Tìm hàng</a>
+        <a class="tab" href="dang-xe.html">Đăng xe</a>
+      </div>
+
+      <div class="search-grid">
+
+        <label>
+          Nơi đi
+          <input id="from" placeholder="Chọn tỉnh/thành">
+        </label>
+
+        <label>
+          Nơi đến
+          <input id="to" placeholder="Chọn tỉnh/thành">
+        </label>
+
+        <label>
+          Loại hàng
+          <select id="cargoType">
+            <option>Chọn loại hàng</option>
+            <option>Hàng tiêu dùng</option>
+            <option>Điện tử</option>
+            <option>Nông sản</option>
+            <option>Vật liệu xây dựng</option>
+          </select>
+        </label>
+
+        <label>
+          Thời gian
+          <input type="date" id="date">
+        </label>
+
+        <button class="btn btn-primary big" id="searchBtn">
+          Tìm xe ngay
+        </button>
+
+      </div>
+
+      <div class="popular">
+        Tìm kiếm phổ biến:
+        <button>Hà Nội → Hồ Chí Minh</button>
+        <button>Hà Nội → Đà Nẵng</button>
+        <button>Bắc Ninh → Hải Phòng</button>
+        <button>Đồng Nai → Bình Dương</button>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ===== VIETTRUCK LIVE MARKET ===== -->
+
 <section id="vtLiveMarket" class="vt-live-market">
+
   <div class="vt-live-label">
     <span class="vt-live-dot"></span>
     DỮ LIỆU VẬN TẢI
@@ -311,8 +442,12 @@
   <div class="vt-live-window">
     <div id="vtLiveTrack" class="vt-live-track"></div>
   </div>
+
 </section>
+
+
 <section class="market-stats">
+
   <div class="stat-box">
     <strong>MIỄN PHÍ</strong>
     <span>Đăng hàng tìm xe</span>
@@ -332,41 +467,59 @@
     <strong>AN TOÀN</strong>
     <span>Thanh toán minh bạch</span>
   </div>
-</section>
-<section class="quick-services">
-  <div class="container service-row" style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px;align-items:start;">
 
-    <a href="dang-hang.html" style="text-decoration:none;color:inherit;text-align:center;">
+</section>
+
+
+<section class="quick-services">
+
+  <div
+    class="container service-row"
+    style="
+      display:grid;
+      grid-template-columns:repeat(6,minmax(0,1fr));
+      gap:18px;
+      align-items:start;
+    "
+  >
+
+    <a href="dang-hang.html"
+       style="text-decoration:none;color:inherit;text-align:center;">
       <span>📦</span>
       <b>Đăng hàng miễn phí</b>
       <small>Tìm xe nhanh chóng</small>
     </a>
 
-    <a href="hang-chieu-ve.html" style="text-decoration:none;color:inherit;text-align:center;">
+    <a href="hang-chieu-ve.html"
+       style="text-decoration:none;color:inherit;text-align:center;">
       <span>🔄</span>
       <b>Hàng chiều về</b>
       <small>Tiết kiệm chi phí</small>
     </a>
 
-    <a href="trung-tam-bao-gia.html" style="text-decoration:none;color:inherit;text-align:center;">
+    <a href="trung-tam-bao-gia.html"
+       style="text-decoration:none;color:inherit;text-align:center;">
       <span>⚖️</span>
       <b>Đấu giá cước</b>
       <small>Nhiều lựa chọn</small>
     </a>
 
-    <a href="lich-su-hanh-trinh.html" style="text-decoration:none;color:inherit;text-align:center;">
+    <a href="lich-su-hanh-trinh.html"
+       style="text-decoration:none;color:inherit;text-align:center;">
       <span>📍</span>
       <b>Theo dõi hành trình</b>
       <small>An toàn, minh bạch</small>
     </a>
 
-    <a href="vi-viettruck.html" style="text-decoration:none;color:inherit;text-align:center;">
+    <a href="vi-viettruck.html"
+       style="text-decoration:none;color:inherit;text-align:center;">
       <span>💳</span>
       <b>Thanh toán an toàn</b>
       <small>Đa dạng phương thức</small>
     </a>
 
-    <a href="ho-tro-khieu-nai.html" style="text-decoration:none;color:inherit;text-align:center;">
+    <a href="ho-tro-khieu-nai.html"
+       style="text-decoration:none;color:inherit;text-align:center;">
       <span>🎧</span>
       <b>Hỗ trợ 24/7</b>
       <small>Luôn đồng hành</small>
@@ -374,14 +527,23 @@
 
   </div>
 </section>
-  <!-- ===== VIDEO GIỚI THIỆU VIETTRUCKS ===== -->
+
+
+<!-- ===== VIDEO GIỚI THIỆU VIETTRUCKS ===== -->
+
 <section class="vt-video-section">
+
   <div class="vt-video-wrap">
 
     <div class="vt-video-text">
-      <span class="vt-video-badge">🚚 VIETTRUCKS</span>
 
-      <h2>Kết nối hàng hóa - Kết nối nhà xe</h2>
+      <span class="vt-video-badge">
+        🚚 VIETTRUCKS
+      </span>
+
+      <h2>
+        Kết nối hàng hóa - Kết nối nhà xe
+      </h2>
 
       <p>
         Đăng hàng miễn phí, tìm xe nhanh chóng và kết nối
@@ -389,17 +551,23 @@
       </p>
 
       <div class="vt-video-actions">
-        <a href="dang-hang.html" class="vt-video-btn primary">
+
+        <a href="dang-hang.html"
+           class="vt-video-btn primary">
           📦 Đăng hàng miễn phí
         </a>
 
-        <a href="tim-xe.html" class="vt-video-btn secondary">
+        <a href="tim-xe.html"
+           class="vt-video-btn secondary">
           🚚 Tìm xe ngay
         </a>
+
       </div>
+
     </div>
 
     <div class="vt-video-box">
+
       <video
         id="viettrucksIntroVideo"
         controls
@@ -407,13 +575,20 @@
         playsinline
         preload="metadata"
       >
-        <source src="viettrucks-gioi-thieu.mp4" type="video/mp4">
+        <source
+          src="viettrucks-gioi-thieu.mp4"
+          type="video/mp4"
+        >
+
         Trình duyệt của bạn không hỗ trợ video.
       </video>
+
     </div>
 
   </div>
+
 </section>
+
 
 <style>
 /* ===== VIDEO GIỚI THIỆU VIETTRUCKS ===== */
@@ -502,7 +677,6 @@
   color:#0f172a;
 }
 
-/* Video nhỏ gọn */
 .vt-video-box{
   width:300px;
   flex:0 0 300px;
@@ -521,7 +695,6 @@
   background:#000;
 }
 
-/* ===== MOBILE ===== */
 @media(max-width:768px){
 
   .vt-video-section{
@@ -564,10 +737,8 @@
     width:100%;
     max-height:330px;
   }
-
 }
 
-/* Điện thoại nhỏ */
 @media(max-width:420px){
 
   .vt-video-box{
@@ -578,18 +749,172 @@
     padding:10px 12px;
     font-size:12px;
   }
-
 }
 </style>
+
 <!-- ===== HẾT VIDEO GIỚI THIỆU VIETTRUCKS ===== -->
-<section class="section" id="hang"><div class="container two-cols"><div><div class="section-head"><h2>Hàng hóa mới nhất</h2><a href="tim-hang.html">Xem tất cả →</a></div><div class="list-card" id="cargoList"></div></div><div id="xe"><div class="section-head"><h2>Xe trống mới nhất</h2><a href="tim-xe.html">Xem tất cả →</a></div><div class="list-card" id="truckList"></div></div></div></section>
-<section class="app-banner section-sm"><div class="container app-inner"><div class="phones">📱📱</div><div><h2>Tải ngay ứng dụng VietTruck</h2><p>Kết nối nhanh hơn · Quản lý đơn hàng dễ dàng hơn · Nhận thông báo theo thời gian thực</p><div class="store-buttons"><button> App Store</button><button>▶ Google Play</button></div></div><div class="app-features"><span>🔔 Nhận báo cước tức thì</span><span>📍 Theo dõi hành trình xe</span><span>💬 Chat trực tiếp với chủ hàng</span><span>🧾 Quản lý lịch sử đơn hàng</span></div></div></section>
-<section class="stats"><div class="container stats-grid"><div><b>200.000+</b><span>Chủ hàng tin tưởng</span></div><div><b>150.000+</b><span>Tài xế / nhà xe</span></div><div><b>500.000+</b><span>Chuyến hàng thành công</span></div><div><b>63</b><span>Tỉnh thành toàn quốc</span></div></div></section>
-<section class="section" id="dich-vu"><div class="container"><div class="section-head"><h2>Vì sao chọn VietTruck?</h2><a href="tin-tuc.html">Xem thêm →</a></div><div class="benefits"><article><span>💎</span><h3>Miễn phí đăng tin</h3><p>Đăng hàng, đăng xe và tiếp cận hàng trăm nghìn thành viên.</p></article><article><span>🛡️</span><h3>An toàn, minh bạch</h3><p>Xác thực tài khoản, đánh giá uy tín và lưu lịch sử giao dịch.</p></article><article><span>🤖</span><h3>Ghép hàng thông minh</h3><p>Gợi ý xe phù hợp theo tuyến đường, loại xe và nhu cầu vận chuyển.</p></article><article><span>💚</span><h3>Hỗ trợ 24/7</h3><p>Đội ngũ hỗ trợ luôn sẵn sàng đồng hành.</p></article></div></div></section>
+
+
+<section class="section" id="hang">
+
+  <div class="container two-cols">
+
+    <div>
+
+      <div class="section-head">
+        <h2>Hàng hóa mới nhất</h2>
+        <a href="tim-hang.html">Xem tất cả →</a>
+      </div>
+
+      <div
+        class="list-card"
+        id="cargoList">
+      </div>
+
+    </div>
+
+    <div id="xe">
+
+      <div class="section-head">
+        <h2>Xe trống mới nhất</h2>
+        <a href="tim-xe.html">Xem tất cả →</a>
+      </div>
+
+      <div
+        class="list-card"
+        id="truckList">
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="app-banner section-sm">
+
+  <div class="container app-inner">
+
+    <div class="phones">
+      📱📱
+    </div>
+
+    <div>
+
+      <h2>
+        Tải ngay ứng dụng VietTruck
+      </h2>
+
+      <p>
+        Kết nối nhanh hơn · Quản lý đơn hàng dễ dàng hơn ·
+        Nhận thông báo theo thời gian thực
+      </p>
+
+      <div class="store-buttons">
+        <button> App Store</button>
+        <button>▶ Google Play</button>
+      </div>
+
+    </div>
+
+    <div class="app-features">
+      <span>🔔 Nhận báo cước tức thì</span>
+      <span>📍 Theo dõi hành trình xe</span>
+      <span>💬 Chat trực tiếp với chủ hàng</span>
+      <span>🧾 Quản lý lịch sử đơn hàng</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="stats">
+
+  <div class="container stats-grid">
+
+    <div>
+      <b>200.000+</b>
+      <span>Chủ hàng tin tưởng</span>
+    </div>
+
+    <div>
+      <b>150.000+</b>
+      <span>Tài xế / nhà xe</span>
+    </div>
+
+    <div>
+      <b>500.000+</b>
+      <span>Chuyến hàng thành công</span>
+    </div>
+
+    <div>
+      <b>63</b>
+      <span>Tỉnh thành toàn quốc</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section" id="dich-vu">
+
+  <div class="container">
+
+    <div class="section-head">
+      <h2>Vì sao chọn VietTruck?</h2>
+      <a href="tin-tuc.html">Xem thêm →</a>
+    </div>
+
+    <div class="benefits">
+
+      <article>
+        <span>💎</span>
+        <h3>Miễn phí đăng tin</h3>
+        <p>
+          Đăng hàng, đăng xe và tiếp cận hàng trăm nghìn thành viên.
+        </p>
+      </article>
+
+      <article>
+        <span>🛡️</span>
+        <h3>An toàn, minh bạch</h3>
+        <p>
+          Xác thực tài khoản, đánh giá uy tín và lưu lịch sử giao dịch.
+        </p>
+      </article>
+
+      <article>
+        <span>🤖</span>
+        <h3>Ghép hàng thông minh</h3>
+        <p>
+          Gợi ý xe phù hợp theo tuyến đường, loại xe và nhu cầu vận chuyển.
+        </p>
+      </article>
+
+      <article>
+        <span>💚</span>
+        <h3>Hỗ trợ 24/7</h3>
+        <p>
+          Đội ngũ hỗ trợ luôn sẵn sàng đồng hành.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
 <section class="section alt" id="tin-tuc">
+
   <div class="container news-grid">
 
     <div>
+
       <div class="section-head">
         <h2>Tin tức & Kiến thức</h2>
         <a href="tin-tuc.html">Xem thêm →</a>
@@ -597,34 +922,46 @@
 
       <div class="news-cards">
 
-        <a href="tin-tuc.html" style="text-decoration:none;color:inherit;">
+        <a href="tin-tuc.html"
+           style="text-decoration:none;color:inherit;">
+
           <article>
             <div class="news-img n1"></div>
             <h3>Giá cước vận tải hàng hóa mới nhất</h3>
             <small>05/09/2026</small>
           </article>
+
         </a>
 
-        <a href="tin-tuc.html" style="text-decoration:none;color:inherit;">
+        <a href="tin-tuc.html"
+           style="text-decoration:none;color:inherit;">
+
           <article>
             <div class="news-img n2"></div>
             <h3>Kinh nghiệm tìm xe tải uy tín cho doanh nghiệp</h3>
             <small>04/09/2026</small>
           </article>
+
         </a>
 
-        <a href="tin-tuc.html" style="text-decoration:none;color:inherit;">
+        <a href="tin-tuc.html"
+           style="text-decoration:none;color:inherit;">
+
           <article>
             <div class="news-img n3"></div>
             <h3>Xu hướng chuyển đổi số ngành logistics Việt Nam</h3>
             <small>03/09/2026</small>
           </article>
+
         </a>
 
       </div>
+
     </div>
 
+
     <div>
+
       <div class="section-head">
         <h2>Đối tác & Khách hàng</h2>
       </div>
@@ -639,182 +976,400 @@
         <span>HÒA PHÁT</span>
         <span>MASAN</span>
       </div>
+
     </div>
 
   </div>
+
 </section>
-<section class="cta" id="dang-hang"><div class="container cta-inner"><div><h2>Bạn có hàng cần vận chuyển?</h2><p>Đăng hàng trong 1 phút và nhận báo giá từ tài xế, nhà xe phù hợp.</p></div><a class="btn btn-light" href="dang-hang.html">Đăng hàng ngay</a></div></section></main>
+
+
+<section class="cta" id="dang-hang">
+
+  <div class="container cta-inner">
+
+    <div>
+      <h2>Bạn có hàng cần vận chuyển?</h2>
+
+      <p>
+        Đăng hàng trong 1 phút và nhận báo giá từ tài xế,
+        nhà xe phù hợp.
+      </p>
+    </div>
+
+    <a
+      class="btn btn-light"
+      href="dang-hang.html">
+      Đăng hàng ngay
+    </a>
+
+  </div>
+
+</section>
+
+</main>
+
+
 <footer id="lien-he">
+
   <div class="container footer-grid">
 
     <div class="footer-brand">
+
       <div class="brand">
-        <div class="brand-mark">🚚</div>
+
+        <div class="brand-mark">
+          🚚
+        </div>
+
         <div>
           <strong>VietTruck</strong>
           <span>Kết nối hàng hóa Việt Nam</span>
         </div>
+
       </div>
 
       <p>
         Nền tảng kết nối vận tải hàng hóa, giúp chủ hàng và nhà xe
         giao dịch nhanh chóng, minh bạch và hiệu quả.
       </p>
+
     </div>
 
-    <div>
-  <h4>Về VietTruck</h4>
-  <a href="gioi-thieu.html">Giới thiệu</a>
-  <a href="dieu-khoan-su-dung.html">Điều khoản sử dụng</a>
-  <a href="chinh-sach-bao-mat.html">Chính sách bảo mật</a>
-  <a href="lien-he.html">Liên hệ</a>
-</div>
 
     <div>
+
+      <h4>Về VietTruck</h4>
+
+      <a href="gioi-thieu.html">
+        Giới thiệu
+      </a>
+
+      <a href="dieu-khoan-su-dung.html">
+        Điều khoản sử dụng
+      </a>
+
+      <a href="chinh-sach-bao-mat.html">
+        Chính sách bảo mật
+      </a>
+
+      <a href="lien-he.html">
+        Liên hệ
+      </a>
+
+    </div>
+
+
+    <div>
+
       <h4>Dịch vụ</h4>
-      <a href="tim-hang.html">Tìm hàng</a>
-      <a href="tim-xe.html">Tìm xe</a>
-      <a href="dang-xe.html">Đăng xe</a>
-      <a href="dang-hang.html">Đăng hàng</a>
-      <a href="hang-chieu-ve.html">Hàng chiều về</a>
-      <a href="trung-tam-bao-gia.html">Đấu giá cước</a>
+
+      <a href="tim-hang.html">
+        Tìm hàng
+      </a>
+
+      <a href="tim-xe.html">
+        Tìm xe
+      </a>
+
+      <a href="dang-xe.html">
+        Đăng xe
+      </a>
+
+      <a href="dang-hang.html">
+        Đăng hàng
+      </a>
+
+      <a href="hang-chieu-ve.html">
+        Hàng chiều về
+      </a>
+
+      <a href="trung-tam-bao-gia.html">
+        Đấu giá cước
+      </a>
+
     </div>
 
+
     <div>
-  <h4>Hỗ trợ</h4>
-  <a href="huong-dan-su-dung.html">Hướng dẫn sử dụng</a>
-  <a href="cau-hoi-thuong-gap.html">Câu hỏi thường gặp</a>
-  <a href="tin-tuc.html">Tin tức</a>
-  <a href="lien-he.html">Liên hệ</a>
-</div>
 
-    <div class="hotline" style="font-size:14px; line-height:1.6; color:#617069;">
+      <h4>Hỗ trợ</h4>
 
-  <div style="font-size:14px; font-weight:700; color:#111827; line-height:1.4; margin-bottom:10px;">
-  CÔNG TY TNHH ĐẦU TƯ THƯƠNG MẠI<br>
-  DỊCH VỤ TRƯỜNG GIANG
-</div>
+      <a href="huong-dan-su-dung.html">
+        Hướng dẫn sử dụng
+      </a>
 
-  <div style="font-size:12px; font-weight:400; color:#617069;">
-    MST: 2301210607
+      <a href="cau-hoi-thuong-gap.html">
+        Câu hỏi thường gặp
+      </a>
+
+      <a href="tin-tuc.html">
+        Tin tức
+      </a>
+
+      <a href="lien-he.html">
+        Liên hệ
+      </a>
+
+    </div>
+
+
+    <div
+      class="hotline"
+      style="
+        font-size:14px;
+        line-height:1.6;
+        color:#617069;
+      "
+    >
+
+      <div
+        style="
+          font-size:14px;
+          font-weight:700;
+          color:#111827;
+          line-height:1.4;
+          margin-bottom:10px;
+        "
+      >
+        CÔNG TY TNHH ĐẦU TƯ THƯƠNG MẠI<br>
+        DỊCH VỤ TRƯỜNG GIANG
+      </div>
+
+      <div
+        style="
+          font-size:12px;
+          font-weight:400;
+          color:#617069;
+        "
+      >
+        MST: 2301210607
+      </div>
+
+      <div
+        style="
+          font-size:12px;
+          font-weight:400;
+          color:#617069;
+          margin-bottom:8px;
+        "
+      >
+        Hotline: 0388 134 999
+      </div>
+
+      <div
+        style="
+          font-size:12px;
+          font-weight:400;
+          color:#617069;
+          margin-bottom:8px;
+        "
+      >
+        Văn phòng miền Bắc:<br>
+        Tầng 5, 776 Cầu Ngà, phường Nam Sơn,<br>
+        thành phố Bắc Ninh
+      </div>
+
+      <div
+        style="
+          font-size:12px;
+          font-weight:400;
+          color:#617069;
+        "
+      >
+        Văn phòng miền Nam:<br>
+        Số 28 đường 05, Cư Xá Bình Phú,<br>
+        phường Bình Phú, thành phố Hồ Chí Minh
+      </div>
+
+    </div>
+
   </div>
 
-  <div style="font-size:12px; font-weight:400; color:#617069; margin-bottom:8px;">
-    Hotline: 0388 134 999
-  </div>
-
-  <div style="font-size:12px; font-weight:400; color:#617069; margin-bottom:8px;">
-    Văn phòng miền Bắc:<br>
-    Tầng 5, 776 Cầu Ngà, phường Nam Sơn,<br>
-    thành phố Bắc Ninh
-  </div>
-
-  <div style="font-size:12px; font-weight:400; color:#617069;">
-    Văn phòng miền Nam:<br>
-    Số 28 đường 05, Cư Xá Bình Phú,<br>
-    phường Bình Phú, thành phố Hồ Chí Minh
-  </div>
-
-</div>
-
-  </div>
 
   <div class="container copyright">
+
     © 2026 VietTruck. All rights reserved.
-    <span>Kết nối hàng hóa · Kiến tạo tương lai</span>
+
+    <span>
+      Kết nối hàng hóa · Kiến tạo tương lai
+    </span>
+
   </div>
+
 </footer>
+
+
 <script src="assets/js/app.js?v=20260930-1"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <script src="supabase-config.js?v=20260930-1"></script>
+
 <script src="auth.js?v=20260930-1"></script>
-  <script>
-document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    const { data, error } =
-      await window.supabaseClient.auth.getSession();
 
-    if (error) {
-      console.error("Lỗi kiểm tra phiên đăng nhập:", error);
-      return;
-    }
-
-    const session = data?.session;
-
-    if (!session) {
-      console.log("Trang chủ: chưa đăng nhập");
-      return;
-    }
-
-    console.log("Trang chủ: đang đăng nhập", session.user.id);
-
-    /* Đổi nút Đăng nhập thành Tài khoản */
-    const loginLink =
-      document.querySelector('a[href="dang-nhap.html"]');
-
-    if (loginLink) {
-      loginLink.href = "tai-khoan.html";
-      loginLink.textContent = "Tài khoản";
-    }
-
-    /* Đổi nút Đăng ký thành Đăng xuất */
-    const signupLink =
-      document.querySelector('a[href="dang-ky.html"]');
-
-    if (signupLink) {
-      signupLink.href = "#";
-      signupLink.textContent = "Đăng xuất";
-
-      signupLink.addEventListener("click", async (e) => {
-        e.preventDefault();
-
-        await window.supabaseClient.auth.signOut();
-        window.location.replace("dang-nhap.html");
-      });
-    }
-
-  } catch (err) {
-    console.error("Lỗi trạng thái đăng nhập trang chủ:", err);
-  }
-});
-</script>
 
 <script>
-const supabaseClient = window.supabaseClient;
+document.addEventListener(
+  "DOMContentLoaded",
+  async () => {
+
+    try {
+
+      const { data, error } =
+        await window.supabaseClient.auth.getSession();
+
+      if (error) {
+
+        console.error(
+          "Lỗi kiểm tra phiên đăng nhập:",
+          error
+        );
+
+        return;
+      }
+
+      const session =
+        data?.session;
+
+      if (!session) {
+
+        console.log(
+          "Trang chủ: chưa đăng nhập"
+        );
+
+        return;
+      }
+
+      console.log(
+        "Trang chủ: đang đăng nhập",
+        session.user.id
+      );
+
+
+      /* Đổi nút Đăng nhập thành Tài khoản */
+
+      const loginLink =
+        document.querySelector(
+          'a[href="dang-nhap.html"]'
+        );
+
+      if (loginLink) {
+
+        loginLink.href =
+          "tai-khoan.html";
+
+        loginLink.textContent =
+          "Tài khoản";
+      }
+
+
+      /* Đổi nút Đăng ký thành Đăng xuất */
+
+      const signupLink =
+        document.querySelector(
+          'a[href="dang-ky.html"]'
+        );
+
+      if (signupLink) {
+
+        signupLink.href = "#";
+
+        signupLink.textContent =
+          "Đăng xuất";
+
+        signupLink.addEventListener(
+          "click",
+          async (e) => {
+
+            e.preventDefault();
+
+            await window
+              .supabaseClient
+              .auth
+              .signOut();
+
+            window.location.replace(
+              "dang-nhap.html"
+            );
+          }
+        );
+      }
+
+    } catch (err) {
+
+      console.error(
+        "Lỗi trạng thái đăng nhập trang chủ:",
+        err
+      );
+    }
+  }
+);
+</script>
+
+
+<script>
+const supabaseClient =
+  window.supabaseClient;
+
 
 async function loadActiveOrdersCount() {
-  const { count, error } = await supabaseClient
-    .from("orders")
-    .select("*", { count: "exact", head: true })
-    .eq("status", "pending");
+
+  const { count, error } =
+    await supabaseClient
+      .from("orders")
+      .select(
+        "*",
+        {
+          count:"exact",
+          head:true
+        }
+      )
+      .eq(
+        "status",
+        "pending"
+      );
+
 
   if (error) {
-    console.error("Không lấy được số đơn:", error);
+
+    console.error(
+      "Không lấy được số đơn:",
+      error
+    );
+
     return;
   }
 
-  const activeOrdersEl = document.getElementById("activeOrders");
 
-if (activeOrdersEl) {
-  activeOrdersEl.textContent = count ?? 0;
+  const activeOrdersEl =
+    document.getElementById(
+      "activeOrders"
+    );
+
+
+  if (activeOrdersEl) {
+
+    activeOrdersEl.textContent =
+      count ?? 0;
+  }
 }
-}
+
 
 loadActiveOrdersCount();
 </script>
 
+
 <!-- ===== VIETTRUCKS AI + HOTLINE + ZALO ===== -->
 
 <style>
+
 #vtSupport{
   position:fixed;
   right:16px;
   bottom:20px;
   z-index:99999;
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:"Be Vietnam Pro",Arial,Helvetica,sans-serif;
 }
 
 .vt-support-buttons{
@@ -975,6 +1530,7 @@ loadActiveOrdersCount();
   opacity:.5;
 }
 
+
 @media(max-width:600px){
 
   #vtSupport{
@@ -1004,6 +1560,7 @@ loadActiveOrdersCount();
 }
 </style>
 
+
 <div id="vtSupport">
 
   <div id="vtChatBox">
@@ -1011,6 +1568,7 @@ loadActiveOrdersCount();
     <div class="vt-chat-header">
 
       <div>
+
         <div class="vt-chat-title">
           🤖 Trợ lý VietTrucks
         </div>
@@ -1018,16 +1576,19 @@ loadActiveOrdersCount();
         <div class="vt-chat-status">
           Hỗ trợ tìm xe • tìm hàng • sử dụng VietTrucks
         </div>
+
       </div>
 
       <button
         class="vt-chat-close"
         type="button"
-        onclick="vtToggleChat()">
+        onclick="vtToggleChat()"
+      >
         ×
       </button>
 
     </div>
+
 
     <div id="vtChatMessages">
 
@@ -1039,31 +1600,39 @@ Tôi có thể hỗ trợ anh/chị tìm xe, tìm hàng, đăng hàng hoặc hư
 
     </div>
 
+
     <div class="vt-quick">
 
-      <button type="button"
-        onclick="vtQuick('Tôi cần tìm xe chở hàng')">
+      <button
+        type="button"
+        onclick="vtQuick('Tôi cần tìm xe chở hàng')"
+      >
         🚚 Tìm xe
       </button>
 
-      <button type="button"
-        onclick="vtQuick('Tôi muốn tìm hàng để chở')">
+      <button
+        type="button"
+        onclick="vtQuick('Tôi muốn tìm hàng để chở')"
+      >
         📦 Tìm hàng
       </button>
 
-      <button type="button"
-        onclick="window.location.href='dang-hang.html'">
+      <button
+        type="button"
+        onclick="window.location.href='dang-hang.html'"
+      >
         ➕ Đăng hàng
       </button>
 
-      <button type="button"
-        onclick="window.location.href='dang-xe.html'">
+      <button
+        type="button"
+        onclick="window.location.href='dang-xe.html'"
+      >
         🚛 Đăng xe
       </button>
 
     </div>
-
-    <div class="vt-chat-input">
+        <div class="vt-chat-input">
 
       <input
         id="vtChatInput"
@@ -1241,31 +1810,49 @@ async function vtSendMessage(){
     loading.remove();
 
     if (error) {
-    console.error("VIETTRUCKS AI FUNCTION ERROR:", error);
+      console.error(
+        "VIETTRUCKS AI FUNCTION ERROR:",
+        error
+      );
 
-    let errorText = error?.message || "Không xác định được lỗi";
+      let errorText =
+        error?.message ||
+        "Không xác định được lỗi";
 
-    try {
+      try {
+
         if (error?.context) {
-            const errorBody = await error.context.json();
-            console.error("VIETTRUCKS AI ERROR BODY:", errorBody);
 
-            errorText =
-                errorBody?.error ||
-                errorBody?.message ||
-                errorText;
+          const errorBody =
+            await error.context.json();
+
+          console.error(
+            "VIETTRUCKS AI ERROR BODY:",
+            errorBody
+          );
+
+          errorText =
+            errorBody?.error ||
+            errorBody?.message ||
+            errorText;
         }
-    } catch (e) {
-        console.error("Không đọc được error body:", e);
-    }
 
-    vtAddMessage(
+      } catch (e) {
+
+        console.error(
+          "Không đọc được error body:",
+          e
+        );
+      }
+
+      vtAddMessage(
         "Lỗi kết nối AI: " + errorText,
         "ai"
-    );
+      );
 
-    return;
-}
+      return;
+    }
+
 
     if(data?.error){
 
@@ -1277,11 +1864,13 @@ async function vtSendMessage(){
       return;
     }
 
+
     vtAddMessage(
       data?.answer ||
       "Tôi chưa xử lý được yêu cầu này.",
       "ai"
     );
+
 
   }catch(error){
 
@@ -1341,7 +1930,8 @@ document.addEventListener(
 <!-- ===== END VIETTRUCKS AI + HOTLINE + ZALO ===== -->
 
 <script src="mobile.js?v=20260930-1"></script>
-  <script>
+
+<script>
 /* =========================================================
    VIETTRUCKS HOME MARKET - PRODUCTION
    HÀNG HÓA MỚI NHẤT + XE TRỐNG MỚI NHẤT
@@ -1353,19 +1943,26 @@ document.addEventListener(
    - KHÔNG tác động vtLiveMarket / vtLiveTrack
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener(
+  "DOMContentLoaded",
+  async function () {
 
   /* =======================================================
      1. KẾT NỐI
      ======================================================= */
 
-  const client = window.supabaseClient;
+  const client =
+    window.supabaseClient;
 
   const cargoList =
-    document.getElementById("cargoList");
+    document.getElementById(
+      "cargoList"
+    );
 
   const truckList =
-    document.getElementById("truckList");
+    document.getElementById(
+      "truckList"
+    );
 
 
   if (!client) {
@@ -1375,6 +1972,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     );
 
     if (cargoList) {
+
       cargoList.innerHTML = `
         <div class="vt-home-empty">
           Chưa kết nối được dữ liệu hàng hóa.
@@ -1383,6 +1981,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     if (truckList) {
+
       truckList.innerHTML = `
         <div class="vt-home-empty">
           Chưa kết nối được dữ liệu xe trống.
@@ -1395,6 +1994,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
   if (!cargoList) {
+
     console.error(
       "VietTrucks Home Market: không tìm thấy #cargoList"
     );
@@ -1402,6 +2002,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
   if (!truckList) {
+
     console.error(
       "VietTrucks Home Market: không tìm thấy #truckList"
     );
@@ -1455,7 +2056,9 @@ document.addEventListener("DOMContentLoaded", async function () {
       return String(value);
     }
 
-    return number.toLocaleString("vi-VN");
+    return number.toLocaleString(
+      "vi-VN"
+    );
   }
 
 
@@ -1466,7 +2069,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     const text =
-      String(value).substring(0, 10);
+      String(value).substring(
+        0,
+        10
+      );
 
     const parts =
       text.split("-");
@@ -1500,7 +2106,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     return (
-      plate.slice(0, 2) +
+      plate.slice(0,2) +
       "****"
     );
   }
@@ -1514,7 +2120,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     #vtLiveTrack
   */
 
-  function forceContainerVisible(element) {
+  function forceContainerVisible(
+    element
+  ) {
 
     if (!element) {
       return;
@@ -1570,14 +2178,18 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
 
-  function forceCardsVisible(element) {
+  function forceCardsVisible(
+    element
+  ) {
 
     if (!element) {
       return;
     }
 
     element
-      .querySelectorAll(".vt-home-card")
+      .querySelectorAll(
+        ".vt-home-card"
+      )
       .forEach(card => {
 
         card.style.setProperty(
@@ -1608,8 +2220,13 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
 
-  forceContainerVisible(cargoList);
-  forceContainerVisible(truckList);
+  forceContainerVisible(
+    cargoList
+  );
+
+  forceContainerVisible(
+    truckList
+  );
 
 
   /* =======================================================
@@ -1648,7 +2265,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         .order(
           "created_at",
           {
-            ascending: false
+            ascending:false
           }
         )
         .limit(6);
@@ -1674,7 +2291,9 @@ document.addEventListener("DOMContentLoaded", async function () {
           </div>
         `;
 
-        forceContainerVisible(cargoList);
+        forceContainerVisible(
+          cargoList
+        );
 
         return;
       }
@@ -1694,7 +2313,9 @@ document.addEventListener("DOMContentLoaded", async function () {
           </div>
         `;
 
-        forceContainerVisible(cargoList);
+        forceContainerVisible(
+          cargoList
+        );
 
         return;
       }
@@ -1852,8 +2473,13 @@ document.addEventListener("DOMContentLoaded", async function () {
           .join("");
 
 
-      forceContainerVisible(cargoList);
-      forceCardsVisible(cargoList);
+      forceContainerVisible(
+        cargoList
+      );
+
+      forceCardsVisible(
+        cargoList
+      );
 
 
       console.log(
@@ -1876,19 +2502,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         </div>
       `;
 
-      forceContainerVisible(cargoList);
+      forceContainerVisible(
+        cargoList
+      );
     }
   }
 
 
   /* =======================================================
      4. XE TRỐNG MỚI NHẤT
-
-     Dùng đúng cách đọc linh hoạt hiện tại:
-     current_location / location / pickup_location / province
-     destination / delivery_location / route_to
-     vehicle_type / type / truck_type
-     plate_number / license_plate
      ======================================================= */
 
   async function loadLatestTrucks() {
@@ -1900,19 +2522,64 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     try {
 
-      const {
-        data,
-        error
-      } = await client
-        .from("vehicles")
-        .select("*")
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
-        )
-        .limit(6);
+      let data = null;
+      let error = null;
+
+
+      /*
+        Lần 1:
+        ưu tiên lấy xe mới nhất theo created_at.
+      */
+
+      {
+        const firstTry =
+          await client
+            .from("vehicles")
+            .select("*")
+            .order(
+              "created_at",
+              {
+                ascending:false
+              }
+            )
+            .limit(6);
+
+        data =
+          firstTry.data;
+
+        error =
+          firstTry.error;
+      }
+
+
+      /*
+        Nếu bảng vehicles không có created_at
+        hoặc cột này gây lỗi,
+        thử lại bằng truy vấn đơn giản.
+
+        Như vậy dữ liệu xe không bị mất chỉ vì
+        một cột sắp xếp không tồn tại.
+      */
+
+      if (error) {
+
+        console.warn(
+          "VietTrucks HOME vehicles: thử lại không dùng created_at:",
+          error
+        );
+
+        const secondTry =
+          await client
+            .from("vehicles")
+            .select("*")
+            .limit(6);
+
+        data =
+          secondTry.data;
+
+        error =
+          secondTry.error;
+      }
 
 
       console.log(
@@ -1935,7 +2602,9 @@ document.addEventListener("DOMContentLoaded", async function () {
           </div>
         `;
 
-        forceContainerVisible(truckList);
+        forceContainerVisible(
+          truckList
+        );
 
         return;
       }
@@ -1955,7 +2624,9 @@ document.addEventListener("DOMContentLoaded", async function () {
           </div>
         `;
 
-        forceContainerVisible(truckList);
+        forceContainerVisible(
+          truckList
+        );
 
         return;
       }
@@ -1964,6 +2635,13 @@ document.addEventListener("DOMContentLoaded", async function () {
       truckList.innerHTML =
         vehicles
           .map(vehicle => {
+
+
+            /*
+              Đọc linh hoạt tên cột vì dữ liệu
+              vehicles hiện tại có thể được tạo
+              từ nhiều màn hình đăng xe khác nhau.
+            */
 
             const from =
               short(
@@ -2000,6 +2678,7 @@ document.addEventListener("DOMContentLoaded", async function () {
               maskPlate(
                 vehicle.plate_number ||
                 vehicle.license_plate ||
+                vehicle.plate ||
                 ""
               );
 
@@ -2062,11 +2741,11 @@ document.addEventListener("DOMContentLoaded", async function () {
                   event.preventDefault();
 
                   if (
-                    typeof window.openTruckDetail
+                    typeof window.openVehicleDetail
                     === 'function'
                   ) {
 
-                    window.openTruckDetail(
+                    window.openVehicleDetail(
                       '${esc(vehicle.id)}'
                     );
 
@@ -2111,8 +2790,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         <span class="vt-home-arrow">
                           →
                         </span>
-
-                        <span class="vt-home-route-to">
+                                                <span class="vt-home-route-to">
                           ${esc(to)}
                         </span>
                       `
@@ -2143,8 +2821,13 @@ document.addEventListener("DOMContentLoaded", async function () {
           .join("");
 
 
-      forceContainerVisible(truckList);
-      forceCardsVisible(truckList);
+      forceContainerVisible(
+        truckList
+      );
+
+      forceCardsVisible(
+        truckList
+      );
 
 
       console.log(
@@ -2167,7 +2850,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         </div>
       `;
 
-      forceContainerVisible(truckList);
+      forceContainerVisible(
+        truckList
+      );
     }
   }
 
@@ -2183,24 +2868,33 @@ document.addEventListener("DOMContentLoaded", async function () {
       loadLatestTrucks()
     ]);
 
+
     /*
       Sau khi cả hai tải xong,
-      ép lại đúng 2 vùng này hiển thị.
+      ép lại đúng hai vùng dữ liệu hiển thị.
     */
 
-    forceContainerVisible(cargoList);
-    forceContainerVisible(truckList);
+    forceContainerVisible(
+      cargoList
+    );
 
-    forceCardsVisible(cargoList);
-    forceCardsVisible(truckList);
+    forceContainerVisible(
+      truckList
+    );
+
+    forceCardsVisible(
+      cargoList
+    );
+
+    forceCardsVisible(
+      truckList
+    );
   }
 
 
   /*
-    Cho phép các phần khác của trang
-    gọi refresh nếu sau này cần.
-
-    Không ghi đè Live Market.
+    Cho phép phần khác của website
+    chủ động refresh dữ liệu khi cần.
   */
 
   window.vtRefreshHomeMarket =
@@ -2225,9 +2919,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     .on(
       "postgres_changes",
       {
-        event: "*",
-        schema: "public",
-        table: "orders"
+        event:"*",
+        schema:"public",
+        table:"orders"
       },
       function () {
 
@@ -2238,13 +2932,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         loadLatestCargo();
       }
     )
-    .subscribe(function (status) {
+    .subscribe(
+      function (status) {
 
-      console.log(
-        "VietTrucks HOME orders realtime:",
-        status
-      );
-    });
+        console.log(
+          "VietTrucks HOME orders realtime:",
+          status
+        );
+      }
+    );
 
 
   /* =======================================================
@@ -2258,9 +2954,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     .on(
       "postgres_changes",
       {
-        event: "*",
-        schema: "public",
-        table: "vehicles"
+        event:"*",
+        schema:"public",
+        table:"vehicles"
       },
       function () {
 
@@ -2271,17 +2967,19 @@ document.addEventListener("DOMContentLoaded", async function () {
         loadLatestTrucks();
       }
     )
-    .subscribe(function (status) {
+    .subscribe(
+      function (status) {
 
-      console.log(
-        "VietTrucks HOME vehicles realtime:",
-        status
-      );
-    });
+        console.log(
+          "VietTrucks HOME vehicles realtime:",
+          status
+        );
+      }
+    );
 
 
   /* =======================================================
-     9. DỰ PHÒNG ĐỒNG BỘ 60 GIÂY
+     9. ĐỒNG BỘ DỰ PHÒNG 60 GIÂY
      ======================================================= */
 
   window.setInterval(
@@ -2301,7 +2999,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
   /* =======================================================
-     10. MOBILE QUAY LẠI TAB/APP
+     10. MOBILE QUAY LẠI TAB / APP
      ======================================================= */
 
   document.addEventListener(
@@ -2309,11 +3007,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     function () {
 
       if (!document.hidden) {
-
-        /*
-          Điện thoại chuyển sang Zalo/Facebook rồi quay lại:
-          tải lại dữ liệu thật ngay.
-        */
 
         loadHomeMarket();
       }
@@ -2325,16 +3018,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     "pageshow",
     function (event) {
 
-      /*
-        Safari/Chrome mobile có thể phục hồi trang
-        từ back-forward cache.
-      */
-
       if (event.persisted) {
 
         loadHomeMarket();
       }
-
     }
   );
 
@@ -2345,24 +3032,48 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 });
 </script>
-  <script>
+
+
+<script>
 /* =========================================================
-   KHÔI PHỤC DÒNG DỮ LIỆU VẬN TẢI VIETTRUCK
-   Chỉ đọc dữ liệu thật - không sửa/xóa dữ liệu Supabase
+   DÒNG DỮ LIỆU VẬN TẢI VIETTRUCK
+   Chỉ đọc dữ liệu thật từ Supabase
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener(
+  "DOMContentLoaded",
+  async function () {
 
-  const client = window.supabaseClient;
-  const market = document.getElementById("vtLiveMarket");
-  const track = document.getElementById("vtLiveTrack");
+  const client =
+    window.supabaseClient;
 
-  if (!client || !market || !track) {
-    console.warn("VietTruck Live Market: thiếu Supabase hoặc vùng hiển thị.");
+  const market =
+    document.getElementById(
+      "vtLiveMarket"
+    );
+
+  const track =
+    document.getElementById(
+      "vtLiveTrack"
+    );
+
+
+  if (
+    !client ||
+    !market ||
+    !track
+  ) {
+
+    console.warn(
+      "VietTruck Live Market: thiếu Supabase hoặc vùng hiển thị."
+    );
+
     return;
   }
 
+
   function esc(value) {
+
     return String(value ?? "")
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
@@ -2371,84 +3082,155 @@ document.addEventListener("DOMContentLoaded", async function () {
       .replaceAll("'", "&#039;");
   }
 
-  function short(value, max = 30) {
-    const text = String(value ?? "").trim();
 
-    if (!text) return "";
+  function short(
+    value,
+    max = 30
+  ) {
+
+    const text =
+      String(value ?? "")
+        .trim();
+
+    if (!text) {
+      return "";
+    }
 
     return text.length > max
-      ? text.slice(0, max).trim() + "..."
+      ? text.slice(
+          0,
+          max
+        ).trim() + "..."
       : text;
   }
 
-  function maskPlate(value) {
-    const plate = String(value ?? "").trim();
 
-    if (!plate) return "";
+  function maskPlate(value) {
+
+    const plate =
+      String(value ?? "")
+        .trim();
+
+    if (!plate) {
+      return "";
+    }
 
     return plate.length >= 2
-      ? plate.slice(0, 2) + "****"
+      ? plate.slice(0,2) + "****"
       : "****";
   }
+
 
   async function loadLiveTransport() {
 
     try {
 
+
       /* ==========================
          LẤY HÀNG ĐANG TÌM XE
          ========================== */
 
-      const ordersPromise = client
-        .from("orders")
-        .select(`
-          id,
-          pickup_location,
-          delivery_location,
-          cargo_type,
-          weight,
-          vehicle_type,
-          pickup_date,
-          status,
-          created_at
-        `)
-        .in("status", ["pending", "open"])
-        .order("created_at", {
-          ascending: false
-        })
-        .limit(10);
+      const ordersPromise =
+        client
+          .from("orders")
+          .select(`
+            id,
+            pickup_location,
+            delivery_location,
+            cargo_type,
+            weight,
+            vehicle_type,
+            pickup_date,
+            status,
+            created_at
+          `)
+          .in(
+            "status",
+            [
+              "pending",
+              "open"
+            ]
+          )
+          .order(
+            "created_at",
+            {
+              ascending:false
+            }
+          )
+          .limit(10);
 
 
       /* ==========================
-         LẤY XE
+         LẤY XE TRỐNG
          ========================== */
 
-      const vehiclesPromise = client
-        .from("vehicles")
-        .select("*")
-        .order("created_at", {
-          ascending: false
-        })
-        .limit(10);
+      const vehiclesPromise =
+        (async () => {
+
+          /*
+            Thử lấy theo created_at trước.
+          */
+
+          const firstTry =
+            await client
+              .from("vehicles")
+              .select("*")
+              .order(
+                "created_at",
+                {
+                  ascending:false
+                }
+              )
+              .limit(10);
+
+
+          if (!firstTry.error) {
+
+            return firstTry;
+          }
+
+
+          /*
+            Nếu cấu trúc vehicles không có
+            created_at hoặc không đọc được cột,
+            thử lại truy vấn đơn giản.
+          */
+
+          console.warn(
+            "Live Market vehicles: thử lại không dùng created_at:",
+            firstTry.error
+          );
+
+
+          return await client
+            .from("vehicles")
+            .select("*")
+            .limit(10);
+
+        })();
 
 
       const [
         ordersResult,
         vehiclesResult
-      ] = await Promise.all([
-        ordersPromise,
-        vehiclesPromise
-      ]);
+      ] =
+        await Promise.all([
+          ordersPromise,
+          vehiclesPromise
+        ]);
 
 
       if (ordersResult.error) {
+
         console.error(
           "Live Market - lỗi orders:",
           ordersResult.error
         );
       }
 
+
       if (vehiclesResult.error) {
+
         console.error(
           "Live Market - lỗi vehicles:",
           vehiclesResult.error
@@ -2459,8 +3241,10 @@ document.addEventListener("DOMContentLoaded", async function () {
       const orders =
         ordersResult.data || [];
 
+
       const vehicles =
         vehiclesResult.data || [];
+
 
       const items = [];
 
@@ -2469,52 +3253,96 @@ document.addEventListener("DOMContentLoaded", async function () {
          TẠO DÒNG HÀNG
          ========================== */
 
-      orders.forEach(order => {
+      orders.forEach(
+        order => {
 
-        const from = short(
-          order.pickup_location,
-          28
-        );
-
-        const to = short(
-          order.delivery_location,
-          28
-        );
-
-        if (!from && !to) return;
+        const from =
+          short(
+            order.pickup_location,
+            28
+          );
 
 
-        const cargo = short(
-          order.cargo_type,
-          22
-        );
+        const to =
+          short(
+            order.delivery_location,
+            28
+          );
 
-        const vehicleType = short(
-          order.vehicle_type,
-          22
-        );
+
+        if (
+          !from &&
+          !to
+        ) {
+          return;
+        }
+
+
+        const cargo =
+          short(
+            order.cargo_type,
+            22
+          );
+
+
+        const vehicleType =
+          short(
+            order.vehicle_type,
+            22
+          );
 
 
         let weight = "";
+
 
         if (
           order.weight !== null &&
           order.weight !== undefined &&
           order.weight !== ""
         ) {
-          const number = Number(order.weight);
 
-          weight = Number.isNaN(number)
-            ? String(order.weight)
-            : number.toLocaleString("vi-VN") + " tấn";
+          const number =
+            Number(
+              order.weight
+            );
+
+
+          weight =
+            Number.isNaN(number)
+              ? String(
+                  order.weight
+                )
+              : number.toLocaleString(
+                  "vi-VN"
+                ) + " tấn";
         }
 
 
         const details = [];
 
-        if (cargo) details.push(esc(cargo));
-        if (weight) details.push(esc(weight));
-        if (vehicleType) details.push(esc(vehicleType));
+
+        if (cargo) {
+
+          details.push(
+            esc(cargo)
+          );
+        }
+
+
+        if (weight) {
+
+          details.push(
+            esc(weight)
+          );
+        }
+
+
+        if (vehicleType) {
+
+          details.push(
+            esc(vehicleType)
+          );
+        }
 
 
         items.push(`
@@ -2525,16 +3353,27 @@ document.addEventListener("DOMContentLoaded", async function () {
             </span>
 
             <strong>
-              ${esc(from || "Chưa xác định")}
+              ${esc(
+                from ||
+                "Chưa xác định"
+              )}
               →
-              ${esc(to || "Chưa xác định")}
+              ${esc(
+                to ||
+                "Chưa xác định"
+              )}
             </strong>
 
             ${
               details.length
                 ? `
-                  <span class="vt-live-separator">•</span>
-                  <span>${details.join(" • ")}</span>
+                  <span class="vt-live-separator">
+                    •
+                  </span>
+
+                  <span>
+                    ${details.join(" • ")}
+                  </span>
                 `
                 : ""
             }
@@ -2549,7 +3388,9 @@ document.addEventListener("DOMContentLoaded", async function () {
          TẠO DÒNG XE
          ========================== */
 
-      vehicles.forEach(vehicle => {
+      vehicles.forEach(
+        vehicle => {
+
 
         const from =
           vehicle.current_location ||
@@ -2580,20 +3421,47 @@ document.addEventListener("DOMContentLoaded", async function () {
           "";
 
 
-        if (!from && !to && !type) return;
+        /*
+          Không bỏ xe chỉ vì thiếu một vài trường.
+          Chỉ bỏ khi bản ghi hoàn toàn không có
+          thông tin vị trí, điểm đến và loại xe.
+        */
+
+        if (
+          !from &&
+          !to &&
+          !type
+        ) {
+
+          return;
+        }
 
 
         const details = [];
 
+
         if (type) {
+
           details.push(
-            esc(short(type, 22))
+            esc(
+              short(
+                type,
+                22
+              )
+            )
           );
         }
 
+
         if (plate) {
+
           details.push(
-            "Xe " + esc(maskPlate(plate))
+            "Xe " +
+            esc(
+              maskPlate(
+                plate
+              )
+            )
           );
         }
 
@@ -2606,19 +3474,39 @@ document.addEventListener("DOMContentLoaded", async function () {
             </span>
 
             <strong>
-              ${esc(short(from || "Xe sẵn sàng", 28))}
+
+              ${esc(
+                short(
+                  from ||
+                  "Xe sẵn sàng",
+                  28
+                )
+              )}
+
               ${
                 to
-                  ? " → " + esc(short(to, 28))
+                  ? " → " +
+                    esc(
+                      short(
+                        to,
+                        28
+                      )
+                    )
                   : ""
               }
+
             </strong>
 
             ${
               details.length
                 ? `
-                  <span class="vt-live-separator">•</span>
-                  <span>${details.join(" • ")}</span>
+                  <span class="vt-live-separator">
+                    •
+                  </span>
+
+                  <span>
+                    ${details.join(" • ")}
+                  </span>
                 `
                 : ""
             }
@@ -2635,30 +3523,29 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       if (!items.length) {
 
-  console.log(
-    "VietTruck Live Market: lần cập nhật này chưa có dữ liệu - giữ nguyên dữ liệu đang chạy."
-  );
+        console.log(
+          "VietTruck Live Market: lần cập nhật này chưa có dữ liệu - giữ nguyên dữ liệu đang chạy."
+        );
 
-  return;
-}
+        return;
+      }
 
 
       /*
-        Nhân đôi danh sách để animation CSS
-        chạy vòng liên tục, không bị khoảng trống.
+        Nhân đôi danh sách để ticker
+        chạy liên tục không có khoảng trống.
       */
 
-      const html = items.join("");
+      const html =
+        items.join("");
+
 
       track.innerHTML =
         html + html;
 
 
-      /*
-        Đảm bảo thanh được hiển thị.
-      */
-
-      market.style.display = "flex";
+      market.style.display =
+        "flex";
 
 
       console.log(
@@ -2676,17 +3563,17 @@ document.addEventListener("DOMContentLoaded", async function () {
         "VietTruck Live Market Error:",
         error
       );
-
     }
-
   }
 
 
   /* TẢI NGAY */
+
   await loadLiveTransport();
 
 
   /* CẬP NHẬT MỖI 60 GIÂY */
+
   setInterval(
     loadLiveTransport,
     60000
@@ -2694,30 +3581,37 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 });
 </script>
-  <!-- POPUP CHI TIẾT HÀNG / XE -->
-<div id="vtDetailModal"
-     style="
-       display:none;
-       position:fixed;
-       inset:0;
-       z-index:99999;
-       background:rgba(15,23,42,.55);
-       padding:20px;
-       align-items:center;
-       justify-content:center;
-     ">
 
-  <div style="
-       width:100%;
-       max-width:620px;
-       max-height:90vh;
-       overflow:auto;
-       background:#fff;
-       border-radius:18px;
-       box-shadow:0 25px 70px rgba(0,0,0,.25);
-       position:relative;
-       padding:26px;
-     ">
+
+<!-- POPUP CHI TIẾT HÀNG / XE -->
+
+<div
+  id="vtDetailModal"
+  style="
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    background:rgba(15,23,42,.55);
+    padding:20px;
+    align-items:center;
+    justify-content:center;
+  "
+>
+
+  <div
+    style="
+      width:100%;
+      max-width:620px;
+      max-height:90vh;
+      overflow:auto;
+      background:#fff;
+      border-radius:18px;
+      box-shadow:0 25px 70px rgba(0,0,0,.25);
+      position:relative;
+      padding:26px;
+    "
+  >
 
     <button
       type="button"
@@ -2733,15 +3627,18 @@ document.addEventListener("DOMContentLoaded", async function () {
         border-radius:50%;
         font-size:20px;
         cursor:pointer;
-      ">
+      "
+    >
       ×
     </button>
+
 
     <div id="vtDetailContent">
       Đang tải...
     </div>
 
   </div>
+
 </div>
 
 
@@ -2749,158 +3646,263 @@ document.addEventListener("DOMContentLoaded", async function () {
 (function () {
 
   const modal =
-    document.getElementById("vtDetailModal");
+    document.getElementById(
+      "vtDetailModal"
+    );
+
 
   const content =
-    document.getElementById("vtDetailContent");
+    document.getElementById(
+      "vtDetailContent"
+    );
 
 
   function safe(value) {
+
     return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
   }
 
 
-  function row(label, value) {
+  function row(
+    label,
+    value
+  ) {
 
     if (
       value === null ||
       value === undefined ||
       String(value).trim() === ""
     ) {
+
       return "";
     }
 
+
     return `
-      <div style="
-        display:grid;
-        grid-template-columns:145px 1fr;
-        gap:12px;
-        padding:10px 0;
-        border-bottom:1px solid #eef2f7;
-        font-size:14px;
-        line-height:1.5;
-      ">
-        <strong style="color:#475569;">
+      <div
+        style="
+          display:grid;
+          grid-template-columns:145px 1fr;
+          gap:12px;
+          padding:10px 0;
+          border-bottom:1px solid #eef2f7;
+          font-size:14px;
+          line-height:1.5;
+        "
+      >
+
+        <strong
+          style="
+            color:#475569;
+          "
+        >
           ${safe(label)}
         </strong>
 
-        <span style="
-          color:#0f172a;
-          overflow-wrap:anywhere;
-        ">
+        <span
+          style="
+            color:#0f172a;
+            overflow-wrap:anywhere;
+          "
+        >
           ${safe(value)}
         </span>
+
       </div>
     `;
   }
 
 
   function openModal() {
-    modal.style.display = "flex";
-    document.body.style.overflow = "hidden";
+
+    modal.style.display =
+      "flex";
+
+    document.body.style.overflow =
+      "hidden";
   }
 
 
-  window.closeVtDetail = function () {
-    modal.style.display = "none";
-    document.body.style.overflow = "";
-  };
+  window.closeVtDetail =
+    function () {
+
+      modal.style.display =
+        "none";
+
+      document.body.style.overflow =
+        "";
+    };
 
 
-  modal.addEventListener("click", function (event) {
-    if (event.target === modal) {
-      closeVtDetail();
+  modal.addEventListener(
+    "click",
+    function (event) {
+
+      if (
+        event.target === modal
+      ) {
+
+        closeVtDetail();
+      }
     }
-  });
+  );
 
 
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape") {
-      closeVtDetail();
+  document.addEventListener(
+    "keydown",
+    function (event) {
+
+      if (
+        event.key === "Escape"
+      ) {
+
+        closeVtDetail();
+      }
     }
-  });
+  );
 
 
   /* =============================================
-     CHI TIẾT HÀNG ĐĂNG HỘ
+     CHI TIẾT HÀNG
      ============================================= */
 
-  window.openCargoDetail = async function (id) {
+  window.openCargoDetail =
+    async function (id) {
 
-    if (!id) return;
+    if (!id) {
+      return;
+    }
+
 
     openModal();
+
 
     content.innerHTML =
       "<p>Đang tải thông tin hàng...</p>";
 
+
     try {
 
-      const { data, error } =
-        await window.supabaseClient
+      const {
+        data,
+        error
+      } =
+        await window
+          .supabaseClient
           .from("orders")
           .select("*")
-          .eq("id", id)
+          .eq(
+            "id",
+            id
+          )
           .single();
 
 
-      if (error) throw error;
+      if (error) {
+        throw error;
+      }
 
 
       const weight =
         data.weight !== null &&
         data.weight !== undefined &&
         data.weight !== ""
-          ? data.weight + " tấn"
+          ? data.weight +
+            " tấn"
           : "";
 
 
       content.innerHTML = `
 
-        <div style="
-          color:#15803d;
-          font-size:13px;
-          font-weight:800;
-          margin-bottom:6px;
-        ">
+        <div
+          style="
+            color:#15803d;
+            font-size:13px;
+            font-weight:800;
+            margin-bottom:6px;
+          "
+        >
           📦 HÀNG ĐANG TÌM XE
         </div>
 
-        <h2 style="
-          margin:0 45px 18px 0;
-          font-size:22px;
-          line-height:1.4;
-          color:#111827;
-        ">
-          ${safe(data.pickup_location || "Chưa xác định")}
+
+        <h2
+          style="
+            margin:0 45px 18px 0;
+            font-size:22px;
+            line-height:1.4;
+            color:#111827;
+          "
+        >
+
+          ${safe(
+            data.pickup_location ||
+            "Chưa xác định"
+          )}
+
           →
-          ${safe(data.delivery_location || "Chưa xác định")}
+
+          ${safe(
+            data.delivery_location ||
+            "Chưa xác định"
+          )}
+
         </h2>
 
-        ${row("Loại hàng", data.cargo_type)}
-        ${row("Khối lượng", weight)}
-        ${row("Loại xe yêu cầu", data.vehicle_type)}
-        ${row("Ngày lấy hàng", data.pickup_date)}
-        ${row("Giá đề xuất", data.price)}
-        ${row("Ghi chú", data.note)}
 
-        <div style="
-          margin-top:20px;
-          padding:14px;
-          border-radius:10px;
-          background:#ecfdf5;
-          color:#065f46;
-          font-size:13px;
-          line-height:1.6;
-        ">
+        ${row(
+          "Loại hàng",
+          data.cargo_type
+        )}
+
+        ${row(
+          "Khối lượng",
+          weight
+        )}
+
+        ${row(
+          "Loại xe yêu cầu",
+          data.vehicle_type
+        )}
+
+        ${row(
+          "Ngày lấy hàng",
+          data.pickup_date
+        )}
+
+        ${row(
+          "Giá đề xuất",
+          data.price
+        )}
+
+        ${row(
+          "Ghi chú",
+          data.note
+        )}
+
+
+        <div
+          style="
+            margin-top:20px;
+            padding:14px;
+            border-radius:10px;
+            background:#ecfdf5;
+            color:#065f46;
+            font-size:13px;
+            line-height:1.6;
+          "
+        >
+
           🔒 Thông tin liên hệ chủ hàng được VietTrucks bảo vệ.
           Nhà xe có nhu cầu nhận chuyến có thể thực hiện qua hệ thống VietTrucks.
+
         </div>
+
 
         <a
           href="trung-tam-bao-gia.html"
@@ -2914,7 +3916,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             text-decoration:none;
             border-radius:10px;
             font-weight:800;
-          ">
+          "
+        >
           Báo giá / Nhận chuyến
         </a>
       `;
@@ -2924,41 +3927,63 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       console.error(error);
 
+
       content.innerHTML = `
-        <h3>Không tải được thông tin hàng</h3>
+
+        <h3>
+          Không tải được thông tin hàng
+        </h3>
+
         <p style="color:#64748b;">
-          ${safe(error.message || error)}
+          ${safe(
+            error.message ||
+            error
+          )}
         </p>
       `;
-
     }
   };
 
 
   /* =============================================
-     CHI TIẾT XE ĐĂNG HỘ
+     CHI TIẾT XE TRỐNG
      ============================================= */
 
-  window.openVehicleDetail = async function (id) {
+  window.openVehicleDetail =
+    async function (id) {
 
-    if (!id) return;
+    if (!id) {
+      return;
+    }
+
 
     openModal();
+
 
     content.innerHTML =
       "<p>Đang tải thông tin xe...</p>";
 
+
     try {
 
-      const { data, error } =
-        await window.supabaseClient
+      const {
+        data,
+        error
+      } =
+        await window
+          .supabaseClient
           .from("vehicles")
           .select("*")
-          .eq("id", id)
+          .eq(
+            "id",
+            id
+          )
           .single();
 
 
-      if (error) throw error;
+      if (error) {
+        throw error;
+      }
 
 
       const type =
@@ -2983,46 +4008,117 @@ document.addEventListener("DOMContentLoaded", async function () {
         "";
 
 
+      const capacity =
+        data.capacity ??
+        data.weight ??
+        data.tonnage ??
+        data.load_capacity ??
+        "";
+
+
+      const plate =
+        data.plate_number ||
+        data.license_plate ||
+        data.plate ||
+        "";
+
+
       content.innerHTML = `
 
-        <div style="
-          color:#0369a1;
-          font-size:13px;
-          font-weight:800;
-          margin-bottom:6px;
-        ">
+        <div
+          style="
+            color:#0369a1;
+            font-size:13px;
+            font-weight:800;
+            margin-bottom:6px;
+          "
+        >
           🚚 XE TRỐNG
         </div>
 
-        <h2 style="
-          margin:0 45px 18px 0;
-          font-size:22px;
-          line-height:1.4;
-          color:#111827;
-        ">
-          ${safe(from || "Xe đang sẵn sàng")}
-          ${to ? " → " + safe(to) : ""}
+
+        <h2
+          style="
+            margin:0 45px 18px 0;
+            font-size:22px;
+            line-height:1.4;
+            color:#111827;
+          "
+        >
+
+          ${safe(
+            from ||
+            "Xe đang sẵn sàng"
+          )}
+
+          ${
+            to
+              ? " → " +
+                safe(to)
+              : ""
+          }
+
         </h2>
 
-        ${row("Loại xe", type)}
-        ${row("Tải trọng", data.capacity)}
-        ${row("Ngày sẵn sàng", data.available_date)}
-        ${row("Sẵn sàng từ", data.available_from)}
-        ${row("Sẵn sàng đến", data.available_to)}
-        ${row("Mô tả", data.description)}
 
-        <div style="
-          margin-top:20px;
-          padding:14px;
-          border-radius:10px;
-          background:#eff6ff;
-          color:#1e40af;
-          font-size:13px;
-          line-height:1.6;
-        ">
+        ${row(
+          "Loại xe",
+          type
+        )}
+
+        ${row(
+          "Tải trọng",
+          capacity
+            ? capacity + " tấn"
+            : ""
+        )}
+
+        ${row(
+          "Biển số",
+          plate
+            ? plate.slice(0,2) +
+              "****"
+            : ""
+        )}
+
+        ${row(
+          "Ngày sẵn sàng",
+          data.available_date
+        )}
+
+        ${row(
+          "Sẵn sàng từ",
+          data.available_from
+        )}
+
+        ${row(
+          "Sẵn sàng đến",
+          data.available_to
+        )}
+
+        ${row(
+          "Mô tả",
+          data.description
+        )}
+
+
+        <div
+          style="
+            margin-top:20px;
+            padding:14px;
+            border-radius:10px;
+            background:#eff6ff;
+            color:#1e40af;
+            font-size:13px;
+            line-height:1.6;
+          "
+        >
+
           🔒 Thông tin liên hệ nhà xe/tài xế được VietTrucks bảo vệ.
           Chủ hàng có nhu cầu vận chuyển có thể kết nối qua hệ thống VietTrucks.
+
         </div>
+
 
         <a
           href="dang-hang.html"
@@ -3036,7 +4132,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             text-decoration:none;
             border-radius:10px;
             font-weight:800;
-          ">
+          "
+        >
           Tôi có hàng cần vận chuyển
         </a>
       `;
@@ -3046,125 +4143,189 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       console.error(error);
 
+
       content.innerHTML = `
-        <h3>Không tải được thông tin xe</h3>
+
+        <h3>
+          Không tải được thông tin xe
+        </h3>
+
         <p style="color:#64748b;">
-          ${safe(error.message || error)}
+          ${safe(
+            error.message ||
+            error
+          )}
         </p>
       `;
-
     }
   };
 
+
 })();
 </script>
-  <script>
+
+
+<script>
 /* =====================================================
-   VIETTRUCK MOBILE LIVE TICKER - LOOP LIÊN TỤC
-   Không thay đổi dữ liệu Supabase
+   VIETTRUCK MOBILE LIVE TICKER
    ===================================================== */
 
 (function () {
 
-  if (window.innerWidth > 768) return;
+  if (
+    window.innerWidth > 768
+  ) {
+    return;
+  }
 
-  const track = document.getElementById("vtLiveTrack");
-  const market = document.getElementById("vtLiveMarket");
 
-  if (!track || !market) return;
+  const track =
+    document.getElementById(
+      "vtLiveTrack"
+    );
 
-  market.style.display = "flex";
+
+  const market =
+    document.getElementById(
+      "vtLiveMarket"
+    );
+
+
+  if (
+    !track ||
+    !market
+  ) {
+    return;
+  }
+
+
+  market.style.display =
+    "flex";
+
 
   let x = 0;
+
   let lastTime = null;
+
   let rafId = null;
 
-  const SPEED = 35; // pixel / giây
+
+  const SPEED = 35;
+
 
   function animate(time) {
 
     if (!lastTime) {
-      lastTime = time;
+
+      lastTime =
+        time;
     }
 
-    const delta = (time - lastTime) / 1000;
-    lastTime = time;
+
+    const delta =
+      (
+        time -
+        lastTime
+      ) / 1000;
+
+
+    lastTime =
+      time;
+
 
     /*
-      Chỉ chạy khi đã có dữ liệu thật.
-      Không xóa dữ liệu nếu Supabase cập nhật chậm.
+      Chỉ chạy khi có dữ liệu.
     */
-    if (track.children.length > 0) {
 
-      const halfWidth = track.scrollWidth / 2;
+    if (
+      track.children.length > 0
+    ) {
 
-      x -= SPEED * delta;
+      const halfWidth =
+        track.scrollWidth / 2;
 
-      /*
-        Vì nội dung ticker đã được nhân đôi,
-        khi chạy hết nửa chiều dài thì quay lại đầu
-        mà người dùng không nhìn thấy điểm nối.
-      */
+
+      x -=
+        SPEED *
+        delta;
+
+
       if (
         halfWidth > 0 &&
-        Math.abs(x) >= halfWidth
+        Math.abs(x) >=
+        halfWidth
       ) {
+
         x = 0;
       }
+
 
       track.style.transform =
         `translate3d(${x}px,0,0)`;
     }
 
-    rafId = requestAnimationFrame(animate);
+
+    rafId =
+      requestAnimationFrame(
+        animate
+      );
   }
 
+
   /*
-    Khi loadLiveMarket() cập nhật lại innerHTML,
+    Khi dữ liệu Supabase cập nhật lại,
     giữ ticker tiếp tục chạy.
   */
-  const observer = new MutationObserver(function () {
 
-    if (track.children.length > 0) {
+  const observer =
+    new MutationObserver(
+      function () {
 
-      market.style.display = "flex";
+        if (
+          track.children.length > 0
+        ) {
 
-      /*
-        Không cho code khác ẩn ticker sau khi
-        dữ liệu thật đã xuất hiện.
-      */
-      track.style.display = "flex";
+          market.style.display =
+            "flex";
+
+
+          track.style.display =
+            "flex";
+        }
+      }
+    );
+
+
+  observer.observe(
+    track,
+    {
+      childList:true,
+      subtree:true
     }
-
-  });
-
-  observer.observe(track, {
-    childList: true,
-    subtree: true
-  });
-
-  /*
-    Khởi động ticker
-  */
-  rafId = requestAnimationFrame(animate);
+  );
 
 
-  /*
-    Khi chuyển app/tab rồi quay lại,
-    tránh delta quá lớn làm ticker nhảy mất.
-  */
+  rafId =
+    requestAnimationFrame(
+      animate
+    );
+
+
   document.addEventListener(
     "visibilitychange",
     function () {
 
       if (!document.hidden) {
-        lastTime = null;
-      }
 
+        lastTime =
+          null;
+      }
     }
   );
 
+
 })();
 </script>
+
 </body>
 </html>
