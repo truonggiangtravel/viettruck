@@ -607,6 +607,78 @@ tbody tr:hover{background:#fafafa}
     font-size:20px;
   }
 }
+  /* =====================================================
+   POD - CHỨNG TỪ GIAO NHẬN
+===================================================== */
+
+.pod-status{
+  display:inline-flex;
+  align-items:center;
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.pod-status.pending{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.pod-status.approved{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.pod-status.rejected{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.pod-actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.pod-btn{
+  border:0;
+  border-radius:7px;
+  padding:7px 9px;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.pod-btn.view{
+  background:#e0f2fe;
+  color:#075985;
+}
+
+.pod-btn.approve{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.pod-btn.reject{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.pod-btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+.pod-note-text{
+  max-width:220px;
+  white-space:normal;
+  line-height:1.5;
+  color:#64748b;
+  font-size:11px;
+}
 </style>
 </head>
 
