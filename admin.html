@@ -2325,6 +2325,607 @@ async function loadTrips(
   return rows;
 }
   /* =====================================================
+   POD - CHỨNG TỪ GIAO NHẬN
+   ADMIN PRODUCTION
+===================================================== */
+
+function podStatusBadge(status){
+
+  const value =
+    normalizeStatus(status);
+
+  if(value === "approved"){
+
+    return `
+      <span class="pod-status approved">
+        ✓ Đã xác nhận
+      </span>
+    `;
+  }
+
+  if(value === "rejected"){
+
+    return `
+      <span class="pod-status rejected">
+        ✕ Bị từ chối
+      </span>
+    `;
+  }
+
+  return `
+    <span class="pod-status pending">
+      ⏳ Chờ xác nhận
+    </span>
+  `;
+}
+
+
+/* =====================================================
+   LOAD POD
+===================================================== */
+
+async function loadPods(
+  profileMap
+){
+
+  const table =
+    document.getElementById(
+      "podsTable"
+    );
+
+  if(!table){
+    return [];
+  }
+
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+
+    .from("trip_pods")
+
+    .select(`
+      id,
+      trip_id,
+      driver_id,
+      shipper_id,
+      file_path,
+      file_name,
+      file_type,
+      file_size,
+      driver_note,
+      status,
+      submitted_at,
+      reviewed_at,
+      reviewed_by,
+      review_note,
+      created_at,
+      updated_at
+    `)
+
+    .order(
+      "submitted_at",
+      {
+        ascending:false
+      }
+    )
+
+    .limit(100);
+
+
+  if(error){
+
+    console.error(
+      "trip_pods:",
+      error
+    );
+
+    table.innerHTML =
+      emptyRow(
+        7,
+        "Không tải được chứng từ POD."
+      );
+
+    return [];
+  }
+
+
+  const pods =
+    data || [];
+
+
+  if(!pods.length){
+
+    table.innerHTML =
+      emptyRow(
+        7,
+        "Chưa có chứng từ giao nhận POD."
+      );
+
+    return [];
+  }
+
+
+  table.innerHTML =
+    pods
+      .slice(0,20)
+      .map(pod=>{
+
+        const driver =
+          profileMap.get(
+            pod.driver_id
+          );
+
+
+        const driverName =
+          driver?.full_name ||
+          driver?.company_name ||
+          driver?.phone ||
+          shortId(
+            pod.driver_id
+          );
+
+
+        const note =
+          pod.status === "rejected"
+            ? (
+                pod.review_note ||
+                pod.driver_note ||
+                "—"
+              )
+            : (
+                pod.driver_note ||
+                pod.review_note ||
+                "—"
+              );
+
+
+        const status =
+          normalizeStatus(
+            pod.status
+          );
+
+
+        const canReview =
+          status === "pending";
+
+
+        return `
+          <tr>
+
+            <td>
+              <strong>
+                ${shortId(
+                  pod.trip_id
+                )}
+              </strong>
+            </td>
+
+            <td>
+              ${esc(
+                driverName
+              )}
+            </td>
+
+            <td>
+
+              <button
+                type="button"
+                class="pod-btn view"
+                onclick="viewPod('${pod.id}')"
+              >
+                👁 Xem POD
+              </button>
+
+              <div
+                style="
+                  margin-top:5px;
+                  font-size:10px;
+                  color:#64748b;
+                  max-width:170px;
+                  overflow:hidden;
+                  text-overflow:ellipsis;
+                  white-space:nowrap;
+                "
+                title="${esc(
+                  pod.file_name ||
+                  ""
+                )}"
+              >
+                ${esc(
+                  pod.file_name ||
+                  "Chứng từ giao nhận"
+                )}
+              </div>
+
+            </td>
+
+            <td>
+              ${dateTimeVN(
+                pod.submitted_at
+              )}
+            </td>
+
+            <td>
+              ${podStatusBadge(
+                pod.status
+              )}
+            </td>
+
+            <td>
+
+              <div class="pod-note-text">
+                ${esc(note)}
+              </div>
+
+            </td>
+
+            <td>
+
+              ${
+                canReview
+                  ? `
+                    <div class="pod-actions">
+
+                      <button
+                        type="button"
+                        class="pod-btn approve"
+                        onclick="approvePod('${pod.id}')"
+                      >
+                        ✓ Xác nhận
+                      </button>
+
+                      <button
+                        type="button"
+                        class="pod-btn reject"
+                        onclick="rejectPod('${pod.id}')"
+                      >
+                        ✕ Từ chối
+                      </button>
+
+                    </div>
+                  `
+                  : `
+                    <span
+                      style="
+                        color:#64748b;
+                        font-size:11px;
+                      "
+                    >
+                      Đã xử lý
+                    </span>
+                  `
+              }
+
+            </td>
+
+          </tr>
+        `;
+      })
+      .join("");
+
+
+  return pods;
+}
+
+
+/* =====================================================
+   XEM POD PRIVATE STORAGE
+===================================================== */
+
+async function viewPod(
+  podId
+){
+
+  try{
+
+    const {
+      data:pod,
+      error:podError
+    } = await supabaseClient
+
+      .from("trip_pods")
+
+      .select(`
+        id,
+        file_path,
+        file_name,
+        file_type
+      `)
+
+      .eq(
+        "id",
+        podId
+      )
+
+      .single();
+
+
+    if(podError){
+      throw podError;
+    }
+
+
+    if(!pod?.file_path){
+
+      throw new Error(
+        "POD không có đường dẫn file."
+      );
+    }
+
+
+    /*
+     * Bucket trip-pods là PRIVATE.
+     *
+     * Không dùng public URL.
+     * Admin tạo signed URL tạm thời.
+     */
+
+    const {
+      data:signedData,
+      error:signedError
+    } = await supabaseClient
+
+      .storage
+
+      .from("trip-pods")
+
+      .createSignedUrl(
+        pod.file_path,
+        300
+      );
+
+
+    if(signedError){
+      throw signedError;
+    }
+
+
+    if(!signedData?.signedUrl){
+
+      throw new Error(
+        "Không tạo được đường dẫn xem POD."
+      );
+    }
+
+
+    window.open(
+      signedData.signedUrl,
+      "_blank",
+      "noopener,noreferrer"
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "Xem POD:",
+      error
+    );
+
+    alert(
+      "Không xem được POD: " +
+      (
+        error?.message ||
+        "Lỗi không xác định"
+      )
+    );
+  }
+}
+
+
+/* =====================================================
+   ADMIN XÁC NHẬN POD
+===================================================== */
+
+async function approvePod(
+  podId
+){
+
+  const confirmed =
+    confirm(
+      "Xác nhận chứng từ giao nhận này là hợp lệ?"
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  const reviewNote =
+    prompt(
+      "Ghi chú xác nhận POD (có thể để trống):",
+      ""
+    );
+
+
+  /*
+   * Cancel prompt = dừng.
+   */
+
+  if(reviewNote === null){
+    return;
+  }
+
+
+  try{
+
+    const {
+      data,
+      error
+    } = await supabaseClient.rpc(
+      "approve_trip_pod",
+      {
+        p_pod_id:
+          podId,
+
+        p_review_note:
+          reviewNote.trim() ||
+          null
+      }
+    );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    if(data !== true){
+
+      throw new Error(
+        "Database không xác nhận POD."
+      );
+    }
+
+
+    alert(
+      "Đã xác nhận POD thành công."
+    );
+
+
+    await loadDashboard();
+
+  }
+  catch(error){
+
+    console.error(
+      "approve_trip_pod:",
+      error
+    );
+
+    alert(
+      "Không xác nhận được POD: " +
+      (
+        error?.message ||
+        "Lỗi không xác định"
+      )
+    );
+  }
+}
+
+
+/* =====================================================
+   ADMIN TỪ CHỐI POD
+===================================================== */
+
+async function rejectPod(
+  podId
+){
+
+  const reason =
+    prompt(
+      "Nhập lý do từ chối POD:"
+    );
+
+
+  if(reason === null){
+    return;
+  }
+
+
+  const reviewNote =
+    reason.trim();
+
+
+  /*
+   * RPC reject_trip_pod yêu cầu lý do.
+   */
+
+  if(!reviewNote){
+
+    alert(
+      "Anh phải nhập lý do từ chối POD."
+    );
+
+    return;
+  }
+
+
+  const confirmed =
+    confirm(
+      "Xác nhận từ chối chứng từ POD này?"
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  try{
+
+    const {
+      data,
+      error
+    } = await supabaseClient.rpc(
+      "reject_trip_pod",
+      {
+        p_pod_id:
+          podId,
+
+        p_review_note:
+          reviewNote
+      }
+    );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    if(data !== true){
+
+      throw new Error(
+        "Database không từ chối POD."
+      );
+    }
+
+
+    alert(
+      "Đã từ chối POD.\n\n" +
+      "Tài xế cần tải lại chứng từ hợp lệ."
+    );
+
+
+    await loadDashboard();
+
+  }
+  catch(error){
+
+    console.error(
+      "reject_trip_pod:",
+      error
+    );
+
+    alert(
+      "Không từ chối được POD: " +
+      (
+        error?.message ||
+        "Lỗi không xác định"
+      )
+    );
+  }
+}
+
+
+/*
+ * Cho onclick trong HTML truy cập được
+ * các function này.
+ */
+
+window.viewPod =
+  viewPod;
+
+window.approvePod =
+  approvePod;
+
+window.rejectPod =
+  rejectPod;
+  /* =====================================================
    DRIVER TABLE
 ===================================================== */
 
