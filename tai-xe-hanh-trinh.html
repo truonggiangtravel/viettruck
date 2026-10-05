@@ -1353,8 +1353,585 @@ function render(){
 
 
 /* =========================================================
-   LOG
+   POD PRODUCTION
 ========================================================= */
+
+async function loadPod(){
+
+    if(!trip?.id){
+        pod = null;
+        return null;
+    }
+
+    const {data,error} = await db
+        .from("trip_pods")
+        .select(`
+            id,
+            trip_id,
+            driver_id,
+            shipper_id,
+            file_path,
+            file_name,
+            file_type,
+            file_size,
+            driver_note,
+            status,
+            submitted_at,
+            reviewed_at,
+            review_note
+        `)
+        .eq("trip_id",trip.id)
+        .maybeSingle();
+
+    if(error){
+        throw new Error(
+            "Không đọc được POD: " +
+            error.message
+        );
+    }
+
+    pod = data || null;
+
+    return pod;
+}
+
+
+function podStatusText(status){
+
+    const value =
+        String(status || "")
+        .toLowerCase();
+
+    if(value === "pending"){
+        return "Chờ xác nhận";
+    }
+
+    if(value === "approved"){
+        return "Đã xác nhận";
+    }
+
+    if(value === "rejected"){
+        return "Bị từ chối";
+    }
+
+    return "Chưa gửi POD";
+}
+
+
+function updatePodUI(){
+
+    const statusBox =
+        document.getElementById(
+            "podStatus"
+        );
+
+    const fileInfo =
+        document.getElementById(
+            "podFileInfo"
+        );
+
+    const uploadBtn =
+        document.getElementById(
+            "podUploadBtn"
+        );
+
+    const completeBtn =
+        document.getElementById(
+            "completeBtn"
+        );
+
+    if(!statusBox){
+        return;
+    }
+
+    statusBox.className =
+        "pod-status";
+
+    if(!pod){
+
+        statusBox.innerHTML = `
+            <strong>
+                Chưa gửi POD
+            </strong>
+
+            <small>
+                Bắt buộc trước khi hoàn thành
+            </small>
+        `;
+
+        if(fileInfo){
+            fileInfo.style.display =
+                "none";
+        }
+
+        if(completeBtn){
+            completeBtn.disabled =
+                true;
+
+            completeBtn.textContent =
+                "📎 Hãy tải POD trước";
+        }
+
+        return;
+    }
+
+
+    const status =
+        String(
+            pod.status || ""
+        ).toLowerCase();
+
+
+    if(status === "pending"){
+
+        statusBox.classList.add(
+            "pending"
+        );
+
+        statusBox.innerHTML = `
+            <strong>
+                ⏳ Chờ xác nhận
+            </strong>
+
+            <small>
+                POD đã được gửi lên VietTrucks
+            </small>
+        `;
+
+    }else if(status === "approved"){
+
+        statusBox.classList.add(
+            "approved"
+        );
+
+        statusBox.innerHTML = `
+            <strong>
+                ✓ Đã xác nhận
+            </strong>
+
+            <small>
+                Chứng từ giao nhận hợp lệ
+            </small>
+        `;
+
+    }else if(status === "rejected"){
+
+        statusBox.classList.add(
+            "rejected"
+        );
+
+        statusBox.innerHTML = `
+            <strong>
+                ✕ POD bị từ chối
+            </strong>
+
+            <small>
+                ${esc(
+                    pod.review_note ||
+                    "Vui lòng tải lại chứng từ."
+                )}
+            </small>
+        `;
+
+    }else{
+
+        statusBox.innerHTML = `
+            <strong>
+                ${esc(
+                    podStatusText(
+                        pod.status
+                    )
+                )}
+            </strong>
+        `;
+
+    }
+
+
+    if(fileInfo){
+
+        fileInfo.style.display =
+            "block";
+
+        fileInfo.innerHTML = `
+            <strong>
+                File:
+            </strong>
+            ${esc(
+                pod.file_name ||
+                "Chứng từ giao nhận"
+            )}
+            <br>
+
+            <strong>
+                Gửi lúc:
+            </strong>
+            ${esc(
+                dateTime(
+                    pod.submitted_at
+                )
+            )}
+        `;
+
+    }
+
+
+    /*
+     * POD approved:
+     * không cho tài xế thay thế nữa.
+     */
+
+    if(uploadBtn){
+
+        if(status === "approved"){
+
+            uploadBtn.disabled =
+                true;
+
+            uploadBtn.textContent =
+                "✓ POD đã được xác nhận";
+
+        }else if(status === "rejected"){
+
+            uploadBtn.disabled =
+                false;
+
+            uploadBtn.textContent =
+                "↻ Tải lại POD";
+
+        }else{
+
+            uploadBtn.disabled =
+                false;
+
+            uploadBtn.textContent =
+                "↻ Thay POD";
+
+        }
+
+    }
+
+
+    /*
+     * complete_trip() ở database vẫn là lớp
+     * bảo vệ cuối cùng.
+     *
+     * pending hoặc approved:
+     * được phép yêu cầu hoàn thành.
+     *
+     * rejected:
+     * không cho bấm.
+     */
+
+    if(completeBtn){
+
+        if(
+            status === "pending" ||
+            status === "approved"
+        ){
+
+            completeBtn.disabled =
+                false;
+
+            completeBtn.textContent =
+                "✓ Hoàn thành chuyến";
+
+        }else{
+
+            completeBtn.disabled =
+                true;
+
+            completeBtn.textContent =
+                "📎 POD chưa hợp lệ";
+
+        }
+
+    }
+}
+
+
+function sanitizeFileName(name){
+
+    const clean =
+        String(name || "pod")
+        .normalize("NFD")
+        .replace(
+            /[\u0300-\u036f]/g,
+            ""
+        )
+        .replace(
+            /[^a-zA-Z0-9._-]/g,
+            "-"
+        )
+        .replace(
+            /-+/g,
+            "-"
+        );
+
+    return clean || "pod";
+}
+
+
+async function uploadPod(){
+
+    if(
+        !user ||
+        !trip ||
+        podUploading
+    ){
+        return;
+    }
+
+
+    const fileInput =
+        document.getElementById(
+            "podFile"
+        );
+
+    const noteInput =
+        document.getElementById(
+            "podNote"
+        );
+
+    const button =
+        document.getElementById(
+            "podUploadBtn"
+        );
+
+    const errorBox =
+        document.getElementById(
+            "podError"
+        );
+
+
+    if(errorBox){
+        errorBox.textContent = "";
+    }
+
+
+    const file =
+        fileInput?.files?.[0];
+
+
+    if(!file){
+
+        alert(
+            "Anh hãy chọn ảnh hoặc PDF chứng từ giao nhận."
+        );
+
+        return;
+    }
+
+
+    if(
+        !POD_ALLOWED_TYPES.has(
+            file.type
+        )
+    ){
+
+        alert(
+            "POD chỉ chấp nhận JPG, PNG, WEBP hoặc PDF."
+        );
+
+        return;
+    }
+
+
+    if(file.size > POD_MAX_SIZE){
+
+        alert(
+            "File POD không được vượt quá 10 MB."
+        );
+
+        return;
+    }
+
+
+    const currentStatus =
+        String(
+            pod?.status || ""
+        ).toLowerCase();
+
+
+    if(currentStatus === "approved"){
+
+        alert(
+            "POD đã được xác nhận nên không thể thay thế."
+        );
+
+        return;
+    }
+
+
+    podUploading = true;
+
+    if(button){
+
+        button.disabled = true;
+
+        button.textContent =
+            "Đang tải POD...";
+    }
+
+
+    try{
+
+        /*
+         * Storage policy yêu cầu:
+         *
+         * trip-id/user-id/file
+         */
+
+        const safeName =
+            sanitizeFileName(
+                file.name
+            );
+
+        const filePath =
+            `${trip.id}/${user.id}/${Date.now()}-${safeName}`;
+
+
+        /*
+         * Mỗi lần dùng tên file mới.
+         * Không cần overwrite file cũ.
+         */
+
+        const {
+            error:uploadError
+        } = await db
+            .storage
+            .from(POD_BUCKET)
+            .upload(
+                filePath,
+                file,
+                {
+                    cacheControl:"3600",
+                    upsert:false,
+                    contentType:file.type
+                }
+            );
+
+
+        if(uploadError){
+
+            throw new Error(
+                "Không tải được file POD: " +
+                uploadError.message
+            );
+
+        }
+
+
+        /*
+         * Sau khi Storage thành công,
+         * ghi metadata bằng RPC bảo mật.
+         */
+
+        const {
+            data:podId,
+            error:rpcError
+        } = await db.rpc(
+            "submit_trip_pod",
+            {
+                p_trip_id:
+                    trip.id,
+
+                p_file_path:
+                    filePath,
+
+                p_file_name:
+                    file.name,
+
+                p_file_type:
+                    file.type,
+
+                p_file_size:
+                    file.size,
+
+                p_driver_note:
+                    noteInput?.value?.trim() ||
+                    null
+            }
+        );
+
+
+        if(rpcError){
+
+            /*
+             * Metadata không ghi được:
+             * không giả vờ thành công.
+             *
+             * Storage không có DELETE policy,
+             * nên file vừa upload có thể còn
+             * trong bucket để Admin xử lý.
+             */
+
+            throw new Error(
+                "File đã tải lên nhưng không ghi được POD: " +
+                rpcError.message
+            );
+
+        }
+
+
+        await loadPod();
+
+        updatePodUI();
+
+
+        if(fileInput){
+            fileInput.value = "";
+        }
+
+
+        addLog(
+            "Đã gửi chứng từ giao nhận POD lên VietTrucks."
+        );
+
+
+        alert(
+            "Đã tải POD thành công.\n\n" +
+            "Trạng thái: " +
+            podStatusText(
+                pod?.status
+            )
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "POD:",
+            error
+        );
+
+
+        if(errorBox){
+
+            errorBox.textContent =
+                error.message;
+
+        }
+
+
+        addLog(
+            "Lỗi POD: " +
+            error.message
+        );
+
+
+        alert(
+            error.message
+        );
+
+    }finally{
+
+        podUploading = false;
+
+        updatePodUI();
+
+    }
+}
 
 function addLog(message){
 
