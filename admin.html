@@ -3519,26 +3519,30 @@ async function loadDashboard(){
      */
 
     const [
-      orders,
-      vehicles,
-      quotes,
-      trips
-    ] = await Promise.all([
+  orders,
+  vehicles,
+  quotes,
+  trips,
+  pods
+] = await Promise.all([
 
-      loadOrders(),
+  loadOrders(),
 
-      loadVehicles(),
+  loadVehicles(),
 
-      loadQuotes(
-        profileMap
-      ),
+  loadQuotes(
+    profileMap
+  ),
 
-      loadTrips(
-        profileMap
-      )
+  loadTrips(
+    profileMap
+  ),
 
-    ]);
+  loadPods(
+    profileMap
+  )
 
+]);
 
     /*
      * Render tài xế.
