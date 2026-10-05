@@ -38,8 +38,7 @@ body{
   min-height:100vh;
 }
 
-button,
-a{
+button,a{
   -webkit-tap-highlight-color:transparent;
 }
 
@@ -48,9 +47,7 @@ a{
   min-height:100vh;
 }
 
-/* ==============================
-   SIDEBAR
-============================== */
+/* SIDEBAR */
 
 .sidebar{
   width:270px;
@@ -86,9 +83,7 @@ a{
   font-weight:800;
 }
 
-.brand h1{
-  font-size:21px;
-}
+.brand h1{font-size:21px}
 
 .brand span{
   display:block;
@@ -136,9 +131,7 @@ a{
   flex:0 0 24px;
 }
 
-/* ==============================
-   MAIN
-============================== */
+/* MAIN */
 
 .main{
   margin-left:270px;
@@ -176,9 +169,7 @@ a{
   font-size:20px;
 }
 
-.topbar h2{
-  font-size:20px;
-}
+.topbar h2{font-size:20px}
 
 .topbar p{
   font-size:12px;
@@ -202,9 +193,7 @@ a{
   color:#334155;
 }
 
-.refresh-btn:hover{
-  background:#f8fafc;
-}
+.refresh-btn:hover{background:#f8fafc}
 
 .admin-box{
   display:flex;
@@ -240,9 +229,7 @@ a{
   margin:auto;
 }
 
-/* ==============================
-   WELCOME
-============================== */
+/* WELCOME */
 
 .welcome{
   background:linear-gradient(120deg,#0f766e,#0d9488,#2563eb);
@@ -278,9 +265,7 @@ a{
   margin-bottom:5px;
 }
 
-/* ==============================
-   CONNECTION
-============================== */
+/* CONNECTION */
 
 .connection{
   display:flex;
@@ -314,9 +299,7 @@ a{
   color:var(--muted);
 }
 
-/* ==============================
-   STATS
-============================== */
+/* STATS */
 
 .stats{
   display:grid;
@@ -331,8 +314,6 @@ a{
   padding:18px;
   border:1px solid #edf0f4;
   box-shadow:0 2px 10px rgba(0,0,0,.04);
-  position:relative;
-  overflow:hidden;
 }
 
 .stat-head{
@@ -378,9 +359,7 @@ a{
   color:#94a3b8;
 }
 
-/* ==============================
-   QUICK
-============================== */
+/* QUICK */
 
 .quick-actions{
   display:grid;
@@ -412,13 +391,9 @@ a{
   margin-bottom:7px;
 }
 
-.quick strong{
-  font-size:11px;
-}
+.quick strong{font-size:11px}
 
-/* ==============================
-   PANELS
-============================== */
+/* PANELS */
 
 .panel{
   background:#fff;
@@ -437,9 +412,7 @@ a{
   margin-bottom:17px;
 }
 
-.panel-head h3{
-  font-size:16px;
-}
+.panel-head h3{font-size:16px}
 
 .panel-head a{
   color:var(--primary);
@@ -460,13 +433,9 @@ a{
   gap:20px;
 }
 
-/* ==============================
-   TABLE
-============================== */
+/* TABLE */
 
-.table-wrap{
-  overflow-x:auto;
-}
+.table-wrap{overflow-x:auto}
 
 table{
   width:100%;
@@ -491,9 +460,7 @@ td{
   vertical-align:middle;
 }
 
-tbody tr:hover{
-  background:#fafafa;
-}
+tbody tr:hover{background:#fafafa}
 
 .loading-row{
   text-align:center;
@@ -510,40 +477,13 @@ tbody tr:hover{
   white-space:nowrap;
 }
 
-.status.green{
-  background:#dcfce7;
-  color:#15803d;
-}
-
-.status.yellow{
-  background:#fef9c3;
-  color:#a16207;
-}
-
-.status.red{
-  background:#fee2e2;
-  color:#b91c1c;
-}
-
-.status.blue{
-  background:#dbeafe;
-  color:#1d4ed8;
-}
-
-.status.purple{
-  background:#ede9fe;
-  color:#6d28d9;
-}
-
-.status.gray{
-  background:#e5e7eb;
-  color:#4b5563;
-}
-
-.status.orange{
-  background:#ffedd5;
-  color:#c2410c;
-}
+.status.green{background:#dcfce7;color:#15803d}
+.status.yellow{background:#fef9c3;color:#a16207}
+.status.red{background:#fee2e2;color:#b91c1c}
+.status.blue{background:#dbeafe;color:#1d4ed8}
+.status.purple{background:#ede9fe;color:#6d28d9}
+.status.gray{background:#e5e7eb;color:#4b5563}
+.status.orange{background:#ffedd5;color:#c2410c}
 
 .action-btn{
   display:inline-block;
@@ -558,17 +498,10 @@ tbody tr:hover{
   font-weight:700;
 }
 
-.action-btn.blue{
-  background:#2563eb;
-}
+.action-btn.blue{background:#2563eb}
+.action-btn.gray{background:#475569}
 
-.action-btn.gray{
-  background:#475569;
-}
-
-/* ==============================
-   GPS
-============================== */
+/* GPS */
 
 .gps-grid{
   display:grid;
@@ -591,9 +524,7 @@ tbody tr:hover{
   margin-bottom:11px;
 }
 
-.gps-card strong{
-  font-size:13px;
-}
+.gps-card strong{font-size:13px}
 
 .gps-card p{
   color:#64748b;
@@ -610,20 +541,12 @@ tbody tr:hover{
   word-break:break-all;
 }
 
-/* ==============================
-   EMPTY
-============================== */
-
 .empty{
   text-align:center;
   padding:25px;
   color:#64748b;
   font-size:12px;
 }
-
-/* ==============================
-   FOOTER
-============================== */
 
 .footer{
   text-align:center;
@@ -632,71 +555,33 @@ tbody tr:hover{
   padding:10px 0 25px;
 }
 
-/* ==============================
-   RESPONSIVE
-============================== */
-
 @media(max-width:1250px){
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .quick-actions{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .gps-grid{
-    grid-template-columns:1fr 1fr;
-  }
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .quick-actions{grid-template-columns:repeat(3,1fr)}
+  .gps-grid{grid-template-columns:1fr 1fr}
 }
 
 @media(max-width:950px){
-  .grid-2{
-    grid-template-columns:1fr;
-  }
+  .grid-2{grid-template-columns:1fr}
 }
 
 @media(max-width:800px){
-  .sidebar{
-    transform:translateX(-100%);
-  }
-
-  .sidebar.open{
-    transform:translateX(0);
-  }
-
-  .main{
-    margin-left:0;
-    width:100%;
-  }
-
-  .menu-btn{
-    display:block;
-  }
-
-  .content{
-    padding:15px;
-  }
-
-  .topbar{
-    padding:0 14px;
-  }
-
-  .admin-name{
-    display:none;
-  }
-
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;width:100%}
+  .menu-btn{display:block}
+  .content{padding:15px}
+  .topbar{padding:0 14px}
+  .admin-name{display:none}
   .welcome{
     flex-direction:column;
     align-items:flex-start;
     gap:15px;
   }
-
   .welcome-time{
     text-align:left;
     margin-left:0;
   }
-
   .connection{
     align-items:flex-start;
     flex-direction:column;
@@ -708,32 +593,15 @@ tbody tr:hover{
     grid-template-columns:1fr 1fr;
     gap:10px;
   }
-
-  .stat-card{
-    padding:14px;
-  }
-
-  .stat-value{
-    font-size:23px;
-  }
-
-  .quick-actions{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .gps-grid{
-    grid-template-columns:1fr;
-  }
-
-  .topbar h2{
-    font-size:15px;
-  }
-
+  .stat-card{padding:14px}
+  .stat-value{font-size:23px}
+  .quick-actions{grid-template-columns:1fr 1fr}
+  .gps-grid{grid-template-columns:1fr}
+  .topbar h2{font-size:15px}
   .refresh-btn{
     padding:8px;
     font-size:0;
   }
-
   .refresh-btn::after{
     content:"↻";
     font-size:20px;
@@ -745,10 +613,6 @@ tbody tr:hover{
 <body>
 
 <div class="app">
-
-<!-- =====================================================
-     SIDEBAR
-===================================================== -->
 
 <aside class="sidebar" id="sidebar">
 
@@ -876,10 +740,6 @@ tbody tr:hover{
 
 </aside>
 
-<!-- =====================================================
-     MAIN
-===================================================== -->
-
 <main class="main">
 
 <header class="topbar">
@@ -902,14 +762,12 @@ tbody tr:hover{
     </button>
 
     <div class="admin-box">
-
       <div class="avatar">AD</div>
 
       <div class="admin-name">
         <strong id="adminName">Quản trị viên</strong>
         <span>Super Admin</span>
       </div>
-
     </div>
 
   </div>
@@ -917,10 +775,6 @@ tbody tr:hover{
 </header>
 
 <section class="content">
-
-<!-- =====================================================
-     WELCOME
-===================================================== -->
 
 <div class="welcome">
 
@@ -944,7 +798,7 @@ tbody tr:hover{
 
   <div class="connection-left">
     <span class="live-dot"></span>
-    <strong>Dữ liệu trực tiếp từ Supabase</strong>
+    <strong>Dữ liệu trực tiếp từ Supabase • Admin chỉ giám sát</strong>
   </div>
 
   <div id="lastUpdated">
@@ -953,79 +807,59 @@ tbody tr:hover{
 
 </div>
 
-<!-- =====================================================
-     STATS
-===================================================== -->
-
 <div class="stats">
 
   <div class="stat-card">
-    <div class="stat-head">
-      <div class="stat-icon green">📦</div>
-    </div>
+    <div class="stat-head"><div class="stat-icon green">📦</div></div>
     <h4>Đơn đang tìm xe</h4>
     <div class="stat-value" id="statPendingOrders">0</div>
     <div class="stat-note">Đơn chưa ghép chuyến</div>
   </div>
 
   <div class="stat-card">
-    <div class="stat-head">
-      <div class="stat-icon orange">🚚</div>
-    </div>
+    <div class="stat-head"><div class="stat-icon orange">🚚</div></div>
     <h4>Xe đang trống</h4>
     <div class="stat-value" id="statAvailableVehicles">0</div>
     <div class="stat-note">Xe có thể nhận hàng</div>
   </div>
 
   <div class="stat-card">
-    <div class="stat-head">
-      <div class="stat-icon purple">💬</div>
-    </div>
+    <div class="stat-head"><div class="stat-icon purple">💬</div></div>
     <h4>Báo giá</h4>
     <div class="stat-value" id="statQuotes">0</div>
     <div class="stat-note">Tổng báo giá trên hệ thống</div>
   </div>
 
   <div class="stat-card">
-    <div class="stat-head">
-      <div class="stat-icon blue">🤝</div>
-    </div>
+    <div class="stat-head"><div class="stat-icon blue">🤝</div></div>
     <h4>Chuyến đã nhận</h4>
     <div class="stat-value" id="statTrips">0</div>
     <div class="stat-note">Các chuyến đã được tạo</div>
   </div>
 
   <div class="stat-card">
-    <div class="stat-head">
-      <div class="stat-icon teal">📍</div>
-    </div>
+    <div class="stat-head"><div class="stat-icon teal">📍</div></div>
     <h4>GPS đang chạy</h4>
     <div class="stat-value" id="statGps">0</div>
     <div class="stat-note">Chuyến có tọa độ GPS</div>
   </div>
 
   <div class="stat-card">
-    <div class="stat-head">
-      <div class="stat-icon yellow">👨‍✈️</div>
-    </div>
+    <div class="stat-head"><div class="stat-icon yellow">👨‍✈️</div></div>
     <h4>Tài xế</h4>
     <div class="stat-value" id="statDrivers">0</div>
     <div class="stat-note">Tài khoản role driver</div>
   </div>
 
   <div class="stat-card">
-    <div class="stat-head">
-      <div class="stat-icon blue">👥</div>
-    </div>
+    <div class="stat-head"><div class="stat-icon blue">👥</div></div>
     <h4>Tổng tài khoản</h4>
     <div class="stat-value" id="statAccounts">0</div>
     <div class="stat-note">Profiles đã đăng ký</div>
   </div>
 
   <div class="stat-card">
-    <div class="stat-head">
-      <div class="stat-icon green">✅</div>
-    </div>
+    <div class="stat-head"><div class="stat-icon green">✅</div></div>
     <h4>Chuyến hoàn thành</h4>
     <div class="stat-value" id="statCompleted">0</div>
     <div class="stat-note">Trips trạng thái completed</div>
@@ -1033,137 +867,132 @@ tbody tr:hover{
 
 </div>
 
-<!-- =====================================================
-     QUICK ACTIONS
-===================================================== -->
-
 <div class="quick-actions">
 
   <a class="quick" href="admin-dang-hang-ho.html">
-    <span>📦</span>
-    <strong>Đăng hàng hộ</strong>
+    <span>📦</span><strong>Đăng hàng hộ</strong>
   </a>
 
   <a class="quick" href="admin-dang-xe-ho.html">
-    <span>🚛</span>
-    <strong>Đăng xe hộ</strong>
+    <span>🚛</span><strong>Đăng xe hộ</strong>
   </a>
 
   <a class="quick" href="quan-ly-don-hang.html">
-    <span>📋</span>
-    <strong>Quản lý đơn</strong>
+    <span>📋</span><strong>Quản lý đơn</strong>
   </a>
 
   <a class="quick" href="trung-tam-bao-gia.html">
-    <span>💬</span>
-    <strong>Báo giá</strong>
+    <span>💬</span><strong>Báo giá</strong>
   </a>
 
   <a class="quick" href="quan-ly-doi-xe.html">
-    <span>🚚</span>
-    <strong>Đội xe</strong>
+    <span>🚚</span><strong>Đội xe</strong>
   </a>
 
   <a class="quick" href="theo-doi-hanh-trinh.html">
-    <span>📍</span>
-    <strong>GPS hành trình</strong>
+    <span>📍</span><strong>GPS hành trình</strong>
   </a>
 
 </div>
-
 <!-- =====================================================
-     ORDERS
-===================================================== -->
-
-<div class="panel">
-
-  <div class="panel-head">
-    <div>
-      <h3>📦 Đơn hàng mới nhất</h3>
-      <div class="panel-subtitle">
-        Dữ liệu trực tiếp từ bảng orders
-      </div>
-    </div>
-
-    <a href="quan-ly-don-hang.html">Xem tất cả →</a>
-  </div>
-
-  <div class="table-wrap">
-
-    <table>
-
-      <thead>
-      <tr>
-        <th>Mã</th>
-        <th>Khách hàng</th>
-        <th>Tuyến</th>
-        <th>Hàng</th>
-        <th>Xe</th>
-        <th>Giá</th>
-        <th>Ngày lấy</th>
-        <th>Trạng thái</th>
-      </tr>
-      </thead>
-
-      <tbody id="ordersTable">
-      <tr>
-        <td colspan="8" class="loading-row">Đang tải...</td>
-      </tr>
-      </tbody>
-
-    </table>
-
-  </div>
-
-</div>
-
-<!-- =====================================================
-     VEHICLES + QUOTES
+     ĐƠN HÀNG + XE MỚI NHẤT
 ===================================================== -->
 
 <div class="grid-2">
 
-<div class="panel">
+  <div class="panel">
 
-  <div class="panel-head">
-
-    <div>
-      <h3>🚚 Xe mới / xe trống</h3>
-      <div class="panel-subtitle">
-        Dữ liệu trực tiếp từ vehicles
+    <div class="panel-head">
+      <div>
+        <h3>📦 Đơn hàng mới nhất</h3>
+        <div class="panel-subtitle">
+          Dữ liệu thật từ bảng orders
+        </div>
       </div>
+
+      <a href="quan-ly-don-hang.html">
+        Xem tất cả →
+      </a>
     </div>
 
-    <a href="quan-ly-doi-xe.html">Xem tất cả →</a>
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Tuyến đường</th>
+            <th>Hàng</th>
+            <th>Loại xe</th>
+            <th>Giá</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+
+        <tbody id="ordersTable">
+          <tr>
+            <td colspan="5" class="loading-row">
+              Đang tải...
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
 
   </div>
 
-  <div class="table-wrap">
 
-    <table>
+  <div class="panel">
 
-      <thead>
-      <tr>
-        <th>Biển số</th>
-        <th>Loại xe</th>
-        <th>Vị trí</th>
-        <th>Điểm đến</th>
-        <th>Tài xế</th>
-        <th>Trạng thái</th>
-      </tr>
-      </thead>
+    <div class="panel-head">
+      <div>
+        <h3>🚚 Xe trống mới nhất</h3>
+        <div class="panel-subtitle">
+          Dữ liệu thật từ bảng vehicles
+        </div>
+      </div>
 
-      <tbody id="vehiclesTable">
-      <tr>
-        <td colspan="6" class="loading-row">Đang tải...</td>
-      </tr>
-      </tbody>
+      <a href="quan-ly-doi-xe.html">
+        Xem tất cả →
+      </a>
+    </div>
 
-    </table>
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Xe</th>
+            <th>Biển số</th>
+            <th>Vị trí</th>
+            <th>Điểm đến</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+
+        <tbody id="vehiclesTable">
+          <tr>
+            <td colspan="5" class="loading-row">
+              Đang tải...
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
 
   </div>
 
 </div>
+
+
+<!-- =====================================================
+     BÁO GIÁ
+===================================================== -->
 
 <div class="panel">
 
@@ -1171,12 +1000,15 @@ tbody tr:hover{
 
     <div>
       <h3>💬 Báo giá mới nhất</h3>
+
       <div class="panel-subtitle">
-        Dữ liệu trực tiếp từ quotes
+        Báo giá thật từ bảng quotes
       </div>
     </div>
 
-    <a href="trung-tam-bao-gia.html">Xem tất cả →</a>
+    <a href="trung-tam-bao-gia.html">
+      Trung tâm báo giá →
+    </a>
 
   </div>
 
@@ -1185,19 +1017,24 @@ tbody tr:hover{
     <table>
 
       <thead>
-      <tr>
-        <th>Đơn</th>
-        <th>Người báo giá</th>
-        <th>Giá</th>
-        <th>Lời nhắn</th>
-        <th>Trạng thái</th>
-      </tr>
+        <tr>
+          <th>Mã báo giá</th>
+          <th>Mã đơn</th>
+          <th>Người báo giá</th>
+          <th>Giá báo</th>
+          <th>Trạng thái</th>
+          <th>Thời gian</th>
+        </tr>
       </thead>
 
       <tbody id="quotesTable">
-      <tr>
-        <td colspan="5" class="loading-row">Đang tải...</td>
-      </tr>
+
+        <tr>
+          <td colspan="6" class="loading-row">
+            Đang tải...
+          </td>
+        </tr>
+
       </tbody>
 
     </table>
@@ -1206,10 +1043,10 @@ tbody tr:hover{
 
 </div>
 
-</div>
 
 <!-- =====================================================
-     TRIPS
+     CHUYẾN VẬN CHUYỂN
+     ADMIN CHỈ ĐỌC / GIÁM SÁT
 ===================================================== -->
 
 <div class="panel">
@@ -1218,12 +1055,15 @@ tbody tr:hover{
 
     <div>
       <h3>🤝 Chuyến đã nhận</h3>
+
       <div class="panel-subtitle">
-        Theo dõi các chuyến được tạo trong bảng trips
+        Admin chỉ giám sát dữ liệu thật từ bảng trips
       </div>
     </div>
 
-    <a href="theo-doi-chuyen.html">Theo dõi chuyến →</a>
+    <a href="theo-doi-hanh-trinh.html">
+      Theo dõi hành trình →
+    </a>
 
   </div>
 
@@ -1232,21 +1072,28 @@ tbody tr:hover{
     <table>
 
       <thead>
-      <tr>
-        <th>Mã chuyến</th>
-        <th>Mã đơn</th>
-        <th>Tài xế</th>
-        <th>Giá thỏa thuận</th>
-        <th>Trạng thái</th>
-        <th>Bắt đầu</th>
-        <th>GPS cuối</th>
-      </tr>
+
+        <tr>
+          <th>Mã chuyến</th>
+          <th>Mã đơn</th>
+          <th>Tài xế</th>
+          <th>Giá chuyến</th>
+          <th>Trạng thái</th>
+          <th>Bắt đầu</th>
+          <th>GPS cuối</th>
+          <th>Theo dõi</th>
+        </tr>
+
       </thead>
 
       <tbody id="tripsTable">
-      <tr>
-        <td colspan="7" class="loading-row">Đang tải...</td>
-      </tr>
+
+        <tr>
+          <td colspan="8" class="loading-row">
+            Đang tải...
+          </td>
+        </tr>
+
       </tbody>
 
     </table>
@@ -1255,8 +1102,9 @@ tbody tr:hover{
 
 </div>
 
+
 <!-- =====================================================
-     GPS
+     GPS THẬT
 ===================================================== -->
 
 <div class="panel">
@@ -1264,24 +1112,34 @@ tbody tr:hover{
   <div class="panel-head">
 
     <div>
+
       <h3>📍 GPS đang chạy</h3>
+
       <div class="panel-subtitle">
-        Chuyến có current_latitude và current_longitude
+        Chỉ hiển thị chuyến đang hoạt động có tọa độ GPS thật
       </div>
+
     </div>
 
-    <a href="theo-doi-hanh-trinh.html">Mở trung tâm GPS →</a>
+    <a href="theo-doi-hanh-trinh.html">
+      Mở trung tâm GPS →
+    </a>
 
   </div>
 
   <div id="gpsGrid" class="gps-grid">
-    <div class="empty">Đang tải vị trí GPS...</div>
+
+    <div class="empty">
+      Đang tải GPS...
+    </div>
+
   </div>
 
 </div>
 
+
 <!-- =====================================================
-     DRIVERS
+     TÀI XẾ
 ===================================================== -->
 
 <div class="panel">
@@ -1289,13 +1147,18 @@ tbody tr:hover{
   <div class="panel-head">
 
     <div>
-      <h3>👨‍✈️ Tài xế / Nhà xe mới</h3>
+
+      <h3>👨‍✈️ Tài xế mới nhất</h3>
+
       <div class="panel-subtitle">
-        Dữ liệu trực tiếp từ profiles
+        Tài khoản thật từ bảng profiles
       </div>
+
     </div>
 
-    <a href="ho-so-tai-xe.html">Xem tài xế →</a>
+    <a href="ho-so-tai-xe.html">
+      Hồ sơ tài xế →
+    </a>
 
   </div>
 
@@ -1304,21 +1167,25 @@ tbody tr:hover{
     <table>
 
       <thead>
-      <tr>
-        <th>Họ tên</th>
-        <th>Vai trò</th>
-        <th>Điện thoại</th>
-        <th>Email</th>
-        <th>Công ty</th>
-        <th>Khu vực</th>
-        <th>Ngày đăng ký</th>
-      </tr>
+
+        <tr>
+          <th>Họ tên</th>
+          <th>Số điện thoại</th>
+          <th>Email</th>
+          <th>Công ty</th>
+          <th>Thành phố</th>
+        </tr>
+
       </thead>
 
       <tbody id="driversTable">
-      <tr>
-        <td colspan="7" class="loading-row">Đang tải...</td>
-      </tr>
+
+        <tr>
+          <td colspan="5" class="loading-row">
+            Đang tải...
+          </td>
+        </tr>
+
       </tbody>
 
     </table>
@@ -1327,8 +1194,9 @@ tbody tr:hover{
 
 </div>
 
+
 <div class="footer">
-  © 2026 VietTrucks.com • Trung tâm điều hành vận tải
+  © 2026 VietTrucks.com — Trung tâm điều hành vận tải
 </div>
 
 </section>
@@ -1337,27 +1205,48 @@ tbody tr:hover{
 
 </div>
 
+
 <!-- =====================================================
      SUPABASE
 ===================================================== -->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
-<script src="auth.js"></script>
+<script src="assets/js/supabase.js"></script>
+<script src="assets/js/auth.js"></script>
 
 <script>
 
 /* =====================================================
-   SUPABASE CLIENT
+   VIETTRUCKS ADMIN PRODUCTION
+
+   ADMIN:
+   - Đọc dữ liệu thật
+   - Giám sát trips
+   - Giám sát GPS
+   - KHÔNG update GPS
+   - KHÔNG update trips trực tiếp
+
+   Database/RLS quyết định quyền thực tế.
 ===================================================== */
 
-const supabaseClient = window.supabaseClient;
+const sidebar =
+  document.getElementById("sidebar");
+
+const menuButton =
+  document.getElementById("menuButton");
+
+const refreshButton =
+  document.getElementById("refreshButton");
+
+const logoutLink =
+  document.getElementById("logoutLink");
+
 
 /* =====================================================
-   HELPERS
+   HTML ESCAPE
 ===================================================== */
 
 function esc(value){
+
   return String(value ?? "")
     .replaceAll("&","&amp;")
     .replaceAll("<","&lt;")
@@ -1366,68 +1255,97 @@ function esc(value){
     .replaceAll("'","&#039;");
 }
 
-function shortId(value){
-  if(!value) return "—";
-  return String(value).split("-")[0].toUpperCase();
-}
+
+/* =====================================================
+   FORMAT
+===================================================== */
 
 function money(value){
-  if(value === null || value === undefined || value === ""){
+
+  if(
+    value === null ||
+    value === undefined ||
+    value === ""
+  ){
     return "Thỏa thuận";
   }
 
-  const number = Number(value);
+  const number =
+    Number(value);
 
-  if(Number.isNaN(number)){
-    return esc(value);
+  if(!Number.isFinite(number)){
+    return "Thỏa thuận";
   }
 
-  return number.toLocaleString("vi-VN") + " đ";
+  return new Intl.NumberFormat(
+    "vi-VN"
+  ).format(number) + " đ";
 }
 
-function dateVN(value){
-
-  if(!value) return "—";
-
-  const d = new Date(value);
-
-  if(Number.isNaN(d.getTime())){
-    return esc(value);
-  }
-
-  return d.toLocaleDateString("vi-VN");
-}
 
 function dateTimeVN(value){
 
-  if(!value) return "—";
-
-  const d = new Date(value);
-
-  if(Number.isNaN(d.getTime())){
+  if(!value){
     return "—";
   }
 
-  return d.toLocaleString("vi-VN");
-}
+  const date =
+    new Date(value);
 
-function setNumber(id,value){
-
-  const el = document.getElementById(id);
-
-  if(el){
-    el.textContent =
-      Number(value || 0).toLocaleString("vi-VN");
+  if(
+    Number.isNaN(
+      date.getTime()
+    )
+  ){
+    return "—";
   }
+
+  return new Intl.DateTimeFormat(
+    "vi-VN",
+    {
+      day:"2-digit",
+      month:"2-digit",
+      year:"numeric",
+      hour:"2-digit",
+      minute:"2-digit"
+    }
+  ).format(date);
 }
+
+
+function shortId(value){
+
+  if(!value){
+    return "—";
+  }
+
+  const string =
+    String(value);
+
+  if(string.length <= 10){
+    return string;
+  }
+
+  return string.slice(0,8) + "...";
+}
+
 
 function normalizeStatus(value){
-  return String(value || "").trim().toLowerCase();
+
+  return String(value || "")
+    .trim()
+    .toLowerCase();
 }
 
-function statusInfo(value){
 
-  const status = normalizeStatus(value);
+/* =====================================================
+   STATUS
+===================================================== */
+
+function statusBadge(value){
+
+  const status =
+    normalizeStatus(value);
 
   const map = {
 
@@ -1436,24 +1354,9 @@ function statusInfo(value){
       color:"yellow"
     },
 
-    open:{
-      text:"Đang mở",
-      color:"green"
-    },
-
     available:{
-      text:"Xe trống",
+      text:"Đang trống",
       color:"green"
-    },
-
-    searching:{
-      text:"Đang tìm",
-      color:"yellow"
-    },
-
-    quoted:{
-      text:"Có báo giá",
-      color:"purple"
     },
 
     accepted:{
@@ -1466,24 +1369,49 @@ function statusInfo(value){
       color:"blue"
     },
 
+    waiting_pickup:{
+      text:"Chờ lấy hàng",
+      color:"yellow"
+    },
+
     active:{
-      text:"Đang hoạt động",
+      text:"Đang chạy",
+      color:"green"
+    },
+
+    started:{
+      text:"Đã bắt đầu",
       color:"green"
     },
 
     in_progress:{
       text:"Đang vận chuyển",
-      color:"orange"
+      color:"green"
     },
 
     transporting:{
       text:"Đang vận chuyển",
-      color:"orange"
+      color:"green"
+    },
+
+    delivering:{
+      text:"Đang giao",
+      color:"green"
     },
 
     completed:{
       text:"Hoàn thành",
-      color:"green"
+      color:"blue"
+    },
+
+    delivered:{
+      text:"Đã giao",
+      color:"blue"
+    },
+
+    rejected:{
+      text:"Từ chối",
+      color:"red"
     },
 
     cancelled:{
@@ -1491,8 +1419,8 @@ function statusInfo(value){
       color:"red"
     },
 
-    rejected:{
-      text:"Từ chối",
+    canceled:{
+      text:"Đã hủy",
       color:"red"
     },
 
@@ -1503,33 +1431,41 @@ function statusInfo(value){
 
   };
 
-  return map[status] || {
-    text:value || "Chưa xác định",
-    color:"gray"
-  };
-}
-
-function statusBadge(value){
-
-  const info = statusInfo(value);
+  const item =
+    map[status] || {
+      text:value || "Chưa xác định",
+      color:"gray"
+    };
 
   return `
-    <span class="status ${info.color}">
-      ${esc(info.text)}
+    <span class="status ${item.color}">
+      ${esc(item.text)}
     </span>
   `;
 }
 
-function emptyRow(colspan,message){
+
+/* =====================================================
+   EMPTY ROW
+===================================================== */
+
+function emptyRow(
+  colspan,
+  message
+){
 
   return `
     <tr>
-      <td colspan="${colspan}" class="loading-row">
+      <td
+        colspan="${colspan}"
+        class="loading-row"
+      >
         ${esc(message)}
       </td>
     </tr>
   `;
 }
+
 
 /* =====================================================
    CLOCK
@@ -1537,399 +1473,74 @@ function emptyRow(colspan,message){
 
 function updateClock(){
 
-  const now = new Date();
+  const now =
+    new Date();
 
-  document.getElementById("clock").textContent =
-    now.toLocaleTimeString(
-      "vi-VN",
-      {
-        hour:"2-digit",
-        minute:"2-digit"
-      }
-    );
+  document
+    .getElementById("clock")
+    .textContent =
+      new Intl.DateTimeFormat(
+        "vi-VN",
+        {
+          hour:"2-digit",
+          minute:"2-digit",
+          second:"2-digit"
+        }
+      ).format(now);
 
-  document.getElementById("today").textContent =
-    now.toLocaleDateString(
-      "vi-VN",
-      {
-        weekday:"long",
-        day:"2-digit",
-        month:"2-digit",
-        year:"numeric"
-      }
-    );
+  document
+    .getElementById("today")
+    .textContent =
+      new Intl.DateTimeFormat(
+        "vi-VN",
+        {
+          weekday:"long",
+          day:"2-digit",
+          month:"2-digit",
+          year:"numeric"
+        }
+      ).format(now);
 }
 
 updateClock();
-setInterval(updateClock,30000);
+
+setInterval(
+  updateClock,
+  1000
+);
+
 
 /* =====================================================
    SIDEBAR
 ===================================================== */
 
-const sidebar =
-  document.getElementById("sidebar");
-
-document
-  .getElementById("menuButton")
-  .addEventListener("click",(event)=>{
-
-    event.stopPropagation();
-
-    sidebar.classList.toggle("open");
-
-  });
-
-document.addEventListener("click",(event)=>{
-
-  if(
-    window.innerWidth <= 800 &&
-    sidebar.classList.contains("open") &&
-    !sidebar.contains(event.target) &&
-    !document.getElementById("menuButton").contains(event.target)
-  ){
-    sidebar.classList.remove("open");
-  }
-
-});
-
-/* =====================================================
-   PROTECT ADMIN
-===================================================== */
-
-async function protectAdminPage(){
-
-  if(!supabaseClient){
-    alert("Không kết nối được Supabase.");
-    return null;
-  }
-
-  const {
-    data:{
-      session
-    },
-    error
-  } = await supabaseClient.auth.getSession();
-
-  if(error || !session){
-
-    localStorage.removeItem(
-      "viettruck_logged_in"
-    );
-
-    localStorage.removeItem(
-      "viettruck_current_user"
-    );
-
-    window.location.replace(
-      "dang-nhap.html"
-    );
-
-    return null;
-  }
-
-  const {
-    data:profile,
-    error:profileError
-  } = await supabaseClient
-    .from("profiles")
-    .select(`
-      id,
-      email,
-      full_name,
-      role,
-      phone,
-      city,
-      company_name
-    `)
-    .eq("id",session.user.id)
-    .single();
-
-  if(
-    profileError ||
-    !profile ||
-    profile.role !== "admin"
-  ){
-
-    if(profile && profile.role !== "admin"){
-      window.location.replace(
-        "dashboard.html"
-      );
-      return null;
+menuButton
+  ?.addEventListener(
+    "click",
+    ()=>{
+      sidebar.classList.toggle("open");
     }
-
-    await supabaseClient.auth.signOut();
-
-    window.location.replace(
-      "dang-nhap.html"
-    );
-
-    return null;
-  }
-
-  document.getElementById(
-    "adminName"
-  ).textContent =
-    profile.full_name ||
-    session.user.email ||
-    "Admin VietTrucks";
-
-  localStorage.setItem(
-    "viettruck_logged_in",
-    "true"
   );
 
-  localStorage.setItem(
-    "viettruck_current_user",
-    JSON.stringify({
-      id:session.user.id,
-      email:session.user.email,
-      name:
-        profile.full_name ||
-        session.user.email,
-      role:"admin"
-    })
-  );
 
-  return {
-    session,
-    profile
-  };
-}
+document.addEventListener(
+  "click",
+  event=>{
+
+    if(
+      window.innerWidth <= 800 &&
+      sidebar.classList.contains("open") &&
+      !sidebar.contains(event.target) &&
+      !menuButton.contains(event.target)
+    ){
+      sidebar.classList.remove("open");
+    }
+  }
+);
+
 
 /* =====================================================
-   ORDERS
-===================================================== */
-
-async function loadOrders(){
-
-  const table =
-    document.getElementById("ordersTable");
-
-  const {
-    data,
-    error
-  } = await supabaseClient
-    .from("orders")
-    .select(`
-      id,
-      pickup_location,
-      delivery_location,
-      cargo_type,
-      weight,
-      vehicle_type,
-      price,
-      pickup_date,
-      status,
-      created_at,
-      customer_name,
-      customer_company,
-      posted_by_admin
-    `)
-    .order(
-      "created_at",
-      {ascending:false}
-    )
-    .limit(10);
-
-  if(error){
-
-    console.error(
-      "orders:",
-      error
-    );
-
-    table.innerHTML =
-      emptyRow(
-        8,
-        "Không tải được đơn hàng."
-      );
-
-    return [];
-  }
-
-  const rows = data || [];
-
-  if(!rows.length){
-
-    table.innerHTML =
-      emptyRow(
-        8,
-        "Chưa có đơn hàng."
-      );
-
-    return [];
-  }
-
-  table.innerHTML =
-    rows.map(order=>{
-
-      const customer =
-        order.customer_company ||
-        order.customer_name ||
-        (
-          order.posted_by_admin
-            ? "Admin đăng hộ"
-            : "Khách hàng"
-        );
-
-      const route =
-        `${order.pickup_location || "—"} → ${order.delivery_location || "—"}`;
-
-      return `
-        <tr>
-          <td>
-            <strong>${shortId(order.id)}</strong>
-          </td>
-
-          <td>${esc(customer)}</td>
-
-          <td>${esc(route)}</td>
-
-          <td>
-            ${esc(order.cargo_type || "—")}
-            ${
-              order.weight != null
-                ? `<br><small>${esc(order.weight)} tấn</small>`
-                : ""
-            }
-          </td>
-
-          <td>${esc(order.vehicle_type || "—")}</td>
-
-          <td>
-            <strong>${money(order.price)}</strong>
-          </td>
-
-          <td>${dateVN(order.pickup_date)}</td>
-
-          <td>
-            ${statusBadge(order.status)}
-          </td>
-        </tr>
-      `;
-
-    }).join("");
-
-  return rows;
-}
-
-/* =====================================================
-   VEHICLES
-===================================================== */
-
-async function loadVehicles(){
-
-  const table =
-    document.getElementById("vehiclesTable");
-
-  const {
-    data,
-    error
-  } = await supabaseClient
-    .from("vehicles")
-    .select(`
-      id,
-      plate_number,
-      vehicle_type,
-      capacity,
-      current_location,
-      destination,
-      status,
-      available_date,
-      driver_name,
-      driver_phone,
-      owner_name,
-      owner_company,
-      created_at
-    `)
-    .order(
-      "created_at",
-      {ascending:false}
-    )
-    .limit(10);
-
-  if(error){
-
-    console.error(
-      "vehicles:",
-      error
-    );
-
-    table.innerHTML =
-      emptyRow(
-        6,
-        "Không tải được danh sách xe."
-      );
-
-    return [];
-  }
-
-  const rows = data || [];
-
-  if(!rows.length){
-
-    table.innerHTML =
-      emptyRow(
-        6,
-        "Chưa có xe."
-      );
-
-    return [];
-  }
-
-  table.innerHTML =
-    rows.map(vehicle=>{
-
-      return `
-        <tr>
-
-          <td>
-            <strong>
-              ${esc(vehicle.plate_number || "—")}
-            </strong>
-          </td>
-
-          <td>
-            ${esc(vehicle.vehicle_type || "—")}
-            ${
-              vehicle.capacity != null
-                ? `<br><small>${esc(vehicle.capacity)} tấn</small>`
-                : ""
-            }
-          </td>
-
-          <td>
-            ${esc(vehicle.current_location || "—")}
-          </td>
-
-          <td>
-            ${esc(vehicle.destination || "—")}
-          </td>
-
-          <td>
-            ${esc(
-              vehicle.driver_name ||
-              vehicle.owner_name ||
-              vehicle.owner_company ||
-              "—"
-            )}
-          </td>
-
-          <td>
-            ${statusBadge(vehicle.status)}
-          </td>
-
-        </tr>
-      `;
-
-    }).join("");
-
-  return rows;
-}
-
-/* =====================================================
-   PROFILES
+   LOAD PROFILES
 ===================================================== */
 
 async function loadProfiles(){
@@ -1953,7 +1564,8 @@ async function loadProfiles(){
     .order(
       "created_at",
       {ascending:false}
-    );
+    )
+    .limit(1000);
 
   if(error){
 
@@ -1968,14 +1580,298 @@ async function loadProfiles(){
   return data || [];
 }
 
+
+/* =====================================================
+   PROFILE MAP
+===================================================== */
+
+function makeProfileMap(
+  profiles
+){
+
+  const map =
+    new Map();
+
+  profiles.forEach(
+    profile=>{
+      map.set(
+        profile.id,
+        profile
+      );
+    }
+  );
+
+  return map;
+}
+
+
+/* =====================================================
+   ORDERS
+===================================================== */
+
+async function loadOrders(){
+
+  const table =
+    document.getElementById(
+      "ordersTable"
+    );
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("orders")
+    .select(`
+      id,
+      pickup_location,
+      delivery_location,
+      cargo_type,
+      weight,
+      vehicle_type,
+      price,
+      status,
+      pickup_date,
+      created_at
+    `)
+    .order(
+      "created_at",
+      {ascending:false}
+    )
+    .limit(100);
+
+  if(error){
+
+    console.error(
+      "orders:",
+      error
+    );
+
+    table.innerHTML =
+      emptyRow(
+        5,
+        "Không tải được đơn hàng."
+      );
+
+    return [];
+  }
+
+  const rows =
+    data || [];
+
+  if(!rows.length){
+
+    table.innerHTML =
+      emptyRow(
+        5,
+        "Chưa có đơn hàng."
+      );
+
+    return [];
+  }
+
+  table.innerHTML =
+    rows
+      .slice(0,10)
+      .map(order=>{
+
+        return `
+          <tr>
+
+            <td>
+              <strong>
+                ${esc(
+                  order.pickup_location ||
+                  "Chưa cập nhật"
+                )}
+              </strong>
+
+              <br>
+
+              <span style="color:#94a3b8">
+                →
+                ${esc(
+                  order.delivery_location ||
+                  "Chưa cập nhật"
+                )}
+              </span>
+            </td>
+
+            <td>
+              ${esc(
+                order.cargo_type ||
+                "—"
+              )}
+            </td>
+
+            <td>
+              ${esc(
+                order.vehicle_type ||
+                "—"
+              )}
+            </td>
+
+            <td>
+              <strong>
+                ${money(order.price)}
+              </strong>
+            </td>
+
+            <td>
+              ${statusBadge(order.status)}
+            </td>
+
+          </tr>
+        `;
+
+      })
+      .join("");
+
+  return rows;
+}
+
+
+/* =====================================================
+   VEHICLES
+===================================================== */
+
+async function loadVehicles(){
+
+  const table =
+    document.getElementById(
+      "vehiclesTable"
+    );
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("vehicles")
+    .select(`
+      id,
+      created_at,
+      user_id,
+      plate_number,
+      vehicle_type,
+      capacity,
+      current_location,
+      destination,
+      status,
+      available_date,
+      driver_name,
+      driver_phone
+    `)
+    .order(
+      "created_at",
+      {ascending:false}
+    )
+    .limit(100);
+
+  if(error){
+
+    console.error(
+      "vehicles:",
+      error
+    );
+
+    table.innerHTML =
+      emptyRow(
+        5,
+        "Không tải được xe."
+      );
+
+    return [];
+  }
+
+  const rows =
+    data || [];
+
+  if(!rows.length){
+
+    table.innerHTML =
+      emptyRow(
+        5,
+        "Chưa có xe."
+      );
+
+    return [];
+  }
+
+  table.innerHTML =
+    rows
+      .slice(0,10)
+      .map(vehicle=>{
+
+        return `
+          <tr>
+
+            <td>
+              <strong>
+                ${esc(
+                  vehicle.vehicle_type ||
+                  "Chưa cập nhật"
+                )}
+              </strong>
+
+              ${
+                vehicle.capacity !== null &&
+                vehicle.capacity !== undefined
+                  ? `
+                    <br>
+                    <span style="color:#94a3b8">
+                      ${esc(vehicle.capacity)} tấn
+                    </span>
+                  `
+                  : ""
+              }
+            </td>
+
+            <td>
+              ${esc(
+                vehicle.plate_number ||
+                "—"
+              )}
+            </td>
+
+            <td>
+              ${esc(
+                vehicle.current_location ||
+                "—"
+              )}
+            </td>
+
+            <td>
+              ${esc(
+                vehicle.destination ||
+                "—"
+              )}
+            </td>
+
+            <td>
+              ${statusBadge(vehicle.status)}
+            </td>
+
+          </tr>
+        `;
+
+      })
+      .join("");
+
+  return rows;
+}
+
+
 /* =====================================================
    QUOTES
 ===================================================== */
 
-async function loadQuotes(profileMap){
+async function loadQuotes(
+  profileMap
+){
 
   const table =
-    document.getElementById("quotesTable");
+    document.getElementById(
+      "quotesTable"
+    );
 
   const {
     data,
@@ -1996,7 +1892,7 @@ async function loadQuotes(profileMap){
       "created_at",
       {ascending:false}
     )
-    .limit(10);
+    .limit(100);
 
   if(error){
 
@@ -2007,20 +1903,21 @@ async function loadQuotes(profileMap){
 
     table.innerHTML =
       emptyRow(
-        5,
+        6,
         "Không tải được báo giá."
       );
 
     return [];
   }
 
-  const rows = data || [];
+  const rows =
+    data || [];
 
   if(!rows.length){
 
     table.innerHTML =
       emptyRow(
-        5,
+        6,
         "Chưa có báo giá."
       );
 
@@ -2028,60 +1925,96 @@ async function loadQuotes(profileMap){
   }
 
   table.innerHTML =
-    rows.map(quote=>{
+    rows
+      .slice(0,10)
+      .map(quote=>{
 
-      const profile =
-        profileMap.get(quote.user_id);
+        const profile =
+          profileMap.get(
+            quote.user_id
+          );
 
-      const user =
-        profile?.company_name ||
-        profile?.full_name ||
-        profile?.phone ||
-        shortId(quote.user_id);
+        const name =
+          profile?.full_name ||
+          profile?.company_name ||
+          profile?.phone ||
+          shortId(
+            quote.user_id
+          );
 
-      return `
-        <tr>
+        return `
+          <tr>
 
-          <td>
-            <strong>
-              ${shortId(quote.order_id)}
-            </strong>
-          </td>
+            <td>
+              <strong>
+                ${shortId(quote.id)}
+              </strong>
+            </td>
 
-          <td>
-            ${esc(user)}
-          </td>
+            <td>
+              ${shortId(
+                quote.order_id
+              )}
+            </td>
 
-          <td>
-            <strong>
-              ${money(quote.price)}
-            </strong>
-          </td>
+            <td>
+              ${esc(name)}
+            </td>
 
-          <td>
-            ${esc(quote.message || "—")}
-          </td>
+            <td>
+              <strong>
+                ${money(quote.price)}
+              </strong>
+            </td>
 
-          <td>
-            ${statusBadge(quote.status)}
-          </td>
+            <td>
+              ${statusBadge(
+                quote.status
+              )}
+            </td>
 
-        </tr>
-      `;
+            <td>
+              ${dateTimeVN(
+                quote.created_at
+              )}
+            </td>
 
-    }).join("");
+          </tr>
+        `;
+
+      })
+      .join("");
 
   return rows;
 }
 
+
 /* =====================================================
    TRIPS
+   ADMIN SELECT ONLY
 ===================================================== */
 
-async function loadTrips(profileMap){
+async function loadTrips(
+  profileMap
+){
 
   const table =
-    document.getElementById("tripsTable");
+    document.getElementById(
+      "tripsTable"
+    );
+
+  /*
+   * QUAN TRỌNG:
+   *
+   * Chỉ SELECT.
+   *
+   * Không:
+   * .update()
+   * .insert()
+   * .delete()
+   *
+   * RLS trips hiện chỉ cho SELECT.
+   */
 
   const {
     data,
@@ -2108,7 +2041,7 @@ async function loadTrips(profileMap){
       "created_at",
       {ascending:false}
     )
-    .limit(30);
+    .limit(100);
 
   if(error){
 
@@ -2119,20 +2052,21 @@ async function loadTrips(profileMap){
 
     table.innerHTML =
       emptyRow(
-        7,
+        8,
         "Không tải được chuyến."
       );
 
     return [];
   }
 
-  const rows = data || [];
+  const rows =
+    data || [];
 
   if(!rows.length){
 
     table.innerHTML =
       emptyRow(
-        7,
+        8,
         "Chưa có chuyến vận chuyển."
       );
 
@@ -2140,423 +2074,667 @@ async function loadTrips(profileMap){
   }
 
   table.innerHTML =
-    rows.slice(0,10).map(trip=>{
+    rows
+      .slice(0,10)
+      .map(trip=>{
 
-      const driver =
-        profileMap.get(trip.driver_id);
+        const driver =
+          profileMap.get(
+            trip.driver_id
+          );
 
-      const driverName =
-        driver?.full_name ||
-        driver?.company_name ||
-        driver?.phone ||
-        shortId(trip.driver_id);
+        const driverName =
+          driver?.full_name ||
+          driver?.company_name ||
+          driver?.phone ||
+          shortId(
+            trip.driver_id
+          );
 
-      return `
-        <tr>
+        const hasGps =
+          trip.current_latitude !== null &&
+          trip.current_latitude !== undefined &&
+          trip.current_longitude !== null &&
+          trip.current_longitude !== undefined;
 
-          <td>
-            <strong>${shortId(trip.id)}</strong>
-          </td>
+        const lat =
+          hasGps
+            ? Number(
+                trip.current_latitude
+              )
+            : null;
 
-          <td>${shortId(trip.order_id)}</td>
+        const lng =
+          hasGps
+            ? Number(
+                trip.current_longitude
+              )
+            : null;
 
-          <td>${esc(driverName)}</td>
+        const mapUrl =
+          hasGps
+            ? `https://www.google.com/maps?q=${encodeURIComponent(lat)},${encodeURIComponent(lng)}`
+            : "";
 
-          <td>
-            <strong>
-              ${money(trip.agreed_price)}
-            </strong>
-          </td>
+        return `
+          <tr>
 
-          <td>
-            ${statusBadge(trip.status)}
-          </td>
+            <td>
+              <strong>
+                ${shortId(trip.id)}
+              </strong>
+            </td>
 
-          <td>
-            ${dateTimeVN(
-              trip.started_at ||
-              trip.created_at
-            )}
-          </td>
+            <td>
+              ${shortId(
+                trip.order_id
+              )}
+            </td>
 
-          <td>
-            ${dateTimeVN(trip.last_location_at)}
-          </td>
+            <td>
+              ${esc(driverName)}
+            </td>
 
-        </tr>
-      `;
+            <td>
+              <strong>
+                ${money(
+                  trip.agreed_price
+                )}
+              </strong>
+            </td>
 
-    }).join("");
+            <td>
+              ${statusBadge(
+                trip.status
+              )}
+            </td>
+
+            <td>
+              ${dateTimeVN(
+                trip.started_at ||
+                trip.created_at
+              )}
+            </td>
+
+            <td>
+              ${dateTimeVN(
+                trip.last_location_at
+              )}
+            </td>
+
+            <td>
+
+              ${
+                hasGps
+                  ? `
+                    <a
+                      class="action-btn blue"
+                      href="${mapUrl}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      📍 Theo dõi
+                    </a>
+                  `
+                  : `
+                    <span
+                      style="
+                        color:#94a3b8;
+                        font-size:11px
+                      "
+                    >
+                      Chưa có GPS
+                    </span>
+                  `
+              }
+
+            </td>
+
+          </tr>
+        `;
+
+      })
+      .join("");
 
   return rows;
 }
-
-/* =====================================================
+  /* =====================================================
    DRIVER TABLE
 ===================================================== */
 
-function renderDrivers(profiles){
+function loadDrivers(profiles){
 
   const table =
-    document.getElementById("driversTable");
+    document.getElementById(
+      "driversTable"
+    );
 
   const drivers =
-    profiles
-      .filter(profile=>{
-        const role =
-          String(profile.role || "")
-            .toLowerCase();
-
-        return (
-          role === "driver" ||
-          role === "carrier"
-        );
-      })
-      .slice(0,12);
+    profiles.filter(profile=>
+      normalizeStatus(profile.role) === "driver"
+    );
 
   if(!drivers.length){
 
     table.innerHTML =
       emptyRow(
-        7,
-        "Chưa có tài khoản tài xế / nhà xe."
+        5,
+        "Chưa có tài xế."
       );
 
-    return;
+    return drivers;
   }
 
   table.innerHTML =
-    drivers.map(profile=>{
+    drivers
+      .slice(0,10)
+      .map(driver=>{
 
-      const role =
-        profile.role === "driver"
-          ? "Tài xế"
-          : profile.role === "carrier"
-            ? "Nhà xe"
-            : profile.role;
+        return `
+          <tr>
 
-      return `
-        <tr>
+            <td>
+              <strong>
+                ${esc(
+                  driver.full_name ||
+                  "Chưa cập nhật"
+                )}
+              </strong>
+            </td>
 
-          <td>
-            <strong>
-              ${esc(profile.full_name || "—")}
-            </strong>
-          </td>
+            <td>
+              ${esc(
+                driver.phone ||
+                "—"
+              )}
+            </td>
 
-          <td>${esc(role || "—")}</td>
+            <td>
+              ${esc(
+                driver.email ||
+                "—"
+              )}
+            </td>
 
-          <td>${esc(profile.phone || "—")}</td>
+            <td>
+              ${esc(
+                driver.company_name ||
+                "—"
+              )}
+            </td>
 
-          <td>${esc(profile.email || "—")}</td>
+            <td>
+              ${esc(
+                driver.city ||
+                "—"
+              )}
+            </td>
 
-          <td>
-            ${esc(profile.company_name || "—")}
-          </td>
+          </tr>
+        `;
 
-          <td>${esc(profile.city || "—")}</td>
+      })
+      .join("");
 
-          <td>${dateVN(profile.created_at)}</td>
-
-        </tr>
-      `;
-
-    }).join("");
+  return drivers;
 }
 
+
 /* =====================================================
-   GPS
+   GPS ĐANG CHẠY
+   ADMIN CHỈ GIÁM SÁT
 ===================================================== */
 
-function renderGps(trips,profileMap){
+function renderGps(
+  trips,
+  profileMap
+){
 
   const container =
-    document.getElementById("gpsGrid");
+    document.getElementById(
+      "gpsGrid"
+    );
+
+  /*
+   * Chỉ những trạng thái được xem là
+   * chuyến đang hoạt động mới xuất hiện
+   * trong khu vực GPS đang chạy.
+   */
+
+  const liveGpsStatuses =
+    new Set([
+      "waiting_pickup",
+      "accepted",
+      "confirmed",
+      "active",
+      "started",
+      "in_progress",
+      "transporting",
+      "delivering"
+    ]);
 
   const gpsTrips =
     trips.filter(trip=>
-      trip.current_latitude !== null &&
-      trip.current_latitude !== undefined &&
-      trip.current_longitude !== null &&
-      trip.current_longitude !== undefined
-    );
 
-  setNumber(
-    "statGps",
-    gpsTrips.length
-  );
+      trip.current_latitude !== null &&
+
+      trip.current_latitude !== undefined &&
+
+      trip.current_longitude !== null &&
+
+      trip.current_longitude !== undefined &&
+
+      liveGpsStatuses.has(
+        normalizeStatus(
+          trip.status
+        )
+      )
+
+    );
 
   if(!gpsTrips.length){
 
     container.innerHTML = `
-      <div class="empty">
-        Chưa có chuyến nào gửi tọa độ GPS.
+      <div
+        class="empty"
+        style="grid-column:1/-1"
+      >
+        Hiện chưa có chuyến đang chạy gửi vị trí GPS.
       </div>
     `;
 
-    return;
+    return [];
   }
 
+
   container.innerHTML =
-    gpsTrips.slice(0,9).map(trip=>{
+    gpsTrips
+      .slice(0,12)
+      .map(trip=>{
 
-      const driver =
-        profileMap.get(trip.driver_id);
+        const driver =
+          profileMap.get(
+            trip.driver_id
+          );
 
-      const driverName =
-        driver?.full_name ||
-        driver?.company_name ||
-        driver?.phone ||
-        "Chưa xác định tài xế";
+        const driverName =
+          driver?.full_name ||
+          driver?.company_name ||
+          driver?.phone ||
+          shortId(
+            trip.driver_id
+          );
 
-      const lat =
-        Number(trip.current_latitude);
+        const lat =
+          Number(
+            trip.current_latitude
+          );
 
-      const lng =
-        Number(trip.current_longitude);
+        const lng =
+          Number(
+            trip.current_longitude
+          );
 
-      const mapUrl =
-        `https://www.google.com/maps?q=${encodeURIComponent(lat)},${encodeURIComponent(lng)}`;
+        const mapUrl =
+          `https://www.google.com/maps?q=${encodeURIComponent(lat)},${encodeURIComponent(lng)}`;
 
-      return `
-        <div class="gps-card">
+        return `
+          <div class="gps-card">
 
-          <div class="gps-top">
+            <div class="gps-top">
 
-            <strong>
-              🚚 ${esc(driverName)}
-            </strong>
+              <div>
 
-            ${statusBadge(trip.status)}
+                <strong>
+                  🚚 ${esc(driverName)}
+                </strong>
+
+                <p>
+                  Chuyến:
+                  ${shortId(trip.id)}
+                </p>
+
+              </div>
+
+              ${statusBadge(
+                trip.status
+              )}
+
+            </div>
+
+
+            <p>
+              <strong>Đơn:</strong>
+              ${shortId(
+                trip.order_id
+              )}
+            </p>
+
+
+            <div class="gps-coordinates">
+
+              📍 ${esc(lat)}, ${esc(lng)}
+
+            </div>
+
+
+            <p>
+              Cập nhật cuối:
+              <strong>
+                ${dateTimeVN(
+                  trip.last_location_at
+                )}
+              </strong>
+            </p>
+
+
+            <div style="margin-top:12px">
+
+              <a
+                class="action-btn blue"
+                href="${mapUrl}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                📍 Xem bản đồ
+              </a>
+
+            </div>
 
           </div>
+        `;
 
-          <p>
-            Chuyến:
-            <strong>${shortId(trip.id)}</strong>
-          </p>
+      })
+      .join("");
 
-          <p>
-            Đơn:
-            ${shortId(trip.order_id)}
-          </p>
-
-          <div class="gps-coordinates">
-            ${lat}, ${lng}
-          </div>
-
-          <p>
-            Cập nhật:
-            ${dateTimeVN(trip.last_location_at)}
-          </p>
-
-          <br>
-
-          <a
-            class="action-btn blue"
-            href="${mapUrl}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            📍 Xem bản đồ
-          </a>
-
-        </div>
-      `;
-
-    }).join("");
+  return gpsTrips;
 }
 
+
 /* =====================================================
-   DASHBOARD STATS
+   STATISTICS
 ===================================================== */
 
-function renderStats({
+function updateStatistics({
+  profiles,
   orders,
   vehicles,
   quotes,
   trips,
-  profiles
+  drivers,
+  gpsTrips
 }){
 
-  const pendingOrderStatuses =
-    new Set([
-      "pending",
-      "open",
-      "searching",
-      "quoted"
-    ]);
-
   const pendingOrders =
-    orders.filter(order=>
-      pendingOrderStatuses.has(
-        normalizeStatus(order.status)
-      )
-    ).length;
+    orders.filter(order=>{
 
-  const availableVehicleStatuses =
-    new Set([
-      "available",
-      "open",
-      "active",
-      "pending"
-    ]);
+      const status =
+        normalizeStatus(
+          order.status
+        );
+
+      return (
+        status === "pending" ||
+        status === "open" ||
+        status === "waiting"
+      );
+
+    }).length;
+
 
   const availableVehicles =
-    vehicles.filter(vehicle=>
-      availableVehicleStatuses.has(
-        normalizeStatus(vehicle.status)
-      )
-    ).length;
+    vehicles.filter(vehicle=>{
 
-  const drivers =
-    profiles.filter(profile=>
-      normalizeStatus(profile.role) === "driver"
-    ).length;
+      const status =
+        normalizeStatus(
+          vehicle.status
+        );
 
-  const completed =
-    trips.filter(trip=>
-      normalizeStatus(trip.status) === "completed"
-    ).length;
+      return (
+        status === "available" ||
+        status === "empty" ||
+        status === "ready"
+      );
 
-  setNumber(
-    "statPendingOrders",
-    pendingOrders
-  );
+    }).length;
 
-  setNumber(
-    "statAvailableVehicles",
-    availableVehicles
-  );
 
-  setNumber(
-    "statQuotes",
-    quotes.length
-  );
+  const completedTrips =
+    trips.filter(trip=>{
 
-  setNumber(
-    "statTrips",
-    trips.length
-  );
+      const status =
+        normalizeStatus(
+          trip.status
+        );
 
-  setNumber(
-    "statDrivers",
-    drivers
-  );
+      return (
+        status === "completed" ||
+        status === "delivered"
+      );
 
-  setNumber(
-    "statAccounts",
-    profiles.length
-  );
+    }).length;
 
-  setNumber(
-    "statCompleted",
-    completed
-  );
+
+  document
+    .getElementById(
+      "statPendingOrders"
+    )
+    .textContent =
+      pendingOrders;
+
+
+  document
+    .getElementById(
+      "statAvailableVehicles"
+    )
+    .textContent =
+      availableVehicles;
+
+
+  document
+    .getElementById(
+      "statQuotes"
+    )
+    .textContent =
+      quotes.length;
+
+
+  document
+    .getElementById(
+      "statTrips"
+    )
+    .textContent =
+      trips.length;
+
+
+  document
+    .getElementById(
+      "statGps"
+    )
+    .textContent =
+      gpsTrips.length;
+
+
+  document
+    .getElementById(
+      "statDrivers"
+    )
+    .textContent =
+      drivers.length;
+
+
+  document
+    .getElementById(
+      "statAccounts"
+    )
+    .textContent =
+      profiles.length;
+
+
+  document
+    .getElementById(
+      "statCompleted"
+    )
+    .textContent =
+      completedTrips;
 }
 
+
 /* =====================================================
-   COUNT ALL DATA
-   Dùng count exact để thống kê không bị giới hạn
+   ADMIN PROFILE
 ===================================================== */
 
-async function loadExactCounts(){
+function showAdminProfile(
+  user,
+  profile
+){
 
-  try{
+  const name =
+    profile?.full_name ||
+    profile?.company_name ||
+    user?.email ||
+    "Quản trị viên";
 
-    const [
-      ordersResult,
-      vehiclesResult,
-      quotesResult,
-      tripsResult,
-      profilesResult
-    ] = await Promise.all([
+  const element =
+    document.getElementById(
+      "adminName"
+    );
 
-      supabaseClient
-        .from("orders")
-        .select(
-          "id",
-          {
-            count:"exact",
-            head:true
-          }
-        ),
+  if(element){
+    element.textContent =
+      name;
+  }
+}
 
-      supabaseClient
-        .from("vehicles")
-        .select(
-          "id",
-          {
-            count:"exact",
-            head:true
-          }
-        ),
 
-      supabaseClient
-        .from("quotes")
-        .select(
-          "id",
-          {
-            count:"exact",
-            head:true
-          }
-        ),
+/* =====================================================
+   KIỂM TRA ADMIN
 
-      supabaseClient
-        .from("trips")
-        .select(
-          "id",
-          {
-            count:"exact",
-            head:true
-          }
-        ),
+   Database vẫn là lớp bảo vệ chính.
+   Frontend chỉ dùng bước này để chặn giao diện.
+===================================================== */
 
-      supabaseClient
-        .from("profiles")
-        .select(
-          "id",
-          {
-            count:"exact",
-            head:true
-          }
-        )
+async function requireAdmin(){
 
-    ]);
+  const {
+    data:{
+      session
+    },
+    error:sessionError
+  } = await supabaseClient
+    .auth
+    .getSession();
 
-    return {
-      orders:
-        ordersResult.count || 0,
 
-      vehicles:
-        vehiclesResult.count || 0,
+  if(
+    sessionError ||
+    !session?.user
+  ){
 
-      quotes:
-        quotesResult.count || 0,
+    window.location.href =
+      "dang-nhap.html";
 
-      trips:
-        tripsResult.count || 0,
+    return null;
+  }
 
-      profiles:
-        profilesResult.count || 0
-    };
 
-  }catch(error){
+  const user =
+    session.user;
+
+
+  const {
+    data:profile,
+    error:profileError
+  } = await supabaseClient
+    .from("profiles")
+    .select(`
+      id,
+      email,
+      full_name,
+      role,
+      phone,
+      city,
+      company_name
+    `)
+    .eq(
+      "id",
+      user.id
+    )
+    .maybeSingle();
+
+
+  if(profileError){
 
     console.error(
-      "Lỗi count:",
-      error
+      "Không tải được hồ sơ Admin:",
+      profileError
+    );
+
+    alert(
+      "Không thể xác minh quyền quản trị."
     );
 
     return null;
   }
+
+
+  const role =
+    normalizeStatus(
+      profile?.role
+    );
+
+
+  /*
+   * Chấp nhận các role Admin phổ biến
+   * đang dùng trên VietTrucks.
+   *
+   * RLS / is_viettrucks_admin()
+   * vẫn là nơi quyết định quyền DB thật.
+   */
+
+  const allowedRoles =
+    new Set([
+      "admin",
+      "super_admin",
+      "superadmin"
+    ]);
+
+
+  if(
+    !allowedRoles.has(role)
+  ){
+
+    alert(
+      "Tài khoản này không có quyền truy cập Trung tâm điều hành Admin."
+    );
+
+    window.location.href =
+      "dashboard.html";
+
+    return null;
+  }
+
+
+  showAdminProfile(
+    user,
+    profile
+  );
+
+
+  return {
+    user,
+    profile
+  };
 }
+
 
 /* =====================================================
    LOAD DASHBOARD
 ===================================================== */
 
-let dashboardLoading = false;
+let dashboardLoading =
+  false;
+
 
 async function loadDashboard(){
 
@@ -2564,36 +2742,54 @@ async function loadDashboard(){
     return;
   }
 
-  dashboardLoading = true;
 
-  const refreshButton =
-    document.getElementById("refreshButton");
+  dashboardLoading =
+    true;
 
-  refreshButton.disabled = true;
-  refreshButton.textContent =
-    "↻ Đang tải...";
+
+  if(refreshButton){
+
+    refreshButton.disabled =
+      true;
+
+    refreshButton.style.opacity =
+      ".65";
+  }
+
+
+  const updated =
+    document.getElementById(
+      "lastUpdated"
+    );
+
+
+  if(updated){
+
+    updated.textContent =
+      "Đang đồng bộ dữ liệu...";
+  }
+
 
   try{
 
     /*
-      Profiles tải trước để ánh xạ
-      driver_id / user_id -> tên người dùng.
-    */
+     * Profiles tải trước để tạo map tên
+     * tài xế / người báo giá.
+     */
 
     const profiles =
       await loadProfiles();
 
+
     const profileMap =
-      new Map(
-        profiles.map(profile=>[
-          profile.id,
-          profile
-        ])
+      makeProfileMap(
+        profiles
       );
 
+
     /*
-      Sau đó tải các bảng vận hành song song.
-    */
+     * Các bảng còn lại tải song song.
+     */
 
     const [
       orders,
@@ -2606,170 +2802,348 @@ async function loadDashboard(){
 
       loadVehicles(),
 
-      loadQuotes(profileMap),
+      loadQuotes(
+        profileMap
+      ),
 
-      loadTrips(profileMap)
+      loadTrips(
+        profileMap
+      )
 
     ]);
 
-    renderDrivers(
-      profiles
-    );
-
-    renderGps(
-      trips,
-      profileMap
-    );
-
-    renderStats({
-      orders,
-      vehicles,
-      quotes,
-      trips,
-      profiles
-    });
 
     /*
-      Tổng tài khoản hiển thị theo dữ liệu
-      profiles đã tải.
-    */
+     * Render tài xế.
+     */
 
-    setNumber(
-      "statAccounts",
-      profiles.length
-    );
-
-    document.getElementById(
-      "lastUpdated"
-    ).textContent =
-      "Cập nhật lúc " +
-      new Date().toLocaleTimeString(
-        "vi-VN",
-        {
-          hour:"2-digit",
-          minute:"2-digit",
-          second:"2-digit"
-        }
+    const drivers =
+      loadDrivers(
+        profiles
       );
 
-  }catch(error){
 
-    console.error(
-      "Lỗi tải Dashboard Admin:",
-      error
-    );
+    /*
+     * Render GPS chỉ từ trips đã SELECT.
+     *
+     * Admin không ghi tọa độ.
+     */
 
-    document.getElementById(
-      "lastUpdated"
-    ).textContent =
-      "Có lỗi khi tải dữ liệu";
+    const gpsTrips =
+      renderGps(
+        trips,
+        profileMap
+      );
 
-  }finally{
 
-    dashboardLoading = false;
+    /*
+     * Cập nhật thống kê.
+     */
 
-    refreshButton.disabled = false;
+    updateStatistics({
 
-    refreshButton.textContent =
-      "↻ Làm mới";
-  }
-}
+      profiles,
 
-/* =====================================================
-   LOGOUT
-===================================================== */
+      orders,
 
-async function logout(){
+      vehicles,
 
-  try{
+      quotes,
 
-    await supabaseClient.auth.signOut();
+      trips,
 
-  }catch(error){
+      drivers,
 
-    console.error(
-      "Lỗi đăng xuất:",
-      error
-    );
+      gpsTrips
 
-  }
+    });
 
-  localStorage.removeItem(
-    "viettruck_current_user"
-  );
 
-  localStorage.removeItem(
-    "viettruck_logged_in"
-  );
+    if(updated){
 
-  window.location.replace(
-    "dang-nhap.html"
-  );
-}
-
-document
-  .getElementById("logoutLink")
-  .addEventListener(
-    "click",
-    function(event){
-
-      event.preventDefault();
-
-      logout();
-
+      updated.textContent =
+        "Cập nhật lúc " +
+        new Intl.DateTimeFormat(
+          "vi-VN",
+          {
+            hour:"2-digit",
+            minute:"2-digit",
+            second:"2-digit"
+          }
+        ).format(
+          new Date()
+        );
     }
-  );
+
+  }
+  catch(error){
+
+    console.error(
+      "Lỗi tải Admin Dashboard:",
+      error
+    );
+
+
+    if(updated){
+
+      updated.textContent =
+        "Có lỗi khi tải dữ liệu.";
+    }
+
+  }
+  finally{
+
+    dashboardLoading =
+      false;
+
+
+    if(refreshButton){
+
+      refreshButton.disabled =
+        false;
+
+      refreshButton.style.opacity =
+        "1";
+    }
+
+  }
+
+}
+
 
 /* =====================================================
    REFRESH
 ===================================================== */
 
-document
-  .getElementById("refreshButton")
-  .addEventListener(
+refreshButton
+  ?.addEventListener(
     "click",
-    loadDashboard
+    async ()=>{
+
+      await loadDashboard();
+
+    }
   );
+
 
 /* =====================================================
-   START
+   LOGOUT
 ===================================================== */
 
-async function startAdmin(){
+logoutLink
+  ?.addEventListener(
+    "click",
+    async event=>{
 
-  /*
-    Bước 1:
-    Xác nhận đúng Admin trước.
-  */
+      event.preventDefault();
 
-  const admin =
-    await protectAdminPage();
 
-  if(!admin){
-    return;
-  }
+      const confirmLogout =
+        confirm(
+          "Anh có chắc muốn đăng xuất khỏi Admin VietTrucks?"
+        );
 
-  /*
-    Bước 2:
-    Chỉ Admin hợp lệ mới được tải dữ liệu.
-  */
 
-  await loadDashboard();
+      if(!confirmLogout){
+        return;
+      }
 
-}
 
-if(document.readyState === "loading"){
+      const {
+        error
+      } = await supabaseClient
+        .auth
+        .signOut();
 
-  document.addEventListener(
-    "DOMContentLoaded",
-    startAdmin
+
+      if(error){
+
+        console.error(
+          "Logout:",
+          error
+        );
+
+        alert(
+          "Không thể đăng xuất. Vui lòng thử lại."
+        );
+
+        return;
+      }
+
+
+      window.location.href =
+        "dang-nhap.html";
+
+    }
   );
 
-}else{
 
-  startAdmin();
+/* =====================================================
+   AUTO REFRESH
+
+   Chỉ đọc dữ liệu lại.
+   Không UPDATE trips/GPS.
+===================================================== */
+
+let autoRefreshTimer =
+  null;
+
+
+function startAutoRefresh(){
+
+  if(autoRefreshTimer){
+
+    clearInterval(
+      autoRefreshTimer
+    );
+  }
+
+
+  /*
+   * 30 giây đồng bộ lại dashboard.
+   * GPS do tài xế cập nhật qua RPC bảo mật.
+   */
+
+  autoRefreshTimer =
+    setInterval(
+      ()=>{
+
+        if(
+          document.visibilityState ===
+          "visible"
+        ){
+
+          loadDashboard();
+
+        }
+
+      },
+      30000
+    );
 
 }
+
+
+/* =====================================================
+   TAB VISIBLE
+===================================================== */
+
+document.addEventListener(
+  "visibilitychange",
+  ()=>{
+
+    if(
+      document.visibilityState ===
+      "visible"
+    ){
+
+      loadDashboard();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   START ADMIN
+===================================================== */
+
+async function initAdmin(){
+
+  try{
+
+    /*
+     * 1. Xác minh đăng nhập + role Admin.
+     */
+
+    const admin =
+      await requireAdmin();
+
+
+    if(!admin){
+      return;
+    }
+
+
+    /*
+     * 2. Tải dữ liệu thật.
+     */
+
+    await loadDashboard();
+
+
+    /*
+     * 3. Bắt đầu tự đồng bộ.
+     */
+
+    startAutoRefresh();
+
+  }
+  catch(error){
+
+    console.error(
+      "Khởi động Admin thất bại:",
+      error
+    );
+
+
+    const updated =
+      document.getElementById(
+        "lastUpdated"
+      );
+
+
+    if(updated){
+
+      updated.textContent =
+        "Không thể khởi động Trung tâm điều hành.";
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   PRODUCTION SECURITY NOTE
+
+   admin.html KHÔNG CÓ:
+
+   supabaseClient
+     .from("trips")
+     .update(...)
+
+   supabaseClient
+     .from("trips")
+     .insert(...)
+
+   supabaseClient
+     .from("trips")
+     .delete(...)
+
+   Admin chỉ SELECT trips.
+
+   Luồng tài xế:
+
+   start_trip(...)
+        ↓
+   update_trip_location(...)
+        ↓
+   complete_trip(...)
+
+   Các RPC bảo mật xử lý thay đổi dữ liệu.
+
+   RLS bảng trips hiện chỉ còn:
+   trips_select_production
+
+===================================================== */
+
+
+document.addEventListener(
+  "DOMContentLoaded",
+  initAdmin
+);
 
 </script>
 
