@@ -1656,45 +1656,228 @@ document.addEventListener("DOMContentLoaded", async () => {
      HÀNG HÓA MỚI NHẤT - ORDERS THẬT
      ======================================================= */
 
-  async function loadLatestCargo() {
+  /* =======================================================
+   HÀNG HÓA MỚI NHẤT - FIX PRODUCTION MOBILE
+   Chỉ xử lý #cargoList
+   KHÔNG ảnh hưởng Xe trống / Live Market
+   ======================================================= */
+
+async function loadLatestCargo() {
+
+  const cargoList =
+    document.getElementById("cargoList");
+
+  if (!cargoList) {
+    console.error(
+      "VietTrucks HOME: không tìm thấy #cargoList"
+    );
+    return;
+  }
+
+  const client =
+    window.supabaseClient;
+
+  if (!client) {
+
+    console.error(
+      "VietTrucks HOME: Supabase chưa sẵn sàng"
+    );
+
+    cargoList.innerHTML = `
+      <div class="vt-home-empty">
+        Đang kết nối dữ liệu...
+      </div>
+    `;
+
+    return;
+  }
+
+
+  /* ==============================
+     HÀM AN TOÀN RIÊNG
+     ============================== */
+
+  const safe = (value) => {
+
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  };
+
+
+  const short = (
+    value,
+    max = 35
+  ) => {
+
+    const text =
+      String(value ?? "").trim();
+
+    if (!text) return "";
+
+    return text.length > max
+      ? text.slice(0, max).trim() + "..."
+      : text;
+
+  };
+
+
+  const weightText = (value) => {
+
+    if (
+      value === null ||
+      value === undefined ||
+      value === ""
+    ) {
+      return "";
+    }
+
+    const n = Number(value);
+
+    if (Number.isNaN(n)) {
+      return String(value);
+    }
+
+    return n.toLocaleString("vi-VN");
+
+  };
+
+
+  const dateText = (value) => {
+
+    if (!value) return "";
+
+    try {
+
+      /*
+        pickup_date dạng YYYY-MM-DD.
+        Không dùng new Date() trực tiếp để tránh
+        lệch ngày trên một số trình duyệt/mobile.
+      */
+
+      const text =
+        String(value).substring(0, 10);
+
+      const parts =
+        text.split("-");
+
+      if (parts.length === 3) {
+
+        return (
+          parts[2] +
+          "/" +
+          parts[1] +
+          "/" +
+          parts[0]
+        );
+
+      }
+
+      return text;
+
+    } catch (e) {
+
+      return String(value);
+
+    }
+
+  };
+
+
+  /* ==============================
+     HIỂN THỊ TRẠNG THÁI LOAD
+     ============================== */
+
+  cargoList.style.display = "flex";
+  cargoList.style.flexDirection = "column";
+  cargoList.style.width = "100%";
+
+  cargoList.innerHTML = `
+    <div class="vt-home-empty">
+      Đang tải hàng hóa mới nhất...
+    </div>
+  `;
+
 
   try {
 
-    console.log("VietTrucks: đang tải Hàng hóa mới nhất...");
+    console.log(
+      "VIETTRUCKS HOME: bắt đầu lấy orders..."
+    );
+
 
     /*
-      PRODUCTION:
-      Chỉ lấy đơn đang tìm xe.
-      Không sửa/xóa dữ liệu.
-      Không ảnh hưởng Live Market chạy ngang.
+      QUAN TRỌNG:
+
+      Query trực tiếp bảng orders.
+
+      Không kiểm tra session.
+      Không phụ thuộc loadLatestTrucks().
+      Không phụ thuộc Live Market.
+      Không lọc lại bằng JavaScript.
     */
-    const { data: orders, error } = await client
+
+    const {
+      data,
+      error
+    } = await client
+
       .from("orders")
-      .select(
-        "id,pickup_location,delivery_location,cargo_type,weight,vehicle_type,pickup_date,status,created_at"
+
+      .select(`
+        id,
+        pickup_location,
+        delivery_location,
+        cargo_type,
+        weight,
+        vehicle_type,
+        pickup_date,
+        status,
+        created_at
+      `)
+
+      .eq(
+        "status",
+        "pending"
       )
-      .eq("status", "pending")
-      .order("created_at", {
-        ascending: false
-      })
+
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      )
+
       .limit(6);
 
+
     console.log(
-      "VietTrucks HOME orders:",
-      orders,
-      error
+      "VIETTRUCKS HOME ORDERS RESULT:",
+      {
+        data,
+        error
+      }
     );
+
+
+    /* ==============================
+       SUPABASE TRẢ LỖI
+       ============================== */
 
     if (error) {
 
       console.error(
-        "VietTrucks - lỗi lấy orders:",
+        "VIETTRUCKS HOME ORDERS ERROR:",
         error
       );
 
       cargoList.innerHTML = `
         <div class="vt-home-empty">
-          Chưa tải được thông tin hàng hóa.
+          Chưa tải được hàng hóa mới nhất.
         </div>
       `;
 
@@ -1702,11 +1885,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    /*
-      Không dùng thêm bộ lọc trung gian.
-      Query đã lấy trực tiếp các đơn pending mới nhất.
-    */
-    if (!Array.isArray(orders) || orders.length === 0) {
+    const orders =
+      Array.isArray(data)
+        ? data
+        : [];
+
+
+    /* ==============================
+       KHÔNG CÓ DỮ LIỆU
+       ============================== */
+
+    if (orders.length === 0) {
+
+      console.warn(
+        "VIETTRUCKS HOME: query orders trả về 0 dòng"
+      );
 
       cargoList.innerHTML = `
         <div class="vt-home-empty">
@@ -1718,86 +1911,137 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    cargoList.innerHTML = orders
-      .map(order => {
+    console.log(
+      "VIETTRUCKS HOME:",
+      orders.length,
+      "đơn hàng"
+    );
 
-        const from = shortText(
-          order.pickup_location || "Chưa xác định",
-          35
-        );
 
-        const to = shortText(
-          order.delivery_location || "Chưa xác định",
-          35
-        );
+    /* ==============================
+       RENDER
+       ============================== */
 
-        const cargo = shortText(
-          order.cargo_type,
-          30
-        );
+    const html =
+      orders.map(order => {
 
-        const vehicle = shortText(
-          order.vehicle_type,
-          30
-        );
+        const from =
+          short(
+            order.pickup_location ||
+            "Chưa xác định"
+          );
 
-        const weight = formatWeight(
-          order.weight
-        );
 
-        const pickupDate = formatDate(
-          order.pickup_date
-        );
+        const to =
+          short(
+            order.delivery_location ||
+            "Chưa xác định"
+          );
+
+
+        const cargo =
+          short(
+            order.cargo_type,
+            30
+          );
+
+
+        const vehicle =
+          short(
+            order.vehicle_type,
+            30
+          );
+
+
+        const weight =
+          weightText(
+            order.weight
+          );
+
+
+        const pickupDate =
+          dateText(
+            order.pickup_date
+          );
+
 
         const details = [];
 
 
         if (cargo) {
 
-          details.push(
-            `<span>${escapeHTML(cargo)}</span>`
-          );
+          details.push(`
+            <span>
+              ${safe(cargo)}
+            </span>
+          `);
+
         }
 
 
         if (weight) {
 
-          details.push(
-            `<span>${escapeHTML(weight)} tấn</span>`
-          );
+          details.push(`
+            <span>
+              ${safe(weight)} tấn
+            </span>
+          `);
+
         }
 
 
         if (vehicle) {
 
-          details.push(
-            `<span>${escapeHTML(vehicle)}</span>`
-          );
+          details.push(`
+            <span>
+              ${safe(vehicle)}
+            </span>
+          `);
+
         }
 
 
         return `
+
           <a
             class="vt-home-card"
             href="#"
-            onclick="event.preventDefault(); openCargoDetail('${order.id}')"
-            title="Xem chi tiết hàng"
+            data-order-id="${safe(order.id)}"
+            onclick="
+              event.preventDefault();
+              if (
+                typeof window.openCargoDetail
+                === 'function'
+              ) {
+                window.openCargoDetail(
+                  '${safe(order.id)}'
+                );
+              } else {
+                window.location.href =
+                  'tim-hang.html';
+              }
+            "
           >
 
             <div class="vt-home-card-top">
 
-              <span class="vt-home-badge cargo">
+              <span
+                class="vt-home-badge cargo"
+              >
                 📦 HÀNG
               </span>
 
+
               ${
                 pickupDate
-                  ? `
-                    <span class="vt-home-date">
-                      ${escapeHTML(pickupDate)}
+                ? `
+                    <span
+                      class="vt-home-date"
+                    >
+                      ${safe(pickupDate)}
                     </span>
                   `
-                  : ""
+                : ""
               }
 
             </div>
@@ -1805,16 +2049,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             <div class="vt-home-route">
 
-              <span class="vt-home-route-from">
-                ${escapeHTML(from)}
+              <span
+                class="vt-home-route-from"
+              >
+                ${safe(from)}
               </span>
 
-              <span class="vt-home-arrow">
+
+              <span
+                class="vt-home-arrow"
+              >
                 →
               </span>
 
-              <span class="vt-home-route-to">
-                ${escapeHTML(to)}
+
+              <span
+                class="vt-home-route-to"
+              >
+                ${safe(to)}
               </span>
 
             </div>
@@ -1823,37 +2075,129 @@ document.addEventListener("DOMContentLoaded", async () => {
             ${
               details.length
                 ? `
-                  <div class="vt-home-detail">
-                    ${details.join("")}
-                  </div>
-                `
+                    <div
+                      class="vt-home-detail"
+                    >
+                      ${details.join("")}
+                    </div>
+                  `
                 : ""
             }
 
           </a>
+
         `;
 
-      })
-      .join("");
+      }).join("");
+
+
+    /*
+      GHI MỘT LẦN DUY NHẤT VÀO cargoList
+    */
+
+    cargoList.innerHTML =
+      html;
+
+
+    /*
+      ÉP HIỂN THỊ TRÊN MOBILE.
+
+      Chỉ tác động #cargoList.
+      Không tác động #truckList.
+      Không tác động #vtLiveMarket.
+    */
+
+    cargoList.style.setProperty(
+      "display",
+      "flex",
+      "important"
+    );
+
+    cargoList.style.setProperty(
+      "visibility",
+      "visible",
+      "important"
+    );
+
+    cargoList.style.setProperty(
+      "opacity",
+      "1",
+      "important"
+    );
+
+    cargoList.style.setProperty(
+      "height",
+      "auto",
+      "important"
+    );
+
+    cargoList.style.setProperty(
+      "max-height",
+      "none",
+      "important"
+    );
+
+    cargoList.style.setProperty(
+      "overflow",
+      "visible",
+      "important"
+    );
+
+
+    /*
+      Đảm bảo từng card không bị mobile.css
+      hoặc app.js ẩn.
+    */
+
+    cargoList
+      .querySelectorAll(
+        ".vt-home-card"
+      )
+      .forEach(card => {
+
+        card.style.setProperty(
+          "display",
+          "block",
+          "important"
+        );
+
+        card.style.setProperty(
+          "visibility",
+          "visible",
+          "important"
+        );
+
+        card.style.setProperty(
+          "opacity",
+          "1",
+          "important"
+        );
+
+      });
 
 
     console.log(
-      `VietTrucks: đã hiển thị ${orders.length} đơn hàng mới nhất`
+      "VIETTRUCKS HOME: render thành công",
+      orders.length,
+      "đơn vào #cargoList"
     );
 
-  } catch (error) {
+
+  } catch (err) {
 
     console.error(
-      "VietTrucks loadLatestCargo Error:",
-      error
+      "VIETTRUCKS HOME FATAL ERROR:",
+      err
     );
 
     cargoList.innerHTML = `
       <div class="vt-home-empty">
-        Chưa tải được thông tin hàng hóa.
+        Chưa tải được hàng hóa mới nhất.
       </div>
     `;
+
   }
+
 }
 
   /* =======================================================
