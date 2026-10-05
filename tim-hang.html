@@ -378,7 +378,6 @@ a{
 
 .quote-btn,
 .receive-btn{
-    position:static;
     display:inline-flex;
     align-items:center;
     justify-content:center;
@@ -425,6 +424,48 @@ a{
     border-radius:12px;
     border:1px solid #e1e6e4;
     color:#56635d;
+}
+
+/* =========================
+   PHÂN TRANG
+========================= */
+
+.pagination{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:7px;
+    margin:26px 0 8px;
+}
+
+.page-btn{
+    min-width:40px;
+    height:40px;
+    padding:0 12px;
+    border:1px solid #d6e0db;
+    border-radius:7px;
+    background:#fff;
+    color:#26362e;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.page-btn:hover{
+    border-color:#078c4b;
+    color:#078c4b;
+}
+
+.page-btn.active{
+    background:#078c4b;
+    border-color:#078c4b;
+    color:#fff;
+}
+
+.page-btn:disabled{
+    opacity:.45;
+    cursor:not-allowed;
 }
 
 /* =========================
@@ -553,11 +594,6 @@ a{
         grid-row:1;
     }
 
-    .order-quote,
-    .order-receive{
-        grid-column:auto;
-    }
-
     .order-quote{
         grid-column:2;
         grid-row:2;
@@ -678,6 +714,18 @@ a{
         width:auto;
         min-width:115px;
     }
+
+    .pagination{
+        gap:5px;
+        margin-top:22px;
+    }
+
+    .page-btn{
+        min-width:36px;
+        height:38px;
+        padding:0 9px;
+        font-size:12px;
+    }
 }
 </style>
 </head>
@@ -685,239 +733,343 @@ a{
 <body>
 
 <header class="search-header">
-    <div class="container-page search-nav">
 
-        <a href="index.html" class="logo">
-            <span class="logo-icon">🚚</span>
-            <div>
-                <strong>VietTruck</strong>
-                <small>Kết nối hàng hóa Việt Nam</small>
-            </div>
-        </a>
+<div class="container-page search-nav">
 
-        <button
-            type="button"
-            class="mobile-menu-btn"
-            id="mobileMenuBtn"
-            aria-label="Mở menu"
-        >
-            ☰
-        </button>
+    <a href="index.html" class="logo">
 
-        <nav class="menu" id="mainMenu">
-            <a href="index.html">Trang chủ</a>
-            <a href="tim-hang.html" class="active">Tìm hàng</a>
-            <a href="tim-xe.html">Tìm xe</a>
-            <a href="dang-hang.html">Đăng hàng</a>
-            <a href="bang-gia.html">Bảng giá</a>
-            <a href="dich-vu.html">Dịch vụ</a>
-            <a href="tin-tuc.html">Tin tức</a>
-            <a href="lien-he.html">Liên hệ</a>
-        </nav>
+        <span class="logo-icon">
+            🚚
+        </span>
 
-        <div class="nav-buttons" id="navUserButtons">
-            <a href="dang-nhap.html" class="btn btn-outline">
-                Đăng nhập
-            </a>
-
-            <a href="dang-ky.html" class="btn btn-green">
-                Đăng ký
-            </a>
+        <div>
+            <strong>VietTruck</strong>
+            <small>Kết nối hàng hóa Việt Nam</small>
         </div>
 
+    </a>
+
+
+    <button
+        type="button"
+        class="mobile-menu-btn"
+        id="mobileMenuBtn"
+        aria-label="Mở menu">
+        ☰
+    </button>
+
+
+    <nav class="menu" id="mainMenu">
+
+        <a href="index.html">
+            Trang chủ
+        </a>
+
+        <a href="tim-hang.html" class="active">
+            Tìm hàng
+        </a>
+
+        <a href="tim-xe.html">
+            Tìm xe
+        </a>
+
+        <a href="dang-hang.html">
+            Đăng hàng
+        </a>
+
+        <a href="bang-gia.html">
+            Bảng giá
+        </a>
+
+        <a href="dich-vu.html">
+            Dịch vụ
+        </a>
+
+        <a href="tin-tuc.html">
+            Tin tức
+        </a>
+
+        <a href="lien-he.html">
+            Liên hệ
+        </a>
+
+    </nav>
+
+
+    <div
+        class="nav-buttons"
+        id="navUserButtons">
+
+        <a
+            href="dang-nhap.html"
+            class="btn btn-outline">
+            Đăng nhập
+        </a>
+
+        <a
+            href="dang-ky.html"
+            class="btn btn-green">
+            Đăng ký
+        </a>
+
     </div>
+
+</div>
+
 </header>
 
 
 <section class="page-head">
-    <div class="container-page">
-        <h1>Tìm hàng vận chuyển cho xe tải toàn quốc</h1>
-        <p>Tìm các đơn hàng phù hợp với tuyến đường và phương tiện của bạn.</p>
-    </div>
+
+<div class="container-page">
+
+    <h1>
+        Tìm hàng vận chuyển cho xe tải toàn quốc
+    </h1>
+
+    <p>
+        Tìm các đơn hàng phù hợp với tuyến đường và phương tiện của bạn.
+    </p>
+
+</div>
+
 </section>
 
 
 <main class="container-page">
 
-    <section class="search-box">
+<section class="search-box">
 
-        <div class="search-grid">
+<div class="search-grid">
 
-            <div class="field">
-                <label for="pickupSearch">Nơi đi</label>
-                <input
-                    type="text"
-                    id="pickupSearch"
-                    placeholder="Tỉnh / Thành phố"
-                >
-            </div>
+    <div class="field">
 
-            <div class="field">
-                <label for="deliverySearch">Nơi đến</label>
-                <input
-                    type="text"
-                    id="deliverySearch"
-                    placeholder="Tỉnh / Thành phố"
-                >
-            </div>
+        <label for="pickupSearch">
+            Nơi đi
+        </label>
 
-            <div class="field">
-                <label for="cargoSearch">Loại hàng</label>
-
-                <select id="cargoSearch">
-                    <option value="">Tất cả loại hàng</option>
-                    <option value="Hàng tiêu dùng">Hàng tiêu dùng</option>
-                    <option value="Máy móc">Máy móc</option>
-                    <option value="Nông sản">Nông sản</option>
-                    <option value="Vật liệu xây dựng">Vật liệu xây dựng</option>
-                    <option value="Điện tử">Điện tử</option>
-                </select>
-            </div>
-
-            <div class="field">
-                <label for="dateSearch">Ngày vận chuyển</label>
-
-                <input
-                    type="date"
-                    id="dateSearch"
-                >
-            </div>
-
-            <button
-                type="button"
-                class="search-button"
-                id="searchButton"
-            >
-                🔍 Tìm hàng
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <div class="content-layout">
-
-        <aside class="filter">
-
-            <h3>Bộ lọc</h3>
-
-            <div class="filter-group">
-
-                <strong>Trọng lượng</strong>
-
-                <label>
-                    <input
-                        type="checkbox"
-                        class="weight-filter"
-                        value="under1"
-                    >
-                    Dưới 1 tấn
-                </label>
-
-                <label>
-                    <input
-                        type="checkbox"
-                        class="weight-filter"
-                        value="1to5"
-                    >
-                    1 – 5 tấn
-                </label>
-
-                <label>
-                    <input
-                        type="checkbox"
-                        class="weight-filter"
-                        value="5to10"
-                    >
-                    5 – 10 tấn
-                </label>
-
-                <label>
-                    <input
-                        type="checkbox"
-                        class="weight-filter"
-                        value="over10"
-                    >
-                    Trên 10 tấn
-                </label>
-
-            </div>
-
-
-            <div class="filter-group">
-
-                <strong>Loại xe yêu cầu</strong>
-
-                <label>
-                    <input
-                        type="checkbox"
-                        class="vehicle-filter"
-                        value="Xe tải thùng"
-                    >
-                    Xe tải thùng
-                </label>
-
-                <label>
-                    <input
-                        type="checkbox"
-                        class="vehicle-filter"
-                        value="Xe container"
-                    >
-                    Xe container
-                </label>
-
-                <label>
-                    <input
-                        type="checkbox"
-                        class="vehicle-filter"
-                        value="Xe lạnh"
-                    >
-                    Xe lạnh
-                </label>
-
-                <label>
-                    <input
-                        type="checkbox"
-                        class="vehicle-filter"
-                        value="Xe đầu kéo"
-                    >
-                    Xe đầu kéo
-                </label>
-
-            </div>
-
-        </aside>
-
-
-        <section class="results-section">
-
-            <div class="results-head">
-                <h2>Hàng hóa mới nhất</h2>
-
-                <span id="orderCount">
-                    Đang tải...
-                </span>
-            </div>
-
-
-            <div id="orders">
-
-                <div class="message-box">
-                    Đang tải danh sách hàng...
-                </div>
-
-            </div>
-
-        </section>
+        <input
+            type="text"
+            id="pickupSearch"
+            placeholder="Tỉnh / Thành phố">
 
     </div>
+
+
+    <div class="field">
+
+        <label for="deliverySearch">
+            Nơi đến
+        </label>
+
+        <input
+            type="text"
+            id="deliverySearch"
+            placeholder="Tỉnh / Thành phố">
+
+    </div>
+
+
+    <div class="field">
+
+        <label for="cargoSearch">
+            Loại hàng
+        </label>
+
+        <select id="cargoSearch">
+
+            <option value="">
+                Tất cả loại hàng
+            </option>
+
+            <option value="Hàng tiêu dùng">
+                Hàng tiêu dùng
+            </option>
+
+            <option value="Máy móc">
+                Máy móc
+            </option>
+
+            <option value="Nông sản">
+                Nông sản
+            </option>
+
+            <option value="Vật liệu xây dựng">
+                Vật liệu xây dựng
+            </option>
+
+            <option value="Điện tử">
+                Điện tử
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="field">
+
+        <label for="dateSearch">
+            Ngày vận chuyển
+        </label>
+
+        <input
+            type="date"
+            id="dateSearch">
+
+    </div>
+
+
+    <button
+        type="button"
+        class="search-button"
+        id="searchButton">
+
+        🔍 Tìm hàng
+
+    </button>
+
+</div>
+
+</section>
+
+
+<div class="content-layout">
+
+<aside class="filter">
+
+    <h3>
+        Bộ lọc
+    </h3>
+
+
+    <div class="filter-group">
+
+        <strong>
+            Trọng lượng
+        </strong>
+
+        <label>
+            <input
+                type="checkbox"
+                class="weight-filter"
+                value="under1">
+            Dưới 1 tấn
+        </label>
+
+        <label>
+            <input
+                type="checkbox"
+                class="weight-filter"
+                value="1to5">
+            1 – 5 tấn
+        </label>
+
+        <label>
+            <input
+                type="checkbox"
+                class="weight-filter"
+                value="5to10">
+            5 – 10 tấn
+        </label>
+
+        <label>
+            <input
+                type="checkbox"
+                class="weight-filter"
+                value="over10">
+            Trên 10 tấn
+        </label>
+
+    </div>
+
+
+    <div class="filter-group">
+
+        <strong>
+            Loại xe yêu cầu
+        </strong>
+
+        <label>
+            <input
+                type="checkbox"
+                class="vehicle-filter"
+                value="Xe tải thùng">
+            Xe tải thùng
+        </label>
+
+        <label>
+            <input
+                type="checkbox"
+                class="vehicle-filter"
+                value="Xe container">
+            Xe container
+        </label>
+
+        <label>
+            <input
+                type="checkbox"
+                class="vehicle-filter"
+                value="Xe lạnh">
+            Xe lạnh
+        </label>
+
+        <label>
+            <input
+                type="checkbox"
+                class="vehicle-filter"
+                value="Xe đầu kéo">
+            Xe đầu kéo
+        </label>
+
+    </div>
+
+</aside>
+
+
+<section class="results-section">
+
+    <div class="results-head">
+
+        <h2>
+            Hàng hóa mới nhất
+        </h2>
+
+        <span id="orderCount">
+            Đang tải...
+        </span>
+
+    </div>
+
+
+    <div id="orders">
+
+        <div class="message-box">
+            Đang tải danh sách hàng...
+        </div>
+
+    </div>
+
+
+    <!-- PHÂN TRANG -->
+    <div
+        id="orderPagination"
+        class="pagination"
+        aria-label="Phân trang đơn hàng">
+    </div>
+
+</section>
+
+</div>
 
 </main>
 
 
 <footer class="footer">
-    <strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+
+    <strong>
+        VietTruck – Kết nối hàng hóa Việt Nam
+    </strong>
 
     <p>
         CÔNG TY TNHH ĐẦU TƯ THƯƠNG MẠI DỊCH VỤ TRƯỜNG GIANG
@@ -930,6 +1082,7 @@ a{
     <p>
         © 2026 VietTrucks.com
     </p>
+
 </footer>
 
 
@@ -937,31 +1090,73 @@ a{
 <script src="supabase-config.js"></script>
 <script src="auth.js"></script>
 
+
 <script>
-const supabaseClient = window.supabaseClient;
+
+/* ================================
+   SUPABASE
+================================ */
+
+const supabaseClient =
+    window.supabaseClient;
+
+
+/* ================================
+   DOM
+================================ */
 
 const navUserButtons =
-    document.getElementById("navUserButtons");
+    document.getElementById(
+        "navUserButtons"
+    );
 
 const orderContainer =
-    document.getElementById("orders");
+    document.getElementById(
+        "orders"
+    );
 
 const orderCount =
-    document.getElementById("orderCount");
+    document.getElementById(
+        "orderCount"
+    );
+
+const orderPagination =
+    document.getElementById(
+        "orderPagination"
+    );
 
 const pickupSearch =
-    document.getElementById("pickupSearch");
+    document.getElementById(
+        "pickupSearch"
+    );
 
 const deliverySearch =
-    document.getElementById("deliverySearch");
+    document.getElementById(
+        "deliverySearch"
+    );
 
 const cargoSearch =
-    document.getElementById("cargoSearch");
+    document.getElementById(
+        "cargoSearch"
+    );
 
 const dateSearch =
-    document.getElementById("dateSearch");
+    document.getElementById(
+        "dateSearch"
+    );
+
+
+/* ================================
+   PHÂN TRANG
+================================ */
+
+const ORDERS_PER_PAGE = 10;
 
 let allOrders = [];
+
+let filteredOrders = [];
+
+let currentOrderPage = 1;
 
 
 /* ================================
@@ -969,16 +1164,26 @@ let allOrders = [];
 ================================ */
 
 const mobileMenuBtn =
-    document.getElementById("mobileMenuBtn");
+    document.getElementById(
+        "mobileMenuBtn"
+    );
 
 const mainMenu =
-    document.getElementById("mainMenu");
+    document.getElementById(
+        "mainMenu"
+    );
 
-mobileMenuBtn.addEventListener("click",function(){
 
-    mainMenu.classList.toggle("open");
+mobileMenuBtn.addEventListener(
+    "click",
+    function(){
 
-});
+        mainMenu.classList.toggle(
+            "open"
+        );
+
+    }
+);
 
 
 /* ================================
@@ -991,20 +1196,20 @@ function updateUserMenu(session){
         return;
     }
 
+
     if(session){
 
         navUserButtons.innerHTML = `
+
             <a
                 href="dashboard.html"
-                class="btn btn-outline"
-            >
+                class="btn btn-outline">
                 Dashboard
             </a>
 
             <a
                 href="tai-khoan.html"
-                class="btn btn-green"
-            >
+                class="btn btn-green">
                 Tài khoản
             </a>
         `;
@@ -1012,17 +1217,16 @@ function updateUserMenu(session){
     }else{
 
         navUserButtons.innerHTML = `
+
             <a
                 href="dang-nhap.html"
-                class="btn btn-outline"
-            >
+                class="btn btn-outline">
                 Đăng nhập
             </a>
 
             <a
                 href="dang-ky.html"
-                class="btn btn-green"
-            >
+                class="btn btn-green">
                 Đăng ký
             </a>
         `;
@@ -1043,7 +1247,10 @@ async function checkLogin(){
             data,
             error
         } =
-        await supabaseClient.auth.getSession();
+        await supabaseClient
+            .auth
+            .getSession();
+
 
         if(error){
 
@@ -1057,7 +1264,11 @@ async function checkLogin(){
             return;
         }
 
-        updateUserMenu(data.session);
+
+        updateUserMenu(
+            data.session
+        );
+
 
     }catch(error){
 
@@ -1072,7 +1283,9 @@ async function checkLogin(){
    THEO DÕI AUTH
 ================================ */
 
-supabaseClient.auth.onAuthStateChange(
+supabaseClient
+.auth
+.onAuthStateChange(
     function(event,session){
 
         console.log(
@@ -1080,7 +1293,10 @@ supabaseClient.auth.onAuthStateChange(
             event
         );
 
-        updateUserMenu(session);
+        updateUserMenu(
+            session
+        );
+
     }
 );
 
@@ -1109,7 +1325,10 @@ function normalizeText(value){
     return String(value || "")
         .toLowerCase()
         .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g,"")
+        .replace(
+            /[\u0300-\u036f]/g,
+            ""
+        )
         .trim();
 }
 
@@ -1123,12 +1342,14 @@ function formatPrice(value){
     const number =
         Number(value);
 
+
     if(
         !Number.isFinite(number) ||
         number <= 0
     ){
         return "Thỏa thuận";
     }
+
 
     return new Intl.NumberFormat(
         "vi-VN"
@@ -1146,10 +1367,12 @@ function formatDate(value){
         return "Chưa xác định";
     }
 
+
     const parts =
         String(value)
         .substring(0,10)
         .split("-");
+
 
     if(parts.length === 3){
 
@@ -1161,6 +1384,7 @@ function formatDate(value){
             parts[0]
         );
     }
+
 
     return escapeHTML(value);
 }
@@ -1178,39 +1402,54 @@ function matchWeight(order){
                 ".weight-filter:checked"
             )
         )
-        .map(item => item.value);
+        .map(
+            item => item.value
+        );
+
 
     if(!checked.length){
         return true;
     }
 
+
     const weight =
         Number(order.weight);
+
 
     if(!Number.isFinite(weight)){
         return false;
     }
 
-    return checked.some(function(type){
 
-        if(type === "under1"){
-            return weight < 1;
+    return checked.some(
+        function(type){
+
+            if(type === "under1"){
+                return weight < 1;
+            }
+
+            if(type === "1to5"){
+                return (
+                    weight >= 1 &&
+                    weight <= 5
+                );
+            }
+
+            if(type === "5to10"){
+                return (
+                    weight > 5 &&
+                    weight <= 10
+                );
+            }
+
+            if(type === "over10"){
+                return weight > 10;
+            }
+
+            return false;
+
         }
-
-        if(type === "1to5"){
-            return weight >= 1 && weight <= 5;
-        }
-
-        if(type === "5to10"){
-            return weight > 5 && weight <= 10;
-        }
-
-        if(type === "over10"){
-            return weight > 10;
-        }
-
-        return false;
-    });
+    );
 }
 
 
@@ -1228,17 +1467,22 @@ function matchVehicle(order){
         )
         .map(
             item =>
-            normalizeText(item.value)
+            normalizeText(
+                item.value
+            )
         );
+
 
     if(!checked.length){
         return true;
     }
 
+
     const vehicle =
         normalizeText(
             order.vehicle_type
         );
+
 
     return checked.some(
         type =>
@@ -1258,548 +1502,848 @@ function filterOrders(){
             pickupSearch.value
         );
 
+
     const delivery =
         normalizeText(
             deliverySearch.value
         );
+
 
     const cargo =
         normalizeText(
             cargoSearch.value
         );
 
+
     const selectedDate =
         dateSearch.value;
 
-    const filtered =
-        allOrders.filter(function(order){
 
-            const pickupValue =
-                normalizeText(
-                    order.pickup_location
-                );
+    filteredOrders =
+        allOrders.filter(
+            function(order){
 
-            const deliveryValue =
-                normalizeText(
-                    order.delivery_location
-                );
+                const pickupValue =
+                    normalizeText(
+                        order.pickup_location
+                    );
 
-            const cargoValue =
-                normalizeText(
-                    order.cargo_type
-                );
 
-            const orderDate =
-                order.pickup_date
-                ? String(order.pickup_date)
-                    .substring(0,10)
-                : "";
+                const deliveryValue =
+                    normalizeText(
+                        order.delivery_location
+                    );
 
-            if(
-                pickup &&
-                !pickupValue.includes(pickup)
-            ){
-                return false;
+
+                const cargoValue =
+                    normalizeText(
+                        order.cargo_type
+                    );
+
+
+                const orderDate =
+                    order.pickup_date
+                    ? String(
+                        order.pickup_date
+                      ).substring(0,10)
+                    : "";
+
+
+                if(
+                    pickup &&
+                    !pickupValue.includes(
+                        pickup
+                    )
+                ){
+                    return false;
+                }
+
+
+                if(
+                    delivery &&
+                    !deliveryValue.includes(
+                        delivery
+                    )
+                ){
+                    return false;
+                }
+
+
+                if(
+                    cargo &&
+                    !cargoValue.includes(
+                        cargo
+                    )
+                ){
+                    return false;
+                }
+
+
+                if(
+                    selectedDate &&
+                    orderDate !== selectedDate
+                ){
+                    return false;
+                }
+
+
+                if(!matchWeight(order)){
+                    return false;
+                }
+
+
+                if(!matchVehicle(order)){
+                    return false;
+                }
+
+
+                return true;
+
             }
+        );
 
-            if(
-                delivery &&
-                !deliveryValue.includes(delivery)
-            ){
-                return false;
-            }
 
-            if(
-                cargo &&
-                !cargoValue.includes(cargo)
-            ){
-                return false;
-            }
+    currentOrderPage = 1;
 
-            if(
-                selectedDate &&
-                orderDate !== selectedDate
-            ){
-                return false;
-            }
-
-            if(!matchWeight(order)){
-                return false;
-            }
-
-            if(!matchVehicle(order)){
-                return false;
-            }
-
-            return true;
-        });
-
-    renderOrders(filtered);
+    renderOrders();
 }
 
 
 /* ================================
-   RENDER ORDERS
+   RENDER 10 ĐƠN / TRANG
 ================================ */
 
-function renderOrders(orders){
+function renderOrders(){
 
     orderContainer.innerHTML = "";
 
-    orderCount.textContent =
-        orders.length + " đơn hàng";
 
-    if(!orders.length){
+    orderCount.textContent =
+        filteredOrders.length +
+        " đơn hàng";
+
+
+    if(!filteredOrders.length){
 
         orderContainer.innerHTML = `
+
             <div class="message-box">
+
                 <strong>
                     Không tìm thấy đơn hàng phù hợp.
                 </strong>
+
                 <br><br>
+
                 Hãy thử thay đổi điều kiện tìm kiếm hoặc bộ lọc.
+
             </div>
         `;
+
+
+        orderPagination.innerHTML = "";
 
         return;
     }
 
 
-    orders.forEach(function(order){
-
-        const card =
-            document.createElement("div");
-
-        card.className =
-            "order-card";
+    const totalPages =
+        Math.ceil(
+            filteredOrders.length /
+            ORDERS_PER_PAGE
+        );
 
 
-        const pickup =
-            escapeHTML(
-                order.pickup_location ||
-                "Chưa xác định"
+    if(
+        currentOrderPage >
+        totalPages
+    ){
+
+        currentOrderPage =
+            totalPages || 1;
+    }
+
+
+    const startIndex =
+        (
+            currentOrderPage - 1
+        ) *
+        ORDERS_PER_PAGE;
+
+
+    const pageOrders =
+        filteredOrders.slice(
+            startIndex,
+            startIndex +
+            ORDERS_PER_PAGE
+        );
+
+
+    pageOrders.forEach(
+        function(order){
+
+            createOrderCard(
+                order
             );
 
-        const delivery =
-            escapeHTML(
-                order.delivery_location ||
-                "Chưa xác định"
-            );
-
-        const cargo =
-            escapeHTML(
-                order.cargo_type ||
-                "Hàng hóa"
-            );
-
-        const weight =
-            escapeHTML(
-                order.weight ??
-                "Chưa xác định"
-            );
-
-        const vehicle =
-            escapeHTML(
-                order.vehicle_type ||
-                "Không yêu cầu"
-            );
+        }
+    );
 
 
-        card.innerHTML = `
+    renderOrderPagination(
+        totalPages
+    );
+}
 
-            <div class="order-main">
 
-                <div class="order-route">
-                    ${pickup}
-                    <span class="route-arrow">
-                        →
-                    </span>
-                    ${delivery}
-                </div>
+/* ================================
+   TẠO CARD ĐƠN HÀNG
+================================ */
 
-                <div class="order-info">
-                    📦 ${cargo}<br>
-                    ⚖️ Trọng lượng: ${weight}<br>
-                    🚚 Loại xe: ${vehicle}<br>
-                    📅 Ngày lấy:
-                    ${formatDate(order.pickup_date)}
-                </div>
+function createOrderCard(order){
+
+    const card =
+        document.createElement(
+            "div"
+        );
+
+
+    card.className =
+        "order-card";
+
+
+    const pickup =
+        escapeHTML(
+            order.pickup_location ||
+            "Chưa xác định"
+        );
+
+
+    const delivery =
+        escapeHTML(
+            order.delivery_location ||
+            "Chưa xác định"
+        );
+
+
+    const cargo =
+        escapeHTML(
+            order.cargo_type ||
+            "Hàng hóa"
+        );
+
+
+    const weight =
+        escapeHTML(
+            order.weight ??
+            "Chưa xác định"
+        );
+
+
+    const vehicle =
+        escapeHTML(
+            order.vehicle_type ||
+            "Không yêu cầu"
+        );
+
+
+    card.innerHTML = `
+
+        <div class="order-main">
+
+            <div class="order-route">
+
+                ${pickup}
+
+                <span class="route-arrow">
+                    →
+                </span>
+
+                ${delivery}
 
             </div>
 
 
-            <div class="order-price">
+            <div class="order-info">
 
-                <div class="price">
-                    ${formatPrice(order.price)}
-                </div>
+                📦 ${cargo}
+                <br>
 
-            </div>
+                ⚖️ Trọng lượng:
+                ${weight}
+                <br>
 
+                🚚 Loại xe:
+                ${vehicle}
+                <br>
 
-            <div class="order-quote">
-
-                <button
-                    type="button"
-                    class="quote-btn"
-                >
-                    Báo giá
-                </button>
+                📅 Ngày lấy:
+                ${formatDate(order.pickup_date)}
 
             </div>
 
+        </div>
 
-            <div class="order-receive">
 
-                <button
-                    type="button"
-                    class="receive-btn"
-                >
-                    Nhận chuyến
-                </button>
+        <div class="order-price">
 
+            <div class="price">
+                ${formatPrice(order.price)}
             </div>
-        `;
+
+        </div>
 
 
-        const quoteButton =
-            card.querySelector(
-                ".quote-btn"
-            );
+        <div class="order-quote">
 
-        const receiveButton =
-            card.querySelector(
-                ".receive-btn"
-            );
+            <button
+                type="button"
+                class="quote-btn">
+                Báo giá
+            </button>
 
-
-        /* =========================
-           BÁO GIÁ
-        ========================= */
-
-        quoteButton.addEventListener(
-            "click",
-            async function(){
-
-                try{
-
-                    const {
-                        data:{
-                            session
-                        },
-                        error:sessionError
-                    } =
-                    await supabaseClient
-                        .auth
-                        .getSession();
+        </div>
 
 
-                    if(
-                        sessionError ||
-                        !session
-                    ){
+        <div class="order-receive">
 
-                        alert(
-                            "Bạn cần đăng nhập để báo giá."
-                        );
+            <button
+                type="button"
+                class="receive-btn">
+                Nhận chuyến
+            </button>
 
-                        window.location.href =
-                            "dang-nhap.html";
-
-                        return;
-                    }
+        </div>
+    `;
 
 
-                    if(
-                        session.user.id ===
-                        order.user_id
-                    ){
-
-                        alert(
-                            "Bạn không thể tự báo giá cho đơn hàng của mình."
-                        );
-
-                        return;
-                    }
+    const quoteButton =
+        card.querySelector(
+            ".quote-btn"
+        );
 
 
-                    const priceInput =
-                        prompt(
-                            "Nhập giá vận chuyển bạn muốn báo (VNĐ):"
-                        );
+    const receiveButton =
+        card.querySelector(
+            ".receive-btn"
+        );
 
 
-                    if(
-                        priceInput === null
-                    ){
-                        return;
-                    }
+    /* =========================
+       BÁO GIÁ
+    ========================= */
+
+    quoteButton.addEventListener(
+        "click",
+        async function(){
+
+            try{
+
+                const {
+                    data:{
+                        session
+                    },
+                    error:sessionError
+                } =
+                await supabaseClient
+                    .auth
+                    .getSession();
 
 
-                    const price =
-                        Number(
-                            String(priceInput)
-                            .replace(/[^\d]/g,"")
-                        );
+                if(
+                    sessionError ||
+                    !session
+                ){
+
+                    alert(
+                        "Bạn cần đăng nhập để báo giá."
+                    );
+
+                    window.location.href =
+                        "dang-nhap.html";
+
+                    return;
+                }
 
 
-                    if(
-                        !price ||
-                        price <= 0
-                    ){
+                if(
+                    session.user.id ===
+                    order.user_id
+                ){
 
-                        alert(
-                            "Giá báo không hợp lệ."
-                        );
+                    alert(
+                        "Bạn không thể tự báo giá cho đơn hàng của mình."
+                    );
 
-                        return;
-                    }
-
-
-                    const message =
-                        prompt(
-                            "Ghi chú cho chủ hàng (không bắt buộc):"
-                        ) || null;
+                    return;
+                }
 
 
-                    quoteButton.disabled =
-                        true;
+                const priceInput =
+                    prompt(
+                        "Nhập giá vận chuyển bạn muốn báo (VNĐ):"
+                    );
 
-                    quoteButton.textContent =
-                        "Đang gửi...";
+
+                if(
+                    priceInput === null
+                ){
+                    return;
+                }
 
 
-                    const {
+                const price =
+                    Number(
+                        String(
+                            priceInput
+                        )
+                        .replace(
+                            /[^\d]/g,
+                            ""
+                        )
+                    );
+
+
+                if(
+                    !price ||
+                    price <= 0
+                ){
+
+                    alert(
+                        "Giá báo không hợp lệ."
+                    );
+
+                    return;
+                }
+
+
+                const message =
+                    prompt(
+                        "Ghi chú cho chủ hàng (không bắt buộc):"
+                    ) || null;
+
+
+                quoteButton.disabled =
+                    true;
+
+
+                quoteButton.textContent =
+                    "Đang gửi...";
+
+
+                const {
+                    error
+                } =
+                await supabaseClient
+                    .from("quotes")
+                    .insert({
+
+                        order_id:
+                            order.id,
+
+                        user_id:
+                            session.user.id,
+
+                        price:
+                            price,
+
+                        message:
+                            message,
+
+                        status:
+                            "pending"
+
+                    });
+
+
+                if(error){
+
+                    console.error(
+                        "Lỗi gửi báo giá:",
                         error
-                    } =
-                    await supabaseClient
-                        .from("quotes")
-                        .insert({
-                            order_id:
-                                order.id,
-
-                            user_id:
-                                session.user.id,
-
-                            price:
-                                price,
-
-                            message:
-                                message,
-
-                            status:
-                                "pending"
-                        });
+                    );
 
 
-                    if(error){
+                    if(
+                        error.code ===
+                        "23505"
+                    ){
 
-                        console.error(
-                            "Lỗi gửi báo giá:",
-                            error
+                        alert(
+                            "Bạn đã gửi báo giá cho đơn hàng này rồi."
                         );
 
+                    }else{
 
-                        if(
-                            error.code ===
-                            "23505"
-                        ){
-
-                            alert(
-                                "Bạn đã gửi báo giá cho đơn hàng này rồi."
-                            );
-
-                        }else{
-
-                            alert(
-                                "Không thể gửi báo giá: " +
-                                error.message
-                            );
-                        }
-
-
-                        quoteButton.disabled =
-                            false;
-
-                        quoteButton.textContent =
-                            "Báo giá";
-
-                        return;
+                        alert(
+                            "Không thể gửi báo giá: " +
+                            error.message
+                        );
                     }
 
-
-                    alert(
-                        "Gửi báo giá thành công!"
-                    );
-
-                    quoteButton.textContent =
-                        "Đã báo giá";
-
-
-                }catch(error){
-
-                    console.error(error);
-
-                    alert(
-                        "Có lỗi khi gửi báo giá."
-                    );
 
                     quoteButton.disabled =
                         false;
 
+
                     quoteButton.textContent =
                         "Báo giá";
+
+
+                    return;
                 }
+
+
+                alert(
+                    "Gửi báo giá thành công!"
+                );
+
+
+                quoteButton.textContent =
+                    "Đã báo giá";
+
+
+            }catch(error){
+
+                console.error(error);
+
+
+                alert(
+                    "Có lỗi khi gửi báo giá."
+                );
+
+
+                quoteButton.disabled =
+                    false;
+
+
+                quoteButton.textContent =
+                    "Báo giá";
             }
-        );
+
+        }
+    );
 
 
-        /* =========================
-           NHẬN CHUYẾN
-        ========================= */
+    /* =========================
+       NHẬN CHUYẾN
+    ========================= */
 
-        receiveButton.addEventListener(
-            "click",
-            async function(){
+    receiveButton.addEventListener(
+        "click",
+        async function(){
 
-                try{
+            try{
 
-                    const {
-                        data:{
-                            session
-                        },
-                        error:sessionError
-                    } =
-                    await supabaseClient
-                        .auth
-                        .getSession();
-
-
-                    if(
-                        sessionError ||
-                        !session
-                    ){
-
-                        alert(
-                            "Bạn cần đăng nhập để nhận chuyến."
-                        );
-
-                        window.location.href =
-                            "dang-nhap.html";
-
-                        return;
-                    }
+                const {
+                    data:{
+                        session
+                    },
+                    error:sessionError
+                } =
+                await supabaseClient
+                    .auth
+                    .getSession();
 
 
-                    if(
-                        session.user.id ===
-                        order.user_id
-                    ){
+                if(
+                    sessionError ||
+                    !session
+                ){
 
-                        alert(
-                            "Bạn không thể tự nhận đơn hàng của mình."
-                        );
-
-                        return;
-                    }
+                    alert(
+                        "Bạn cần đăng nhập để nhận chuyến."
+                    );
 
 
-                    const ok =
-                        confirm(
-                            "Bạn xác nhận nhận chuyến hàng này?"
-                        );
+                    window.location.href =
+                        "dang-nhap.html";
 
 
-                    if(!ok){
-                        return;
-                    }
+                    return;
+                }
 
 
-                    receiveButton.disabled =
-                        true;
+                if(
+                    session.user.id ===
+                    order.user_id
+                ){
 
-                    receiveButton.textContent =
-                        "Đang nhận...";
+                    alert(
+                        "Bạn không thể tự nhận đơn hàng của mình."
+                    );
+
+                    return;
+                }
 
 
-                    const {
-                        data,
+                const ok =
+                    confirm(
+                        "Bạn xác nhận nhận chuyến hàng này?"
+                    );
+
+
+                if(!ok){
+                    return;
+                }
+
+
+                receiveButton.disabled =
+                    true;
+
+
+                receiveButton.textContent =
+                    "Đang nhận...";
+
+
+                const {
+                    data,
+                    error
+                } =
+                await supabaseClient
+                    .rpc(
+                        "accept_order",
+                        {
+                            p_order_id:
+                                order.id
+                        }
+                    );
+
+
+                if(error){
+
+                    console.error(
+                        "Lỗi nhận chuyến:",
                         error
-                    } =
-                    await supabaseClient
-                        .rpc(
-                            "accept_order",
-                            {
-                                p_order_id:
-                                    order.id
-                            }
-                        );
-
-
-                    if(error){
-
-                        console.error(
-                            "Lỗi nhận chuyến:",
-                            error
-                        );
-
-                        alert(
-                            "Không thể nhận chuyến: " +
-                            error.message
-                        );
-
-                        receiveButton.disabled =
-                            false;
-
-                        receiveButton.textContent =
-                            "Nhận chuyến";
-
-                        return;
-                    }
-
-
-                    if(data !== true){
-
-                        alert(
-                            "Đơn hàng này đã được người khác nhận hoặc không còn khả dụng."
-                        );
-
-                        await loadOrders();
-
-                        return;
-                    }
+                    );
 
 
                     alert(
-                        "Nhận chuyến thành công!"
+                        "Không thể nhận chuyến: " +
+                        error.message
+                    );
+
+
+                    receiveButton.disabled =
+                        false;
+
+
+                    receiveButton.textContent =
+                        "Nhận chuyến";
+
+
+                    return;
+                }
+
+
+                if(data !== true){
+
+                    alert(
+                        "Đơn hàng này đã được người khác nhận hoặc không còn khả dụng."
                     );
 
 
                     await loadOrders();
 
 
-                }catch(error){
+                    return;
+                }
 
-                    console.error(error);
 
-                    alert(
-                        "Có lỗi xảy ra khi nhận chuyến."
+                alert(
+                    "Nhận chuyến thành công!"
+                );
+
+
+                await loadOrders();
+
+
+            }catch(error){
+
+                console.error(error);
+
+
+                alert(
+                    "Có lỗi xảy ra khi nhận chuyến."
+                );
+
+
+                receiveButton.disabled =
+                    false;
+
+
+                receiveButton.textContent =
+                    "Nhận chuyến";
+            }
+
+        }
+    );
+
+
+    orderContainer.appendChild(
+        card
+    );
+}
+
+
+/* ================================
+   PHÂN TRANG
+================================ */
+
+function renderOrderPagination(
+    totalPages
+){
+
+    orderPagination.innerHTML = "";
+
+
+    if(totalPages <= 1){
+        return;
+    }
+
+
+    function makeButton(
+        text,
+        page,
+        active = false,
+        disabled = false
+    ){
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+        button.type =
+            "button";
+
+
+        button.className =
+            "page-btn" +
+            (
+                active
+                ? " active"
+                : ""
+            );
+
+
+        button.textContent =
+            text;
+
+
+        button.disabled =
+            disabled;
+
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                if(
+                    disabled ||
+                    page === currentOrderPage
+                ){
+                    return;
+                }
+
+
+                currentOrderPage =
+                    page;
+
+
+                renderOrders();
+
+
+                const resultsSection =
+                    document.querySelector(
+                        ".results-section"
                     );
 
-                    receiveButton.disabled =
-                        false;
 
-                    receiveButton.textContent =
-                        "Nhận chuyến";
+                if(resultsSection){
+
+                    resultsSection.scrollIntoView({
+                        behavior:"smooth",
+                        block:"start"
+                    });
+
                 }
             }
         );
 
 
-        orderContainer.appendChild(
-            card
+        return button;
+    }
+
+
+    /* TRƯỚC */
+
+    orderPagination.appendChild(
+        makeButton(
+            "‹ Trước",
+            Math.max(
+                1,
+                currentOrderPage - 1
+            ),
+            false,
+            currentOrderPage === 1
+        )
+    );
+
+
+    /* HIỆN TỐI ĐA 5 SỐ TRANG */
+
+    let startPage =
+        Math.max(
+            1,
+            currentOrderPage - 2
         );
-    });
+
+
+    let endPage =
+        Math.min(
+            totalPages,
+            startPage + 4
+        );
+
+
+    startPage =
+        Math.max(
+            1,
+            endPage - 4
+        );
+
+
+    for(
+        let page = startPage;
+        page <= endPage;
+        page++
+    ){
+
+        orderPagination.appendChild(
+            makeButton(
+                String(page),
+                page,
+                page === currentOrderPage
+            )
+        );
+    }
+
+
+    /* SAU */
+
+    orderPagination.appendChild(
+        makeButton(
+            "Sau ›",
+            Math.min(
+                totalPages,
+                currentOrderPage + 1
+            ),
+            false,
+            currentOrderPage === totalPages
+        )
+    );
 }
 
 
@@ -1811,12 +2355,17 @@ function renderOrders(orders){
 async function loadOrders(){
 
     orderContainer.innerHTML = `
+
         <div class="message-box">
             Đang kiểm tra tài khoản...
         </div>
     `;
 
+
+    orderPagination.innerHTML = "";
+
     orderCount.textContent = "";
+
 
     try{
 
@@ -1843,8 +2392,12 @@ async function loadOrders(){
 
             allOrders = [];
 
+            filteredOrders = [];
+
+
             orderCount.textContent =
                 "Yêu cầu đăng nhập";
+
 
             orderContainer.innerHTML = `
 
@@ -1853,26 +2406,25 @@ async function loadOrders(){
                     style="
                         text-align:center;
                         padding:40px 25px;
-                    "
-                >
+                    ">
 
                     <div
                         style="
                             font-size:42px;
                             margin-bottom:15px;
-                        "
-                    >
+                        ">
                         🔒
                     </div>
+
 
                     <h3
                         style="
                             margin:0 0 10px;
                             color:#13221b;
-                        "
-                    >
+                        ">
                         Đăng nhập để xem thông tin hàng
                     </h3>
+
 
                     <p
                         style="
@@ -1880,13 +2432,15 @@ async function loadOrders(){
                             max-width:520px;
                             line-height:1.7;
                             color:#68736e;
-                        "
-                    >
+                        ">
+
                         Thông tin chi tiết hàng hóa,
                         tuyến vận chuyển, giá cước,
                         Báo giá và Nhận chuyến chỉ dành
                         cho thành viên VietTrucks.
+
                     </p>
+
 
                     <div
                         style="
@@ -1894,20 +2448,18 @@ async function loadOrders(){
                             justify-content:center;
                             gap:10px;
                             flex-wrap:wrap;
-                        "
-                    >
+                        ">
 
                         <a
                             href="dang-nhap.html?redirect=tim-hang.html"
-                            class="btn btn-green"
-                        >
+                            class="btn btn-green">
                             Đăng nhập
                         </a>
 
+
                         <a
                             href="dang-ky.html"
-                            class="btn btn-outline"
-                        >
+                            class="btn btn-outline">
                             Đăng ký tài khoản
                         </a>
 
@@ -1915,6 +2467,7 @@ async function loadOrders(){
 
                 </div>
             `;
+
 
             return;
         }
@@ -1925,14 +2478,20 @@ async function loadOrders(){
         ========================= */
 
         orderContainer.innerHTML = `
+
             <div class="message-box">
                 Đang tải danh sách hàng...
             </div>
         `;
 
+
         orderCount.textContent =
             "Đang tải...";
 
+
+        /* =========================
+           LẤY ĐƠN THẬT TỪ SUPABASE
+        ========================= */
 
         const {
             data,
@@ -1964,17 +2523,26 @@ async function loadOrders(){
                 error
             );
 
+
             allOrders = [];
 
+            filteredOrders = [];
+
+
             orderContainer.innerHTML = `
+
                 <div class="message-box">
+
                     Không thể tải danh sách hàng.
                     Vui lòng thử lại sau.
+
                 </div>
             `;
 
+
             orderCount.textContent =
                 "0 đơn hàng";
+
 
             return;
         }
@@ -1984,6 +2552,13 @@ async function loadOrders(){
             Array.isArray(data)
             ? data
             : [];
+
+
+        filteredOrders =
+            [...allOrders];
+
+
+        currentOrderPage = 1;
 
 
         filterOrders();
@@ -1996,57 +2571,86 @@ async function loadOrders(){
             error
         );
 
+
         allOrders = [];
 
+        filteredOrders = [];
+
+
         orderContainer.innerHTML = `
+
             <div class="message-box">
+
                 Không thể kết nối dữ liệu.
                 Vui lòng tải lại trang.
+
             </div>
         `;
 
+
         orderCount.textContent =
             "0 đơn hàng";
+
+
+        orderPagination.innerHTML =
+            "";
     }
 }
+
 
 /* ================================
    SEARCH BUTTON
 ================================ */
 
 document
-.getElementById("searchButton")
+.getElementById(
+    "searchButton"
+)
 .addEventListener(
     "click",
     filterOrders
 );
 
 
-/* ENTER TÌM KIẾM */
+/* ================================
+   ENTER TÌM KIẾM
+================================ */
 
 [
     pickupSearch,
     deliverySearch
-].forEach(function(input){
+]
+.forEach(
+    function(input){
 
-    input.addEventListener(
-        "keydown",
-        function(event){
+        input.addEventListener(
+            "keydown",
+            function(event){
 
-            if(
-                event.key === "Enter"
-            ){
-                filterOrders();
+                if(
+                    event.key ===
+                    "Enter"
+                ){
+
+                    filterOrders();
+
+                }
             }
-        }
-    );
-});
+        );
 
+    }
+);
+
+
+/* ================================
+   SELECT
+================================ */
 
 cargoSearch.addEventListener(
     "change",
     filterOrders
 );
+
 
 dateSearch.addEventListener(
     "change",
@@ -2054,19 +2658,24 @@ dateSearch.addEventListener(
 );
 
 
-/* FILTER CHECKBOX */
+/* ================================
+   FILTER CHECKBOX
+================================ */
 
 document
 .querySelectorAll(
     ".weight-filter, .vehicle-filter"
 )
-.forEach(function(item){
+.forEach(
+    function(item){
 
-    item.addEventListener(
-        "change",
-        filterOrders
-    );
-});
+        item.addEventListener(
+            "change",
+            filterOrders
+        );
+
+    }
+);
 
 
 /* ================================
@@ -2080,8 +2689,10 @@ document.addEventListener(
         await checkLogin();
 
         await loadOrders();
+
     }
 );
+
 </script>
 
 </body>
