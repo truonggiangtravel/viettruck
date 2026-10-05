@@ -1395,7 +1395,136 @@ function bindCancelButtons(){
 
 }
 
+/* ========================================
+   CHỦ HÀNG XÁC NHẬN ĐÃ NHẬN HÀNG
+======================================== */
 
+function bindConfirmDeliveryButtons(){
+
+  document
+    .querySelectorAll(
+      ".confirm-delivery-btn"
+    )
+    .forEach(function(button){
+
+      button.addEventListener(
+        "click",
+        async function(){
+
+          const tripId =
+            this.dataset.tripId;
+
+
+          if(!tripId){
+            return;
+          }
+
+
+          const ok =
+            window.confirm(
+              "Anh xác nhận hàng đã được giao đầy đủ và đã nhận hàng?"
+            );
+
+
+          if(!ok){
+            return;
+          }
+
+
+          const oldText =
+            this.textContent;
+
+
+          this.disabled = true;
+
+          this.textContent =
+            "Đang xác nhận...";
+
+
+          try{
+
+            /*
+              QUAN TRỌNG:
+
+              Frontend KHÔNG UPDATE trips.
+
+              Toàn bộ kiểm tra:
+              - đúng shipper
+              - trip completed
+              - POD approved
+              - chưa xác nhận trước đó
+
+              đều do RPC SECURITY DEFINER
+              kiểm tra tại database.
+            */
+
+            const {
+              data,
+              error
+            } = await supabaseClient.rpc(
+              "confirm_trip_delivery",
+              {
+                p_trip_id:
+                  tripId
+              }
+            );
+
+
+            if(error){
+              throw error;
+            }
+
+
+            if(data !== true){
+
+              throw new Error(
+                "Database không xác nhận giao hàng."
+              );
+            }
+
+
+            alert(
+              "Xác nhận nhận hàng thành công."
+            );
+
+
+            /*
+              Tải lại dữ liệu thật.
+            */
+
+            await loadOrders();
+
+
+          }catch(error){
+
+            console.error(
+              "confirm_trip_delivery:",
+              error
+            );
+
+
+            alert(
+              "Không thể xác nhận nhận hàng: " +
+              (
+                error.message ||
+                "Lỗi không xác định"
+              )
+            );
+
+
+            this.disabled = false;
+
+            this.textContent =
+              oldText;
+
+          }
+
+        }
+      );
+
+    });
+
+}
 /* ========================================
    BỘ LỌC
 ======================================== */
