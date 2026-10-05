@@ -1192,12 +1192,71 @@ function render(){
                         ■ Dừng chia sẻ GPS
                     </button>
 
-                    <button
+                                        <button
                         id="completeBtn"
                         class="action-btn complete-btn"
                         type="button">
                         ✓ Hoàn thành chuyến
                     </button>
+
+                </div>
+
+                <div class="pod-box">
+
+                    <h3>
+                        📎 Chứng từ giao nhận (POD)
+                    </h3>
+
+                    <p class="pod-description">
+                        Sau khi giao hàng, tài xế phải tải ảnh
+                        biên bản giao nhận hoặc file PDF lên VietTrucks.
+                        Không có POD hợp lệ thì hệ thống không cho
+                        hoàn thành chuyến.
+                    </p>
+
+                    <div
+                        id="podStatus"
+                        class="pod-status">
+
+                        <strong>
+                            Chưa gửi POD
+                        </strong>
+
+                        <small>
+                            Bắt buộc trước khi hoàn thành
+                        </small>
+
+                    </div>
+
+                    <input
+                        id="podFile"
+                        class="pod-file"
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp,application/pdf">
+
+                    <textarea
+                        id="podNote"
+                        class="pod-note"
+                        maxlength="500"
+                        placeholder="Ghi chú chứng từ giao nhận (không bắt buộc)"></textarea>
+
+                    <button
+                        id="podUploadBtn"
+                        class="pod-upload-btn"
+                        type="button">
+                        📤 Tải POD lên VietTrucks
+                    </button>
+
+                    <div
+                        id="podFileInfo"
+                        class="pod-file-info"
+                        style="display:none">
+                    </div>
+
+                    <div
+                        id="podError"
+                        class="pod-error">
+                    </div>
 
                 </div>
 
