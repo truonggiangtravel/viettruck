@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hồ sơ tài khoản | VietTruck</title>
+
+<title>Hồ sơ tài khoản | VietTrucks</title>
 
 <style>
 *{
@@ -12,10 +13,12 @@
   padding:0;
   font-family:Arial,Helvetica,sans-serif;
 }
+
 body{
   background:#f5f7fa;
   color:#1f2937;
 }
+
 .header{
   background:#fff;
   border-bottom:1px solid #e5e7eb;
@@ -23,53 +26,69 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:20px;
 }
+
 .logo{
   color:#16a34a;
   font-size:24px;
   font-weight:800;
   text-decoration:none;
 }
+
 .header-links{
   display:flex;
   gap:16px;
   flex-wrap:wrap;
 }
+
 .header-links a{
   color:#4b5563;
   text-decoration:none;
   font-size:14px;
 }
+
+.header-links a:hover{
+  color:#16a34a;
+}
+
 .container{
   max-width:1050px;
   margin:35px auto;
   padding:0 20px;
 }
+
 .title{
   margin-bottom:22px;
 }
+
 .title h1{
   font-size:28px;
   margin-bottom:7px;
 }
+
 .title p{
   color:#6b7280;
   line-height:1.6;
 }
+
 .grid{
   display:grid;
   grid-template-columns:320px 1fr;
   gap:22px;
 }
+
 .card{
   background:#fff;
   border-radius:14px;
   padding:22px;
   box-shadow:0 3px 15px rgba(0,0,0,.06);
 }
+
 .profile{
   text-align:center;
 }
+
 .avatar{
   width:105px;
   height:105px;
@@ -80,18 +99,23 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:42px;
+  font-size:34px;
   font-weight:800;
 }
+
 .profile h2{
   font-size:20px;
   margin-bottom:5px;
+  word-break:break-word;
 }
+
 .profile p{
   color:#6b7280;
   font-size:13px;
   margin-bottom:8px;
+  word-break:break-word;
 }
+
 .badge{
   display:inline-block;
   background:#dcfce7;
@@ -102,67 +126,94 @@ body{
   font-weight:700;
   margin-top:5px;
 }
+
 .info{
   margin-top:22px;
   text-align:left;
 }
+
 .info-row{
   padding:11px 0;
   border-bottom:1px solid #eef2f7;
   font-size:13px;
 }
+
+.info-row:last-child{
+  border-bottom:0;
+}
+
 .info-row span{
   display:block;
   color:#6b7280;
   margin-bottom:4px;
 }
+
 .info-row strong{
   font-size:14px;
+  word-break:break-word;
 }
+
 .card h3{
   margin-bottom:18px;
   font-size:19px;
 }
+
 .form-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:14px;
 }
+
 .form-group{
   margin-bottom:14px;
 }
+
 .form-group.full{
   grid-column:1/-1;
 }
+
 label{
   display:block;
   font-size:13px;
   font-weight:700;
   margin-bottom:6px;
 }
-input,select,textarea{
+
+input{
   width:100%;
   padding:11px 12px;
   border:1px solid #d1d5db;
   border-radius:8px;
   outline:none;
+  font-size:14px;
+  background:#fff;
 }
-input:focus,
-select:focus,
-textarea:focus{
+
+input:focus{
   border-color:#16a34a;
   box-shadow:0 0 0 3px rgba(22,163,74,.08);
 }
-textarea{
-  min-height:90px;
-  resize:vertical;
+
+input[readonly]{
+  background:#f3f4f6;
+  color:#6b7280;
+  cursor:not-allowed;
 }
+
+.help{
+  color:#6b7280;
+  font-size:11px;
+  line-height:1.5;
+  margin-top:6px;
+}
+
 .actions{
   display:flex;
   gap:10px;
   flex-wrap:wrap;
   margin-top:8px;
 }
+
 button{
   border:0;
   border-radius:8px;
@@ -170,18 +221,31 @@ button{
   cursor:pointer;
   font-weight:700;
 }
+
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
 .primary{
   background:#16a34a;
   color:#fff;
 }
+
+.primary:hover:not(:disabled){
+  background:#15803d;
+}
+
 .secondary{
   background:#fff;
   border:1px solid #d1d5db;
   color:#374151;
 }
+
 .quick{
   margin-top:20px;
 }
+
 .quick a{
   display:block;
   text-decoration:none;
@@ -190,27 +254,114 @@ button{
   border-bottom:1px solid #eef2f7;
   font-size:14px;
 }
+
 .quick a:hover{
   color:#16a34a;
 }
-.notice{
+
+.message{
+  display:none;
+  margin-bottom:18px;
+  padding:13px 14px;
+  border-radius:9px;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.message.success{
+  display:block;
+  background:#dcfce7;
+  border:1px solid #86efac;
+  color:#166534;
+}
+
+.message.error{
+  display:block;
+  background:#fee2e2;
+  border:1px solid #fecaca;
+  color:#991b1b;
+}
+
+.message.info{
+  display:block;
+  background:#dbeafe;
+  border:1px solid #bfdbfe;
+  color:#1e40af;
+}
+
+.production-notice{
   margin-top:20px;
-  background:#fff7ed;
-  border:1px solid #fed7aa;
-  color:#9a3412;
+  background:#ecfdf5;
+  border:1px solid #bbf7d0;
+  color:#166534;
   padding:14px;
   border-radius:10px;
   font-size:13px;
   line-height:1.6;
 }
+
+.loading-screen{
+  position:fixed;
+  inset:0;
+  background:rgba(245,247,250,.96);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.loading-box{
+  background:#fff;
+  border-radius:14px;
+  padding:25px 30px;
+  box-shadow:0 10px 35px rgba(0,0,0,.1);
+  text-align:center;
+}
+
+.spinner{
+  width:38px;
+  height:38px;
+  border:4px solid #dcfce7;
+  border-top-color:#16a34a;
+  border-radius:50%;
+  margin:0 auto 14px;
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
 @media(max-width:800px){
   .grid{
     grid-template-columns:1fr;
   }
+
+  .header{
+    padding:14px 18px;
+    align-items:flex-start;
+  }
 }
+
 @media(max-width:560px){
   .form-grid{
     grid-template-columns:1fr;
+  }
+
+  .form-group.full{
+    grid-column:auto;
+  }
+
+  .header{
+    flex-direction:column;
+  }
+
+  .container{
+    margin-top:22px;
+  }
+
+  .title h1{
+    font-size:24px;
   }
 }
 </style>
@@ -218,10 +369,17 @@ button{
 
 <body>
 
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <strong>Đang tải hồ sơ thật...</strong>
+  </div>
+</div>
+
 <header class="header">
 
   <a href="dashboard.html" class="logo">
-    🚚 VietTruck
+    🚚 VietTrucks
   </a>
 
   <div class="header-links">
@@ -237,24 +395,36 @@ button{
 
   <div class="title">
     <h1>Hồ sơ tài khoản</h1>
+
     <p>
-      Quản lý thông tin cá nhân và thông tin liên hệ của tài khoản VietTruck.
+      Thông tin bên dưới được lấy trực tiếp từ tài khoản đang đăng nhập
+      và cơ sở dữ liệu VietTrucks.
     </p>
   </div>
 
+  <div id="message" class="message"></div>
+
   <div class="grid">
+
+    <!-- =========================
+         CỘT TRÁI
+    ========================== -->
 
     <div>
 
       <div class="card profile">
 
-        <div class="avatar">
+        <div class="avatar" id="avatar">
           VT
         </div>
 
-        <h2>Nguyễn Văn An</h2>
+        <h2 id="profileName">
+          Đang tải...
+        </h2>
 
-        <p>an.sales@viettruck.vn</p>
+        <p id="profileEmail">
+          —
+        </p>
 
         <span class="badge">
           Đang hoạt động
@@ -263,28 +433,38 @@ button{
         <div class="info">
 
           <div class="info-row">
-            <span>Tên đăng nhập</span>
-            <strong>an.sales</strong>
-          </div>
-
-          <div class="info-row">
-            <span>Mã nhân viên</span>
-            <strong>NV003</strong>
-          </div>
-
-          <div class="info-row">
-            <span>Bộ phận</span>
-            <strong>Sales</strong>
+            <span>Mã tài khoản</span>
+            <strong id="profileId">—</strong>
           </div>
 
           <div class="info-row">
             <span>Vai trò hệ thống</span>
-            <strong>Sales</strong>
+            <strong id="profileRole">—</strong>
           </div>
 
           <div class="info-row">
-            <span>Đăng nhập gần nhất</span>
-            <strong>05/09/2026 13:20</strong>
+            <span>Số điện thoại</span>
+            <strong id="profilePhone">—</strong>
+          </div>
+
+          <div class="info-row">
+            <span>Công ty</span>
+            <strong id="profileCompany">—</strong>
+          </div>
+
+          <div class="info-row">
+            <span>Khu vực</span>
+            <strong id="profileCity">—</strong>
+          </div>
+
+          <div class="info-row">
+            <span>Ngày tạo hồ sơ</span>
+            <strong id="profileCreatedAt">—</strong>
+          </div>
+
+          <div class="info-row">
+            <span>Cập nhật gần nhất</span>
+            <strong id="profileUpdatedAt">—</strong>
           </div>
 
         </div>
@@ -311,103 +491,131 @@ button{
 
     </div>
 
+    <!-- =========================
+         CỘT PHẢI
+    ========================== -->
 
     <div class="card">
 
       <h3>Thông tin cá nhân</h3>
 
-      <form onsubmit="saveProfile(event)">
+      <form id="profileForm">
 
         <div class="form-grid">
 
           <div class="form-group">
-            <label>Họ và tên</label>
+            <label for="fullName">
+              Họ và tên
+            </label>
+
             <input
+              id="fullName"
               type="text"
-              value="Nguyễn Văn An"
-              required
+              maxlength="150"
+              placeholder="Nhập họ và tên"
             >
           </div>
 
           <div class="form-group">
-            <label>Ngày sinh</label>
-            <input
-              type="date"
-              value="1990-05-15"
-            >
-          </div>
+            <label for="phone">
+              Số điện thoại
+            </label>
 
-          <div class="form-group">
-            <label>Số điện thoại</label>
             <input
+              id="phone"
               type="tel"
-              value="0987654321"
+              maxlength="30"
+              placeholder="Nhập số điện thoại"
             >
           </div>
 
-          <div class="form-group">
-            <label>Email</label>
+          <div class="form-group full">
+            <label for="email">
+              Email đăng nhập
+            </label>
+
             <input
+              id="email"
               type="email"
-              value="an.sales@viettruck.vn"
+              readonly
+            >
+
+            <div class="help">
+              Email đăng nhập không thay đổi tại trang hồ sơ này.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="companyName">
+              Công ty / Nhà xe
+            </label>
+
+            <input
+              id="companyName"
+              type="text"
+              maxlength="200"
+              placeholder="Tên công ty hoặc nhà xe"
             >
           </div>
 
           <div class="form-group">
-            <label>Chức vụ</label>
-            <input
-              type="text"
-              value="Nhân viên kinh doanh"
-            >
-          </div>
+            <label for="city">
+              Tỉnh / Thành phố
+            </label>
 
-          <div class="form-group">
-            <label>Bộ phận</label>
-            <select>
-              <option>Sales</option>
-              <option>Điều phối</option>
-              <option>Kế toán</option>
-              <option>CSKH</option>
-              <option>Quản lý</option>
-            </select>
-          </div>
-
-          <div class="form-group full">
-            <label>Địa chỉ</label>
             <input
+              id="city"
               type="text"
-              placeholder="Nhập địa chỉ liên hệ"
+              maxlength="120"
+              placeholder="Ví dụ: Bắc Ninh"
             >
           </div>
 
           <div class="form-group full">
-            <label>Ghi chú cá nhân</label>
-            <textarea
-              placeholder="Thông tin bổ sung..."
-            ></textarea>
+            <label for="role">
+              Vai trò hệ thống
+            </label>
+
+            <input
+              id="role"
+              type="text"
+              readonly
+            >
+
+            <div class="help">
+              Vai trò được hệ thống quản lý và người dùng không thể tự đổi
+              tại trang này.
+            </div>
           </div>
 
         </div>
 
         <div class="actions">
 
-          <button type="submit" class="primary">
+          <button
+            type="submit"
+            class="primary"
+            id="saveButton"
+          >
             Lưu thay đổi
           </button>
 
-          <button type="button" class="secondary"
-                  onclick="cancelEdit()">
-            Hủy
+          <button
+            type="button"
+            class="secondary"
+            id="cancelButton"
+          >
+            Hủy thay đổi
           </button>
 
         </div>
 
       </form>
 
-      <div class="notice">
-        ⚠️ Đây là giao diện mô phỏng. Thông tin thay đổi chưa được lưu thật.
-        Khi triển khai hệ thống chính thức, hồ sơ sẽ được lưu trong cơ sở dữ liệu
-        và liên kết với tài khoản đăng nhập của từng người dùng.
+      <div class="production-notice">
+        ✓ Trang này đang sử dụng dữ liệu thật từ Supabase.
+        Chỉ các trường đang tồn tại trong bảng
+        <strong>profiles</strong> mới được hiển thị và cập nhật.
       </div>
 
     </div>
@@ -416,20 +624,610 @@ button{
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
 <script>
+/* =========================================================
+   VIETTRUCKS - HỒ SƠ TÀI KHOẢN PRODUCTION
+   Dữ liệu thật: auth.users + public.profiles
 
-function saveProfile(event){
-  event.preventDefault();
+   profiles:
+   id
+   created_at
+   email
+   full_name
+   role
+   phone
+   city
+   company_name
+   updated_at
+========================================================= */
 
-  alert(
-    "Đã ghi nhận thay đổi hồ sơ tài khoản."
-  );
+const sb = window.supabaseClient;
+
+let currentUser = null;
+let currentProfile = null;
+
+
+/* =========================================================
+   TIỆN ÍCH
+========================================================= */
+
+function cleanValue(value){
+  const text = String(value ?? "").trim();
+  return text === "" ? null : text;
 }
 
+function displayValue(value){
+  const text = String(value ?? "").trim();
+  return text || "Chưa cập nhật";
+}
+
+function formatDateTime(value){
+  if(!value) return "Chưa có dữ liệu";
+
+  const date = new Date(value);
+
+  if(Number.isNaN(date.getTime())){
+    return "Chưa có dữ liệu";
+  }
+
+  return date.toLocaleString("vi-VN");
+}
+
+function roleLabel(role){
+
+  const value = String(role || "").toLowerCase();
+
+  const labels = {
+    admin:"Quản trị viên",
+    driver:"Tài xế",
+    carrier:"Nhà xe",
+    customer:"Chủ hàng",
+    shipper:"Chủ hàng",
+    user:"Người dùng"
+  };
+
+  return labels[value] || role || "Chưa xác định";
+}
+
+function makeInitials(name,email){
+
+  const source =
+    String(name || "").trim() ||
+    String(email || "").split("@")[0] ||
+    "VT";
+
+  const words =
+    source
+      .split(/\s+/)
+      .filter(Boolean);
+
+  if(words.length >= 2){
+    return (
+      words[0][0] +
+      words[words.length - 1][0]
+    ).toUpperCase();
+  }
+
+  return source
+    .substring(0,2)
+    .toUpperCase();
+}
+
+function showMessage(type,text){
+
+  const box =
+    document.getElementById("message");
+
+  box.className =
+    "message " + type;
+
+  box.textContent = text;
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+function clearMessage(){
+
+  const box =
+    document.getElementById("message");
+
+  box.className = "message";
+  box.textContent = "";
+}
+
+function hideLoading(){
+
+  document.getElementById(
+    "loadingScreen"
+  ).style.display = "none";
+}
+
+
+/* =========================================================
+   HIỂN THỊ HỒ SƠ
+========================================================= */
+
+function renderProfile(profile,user){
+
+  const email =
+    user?.email ||
+    profile?.email ||
+    "";
+
+  const fullName =
+    profile?.full_name || "";
+
+  document.getElementById(
+    "avatar"
+  ).textContent =
+    makeInitials(
+      fullName,
+      email
+    );
+
+  document.getElementById(
+    "profileName"
+  ).textContent =
+    displayValue(fullName);
+
+  document.getElementById(
+    "profileEmail"
+  ).textContent =
+    displayValue(email);
+
+  document.getElementById(
+    "profileId"
+  ).textContent =
+    user?.id || profile?.id || "—";
+
+  document.getElementById(
+    "profileRole"
+  ).textContent =
+    roleLabel(profile?.role);
+
+  document.getElementById(
+    "profilePhone"
+  ).textContent =
+    displayValue(profile?.phone);
+
+  document.getElementById(
+    "profileCompany"
+  ).textContent =
+    displayValue(profile?.company_name);
+
+  document.getElementById(
+    "profileCity"
+  ).textContent =
+    displayValue(profile?.city);
+
+  document.getElementById(
+    "profileCreatedAt"
+  ).textContent =
+    formatDateTime(profile?.created_at);
+
+  document.getElementById(
+    "profileUpdatedAt"
+  ).textContent =
+    formatDateTime(profile?.updated_at);
+
+
+  /* FORM */
+
+  document.getElementById(
+    "fullName"
+  ).value =
+    profile?.full_name || "";
+
+  document.getElementById(
+    "phone"
+  ).value =
+    profile?.phone || "";
+
+  document.getElementById(
+    "email"
+  ).value =
+    email;
+
+  document.getElementById(
+    "companyName"
+  ).value =
+    profile?.company_name || "";
+
+  document.getElementById(
+    "city"
+  ).value =
+    profile?.city || "";
+
+  document.getElementById(
+    "role"
+  ).value =
+    roleLabel(profile?.role);
+}
+
+
+/* =========================================================
+   TẠO PROFILE NẾU AUTH USER CÓ NHƯNG PROFILE CHƯA CÓ
+
+   Chỉ tạo các cột thật đang tồn tại.
+========================================================= */
+
+async function createMissingProfile(user){
+
+  const payload = {
+    id:user.id,
+    email:user.email || null,
+    full_name:
+      user.user_metadata?.full_name ||
+      user.user_metadata?.name ||
+      null,
+    phone:
+      user.phone ||
+      user.user_metadata?.phone ||
+      null
+  };
+
+  const {
+    data,
+    error
+  } = await sb
+    .from("profiles")
+    .insert(payload)
+    .select(`
+      id,
+      created_at,
+      email,
+      full_name,
+      role,
+      phone,
+      city,
+      company_name,
+      updated_at
+    `)
+    .single();
+
+  if(error){
+    throw error;
+  }
+
+  return data;
+}
+
+
+/* =========================================================
+   TẢI DỮ LIỆU THẬT
+========================================================= */
+
+async function loadProfile(){
+
+  clearMessage();
+
+  if(!sb){
+
+    hideLoading();
+
+    showMessage(
+      "error",
+      "Không kết nối được Supabase. Kiểm tra file supabase-config.js."
+    );
+
+    return;
+  }
+
+  try{
+
+    const {
+      data:{
+        user
+      },
+      error:userError
+    } = await sb.auth.getUser();
+
+    if(userError){
+      throw userError;
+    }
+
+    if(!user){
+
+      window.location.replace(
+        "dang-nhap.html"
+      );
+
+      return;
+    }
+
+    currentUser = user;
+
+    const {
+      data:profile,
+      error:profileError
+    } = await sb
+      .from("profiles")
+      .select(`
+        id,
+        created_at,
+        email,
+        full_name,
+        role,
+        phone,
+        city,
+        company_name,
+        updated_at
+      `)
+      .eq("id",user.id)
+      .maybeSingle();
+
+    if(profileError){
+      throw profileError;
+    }
+
+    if(!profile){
+
+      /*
+        Trường hợp tài khoản Auth đã tồn tại
+        nhưng chưa có hàng tương ứng trong profiles.
+      */
+
+      try{
+
+        currentProfile =
+          await createMissingProfile(user);
+
+      }catch(createError){
+
+        console.error(
+          "Không tạo được profile:",
+          createError
+        );
+
+        /*
+          Không dựng dữ liệu demo.
+          Chỉ hiển thị thông tin thật từ Auth.
+        */
+
+        currentProfile = {
+          id:user.id,
+          email:user.email || null,
+          full_name:
+            user.user_metadata?.full_name ||
+            user.user_metadata?.name ||
+            null,
+          phone:user.phone || null,
+          role:null,
+          city:null,
+          company_name:null,
+          created_at:user.created_at || null,
+          updated_at:null
+        };
+
+        showMessage(
+          "info",
+          "Tài khoản đăng nhập đã tồn tại nhưng hồ sơ profiles chưa được tạo hoặc chưa có quyền tạo. Thông tin đang hiển thị từ tài khoản đăng nhập."
+        );
+      }
+
+    }else{
+
+      currentProfile = profile;
+    }
+
+    renderProfile(
+      currentProfile,
+      currentUser
+    );
+
+  }catch(error){
+
+    console.error(
+      "Lỗi tải hồ sơ:",
+      error
+    );
+
+    showMessage(
+      "error",
+      "Không tải được hồ sơ tài khoản: " +
+      (error.message || "Lỗi không xác định")
+    );
+
+  }finally{
+
+    hideLoading();
+  }
+}
+
+
+/* =========================================================
+   LƯU THẬT VÀO SUPABASE
+========================================================= */
+
+async function saveProfile(event){
+
+  event.preventDefault();
+
+  clearMessage();
+
+  if(!currentUser){
+    showMessage(
+      "error",
+      "Phiên đăng nhập không hợp lệ."
+    );
+    return;
+  }
+
+  const saveButton =
+    document.getElementById("saveButton");
+
+  saveButton.disabled = true;
+  saveButton.textContent =
+    "Đang lưu...";
+
+  try{
+
+    const payload = {
+
+      full_name:
+        cleanValue(
+          document.getElementById(
+            "fullName"
+          ).value
+        ),
+
+      phone:
+        cleanValue(
+          document.getElementById(
+            "phone"
+          ).value
+        ),
+
+      company_name:
+        cleanValue(
+          document.getElementById(
+            "companyName"
+          ).value
+        ),
+
+      city:
+        cleanValue(
+          document.getElementById(
+            "city"
+          ).value
+        ),
+
+      updated_at:
+        new Date().toISOString()
+
+    };
+
+    const {
+      data,
+      error
+    } = await sb
+      .from("profiles")
+      .update(payload)
+      .eq("id",currentUser.id)
+      .select(`
+        id,
+        created_at,
+        email,
+        full_name,
+        role,
+        phone,
+        city,
+        company_name,
+        updated_at
+      `)
+      .single();
+
+    if(error){
+      throw error;
+    }
+
+    if(!data){
+      throw new Error(
+        "Không nhận được hồ sơ sau khi cập nhật."
+      );
+    }
+
+    currentProfile = data;
+
+    renderProfile(
+      currentProfile,
+      currentUser
+    );
+
+    showMessage(
+      "success",
+      "✓ Đã lưu thay đổi vào dữ liệu thật của VietTrucks."
+    );
+
+  }catch(error){
+
+    console.error(
+      "Lỗi lưu hồ sơ:",
+      error
+    );
+
+    showMessage(
+      "error",
+      "Không lưu được hồ sơ: " +
+      (error.message || "Lỗi không xác định")
+    );
+
+  }finally{
+
+    saveButton.disabled = false;
+    saveButton.textContent =
+      "Lưu thay đổi";
+  }
+}
+
+
+/* =========================================================
+   HỦY THAY ĐỔI
+========================================================= */
+
 function cancelEdit(){
-  alert(
-    "Đã hủy thay đổi."
+
+  clearMessage();
+
+  if(
+    currentProfile &&
+    currentUser
+  ){
+
+    renderProfile(
+      currentProfile,
+      currentUser
+    );
+
+    showMessage(
+      "info",
+      "Đã hủy các thay đổi chưa lưu."
+    );
+  }
+}
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+document
+  .getElementById("profileForm")
+  .addEventListener(
+    "submit",
+    saveProfile
   );
+
+document
+  .getElementById("cancelButton")
+  .addEventListener(
+    "click",
+    cancelEdit
+  );
+
+
+/* =========================================================
+   START
+========================================================= */
+
+if(
+  document.readyState === "loading"
+){
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    loadProfile
+  );
+
+}else{
+
+  loadProfile();
 }
 
 </script>
