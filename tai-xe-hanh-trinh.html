@@ -726,7 +726,20 @@ let saving = false;
 let lastSave = 0;
 let latestPosition = null;
 
+/* POD production */
+let pod = null;
+let podUploading = false;
+
 const SAVE_INTERVAL = 10000;
+const POD_BUCKET = "trip-pods";
+const POD_MAX_SIZE = 10 * 1024 * 1024;
+
+const POD_ALLOWED_TYPES = new Set([
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "application/pdf"
+]);
 
 
 /* =========================================================
