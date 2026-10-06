@@ -616,7 +616,7 @@ if (!currentUserId) {
         button.style,
         {
 
-          display: "none",
+          display: "inline-flex",
 
           alignItems:
             "center",
