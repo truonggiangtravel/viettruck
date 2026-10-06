@@ -1820,7 +1820,351 @@ async function loadProfiles(){
   return data || [];
 }
 
+/* =====================================================
+   QUẢN LÝ THÀNH VIÊN
+===================================================== */
 
+let allMembers = [];
+let currentMemberRole = "all";
+
+
+function memberRoleLabel(role){
+
+  const value =
+    normalizeStatus(role);
+
+  if(value === "admin"){
+    return "Admin";
+  }
+
+  if(value === "driver"){
+    return "Tài xế / Nhà xe";
+  }
+
+  if(value === "customer"){
+    return "Chủ hàng";
+  }
+
+  return role || "Chưa xác định";
+}
+
+
+function memberRoleBadge(role){
+
+  const value =
+    normalizeStatus(role);
+
+  let color = "gray";
+
+  if(value === "admin"){
+    color = "red";
+  }
+
+  if(value === "driver"){
+    color = "green";
+  }
+
+  if(value === "customer"){
+    color = "blue";
+  }
+
+  return `
+    <span class="status ${color}">
+      ${esc(memberRoleLabel(role))}
+    </span>
+  `;
+}
+
+
+function renderMembers(rows){
+
+  const table =
+    document.getElementById(
+      "membersTable"
+    );
+
+  if(!table){
+    return;
+  }
+
+
+  if(!rows?.length){
+
+    table.innerHTML =
+      emptyRow(
+        12,
+        "Không có thành viên phù hợp."
+      );
+
+    return;
+  }
+
+
+  table.innerHTML =
+    rows
+      .map(member=>{
+
+        const name =
+          member.full_name ||
+          member.company_name ||
+          member.email ||
+          member.phone ||
+          "Chưa cập nhật";
+
+
+        const secondary =
+          member.company_name &&
+          member.company_name !== name
+            ? member.company_name
+            : member.email &&
+              member.email !== name
+              ? member.email
+              : "";
+
+
+        return `
+          <tr>
+
+            <td>
+              <strong>
+                ${esc(name)}
+              </strong>
+
+              ${
+                secondary
+                  ? `
+                    <br>
+                    <span style="color:#94a3b8">
+                      ${esc(secondary)}
+                    </span>
+                  `
+                  : ""
+              }
+            </td>
+
+
+            <td>
+              ${memberRoleBadge(member.role)}
+            </td>
+
+
+            <td>
+              ${esc(member.phone || "—")}
+            </td>
+
+
+            <td>
+              ${esc(member.city || "—")}
+            </td>
+
+
+            <td>
+              ${dateTimeVN(member.created_at)}
+            </td>
+
+
+            <td>
+              <strong>
+                ${Number(member.total_orders || 0)}
+              </strong>
+            </td>
+
+
+            <td>
+              ${Number(member.total_vehicles || 0)}
+            </td>
+
+
+            <td>
+              ${Number(member.total_quotes || 0)}
+            </td>
+
+
+            <td>
+              ${Number(member.total_trips || 0)}
+            </td>
+
+
+            <td>
+              ${Number(member.completed_trips || 0)}
+            </td>
+
+
+            <td>
+              ${Number(member.total_conversations || 0)}
+            </td>
+
+
+            <td>
+              ${dateTimeVN(member.last_activity_at)}
+            </td>
+
+          </tr>
+        `;
+
+      })
+      .join("");
+}
+
+
+function applyMemberFilters(){
+
+  const search =
+    String(
+      document
+        .getElementById("memberSearch")
+        ?.value || ""
+    )
+      .trim()
+      .toLowerCase();
+
+
+  const filtered =
+    allMembers.filter(member=>{
+
+      const role =
+        normalizeStatus(
+          member.role
+        );
+
+
+      const roleMatch =
+        currentMemberRole === "all" ||
+        role === currentMemberRole;
+
+
+      const searchText = [
+        member.full_name,
+        member.email,
+        member.phone,
+        member.company_name,
+        member.city,
+        member.role
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+
+      const searchMatch =
+        !search ||
+        searchText.includes(search);
+
+
+      return (
+        roleMatch &&
+        searchMatch
+      );
+
+    });
+
+
+  renderMembers(filtered);
+}
+
+
+async function loadMembers(){
+
+  const table =
+    document.getElementById(
+      "membersTable"
+    );
+
+
+  if(!table){
+    return [];
+  }
+
+
+  const {
+    data,
+    error
+  } = await supabaseClient.rpc(
+    "admin_get_customers"
+  );
+
+
+  if(error){
+
+    console.error(
+      "admin_get_customers:",
+      error
+    );
+
+
+    table.innerHTML =
+      emptyRow(
+        12,
+        "Không tải được danh sách thành viên."
+      );
+
+
+    return [];
+  }
+
+
+  allMembers =
+    data || [];
+
+
+  applyMemberFilters();
+
+
+  return allMembers;
+}
+
+
+/* =====================================================
+   TÌM KIẾM + LỌC VAI TRÒ
+===================================================== */
+
+document
+  .getElementById("memberSearch")
+  ?.addEventListener(
+    "input",
+    ()=>{
+      applyMemberFilters();
+    }
+  );
+
+
+document
+  .querySelectorAll(".member-filter")
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        currentMemberRole =
+          button.dataset.role ||
+          "all";
+
+
+        document
+          .querySelectorAll(
+            ".member-filter"
+          )
+          .forEach(item=>{
+
+            item.classList.add(
+              "gray"
+            );
+
+          });
+
+
+        button.classList.remove(
+          "gray"
+        );
+
+
+        applyMemberFilters();
+
+      }
+    );
+
+  });
 /* =====================================================
    PROFILE MAP
 ===================================================== */
