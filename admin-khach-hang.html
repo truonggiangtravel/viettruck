@@ -460,53 +460,110 @@
   </section>
 
 
-  <!-- KHÁCH HÀNG -->
+  <!-- QUẢN LÝ THÀNH VIÊN -->
 
-  <section class="panel">
+<section class="panel">
 
-    <div class="panel-head">
+  <div class="panel-head">
 
-      <h2>👥 Tài khoản đăng ký</h2>
-
-      <input
-        id="customerSearch"
-        class="search"
-        type="search"
-        placeholder="Tìm tên, email, điện thoại, công ty..."
-      >
-
+    <div>
+      <h2>👥 Quản lý thành viên</h2>
+      <div class="muted" style="margin-top:6px">
+        Theo dõi Chủ hàng, Tài xế/Nhà xe và tài khoản Admin
+      </div>
     </div>
 
-    <div class="table-wrap">
+    <input
+      id="customerSearch"
+      class="search"
+      type="search"
+      placeholder="Tìm tên, email, điện thoại, công ty..."
+    >
 
-      <table>
+  </div>
 
-        <thead>
-          <tr>
-            <th>Khách hàng</th>
-            <th>Vai trò</th>
-            <th>Điện thoại</th>
-            <th>Khu vực</th>
-            <th>Ngày đăng ký</th>
-            <th>Đơn hàng</th>
-            <th>Xe</th>
-            <th>Hội thoại</th>
-          </tr>
-        </thead>
+  <!-- BỘ LỌC VAI TRÒ -->
+  <div
+    style="
+      padding:14px 20px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      border-bottom:1px solid #e4e7ec;
+    "
+  >
 
-        <tbody id="customerBody">
-          <tr>
-            <td colspan="8" class="loading">
-              Đang tải dữ liệu...
-            </td>
-          </tr>
-        </tbody>
+    <button
+      type="button"
+      class="btn member-filter"
+      data-role="all"
+    >
+      Tất cả
+    </button>
 
-      </table>
+    <button
+      type="button"
+      class="btn member-filter"
+      data-role="customer"
+      style="background:#475467"
+    >
+      Chủ hàng
+    </button>
 
-    </div>
+    <button
+      type="button"
+      class="btn member-filter"
+      data-role="driver"
+      style="background:#475467"
+    >
+      Tài xế / Nhà xe
+    </button>
 
-  </section>
+    <button
+      type="button"
+      class="btn member-filter"
+      data-role="admin"
+      style="background:#475467"
+    >
+      Admin
+    </button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table style="min-width:1450px">
+
+      <thead>
+        <tr>
+          <th>Thành viên</th>
+          <th>Vai trò</th>
+          <th>Điện thoại</th>
+          <th>Khu vực</th>
+          <th>Ngày đăng ký</th>
+          <th>Đơn</th>
+          <th>Xe</th>
+          <th>Báo giá</th>
+          <th>Chuyến</th>
+          <th>Hoàn thành</th>
+          <th>Hội thoại</th>
+          <th>Hoạt động gần nhất</th>
+        </tr>
+      </thead>
+
+      <tbody id="customerBody">
+        <tr>
+          <td colspan="12" class="loading">
+            Đang tải dữ liệu thành viên...
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
 
 
   <!-- HỘI THOẠI -->
