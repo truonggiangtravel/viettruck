@@ -154,80 +154,526 @@ display:block;width:100%;text-align:center;text-decoration:none;border-radius:8p
 
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
-    const supabaseClient = window.supabaseClient;
 
-    const sendBtn = document.getElementById("sendTransportRequest");
-    const contactBtn = document.getElementById("contactDriver");
+    const supabaseClient = window.supabaseClient;
 
     if (!supabaseClient) {
         console.error("Không tìm thấy Supabase client");
         return;
     }
 
-    // Lấy xe hiện tại từ URL
-    const params = new URLSearchParams(window.location.search);
-    const vehicleId = params.get("id");
 
-    // Kiểm tra phiên đăng nhập hiện tại
-    async function getCurrentUser() {
-        const {
-            data: { session },
-            error
-        } = await supabaseClient.auth.getSession();
+    /* =====================================================
+       1. LẤY ID XE TỪ URL
+    ===================================================== */
 
-        if (error) {
-            console.error("Lỗi kiểm tra đăng nhập:", error);
-            return null;
-        }
+    const params =
+        new URLSearchParams(window.location.search);
 
-        return session?.user || null;
+    const vehicleId =
+        params.get("id");
+
+
+    if (!vehicleId) {
+
+        alert("Không xác định được xe.");
+
+        window.location.href =
+            "tim-xe.html";
+
+        return;
     }
 
-    // GỬI YÊU CẦU VẬN CHUYỂN
-    sendBtn?.addEventListener("click", async (e) => {
-        e.preventDefault();
 
-        const user = await getCurrentUser();
+    /* =====================================================
+       2. BẮT BUỘC ĐĂNG NHẬP
+    ===================================================== */
 
-        if (!user) {
-            window.location.href =
-                "dang-nhap.html?redirect=" +
-                encodeURIComponent(window.location.href);
-            return;
-        }
+    const {
+        data: { session },
+        error: sessionError
+    } =
+    await supabaseClient.auth.getSession();
 
-        // Đã đăng nhập thì giữ nguyên phiên và chuyển sang Đăng hàng
-        const target = vehicleId
-            ? "dang-hang.html?vehicle_id=" + encodeURIComponent(vehicleId)
-            : "dang-hang.html";
 
-        window.location.href = target;
-    });
-  // CHAT NỘI BỘ CHỦ HÀNG <-> NHÀ XE
-contactBtn.addEventListener("click", async (e) => {
-    e.preventDefault();
+    if (sessionError) {
 
-    const user = await getCurrentUser();
+        console.error(
+            "Lỗi kiểm tra đăng nhập:",
+            sessionError
+        );
 
-    if (!user) {
         window.location.href =
             "dang-nhap.html?redirect=" +
             encodeURIComponent(window.location.href);
+
         return;
     }
 
-    if (!vehicleId) {
-        alert("Không xác định được xe.");
+
+    if (!session || !session.user) {
+
+        window.location.href =
+            "dang-nhap.html?redirect=" +
+            encodeURIComponent(window.location.href);
+
         return;
     }
 
-    window.location.href =
-        "chat.html?vehicle_id=" +
-        encodeURIComponent(vehicleId);
+
+    const currentUser =
+        session.user;
+
+
+    /* =====================================================
+       3. HÀM AN TOÀN
+    ===================================================== */
+
+    function escapeHTML(value) {
+
+        return String(value ?? "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+
+
+    function formatDate(value) {
+
+        if (!value) {
+            return "Chưa cập nhật";
+        }
+
+        const date =
+            String(value).substring(0, 10);
+
+        const parts =
+            date.split("-");
+
+        if (parts.length !== 3) {
+            return escapeHTML(value);
+        }
+
+        return (
+            Number(parts[2]) +
+            "/" +
+            Number(parts[1]) +
+            "/" +
+            parts[0]
+        );
+    }
+
+
+    /* =====================================================
+       4. LẤY THÔNG TIN XE THẬT
+    ===================================================== */
+
+    const {
+        data: vehicle,
+        error: vehicleError
+    } =
+    await supabaseClient
+        .from("vehicles")
+        .select(`
+            id,
+            user_id,
+            plate_number,
+            vehicle_type,
+            capacity,
+            current_location,
+            destination,
+            available_date,
+            current_province,
+            current_district,
+            destination_province,
+            destination_district,
+            available_from,
+            available_to,
+            driver_name,
+            description,
+            status,
+            created_at
+        `)
+        .eq("id", vehicleId)
+        .maybeSingle();
+
+
+    if (vehicleError) {
+
+        console.error(
+            "Không tải được thông tin xe:",
+            vehicleError
+        );
+
+        alert(
+            "Không tải được thông tin xe."
+        );
+
+        return;
+    }
+
+
+    if (!vehicle) {
+
+        alert(
+            "Xe không tồn tại hoặc đã bị xóa."
+        );
+
+        window.location.href =
+            "tim-xe.html";
+
+        return;
+    }
+
+
+    /* =====================================================
+       5. CHUẨN BỊ DỮ LIỆU
+    ===================================================== */
+
+    const vehicleType =
+        escapeHTML(
+            vehicle.vehicle_type ||
+            "Xe tải"
+        );
+
+
+    const plate =
+        escapeHTML(
+            vehicle.plate_number ||
+            "Chưa cập nhật"
+        );
+
+
+    const capacity =
+        vehicle.capacity
+        ? escapeHTML(vehicle.capacity) + " tấn"
+        : "Chưa cập nhật";
+
+
+    const currentProvince =
+        escapeHTML(
+            vehicle.current_province ||
+            vehicle.current_location ||
+            "Chưa cập nhật"
+        );
+
+
+    const currentDistrict =
+        vehicle.current_district
+        ? " - " +
+          escapeHTML(vehicle.current_district)
+        : "";
+
+
+    const destinationProvince =
+        escapeHTML(
+            vehicle.destination_province ||
+            vehicle.destination ||
+            "Chưa cập nhật"
+        );
+
+
+    const destinationDistrict =
+        vehicle.destination_district
+        ? " - " +
+          escapeHTML(vehicle.destination_district)
+        : "";
+
+
+    const availableDate =
+        formatDate(
+            vehicle.available_date
+        );
+
+
+    const driverName =
+        escapeHTML(
+            vehicle.driver_name ||
+            "Nhà xe VietTrucks"
+        );
+
+
+    const description =
+        escapeHTML(
+            vehicle.description ||
+            "Nhà xe chưa cập nhật mô tả."
+        );
+
+
+    /* =====================================================
+       6. HIỂN THỊ CHI TIẾT XE
+    ===================================================== */
+
+    const mainSection =
+        document.querySelector(
+            "main.layout > section"
+        );
+
+
+    if (mainSection) {
+
+        mainSection.innerHTML = `
+
+            <div class="card">
+
+                <div class="truck-title">
+
+                    <div class="truck-icon">
+                        🚚
+                    </div>
+
+                    <div>
+
+                        <div class="truck-name">
+                            ${vehicleType}
+                        </div>
+
+                        <div class="verified">
+                            ✓ Thông tin xe trên VietTrucks
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="tags">
+
+                    <span class="tag">
+                        ${capacity}
+                    </span>
+
+                    <span class="tag">
+                        ${vehicleType}
+                    </span>
+
+                    <span class="tag">
+                        ${plate}
+                    </span>
+
+                </div>
+
+
+                <div class="info-grid">
+
+                    <div class="info">
+
+                        <span>
+                            📍 Xe đang ở
+                        </span>
+
+                        <strong>
+                            ${currentProvince}
+                            ${currentDistrict}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info">
+
+                        <span>
+                            🏁 Đi đến
+                        </span>
+
+                        <strong>
+                            ${destinationProvince}
+                            ${destinationDistrict}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info">
+
+                        <span>
+                            🚚 Biển số
+                        </span>
+
+                        <strong>
+                            ${plate}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info">
+
+                        <span>
+                            ⚖️ Tải trọng
+                        </span>
+
+                        <strong>
+                            ${capacity}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info">
+
+                        <span>
+                            📅 Ngày sẵn sàng
+                        </span>
+
+                        <strong>
+                            ${availableDate}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info">
+
+                        <span>
+                            Trạng thái
+                        </span>
+
+                        <strong style="color:#078c4b">
+                            ● Sẵn sàng
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>
+                    Thông tin nhà xe
+                </h2>
+
+                <div class="driver">
+
+                    <div class="avatar">
+                        🚚
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            ${driverName}
+                        </strong>
+
+                        <span>
+                            Thành viên VietTrucks
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>
+                    Mô tả
+                </h2>
+
+                <div class="description">
+                    ${description}
+                </div>
+
+            </div>
+
+        `;
+    }
+
+
+    /* =====================================================
+       7. KHUNG TRẠNG THÁI BÊN PHẢI
+    ===================================================== */
+
+    const statusBox =
+        document.querySelector(
+            ".status-box"
+        );
+
+
+    if (statusBox) {
+
+        statusBox.insertAdjacentHTML(
+            "afterbegin",
+            `
+
+            <div class="status">
+                ● Xe đang sẵn sàng
+            </div>
+
+            <div class="status-note">
+                Có thể gửi yêu cầu vận chuyển
+                hoặc nhắn tin với nhà xe.
+            </div>
+
+            `
+        );
+    }
+
+
+    /* =====================================================
+       8. GỬI YÊU CẦU VẬN CHUYỂN
+    ===================================================== */
+
+    const sendBtn =
+        document.getElementById(
+            "sendTransportRequest"
+        );
+
+
+    sendBtn?.addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+            window.location.href =
+                "dang-hang.html?vehicle_id=" +
+                encodeURIComponent(
+                    vehicleId
+                );
+        }
+    );
+
+
+    /* =====================================================
+       9. CHAT CHỦ HÀNG ↔ NHÀ XE
+    ===================================================== */
+
+    const contactBtn =
+        document.getElementById(
+            "contactDriver"
+        );
+
+
+    contactBtn?.addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+            window.location.href =
+                "chat.html?vehicle_id=" +
+                encodeURIComponent(
+                    vehicleId
+                );
+        }
+    );
+
+
+    console.log(
+        "VietTrucks: đã tải chi tiết xe",
+        vehicleId,
+        currentUser.id
+    );
+
 });
-  });
-
-   
 </script>
 </body>
 </html>
