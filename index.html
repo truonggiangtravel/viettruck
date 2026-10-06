@@ -1228,92 +1228,150 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
+  "use strict";
 
-  try {
+  const client = window.supabaseClient;
 
-    const { data, error } =
-      await window.supabaseClient.auth.getSession();
+  if (!client) {
+    console.error("Trang chủ: chưa có Supabase Client");
+    return;
+  }
 
-    if (error) {
-      console.error(
-        "Lỗi kiểm tra phiên đăng nhập:",
-        error
-      );
-      return;
+  const loginLink = document.querySelector(
+    '.header-actions a[href="dang-nhap.html"]'
+  );
+
+  const signupLink = document.querySelector(
+    '.header-actions a[href="dang-ky.html"]'
+  );
+
+  let logoutHandlerAdded = false;
+
+
+  function showLoggedOut() {
+    if (loginLink) {
+      loginLink.href = "dang-nhap.html";
+      loginLink.textContent = "Đăng nhập";
     }
 
-    const session = data?.session;
+    if (signupLink) {
+      signupLink.href = "dang-ky.html";
+      signupLink.textContent = "Đăng ký";
+      signupLink.onclick = null;
+    }
+  }
 
-    if (!session) {
-      console.log("Trang chủ: chưa đăng nhập");
+
+  function showLoggedIn(user) {
+    if (!user) {
+      showLoggedOut();
       return;
     }
 
     console.log(
       "Trang chủ: đang đăng nhập",
-      session.user.id
+      user.id,
+      user.email || user.phone || ""
     );
-
-
-    /* Đổi nút Đăng nhập thành Tài khoản */
-
-    const loginLink =
-      document.querySelector(
-        'a[href="dang-nhap.html"]'
-      );
 
     if (loginLink) {
-
-      loginLink.href =
-        "tai-khoan.html";
-
-      loginLink.textContent =
-        "Tài khoản";
+      loginLink.href = "tai-khoan.html";
+      loginLink.textContent = "Tài khoản";
     }
-
-
-    /* Đổi nút Đăng ký thành Đăng xuất */
-
-    const signupLink =
-      document.querySelector(
-        'a[href="dang-ky.html"]'
-      );
 
     if (signupLink) {
-
       signupLink.href = "#";
+      signupLink.textContent = "Đăng xuất";
 
-      signupLink.textContent =
-        "Đăng xuất";
+      if (!logoutHandlerAdded) {
+        signupLink.addEventListener(
+          "click",
+          async (event) => {
+            event.preventDefault();
+
+            try {
+              const { error } =
+                await client.auth.signOut();
+
+              if (error) {
+                throw error;
+              }
+
+              window.location.replace(
+                "dang-nhap.html"
+              );
+
+            } catch (error) {
+              console.error(
+                "Lỗi đăng xuất:",
+                error
+              );
+
+              alert(
+                "Không thể đăng xuất. Vui lòng thử lại."
+              );
+            }
+          }
+        );
+
+        logoutHandlerAdded = true;
+      }
+    }
+  }
 
 
-      signupLink.addEventListener(
-        "click",
-        async (e) => {
+  /* ==========================================
+     1. KIỂM TRA USER THẬT TỪ SUPABASE
+     ========================================== */
 
-          e.preventDefault();
+  try {
+    const { data, error } =
+      await client.auth.getUser();
 
-          await window.supabaseClient
-            .auth
-            .signOut();
-
-          window.location.replace(
-            "dang-nhap.html"
-          );
-
-        }
+    if (error) {
+      console.warn(
+        "Trang chủ getUser:",
+        error
       );
-
     }
 
-  } catch (err) {
+    if (data?.user) {
+      showLoggedIn(data.user);
+    } else {
+      showLoggedOut();
+    }
 
+  } catch (error) {
     console.error(
-      "Lỗi trạng thái đăng nhập trang chủ:",
-      err
+      "Trang chủ kiểm tra đăng nhập:",
+      error
     );
 
+    showLoggedOut();
   }
+
+
+  /* ==========================================
+     2. THEO DÕI LOGIN / LOGOUT / REFRESH TOKEN
+     ========================================== */
+
+  client.auth.onAuthStateChange(
+    (_event, session) => {
+
+      setTimeout(() => {
+
+        const user =
+          session?.user || null;
+
+        if (user) {
+          showLoggedIn(user);
+        } else {
+          showLoggedOut();
+        }
+
+      }, 0);
+    }
+  );
 
 });
 </script>
