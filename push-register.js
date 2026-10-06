@@ -236,12 +236,38 @@
   if (!button || busy) return;
 
   // Chưa đăng nhập
-  if (!currentUserId) {
-    currentUserSubscribed = false;
-    button.dataset.pushEnabled = "0";
-    button.style.display = "none";
-    return;
+  // Kiểm tra trực tiếp session Supabase.
+// Không phụ thuộc currentUserId đã kịp cập nhật hay chưa.
+if (!currentUserId) {
+  try {
+    const { data, error } =
+      await window.supabaseClient.auth.getSession();
+
+    if (error) {
+      console.error("Push getSession:", error);
+    }
+
+    const sessionUser =
+      data?.session?.user || null;
+
+    if (sessionUser?.id) {
+      currentUserId = sessionUser.id;
+    }
+  } catch (error) {
+    console.error(
+      "Push kiểm tra session:",
+      error
+    );
   }
+}
+
+// Thực sự chưa đăng nhập mới ẩn nút
+if (!currentUserId) {
+  currentUserSubscribed = false;
+  button.dataset.pushEnabled = "0";
+  button.style.display = "none";
+  return;
+}
 
   button.style.display = "inline-flex";
 
