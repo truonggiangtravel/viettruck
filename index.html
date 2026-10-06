@@ -4124,5 +4124,311 @@ document.addEventListener("DOMContentLoaded", async function () {
 })();
 </script>
 
+<!-- VIETTRUCKS - CHUONG THONG BAO -->
+<style>
+#vtBellWrap{
+  position:relative;
+  display:none;
+  align-items:center;
+  margin-left:8px;
+  z-index:1000;
+}
+#vtBellBtn{
+  position:relative;
+  background:#f0fdf4;
+  color:#15803d;
+  border:1px solid #bbf7d0;
+  border-radius:50%;
+  width:42px;
+  height:42px;
+  font-size:22px;
+  cursor:pointer;
+}
+#vtBellCount{
+  display:none;
+  position:absolute;
+  top:-5px;
+  right:-7px;
+  background:#dc2626;
+  color:white;
+  border-radius:20px;
+  min-width:19px;
+  padding:2px 4px;
+  font-size:11px;
+  font-weight:bold;
+}
+#vtBellPanel{
+  display:none;
+  position:absolute;
+  right:0;
+  top:50px;
+  width:340px;
+  max-width:calc(100vw - 20px);
+  max-height:420px;
+  overflow-y:auto;
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  box-shadow:0 12px 35px #0002;
+  color:#111827;
+}
+.vtBellHeading{
+  padding:14px;
+  font-weight:800;
+  border-bottom:1px solid #eee;
+}
+.vtBellItem{
+  display:block;
+  padding:12px 14px;
+  border-bottom:1px solid #eee;
+  color:#111827;
+  text-decoration:none;
+  font-size:13px;
+}
+.vtBellItem.unread{
+  background:#f0fdf4;
+}
+.vtBellItem strong{
+  display:block;
+  margin-bottom:5px;
+}
+.vtBellItem p{
+  margin:0;
+  color:#64748b;
+  line-height:1.5;
+}
+.vtBellEmpty{
+  padding:20px;
+  text-align:center;
+  color:#64748b;
+}
+@media(max-width:768px){
+  #vtBellWrap{margin-left:4px}
+  #vtBellBtn{width:37px;height:37px}
+  #vtBellPanel{
+    position:fixed;
+    top:65px;
+    right:10px;
+    width:calc(100vw - 20px);
+    max-width:360px;
+  }
+}
+</style>
+
+<script>
+(function(){
+  "use strict";
+
+  let client = null;
+  let currentUser = null;
+  let channel = null;
+  let refreshTimer = null;
+
+  function createBell(){
+    if(document.getElementById("vtBellWrap")) return;
+
+    const header = document.querySelector(".header-actions");
+    if(!header) return;
+
+    const wrap = document.createElement("div");
+    wrap.id = "vtBellWrap";
+
+    wrap.innerHTML = `
+      <button id="vtBellBtn" type="button"
+        aria-label="Thông báo"
+        aria-expanded="false">
+        🔔
+        <span id="vtBellCount"></span>
+      </button>
+      <div id="vtBellPanel">
+        <div class="vtBellHeading">
+          🔔 Thông báo VietTrucks
+        </div>
+        <div id="vtBellList" class="vtBellEmpty">
+          Đang tải thông báo...
+        </div>
+      </div>
+    `;
+
+    const menuBtn = header.querySelector(".menu-btn");
+    if(menuBtn){
+      header.insertBefore(wrap,menuBtn);
+    }else{
+      header.appendChild(wrap);
+    }
+
+    document.getElementById("vtBellBtn")
+      .addEventListener("click",function(e){
+        e.stopPropagation();
+        const panel = document.getElementById("vtBellPanel");
+        const opening = panel.style.display !== "block";
+        panel.style.display = opening ? "block" : "none";
+        this.setAttribute("aria-expanded",String(opening));
+        if(opening) loadNotifications();
+      });
+
+    document.addEventListener("click",function(e){
+      if(!wrap.contains(e.target)){
+        document.getElementById("vtBellPanel").style.display="none";
+        document.getElementById("vtBellBtn")
+          .setAttribute("aria-expanded","false");
+      }
+    });
+  }
+
+  function safeLink(value){
+    if(typeof value !== "string") return null;
+    try{
+      const url = new URL(value,location.origin);
+      if(url.origin !== location.origin) return null;
+      if(!["http:","https:"].includes(url.protocol)) return null;
+      return url.href;
+    }catch{
+      return null;
+    }
+  }
+
+  async function loadNotifications(){
+    if(!client || !currentUser) return;
+
+    const {data,error} = await client
+      .from("notifications")
+      .select("id,title,message,link,is_read,created_at")
+      .eq("user_id",currentUser.id)
+      .order("created_at",{ascending:false})
+      .limit(30);
+
+    if(error){
+      console.error("Lỗi thông báo:",error);
+      document.getElementById("vtBellList").textContent =
+        "Không tải được thông báo.";
+      return;
+    }
+
+    const list = document.getElementById("vtBellList");
+    list.replaceChildren();
+
+    const items = data || [];
+    const unread = items.filter(x=>!x.is_read).length;
+    const count = document.getElementById("vtBellCount");
+
+    count.textContent = unread > 99 ? "99+" : String(unread);
+    count.style.display = unread ? "block" : "none";
+
+    if(!items.length){
+      list.className="vtBellEmpty";
+      list.textContent="Chưa có thông báo mới.";
+      return;
+    }
+
+    list.className="";
+
+    items.forEach(item=>{
+      const row=document.createElement("a");
+      row.className="vtBellItem"+(item.is_read?"":" unread");
+
+      const destination=safeLink(item.link);
+      row.href=destination || "#";
+
+      const title=document.createElement("strong");
+      title.textContent=item.title || "Thông báo VietTrucks";
+
+      const message=document.createElement("p");
+      message.textContent=item.message || "";
+
+      const date=document.createElement("small");
+      date.textContent=item.created_at
+        ? new Date(item.created_at).toLocaleString("vi-VN")
+        : "";
+
+      row.append(title,message,date);
+
+      row.addEventListener("click",async e=>{
+        e.preventDefault();
+
+        if(!item.is_read){
+          const {error:markError}=await client
+            .from("notifications")
+            .update({is_read:true})
+            .eq("id",item.id)
+            .eq("user_id",currentUser.id);
+
+          if(markError){
+            console.error("Không đánh dấu đã đọc:",markError);
+          }
+        }
+
+        if(destination){
+          location.href=destination;
+        }else{
+          loadNotifications();
+        }
+      });
+
+      list.appendChild(row);
+    });
+  }
+
+  async function cleanup(){
+    if(refreshTimer){
+      clearInterval(refreshTimer);
+      refreshTimer=null;
+    }
+    if(channel && client){
+      await client.removeChannel(channel);
+      channel=null;
+    }
+  }
+
+  async function initialize(user){
+    await cleanup();
+    currentUser=user;
+
+    const wrap=document.getElementById("vtBellWrap");
+    if(!wrap) return;
+
+    wrap.style.display=user?"inline-flex":"none";
+    if(!user) return;
+
+    await loadNotifications();
+
+    channel=client
+      .channel("vt-notifications-"+user.id)
+      .on("postgres_changes",{
+        event:"*",
+        schema:"public",
+        table:"notifications",
+        filter:"user_id=eq."+user.id
+      },()=>loadNotifications())
+      .subscribe();
+
+    refreshTimer=setInterval(loadNotifications,60000);
+  }
+
+  document.addEventListener("DOMContentLoaded",async()=>{
+    client=window.supabaseClient;
+    if(!client){
+      console.error("Chưa có Supabase Client");
+      return;
+    }
+
+    createBell();
+
+    const {data,error}=await client.auth.getUser();
+    if(error) console.error("Lỗi xác thực thông báo:",error);
+
+    await initialize(data?.user || null);
+
+    client.auth.onAuthStateChange((_event,session)=>{
+      const nextUser=session?.user || null;
+      if(nextUser?.id !== currentUser?.id){
+        setTimeout(()=>initialize(nextUser),0);
+      }
+    });
+  });
+})();
+</script>
+<!-- END VIETTRUCKS NOTIFICATIONS -->
+
 </body>
 </html>
