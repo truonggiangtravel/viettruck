@@ -1279,22 +1279,13 @@
      ===================================================== */
 
   document
-    .getElementById(
-      "customerSearch"
-    )
-    .addEventListener(
-      "input",
-      function() {
-
-        const q =
-          this.value
-            .trim()
-            .toLowerCase();
-
-        if (!q) {
-          renderCustomers(
-            allCustomers
-          );
+  .getElementById("customerSearch")
+  .addEventListener(
+    "input",
+    function() {
+      applyMemberFilters();
+    }
+  );
 
           return;
         }
