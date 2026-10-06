@@ -1323,6 +1323,79 @@
       }
     );
 
+  /* =====================================================
+   LỌC THÀNH VIÊN THEO VAI TRÒ
+   ===================================================== */
+
+let currentMemberRole = "all";
+
+function applyMemberFilters() {
+
+  const searchInput =
+    document.getElementById("customerSearch");
+
+  const q =
+    String(searchInput?.value || "")
+      .trim()
+      .toLowerCase();
+
+  const filtered =
+    allCustomers.filter(item => {
+
+      const role =
+        String(item.role || "")
+          .toLowerCase();
+
+      const roleMatch =
+        currentMemberRole === "all" ||
+        role === currentMemberRole;
+
+      const text = [
+        item.full_name,
+        item.email,
+        item.phone,
+        item.role,
+        item.city,
+        item.company_name
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      const searchMatch =
+        !q || text.includes(q);
+
+      return roleMatch && searchMatch;
+    });
+
+  renderCustomers(filtered);
+}
+
+
+document
+  .querySelectorAll(".member-filter")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      function() {
+
+        currentMemberRole =
+          this.dataset.role || "all";
+
+        document
+          .querySelectorAll(".member-filter")
+          .forEach(btn => {
+            btn.style.background = "#475467";
+          });
+
+        this.style.background = "#087f45";
+
+        applyMemberFilters();
+      }
+    );
+
+  });
 
   /* =====================================================
      TÌM KIẾM CHAT
