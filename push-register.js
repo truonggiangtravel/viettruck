@@ -611,49 +611,36 @@ if (!currentUserId) {
         "🔔 Bật thông báo";
 
 
-      Object.assign(
-        button.style,
-        {
+      Object.assign(button.style, {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  background: "#15803d",
+  color: "#ffffff",
+  border: "0",
+  borderRadius: "9px",
+  padding: "9px 12px",
+  fontSize: "12px",
+  fontWeight: "700",
+  cursor: "pointer",
+  whiteSpace: "nowrap",
+  lineHeight: "1.3",
+  zIndex: "9999"
+});
 
-          display: "inline-flex",
-
-          alignItems:
-            "center",
-
-          justifyContent:
-            "center",
-
-          background:
-            "#15803d",
-
-          color:
-            "#ffffff",
-
-          border:
-            "0",
-
-          borderRadius:
-            "9px",
-
-          padding:
-            "9px 12px",
-
-          fontSize:
-            "12px",
-
-          fontWeight:
-            "700",
-
-          cursor:
-            "pointer",
-
-          maxWidth:
-            "150px",
-
-          lineHeight:
-            "1.3"
-        }
-      );
+// MOBILE
+if (window.innerWidth <= 768) {
+  Object.assign(button.style, {
+    position: "fixed",
+    top: "82px",
+    right: "12px",
+    width: "auto",
+    maxWidth: "none",
+    padding: "9px 12px",
+    fontSize: "12px",
+    boxShadow: "0 3px 12px rgba(0,0,0,.18)"
+  });
+}
 
 
       const bell =
