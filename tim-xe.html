@@ -1861,7 +1861,14 @@ document
    CHẠY
 ======================================== */
 
-loadAvailableVehicles();
+async function initializeVehiclePage(){
+
+    await checkVehicleViewerSession();
+
+    await loadAvailableVehicles();
+}
+
+initializeVehiclePage();
 
 </script>
 
