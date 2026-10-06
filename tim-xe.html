@@ -1506,10 +1506,15 @@ function renderVehicles(){
                             </div>
 
                             <a
-                                href="chi-tiet-xe.html?id=${encodeURIComponent(vehicle.id)}"
-                                class="view-btn">
-                                Xem xe
-                            </a>
+    href="#"
+    class="view-btn"
+    onclick="event.preventDefault(); openVehicleDetail('${vehicle.id}')">
+    ${
+        currentUserLoggedIn
+        ? "Xem xe"
+        : "Đăng nhập để xem"
+    }
+</a>
 
                         </div>
 
