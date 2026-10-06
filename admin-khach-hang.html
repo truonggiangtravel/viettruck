@@ -1287,32 +1287,7 @@
     }
   );
 
-          return;
-        }
-
-        const filtered =
-          allCustomers.filter(item => {
-
-            const text = [
-              item.full_name,
-              item.email,
-              item.phone,
-              item.role,
-              item.city,
-              item.company_name
-            ]
-              .filter(Boolean)
-              .join(" ")
-              .toLowerCase();
-
-            return text.includes(q);
-          });
-
-        renderCustomers(
-          filtered
-        );
-      }
-    );
+          
 
   /* =====================================================
    LỌC THÀNH VIÊN THEO VAI TRÒ
