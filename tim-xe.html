@@ -1387,11 +1387,11 @@ function renderVehicles(){
 
 
                 const plate =
-                    escapeHTML(
-                        vehicle.plate_number ||
-                        "Chưa cập nhật"
-                    );
-
+    escapeHTML(
+        maskVehiclePlate(
+            vehicle.plate_number
+        )
+    );
 
                 const availableDate =
                     formatDate(
