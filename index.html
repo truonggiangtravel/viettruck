@@ -2562,18 +2562,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       */
 
       const {
-        data: vehicles,
-        error
-      } = await client
-        .from("vehicles")
-        .select("*")
-        .order(
-          "created_at",
-          {
-            ascending:false
-          }
-        )
-        .limit(6);
+  data: vehicles,
+  error
+} = await client
+  .from("vehicles")
+  .select("*")
+  .order("available_date", {
+    ascending: false,
+    nullsFirst: false
+  })
+  .order("created_at", {
+    ascending: false
+  })
+  .limit(6);
 
 
       if (error) {
