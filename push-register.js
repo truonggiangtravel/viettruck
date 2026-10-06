@@ -331,10 +331,9 @@ if (!currentUserId) {
     currentUserSubscribed = false;
     button.dataset.pushEnabled = "0";
 
-    setButton("🔔 Bật thông báo");
+        setButton("🔔 Bật thông báo");
   }
 }
-  }
 
 
   // ==========================================================
