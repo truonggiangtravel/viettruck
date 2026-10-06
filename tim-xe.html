@@ -1639,10 +1639,7 @@ async function loadAvailableVehicles(){
             status,
             created_at
         `)
-        .eq(
-            "status",
-            "available"
-        )
+        
         .order(
             "created_at",
             {
