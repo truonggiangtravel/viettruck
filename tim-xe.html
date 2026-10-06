@@ -1618,34 +1618,34 @@ async function loadAvailableVehicles(){
         error
     } =
     await supabaseClient
-        .from("vehicles")
-        .select(`
-            id,
-            plate_number,
-            vehicle_type,
-            capacity,
-            current_location,
-            destination,
-            available_date,
-            current_province,
-            current_district,
-            destination_province,
-            destination_district,
-            available_from,
-            available_to,
-            driver_name,
-            driver_phone,
-            description,
-            status,
-            created_at
-        `)
-        
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
+    .from("vehicles")
+    .select(`
+        id,
+        plate_number,
+        vehicle_type,
+        capacity,
+        current_location,
+        destination,
+        available_date,
+        current_province,
+        current_district,
+        destination_province,
+        destination_district,
+        available_from,
+        available_to,
+        driver_name,
+        driver_phone,
+        description,
+        status,
+        created_at
+    `)
+    .eq("status", "available")
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
 
 
     if(error){
