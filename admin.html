@@ -1318,7 +1318,122 @@ tbody tr:hover{background:#fafafa}
 
 </div>
 
+<!-- =====================================================
+     QUẢN LÝ THÀNH VIÊN
+===================================================== -->
 
+<div class="panel" id="quan-ly-thanh-vien">
+
+  <div class="panel-head">
+    <div>
+      <h3>👥 Quản lý thành viên</h3>
+      <div class="panel-subtitle">
+        Theo dõi tài khoản Chủ hàng, Tài xế/Nhà xe và Admin
+      </div>
+    </div>
+  </div>
+
+  <!-- BỘ LỌC -->
+  <div
+    style="
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:15px;
+    "
+  >
+
+    <button
+      type="button"
+      class="action-btn member-filter"
+      data-role="all"
+    >
+      Tất cả
+    </button>
+
+    <button
+      type="button"
+      class="action-btn gray member-filter"
+      data-role="customer"
+    >
+      Chủ hàng
+    </button>
+
+    <button
+      type="button"
+      class="action-btn gray member-filter"
+      data-role="driver"
+    >
+      Tài xế / Nhà xe
+    </button>
+
+    <button
+      type="button"
+      class="action-btn gray member-filter"
+      data-role="admin"
+    >
+      Admin
+    </button>
+
+  </div>
+
+  <!-- TÌM KIẾM -->
+  <div style="margin-bottom:15px">
+
+    <input
+      id="memberSearch"
+      type="search"
+      placeholder="Tìm tên, email, số điện thoại, công ty..."
+      style="
+        width:100%;
+        max-width:520px;
+        padding:11px 13px;
+        border:1px solid #e5e7eb;
+        border-radius:9px;
+        outline:none;
+        font-size:13px;
+      "
+    >
+
+  </div>
+
+  <!-- BẢNG THÀNH VIÊN -->
+  <div class="table-wrap">
+
+    <table style="min-width:1350px">
+
+      <thead>
+        <tr>
+          <th>Thành viên</th>
+          <th>Vai trò</th>
+          <th>Điện thoại</th>
+          <th>Khu vực</th>
+          <th>Ngày đăng ký</th>
+          <th>Đơn</th>
+          <th>Xe</th>
+          <th>Báo giá</th>
+          <th>Chuyến</th>
+          <th>Hoàn thành</th>
+          <th>Hội thoại</th>
+          <th>Hoạt động gần nhất</th>
+        </tr>
+      </thead>
+
+      <tbody id="membersTable">
+
+        <tr>
+          <td colspan="12" class="loading-row">
+            Đang tải thành viên...
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
 <div class="footer">
   © 2026 VietTrucks.com — Trung tâm điều hành vận tải
 </div>
