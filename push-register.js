@@ -235,94 +235,217 @@
   async function refreshButton() {
   if (!button || busy) return;
 
-  // Chưa đăng nhập
-  // Kiểm tra trực tiếp session Supabase.
-// Không phụ thuộc currentUserId đã kịp cập nhật hay chưa.
-if (!currentUserId) {
-  try {
-    const { data, error } =
-      await window.supabaseClient.auth.getSession();
+  // =====================================================
+  // KIỂM TRA USER HIỆN TẠI
+  // =====================================================
 
-    if (error) {
-      console.error("Push getSession:", error);
+  if (!currentUserId) {
+    try {
+      const { data, error } =
+        await window.supabaseClient.auth.getSession();
+
+      if (error) {
+        console.error("Push getSession:", error);
+      }
+
+      const sessionUser =
+        data?.session?.user || null;
+
+      if (sessionUser?.id) {
+        currentUserId = sessionUser.id;
+      }
+
+    } catch (error) {
+      console.error(
+        "Push kiểm tra session:",
+        error
+      );
     }
-
-    const sessionUser =
-      data?.session?.user || null;
-
-    if (sessionUser?.id) {
-      currentUserId = sessionUser.id;
-    }
-  } catch (error) {
-    console.error(
-      "Push kiểm tra session:",
-      error
-    );
   }
-}
 
-// Thực sự chưa đăng nhập mới ẩn nút
-if (!currentUserId) {
-  currentUserSubscribed = false;
-  button.dataset.pushEnabled = "0";
-  button.style.display = "none";
-  return;
-}
+  // Chưa đăng nhập -> ẩn nút
+  if (!currentUserId) {
+    currentUserSubscribed = false;
+    button.dataset.pushEnabled = "0";
+    button.style.display = "none";
+    return;
+  }
 
   button.style.display = "inline-flex";
 
-  // Trình duyệt không hỗ trợ
+
+  // =====================================================
+  // NHẬN DIỆN IPHONE / IPAD
+  // =====================================================
+
+  const ua =
+    navigator.userAgent ||
+    navigator.vendor ||
+    window.opera ||
+    "";
+
+  const isIOS =
+    /iPad|iPhone|iPod/.test(ua) ||
+    (
+      navigator.platform === "MacIntel" &&
+      navigator.maxTouchPoints > 1
+    );
+
+  // Kiểm tra đang chạy từ biểu tượng Home Screen hay chưa
+  const isStandalone =
+    window.matchMedia &&
+    window.matchMedia(
+      "(display-mode: standalone)"
+    ).matches ||
+    window.navigator.standalone === true;
+
+
+  // =====================================================
+  // IPHONE/IPAD ĐANG MỞ BẰNG TRÌNH DUYỆT
+  // =====================================================
+
+  if (isIOS && !isStandalone) {
+
+    currentUserSubscribed = false;
+    button.dataset.pushEnabled = "0";
+
+    setButton(
+      "🔔 Bật thông báo trên iPhone"
+    );
+
+    button.onclick = function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      alert(
+        "Để nhận thông báo VietTrucks trên iPhone:\n\n" +
+        "1. Bấm nút Chia sẻ của trình duyệt.\n\n" +
+        "2. Chọn “Thêm vào Màn hình chính”.\n\n" +
+        "3. Mở VietTrucks từ biểu tượng vừa tạo.\n\n" +
+        "4. Đăng nhập và bấm “🔔 Bật thông báo”.\n\n" +
+        "Sau khi bật, VietTrucks có thể gửi thông báo khi có hàng hoặc xe phù hợp."
+      );
+    };
+
+    return;
+  }
+
+
+  // =====================================================
+  // TRÌNH DUYỆT THỰC SỰ KHÔNG HỖ TRỢ PUSH
+  // =====================================================
+
   if (
     !("Notification" in window) ||
     !("serviceWorker" in navigator) ||
     !("PushManager" in window)
   ) {
+
     currentUserSubscribed = false;
     button.dataset.pushEnabled = "0";
-    setButton("Thiết bị chưa hỗ trợ thông báo", true);
+
+    setButton(
+      "🔔 Thiết bị chưa hỗ trợ thông báo",
+      true
+    );
+
     return;
   }
 
-  // Người dùng đã chặn thông báo
+
+  // =====================================================
+  // KHÔI PHỤC CLICK CHÍNH CỦA NÚT
+  // =====================================================
+
+  button.onclick = null;
+
+  button.removeEventListener(
+    "click",
+    togglePush
+  );
+
+  button.addEventListener(
+    "click",
+    togglePush
+  );
+
+
+  // =====================================================
+  // USER ĐÃ CHẶN THÔNG BÁO
+  // =====================================================
+
   if (Notification.permission === "denied") {
+
     currentUserSubscribed = false;
     button.dataset.pushEnabled = "0";
-    setButton("🔕 Thông báo bị chặn", true);
+
+    setButton(
+      "🔕 Thông báo đang bị chặn",
+      true
+    );
+
     return;
   }
+
+
+  // =====================================================
+  // KIỂM TRA SUBSCRIPTION
+  // =====================================================
 
   try {
-    setButton("Đang kiểm tra...", true);
 
-    // Lấy subscription hiện tại của trình duyệt
-    const { subscription } = await getSubscription();
+    setButton(
+      "Đang kiểm tra...",
+      true
+    );
 
-    // Không có subscription trên trình duyệt
+    const { subscription } =
+      await getSubscription();
+
+
+    // Chưa có subscription
     if (!subscription) {
+
       currentUserSubscribed = false;
       button.dataset.pushEnabled = "0";
-      setButton("🔔 Bật thông báo");
+
+      setButton(
+        "🔔 Bật thông báo"
+      );
+
       return;
     }
 
-    // Kiểm tra subscription này có thuộc tài khoản
-    // đang đăng nhập hay không
+
+    // Kiểm tra subscription thuộc user hiện tại
     const belongsToCurrentUser =
-      await checkCurrentUserSubscription(subscription);
+      await checkCurrentUserSubscription(
+        subscription
+      );
+
 
     if (belongsToCurrentUser) {
+
       currentUserSubscribed = true;
       button.dataset.pushEnabled = "1";
 
-      setButton("🔕 Tắt thông báo");
+      setButton(
+        "🔕 Tắt thông báo"
+      );
+
     } else {
+
       currentUserSubscribed = false;
       button.dataset.pushEnabled = "0";
 
-      setButton("🔔 Bật thông báo");
+      setButton(
+        "🔔 Bật thông báo"
+      );
     }
 
+
   } catch (error) {
+
     console.error(
       "VietTrucks Push refresh:",
       error
@@ -331,10 +454,11 @@ if (!currentUserId) {
     currentUserSubscribed = false;
     button.dataset.pushEnabled = "0";
 
-        setButton("🔔 Bật thông báo");
+    setButton(
+      "🔔 Bật thông báo"
+    );
   }
 }
-
 
   // ==========================================================
   // BẬT / TẮT PUSH
