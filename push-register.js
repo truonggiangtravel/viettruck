@@ -21,22 +21,43 @@
     button.disabled = disabled;
   }
 
-  function decodeVapidKey(key) {
-    const padding = "=".repeat(
-      (4 - key.length % 4) % 4
-    );
+  
+function decodeVapidKey(key) {
+  const cleanKey = String(key || "")
+    .trim()
+    .replace(/^["']|["']$/g, "");
 
-    const base64 = (key + padding)
-      .replace(/-/g, "+")
-      .replace(/_/g, "/");
-
-    const raw = atob(base64);
-
-    return Uint8Array.from(
-      raw,
-      c => c.charCodeAt(0)
+  if (!/^[A-Za-z0-9_-]{87}$/.test(cleanKey)) {
+    throw new Error(
+      "VAPID Public Key không hợp lệ. " +
+      "Hãy kiểm tra khóa trong Supabase Secrets."
     );
   }
+
+  const padding = "=".repeat(
+    (4 - cleanKey.length % 4) % 4
+  );
+
+  const base64 = (cleanKey + padding)
+    .replace(/-/g, "+")
+    .replace(/_/g, "/");
+
+  const raw = window.atob(base64);
+
+  const bytes = Uint8Array.from(
+    raw,
+    c => c.charCodeAt(0)
+  );
+
+  if (bytes.length !== 65 || bytes[0] !== 4) {
+    throw new Error(
+      "VAPID Public Key không đúng định dạng."
+    );
+  }
+
+  return bytes;
+}
+
 
   async function callApi(action, extra = {}) {
     const { data: sessionData, error: sessionError } =
