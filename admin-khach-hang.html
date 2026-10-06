@@ -876,98 +876,129 @@
 
   function renderCustomers(rows) {
 
-    const body =
-      document.getElementById(
-        "customerBody"
-      );
+  const body =
+    document.getElementById("customerBody");
 
-    if (!rows.length) {
-      body.innerHTML = `
-        <tr>
-          <td colspan="8" class="empty">
-            Chưa có tài khoản.
-          </td>
-        </tr>
-      `;
+  if (!rows.length) {
 
-      return;
-    }
+    body.innerHTML = `
+      <tr>
+        <td colspan="12" class="empty">
+          Không tìm thấy thành viên phù hợp.
+        </td>
+      </tr>
+    `;
 
-    body.innerHTML = rows.map(item => {
-
-      const name =
-        item.full_name ||
-        item.company_name ||
-        item.email ||
-        item.phone ||
-        "Người dùng";
-
-      const secondary =
-        item.company_name &&
-        item.company_name !== name
-          ? item.company_name
-          : item.email || "";
-
-      const role =
-        String(
-          item.role || ""
-        ).toLowerCase();
-
-      return `
-        <tr>
-
-          <td>
-            <div class="name">
-              ${esc(name)}
-            </div>
-
-            ${
-              secondary
-                ? `
-                  <div class="muted">
-                    ${esc(secondary)}
-                  </div>
-                `
-                : ""
-            }
-          </td>
-
-          <td>
-            <span class="role ${role === "admin" ? "admin" : ""}">
-              ${esc(displayRole(item.role))}
-            </span>
-          </td>
-
-          <td>
-            ${esc(item.phone || "—")}
-          </td>
-
-          <td>
-            ${esc(item.city || "—")}
-          </td>
-
-          <td>
-            ${esc(formatDate(item.created_at))}
-          </td>
-
-          <td>
-            ${Number(item.total_orders || 0)}
-          </td>
-
-          <td>
-            ${Number(item.total_vehicles || 0)}
-          </td>
-
-          <td>
-            ${Number(item.total_conversations || 0)}
-          </td>
-
-        </tr>
-      `;
-
-    }).join("");
+    return;
   }
 
+  body.innerHTML = rows.map(item => {
+
+    const name =
+      item.full_name ||
+      item.company_name ||
+      item.email ||
+      item.phone ||
+      "Người dùng";
+
+    const secondary =
+      item.company_name &&
+      item.company_name !== name
+        ? item.company_name
+        : item.email || "";
+
+    const role =
+      String(item.role || "")
+        .toLowerCase();
+
+    const totalOrders =
+      Number(item.total_orders || 0);
+
+    const totalVehicles =
+      Number(item.total_vehicles || 0);
+
+    const totalQuotes =
+      Number(item.total_quotes || 0);
+
+    const totalTrips =
+      Number(item.total_trips || 0);
+
+    const completedTrips =
+      Number(item.completed_trips || 0);
+
+    const totalConversations =
+      Number(item.total_conversations || 0);
+
+    return `
+      <tr>
+
+        <td>
+          <div class="name">
+            ${esc(name)}
+          </div>
+
+          ${
+            secondary
+              ? `
+                <div class="muted">
+                  ${esc(secondary)}
+                </div>
+              `
+              : ""
+          }
+        </td>
+
+        <td>
+          <span class="role ${role === "admin" ? "admin" : ""}">
+            ${esc(displayRole(item.role))}
+          </span>
+        </td>
+
+        <td>
+          ${esc(item.phone || "—")}
+        </td>
+
+        <td>
+          ${esc(item.city || "—")}
+        </td>
+
+        <td>
+          ${esc(formatDate(item.created_at))}
+        </td>
+
+        <td>
+          ${totalOrders}
+        </td>
+
+        <td>
+          ${totalVehicles}
+        </td>
+
+        <td>
+          ${totalQuotes}
+        </td>
+
+        <td>
+          <strong>${totalTrips}</strong>
+        </td>
+
+        <td>
+          ${completedTrips}
+        </td>
+
+        <td>
+          ${totalConversations}
+        </td>
+
+        <td>
+          ${esc(formatDate(item.last_activity_at))}
+        </td>
+
+      </tr>
+    `;
+
+  }).join("");
+}
 
   /* =====================================================
      HỘI THOẠI
