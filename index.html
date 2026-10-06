@@ -2589,10 +2589,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 } = await client
   .from("vehicles")
   .select("*")
-  .order("available_date", {
-    ascending: false,
-    nullsFirst: false
-  })
   .order("created_at", {
     ascending: false
   })
