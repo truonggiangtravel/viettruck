@@ -1273,13 +1273,8 @@
     const header = document.querySelector(".header-actions");
     if (!header) return;
 
-    const loginBtn = header.querySelector(
-      'a[data-vt-login], a[href="dang-nhap.html"], a[href="tai-khoan.html"]'
-    );
-
-    const signupBtn = header.querySelector(
-      'a[data-vt-signup], a[href="dang-ky.html"]'
-    );
+    const loginBtn = document.getElementById("vtLoginBtn");
+const signupBtn = document.getElementById("vtSignupBtn");
 
     if (loginBtn) {
       loginBtn.dataset.vtLogin = "1";
