@@ -2277,6 +2277,28 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       @media (max-width: 768px) {
+      #truckList {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+#truckList .vt-home-card {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+#truckList .vt-home-card:nth-child(n) {
+  display: block !important;
+}
 
         #cargoList,
         #truckList {
