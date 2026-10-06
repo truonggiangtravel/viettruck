@@ -1024,49 +1024,62 @@ async function(event){
 
     const orderPayload = {
 
-      pickup_location:
-        pickup_location,
+  pickup_location: pickup_location,
+  delivery_location: delivery_location,
+  cargo_type: cargo_type,
+  weight: weight,
 
-      delivery_location:
-        delivery_location,
+  vehicle_type:
+    vehicle_type || null,
 
-      cargo_type:
-        cargo_type,
+  pickup_date:
+    pickup_date,
 
-      weight:
-        weight,
+  price:
+    (
+      Number.isFinite(price) &&
+      price > 0
+    )
+      ? price
+      : null,
 
-      vehicle_type:
-        vehicle_type || null,
+  status:
+    "pending",
 
-      pickup_date:
-        pickup_date,
+  posted_by_admin:
+    true,
 
-      price:
-        (
-          Number.isFinite(price) &&
-          price > 0
-        )
-        ? price
-        : null,
+  is_admin_created:
+    true,
 
-      status:
-        "pending",
+  created_by:
+    currentAdmin.id,
 
-      posted_by_admin:
-        true,
+  created_by_role:
+    "admin",
 
-      contact_hidden:
-        true,
+  customer_name:
+    contact_name,
 
-      source:
-        source,
+  customer_phone:
+    contact_phone,
 
-      admin_note:
-        null
+  customer_company:
+    company_name || null,
 
-    };
+  customer_source:
+    source,
 
+  contact_hidden:
+    true,
+
+  source:
+    source,
+
+  admin_note:
+    note || null
+
+};
 
     const {
       data:orderData,
