@@ -1227,153 +1227,167 @@
 
 
 <script>
-document.addEventListener("DOMContentLoaded", async () => {
+(function () {
   "use strict";
 
-  const client = window.supabaseClient;
+  function setHeaderLoggedIn(user) {
+    const header = document.querySelector(".header-actions");
+    if (!header) return;
 
-  if (!client) {
-    console.error("Trang chủ: chưa có Supabase Client");
-    return;
-  }
+    const loginBtn = header.querySelector(
+      'a[href="dang-nhap.html"], a[data-vt-login]'
+    );
 
-  const loginLink = document.querySelector(
-    '.header-actions a[href="dang-nhap.html"]'
-  );
+    const signupBtn = header.querySelector(
+      'a[href="dang-ky.html"], a[data-vt-signup]'
+    );
 
-  const signupLink = document.querySelector(
-    '.header-actions a[href="dang-ky.html"]'
-  );
-
-  let logoutHandlerAdded = false;
-
-
-  function showLoggedOut() {
-    if (loginLink) {
-      loginLink.href = "dang-nhap.html";
-      loginLink.textContent = "Đăng nhập";
+    if (loginBtn) {
+      loginBtn.dataset.vtLogin = "1";
+      loginBtn.href = "tai-khoan.html";
+      loginBtn.textContent = "Tài khoản";
     }
 
-    if (signupLink) {
-      signupLink.href = "dang-ky.html";
-      signupLink.textContent = "Đăng ký";
-      signupLink.onclick = null;
-    }
-  }
+    if (signupBtn) {
+      signupBtn.dataset.vtSignup = "1";
+      signupBtn.href = "#";
+      signupBtn.textContent = "Đăng xuất";
 
+      signupBtn.onclick = async function (e) {
+        e.preventDefault();
 
-  function showLoggedIn(user) {
-    if (!user) {
-      showLoggedOut();
-      return;
+        try {
+          await window.supabaseClient.auth.signOut();
+        } catch (err) {
+          console.error("Lỗi đăng xuất:", err);
+        }
+
+        window.location.href = "dang-nhap.html";
+      };
     }
 
     console.log(
-      "Trang chủ: đang đăng nhập",
-      user.id,
-      user.email || user.phone || ""
+      "VietTrucks: đã đăng nhập",
+      user?.id || ""
+    );
+  }
+
+
+  function setHeaderLoggedOut() {
+    const header = document.querySelector(".header-actions");
+    if (!header) return;
+
+    const loginBtn = header.querySelector(
+      'a[data-vt-login], a[href="dang-nhap.html"], a[href="tai-khoan.html"]'
     );
 
-    if (loginLink) {
-      loginLink.href = "tai-khoan.html";
-      loginLink.textContent = "Tài khoản";
+    const signupBtn = header.querySelector(
+      'a[data-vt-signup], a[href="dang-ky.html"]'
+    );
+
+    if (loginBtn) {
+      loginBtn.dataset.vtLogin = "1";
+      loginBtn.href = "dang-nhap.html";
+      loginBtn.textContent = "Đăng nhập";
     }
 
-    if (signupLink) {
-      signupLink.href = "#";
-      signupLink.textContent = "Đăng xuất";
-
-      if (!logoutHandlerAdded) {
-        signupLink.addEventListener(
-          "click",
-          async (event) => {
-            event.preventDefault();
-
-            try {
-              const { error } =
-                await client.auth.signOut();
-
-              if (error) {
-                throw error;
-              }
-
-              window.location.replace(
-                "dang-nhap.html"
-              );
-
-            } catch (error) {
-              console.error(
-                "Lỗi đăng xuất:",
-                error
-              );
-
-              alert(
-                "Không thể đăng xuất. Vui lòng thử lại."
-              );
-            }
-          }
-        );
-
-        logoutHandlerAdded = true;
-      }
+    if (signupBtn) {
+      signupBtn.dataset.vtSignup = "1";
+      signupBtn.href = "dang-ky.html";
+      signupBtn.textContent = "Đăng ký";
+      signupBtn.onclick = null;
     }
   }
 
 
-  /* ==========================================
-     1. KIỂM TRA USER THẬT TỪ SUPABASE
-     ========================================== */
+  async function syncHeaderAuth() {
+    const client = window.supabaseClient;
 
-  try {
-    const { data, error } =
-      await client.auth.getUser();
+    if (!client) {
+      console.error("VietTrucks: Supabase Client chưa sẵn sàng");
+      return;
+    }
 
-    if (error) {
-      console.warn(
-        "Trang chủ getUser:",
+    try {
+      /*
+       * QUAN TRỌNG:
+       * getSession đọc session đang lưu trong trình duyệt.
+       * Đây cũng chính là session mà Dashboard đang sử dụng.
+       */
+      const {
+        data: { session },
         error
+      } = await client.auth.getSession();
+
+      if (error) {
+        console.error(
+          "VietTrucks getSession:",
+          error
+        );
+      }
+
+      if (session?.user) {
+        setHeaderLoggedIn(session.user);
+      } else {
+        setHeaderLoggedOut();
+      }
+
+    } catch (err) {
+      console.error(
+        "VietTrucks syncHeaderAuth:",
+        err
       );
     }
-
-    if (data?.user) {
-      showLoggedIn(data.user);
-    } else {
-      showLoggedOut();
-    }
-
-  } catch (error) {
-    console.error(
-      "Trang chủ kiểm tra đăng nhập:",
-      error
-    );
-
-    showLoggedOut();
   }
 
 
-  /* ==========================================
-     2. THEO DÕI LOGIN / LOGOUT / REFRESH TOKEN
-     ========================================== */
+  /*
+   * Chạy sau khi DOM đã có header.
+   */
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      syncHeaderAuth
+    );
+  } else {
+    syncHeaderAuth();
+  }
 
-  client.auth.onAuthStateChange(
-    (_event, session) => {
 
-      setTimeout(() => {
+  /*
+   * Theo dõi thay đổi đăng nhập/đăng xuất.
+   */
+  window.addEventListener("load", function () {
+    const client = window.supabaseClient;
+    if (!client) return;
 
-        const user =
-          session?.user || null;
+    client.auth.onAuthStateChange(
+      function (event, session) {
 
-        if (user) {
-          showLoggedIn(user);
-        } else {
-          showLoggedOut();
-        }
+        console.log(
+          "VietTrucks auth event:",
+          event
+        );
 
-      }, 0);
-    }
-  );
+        setTimeout(function () {
+          if (session?.user) {
+            setHeaderLoggedIn(session.user);
+          } else if (event === "SIGNED_OUT") {
+            setHeaderLoggedOut();
+          }
+        }, 0);
+      }
+    );
 
-});
+    /*
+     * Kiểm tra lại lần nữa sau khi toàn bộ JS tải xong.
+     * Tránh auth.js hoặc script khác ghi đè header.
+     */
+    setTimeout(syncHeaderAuth, 300);
+    setTimeout(syncHeaderAuth, 1200);
+  });
+
+})();
 </script>
 
 
