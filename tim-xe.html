@@ -925,6 +925,99 @@ function escapeHTML(value){
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#039;");
 }
+    /* ========================================
+   QUYỀN XEM THÔNG TIN XE
+======================================== */
+
+let currentUserLoggedIn = false;
+
+async function checkVehicleViewerSession(){
+
+    try{
+
+        const {
+            data:{
+                session
+            }
+        } = await supabaseClient.auth.getSession();
+
+        currentUserLoggedIn = !!session;
+
+    }catch(error){
+
+        console.error(
+            "Không kiểm tra được trạng thái đăng nhập:",
+            error
+        );
+
+        currentUserLoggedIn = false;
+    }
+}
+
+
+/* ========================================
+   CHE BIỂN SỐ VỚI KHÁCH CHƯA ĐĂNG NHẬP
+   Ví dụ: 60H-436.75 -> 60H-***.**
+======================================== */
+
+function maskVehiclePlate(value){
+
+    const plate =
+        String(value || "").trim();
+
+    if(!plate){
+        return "Chưa cập nhật";
+    }
+
+    if(currentUserLoggedIn){
+        return plate;
+    }
+
+    const dashIndex =
+        plate.indexOf("-");
+
+    if(dashIndex > 0){
+
+        return (
+            plate.substring(0, dashIndex + 1) +
+            "***.**"
+        );
+    }
+
+    if(plate.length >= 3){
+
+        return (
+            plate.substring(0, 3) +
+            "-***.**"
+        );
+    }
+
+    return "***.**";
+}
+
+
+/* ========================================
+   XEM CHI TIẾT XE
+======================================== */
+
+function openVehicleDetail(vehicleId){
+
+    if(!currentUserLoggedIn){
+
+        const returnUrl =
+            "tim-xe.html";
+
+        window.location.href =
+            "dang-nhap.html?redirect=" +
+            encodeURIComponent(returnUrl);
+
+        return;
+    }
+
+    window.location.href =
+        "chi-tiet-xe.html?id=" +
+        encodeURIComponent(vehicleId);
+}
 
 
 /* ========================================
