@@ -233,127 +233,81 @@
   // ==========================================================
 
   async function refreshButton() {
+  if (!button || busy) return;
 
-    if (!button || busy) return;
+  // Chưa đăng nhập
+  if (!currentUserId) {
+    currentUserSubscribed = false;
+    button.dataset.pushEnabled = "0";
+    button.style.display = "none";
+    return;
+  }
 
+  button.style.display = "inline-flex";
 
-    // Chưa đăng nhập
-    if (!currentUserId) {
+  // Trình duyệt không hỗ trợ
+  if (
+    !("Notification" in window) ||
+    !("serviceWorker" in navigator) ||
+    !("PushManager" in window)
+  ) {
+    currentUserSubscribed = false;
+    button.dataset.pushEnabled = "0";
+    setButton("Thiết bị chưa hỗ trợ thông báo", true);
+    return;
+  }
 
+  // Người dùng đã chặn thông báo
+  if (Notification.permission === "denied") {
+    currentUserSubscribed = false;
+    button.dataset.pushEnabled = "0";
+    setButton("🔕 Thông báo bị chặn", true);
+    return;
+  }
+
+  try {
+    setButton("Đang kiểm tra...", true);
+
+    // Lấy subscription hiện tại của trình duyệt
+    const { subscription } = await getSubscription();
+
+    // Không có subscription trên trình duyệt
+    if (!subscription) {
       currentUserSubscribed = false;
-
-      button.style.display = "none";
-
+      button.dataset.pushEnabled = "0";
+      setButton("🔔 Bật thông báo");
       return;
     }
 
+    // Kiểm tra subscription này có thuộc tài khoản
+    // đang đăng nhập hay không
+    const belongsToCurrentUser =
+      await checkCurrentUserSubscription(subscription);
 
-    button.style.display =
-      "inline-flex";
+    if (belongsToCurrentUser) {
+      currentUserSubscribed = true;
+      button.dataset.pushEnabled = "1";
 
-
-    // Trình duyệt không hỗ trợ
-    if (
-      !("Notification" in window) ||
-      !("serviceWorker" in navigator) ||
-      !("PushManager" in window)
-    ) {
-
-      setButton(
-        "Thiết bị chưa hỗ trợ thông báo",
-        true
-      );
-
-      return;
-    }
-
-
-    // User đã block notification
-    if (
-      Notification.permission ===
-      "denied"
-    ) {
-
-      setButton(
-        "🔕 Thông báo bị chặn",
-        true
-      );
-
-      return;
-    }
-
-
-    try {
-
-      setButton(
-        "Đang kiểm tra...",
-        true
-      );
-
-
-      const { subscription } =
-        await getSubscription();
-
-
-      // Không có subscription trình duyệt
-      if (!subscription) {
-
-        currentUserSubscribed = false;
-
-        setButton(
-          "🔔 Bật thông báo"
-        );
-
-        return;
-      }
-
-
-      // Có subscription trình duyệt
-      // -> phải kiểm tra nó có thuộc USER
-      // hiện tại hay không
-
-      const belongsToCurrentUser =
-        await checkCurrentUserSubscription(
-          subscription
-        );
-
-
-      if (belongsToCurrentUser) {
-
-        setButton(
-          "🔕 Tắt thông báo"
-        );
-
-      } else {
-
-        /*
-         Subscription tồn tại trong browser
-         nhưng không thuộc user hiện tại.
-
-         Ví dụ:
-         Admin logout -> Driver login.
-
-         Không được hiển thị "Tắt thông báo".
-        */
-
-        setButton(
-          "🔔 Bật thông báo"
-        );
-      }
-
-    } catch (error) {
-
-      console.error(
-        "VietTrucks Push refresh:",
-        error
-      );
-
+      setButton("🔕 Tắt thông báo");
+    } else {
       currentUserSubscribed = false;
+      button.dataset.pushEnabled = "0";
 
-      setButton(
-        "🔔 Bật thông báo"
-      );
+      setButton("🔔 Bật thông báo");
     }
+
+  } catch (error) {
+    console.error(
+      "VietTrucks Push refresh:",
+      error
+    );
+
+    currentUserSubscribed = false;
+    button.dataset.pushEnabled = "0";
+
+    setButton("🔔 Bật thông báo");
+  }
+}
   }
 
 
