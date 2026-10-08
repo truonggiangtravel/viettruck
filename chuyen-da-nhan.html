@@ -792,6 +792,23 @@ if (sideUserRole) {
               <div class="actions">
   <a
     class="action-btn btn-green"
+    href="thanh-toan-chuyen.html?trip_id=${encodeURIComponent(trip.id)}"
+    style="
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 16px;
+      border-radius:8px;
+      margin-bottom:10px;
+      text-decoration:none;
+      text-align:center;
+    "
+  >
+    📦 Bốc hàng / Thanh toán
+  </a>
+
+  <a
+    class="action-btn btn-green"
     href="tai-xe-hanh-trinh.html?trip_id=${encodeURIComponent(trip.id)}"
     style="
       display:inline-flex;
@@ -804,7 +821,7 @@ if (sideUserRole) {
       text-align:center;
     "
   >
-    📎 Tải chứng từ / Theo dõi hành trình
+    📎 Chứng từ / Hành trình
   </a>
 
   ${actionButton}
