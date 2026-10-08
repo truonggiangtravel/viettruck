@@ -150,24 +150,33 @@
   // ==========================================================
 
   async function getSubscription() {
-
-    const registration =
-      await navigator.serviceWorker.register(
-        SW_PATH
-      );
-
-    await navigator.serviceWorker.ready;
-
-    const subscription =
-      await registration.pushManager
-        .getSubscription();
-
-    return {
-      registration,
-      subscription
-    };
+  if (
+    !("serviceWorker" in navigator) ||
+    !("PushManager" in window) ||
+    !("Notification" in window)
+  ) {
+    throw new Error(
+      "Thiết bị chưa hỗ trợ thông báo. Bạn vẫn có thể xem và nhận đơn hàng."
+    );
   }
 
+  await navigator.serviceWorker.register(SW_PATH);
+  const registration = await navigator.serviceWorker.ready;
+
+  if (
+    !registration.pushManager ||
+    typeof registration.pushManager.getSubscription !== "function"
+  ) {
+    throw new Error(
+      "Chưa thể bật thông báo trên trình duyệt này. Bạn vẫn có thể xem và nhận đơn hàng."
+    );
+  }
+
+  const subscription =
+    await registration.pushManager.getSubscription();
+
+  return { registration, subscription };
+}
 
   // ==========================================================
   // KIỂM TRA SUBSCRIPTION CÓ THUỘC USER HIỆN TẠI KHÔNG
