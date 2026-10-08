@@ -3,32 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Theo dõi hành trình | VietTrucks</title>
 <meta name="robots" content="noindex,nofollow">
 
 <style>
-*{
-    box-sizing:border-box;
-}
-
+*{box-sizing:border-box}
 body{
     margin:0;
     font-family:Arial,Helvetica,sans-serif;
     background:#f4f7f5;
     color:#17231d;
 }
-
-a{
-    text-decoration:none;
-}
-
-button{
-    font-family:inherit;
-}
-
-/* ================= HEADER ================= */
-
+a{text-decoration:none}
+button{font-family:inherit}
 .header{
     background:#fff;
     border-bottom:1px solid #e1e7e3;
@@ -36,7 +23,6 @@ button{
     top:0;
     z-index:100;
 }
-
 .header-inner{
     max-width:1180px;
     margin:auto;
@@ -46,35 +32,16 @@ button{
     justify-content:space-between;
     gap:20px;
 }
-
-.logo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    color:#087d45;
-}
-
-.logo-icon{
-    font-size:34px;
-}
-
-.logo-title{
-    font-size:25px;
-    font-weight:800;
-}
-
+.logo{display:flex;align-items:center;gap:10px;color:#087d45}
+.logo-icon{font-size:34px}
+.logo-title{font-size:25px;font-weight:800}
 .logo-sub{
     display:block;
     font-size:11px;
     color:#6c7771;
     margin-top:2px;
 }
-
-.header-actions{
-    display:flex;
-    gap:10px;
-}
-
+.header-actions{display:flex;gap:10px}
 .header-btn{
     min-height:42px;
     padding:0 16px;
@@ -85,58 +52,22 @@ button{
     font-size:13px;
     font-weight:700;
 }
-
-.btn-outline{
-    border:1px solid #078c4b;
-    color:#078c4b;
-    background:#fff;
-}
-
-.btn-green{
-    background:#078c4b;
-    color:#fff;
-    border:1px solid #078c4b;
-}
-
-/* ================= HERO ================= */
-
+.btn-outline{border:1px solid #078c4b;color:#078c4b;background:#fff}
+.btn-green{background:#078c4b;color:#fff;border:1px solid #078c4b}
 .hero{
     background:linear-gradient(135deg,#076c3c,#0ba65c);
     color:#fff;
     padding:30px 18px;
 }
-
-.hero-inner{
-    max-width:1180px;
-    margin:auto;
-}
-
-.hero h1{
-    margin:0 0 8px;
-    font-size:28px;
-}
-
-.hero p{
-    margin:0;
-    font-size:14px;
-    line-height:1.6;
-    opacity:.94;
-}
-
-/* ================= MAIN ================= */
-
-.container{
-    max-width:1180px;
-    margin:24px auto 60px;
-    padding:0 18px;
-}
-
+.hero-inner{max-width:1180px;margin:auto}
+.hero h1{margin:0 0 8px;font-size:28px}
+.hero p{margin:0;font-size:14px;line-height:1.6;opacity:.94}
+.container{max-width:1180px;margin:24px auto 60px;padding:0 18px}
 .layout{
     display:grid;
     grid-template-columns:minmax(0,1.3fr) minmax(300px,.7fr);
     gap:20px;
 }
-
 .card{
     background:#fff;
     border:1px solid #e0e7e3;
@@ -144,11 +75,7 @@ button{
     padding:22px;
     box-shadow:0 5px 18px rgba(0,0,0,.035);
 }
-
-.card + .card{
-    margin-top:18px;
-}
-
+.card + .card{margin-top:18px}
 .card-head{
     display:flex;
     align-items:center;
@@ -156,12 +83,7 @@ button{
     gap:12px;
     margin-bottom:18px;
 }
-
-.card-head h2{
-    margin:0;
-    font-size:19px;
-}
-
+.card-head h2{margin:0;font-size:19px}
 .badge{
     display:inline-flex;
     align-items:center;
@@ -174,56 +96,19 @@ button{
     font-size:11px;
     font-weight:700;
 }
-
-.badge-green{
-    background:#e5f7ed;
-    color:#087d45;
-}
-
-.badge-blue{
-    background:#eaf1ff;
-    color:#285eaf;
-}
-
-.badge-red{
-    background:#fff0f0;
-    color:#b42323;
-}
-
-/* ================= ROUTE ================= */
-
-.route{
-    font-size:21px;
-    line-height:1.5;
-    font-weight:800;
-    margin-bottom:18px;
-}
-
-.route-arrow{
-    color:#078c4b;
-    padding:0 5px;
-}
-
-.info-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-
+.badge-green{background:#e5f7ed;color:#087d45}
+.badge-blue{background:#eaf1ff;color:#285eaf}
+.badge-red{background:#fff0f0;color:#b42323}
+.route{font-size:21px;line-height:1.5;font-weight:800;margin-bottom:18px}
+.route-arrow{color:#078c4b;padding:0 5px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .info{
     padding:14px;
     background:#f7f9f8;
     border:1px solid #e5ebe7;
     border-radius:10px;
 }
-
-.info-label{
-    display:block;
-    font-size:11px;
-    color:#75817b;
-    margin-bottom:6px;
-}
-
+.info-label{display:block;font-size:11px;color:#75817b;margin-bottom:6px}
 .info-value{
     display:block;
     font-size:14px;
@@ -231,9 +116,6 @@ button{
     line-height:1.5;
     overflow-wrap:anywhere;
 }
-
-/* ================= GPS ================= */
-
 .notice{
     padding:14px;
     border-radius:10px;
@@ -241,25 +123,9 @@ button{
     line-height:1.65;
     margin-bottom:16px;
 }
-
-.notice-info{
-    background:#eef8f3;
-    border:1px solid #cce8da;
-    color:#245f43;
-}
-
-.notice-warning{
-    background:#fff7e5;
-    border:1px solid #f0dba8;
-    color:#765611;
-}
-
-.notice-error{
-    background:#fff0f0;
-    border:1px solid #efc7c7;
-    color:#8c2929;
-}
-
+.notice-info{background:#eef8f3;border:1px solid #cce8da;color:#245f43}
+.notice-warning{background:#fff7e5;border:1px solid #f0dba8;color:#765611}
+.notice-error{background:#fff0f0;border:1px solid #efc7c7;color:#8c2929}
 .gps-status{
     display:flex;
     align-items:center;
@@ -269,7 +135,6 @@ button{
     border-radius:10px;
     margin-bottom:16px;
 }
-
 .gps-dot{
     width:13px;
     height:13px;
@@ -277,61 +142,25 @@ button{
     background:#adb6b1;
     flex-shrink:0;
 }
-
-.gps-dot.live{
-    background:#0aa45a;
-    box-shadow:0 0 0 6px rgba(10,164,90,.12);
-}
-
-.gps-dot.error{
-    background:#d64242;
-}
-
-.gps-status strong{
-    display:block;
-    font-size:14px;
-}
-
+.gps-dot.live{background:#0aa45a;box-shadow:0 0 0 6px rgba(10,164,90,.12)}
+.gps-dot.error{background:#d64242}
+.gps-status strong{display:block;font-size:14px}
 .gps-status small{
     display:block;
     margin-top:4px;
     color:#6c7771;
     line-height:1.4;
 }
-
 .location-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:10px;
     margin-bottom:18px;
 }
-
-.location{
-    padding:13px;
-    border:1px solid #e1e7e4;
-    border-radius:10px;
-}
-
-.location small{
-    display:block;
-    color:#78837d;
-    margin-bottom:6px;
-}
-
-.location strong{
-    display:block;
-    font-size:14px;
-    overflow-wrap:anywhere;
-}
-
-/* ================= BUTTONS ================= */
-
-.actions{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-}
-
+.location{padding:13px;border:1px solid #e1e7e4;border-radius:10px}
+.location small{display:block;color:#78837d;margin-bottom:6px}
+.location strong{display:block;font-size:14px;overflow-wrap:anywhere}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .action-btn{
     min-height:50px;
     padding:0 15px;
@@ -341,29 +170,10 @@ button{
     font-size:14px;
     font-weight:800;
 }
-
-.action-btn:disabled{
-    opacity:.45;
-    cursor:not-allowed;
-}
-
-.start-btn{
-    background:#078c4b;
-    color:#fff;
-}
-
-.stop-btn{
-    background:#fff;
-    border:1px solid #d55353;
-    color:#b32626;
-}
-
-.complete-btn{
-    background:#155eef;
-    color:#fff;
-    grid-column:1/-1;
-}
-
+.action-btn:disabled{opacity:.45;cursor:not-allowed}
+.start-btn{background:#078c4b;color:#fff}
+.stop-btn{background:#fff;border:1px solid #d55353;color:#b32626}
+.complete-btn{background:#155eef;color:#fff;grid-column:1/-1}
 .refresh-btn{
     width:100%;
     margin-top:12px;
@@ -371,9 +181,6 @@ button{
     border:1px solid #078c4b;
     color:#078c4b;
 }
-
-    /* ================= POD ================= */
-
 .pod-box{
     margin-top:18px;
     padding:18px;
@@ -381,19 +188,8 @@ button{
     border-radius:12px;
     background:#fbfcfb;
 }
-
-.pod-box h3{
-    margin:0 0 8px;
-    font-size:17px;
-}
-
-.pod-description{
-    margin:0 0 15px;
-    color:#65726b;
-    font-size:12px;
-    line-height:1.65;
-}
-
+.pod-box h3{margin:0 0 8px;font-size:17px}
+.pod-description{margin:0 0 15px;color:#65726b;font-size:12px;line-height:1.65}
 .pod-status{
     display:flex;
     align-items:center;
@@ -404,31 +200,11 @@ button{
     background:#f2f5f3;
     margin-bottom:14px;
 }
-
-.pod-status strong{
-    font-size:13px;
-}
-
-.pod-status small{
-    color:#6c7771;
-    text-align:right;
-}
-
-.pod-status.pending{
-    background:#fff7e5;
-    color:#765611;
-}
-
-.pod-status.approved{
-    background:#e5f7ed;
-    color:#087d45;
-}
-
-.pod-status.rejected{
-    background:#fff0f0;
-    color:#a32626;
-}
-
+.pod-status strong{font-size:13px}
+.pod-status small{color:#6c7771;text-align:right}
+.pod-status.pending{background:#fff7e5;color:#765611}
+.pod-status.approved{background:#e5f7ed;color:#087d45}
+.pod-status.rejected{background:#fff0f0;color:#a32626}
 .pod-file{
     width:100%;
     padding:11px;
@@ -437,7 +213,6 @@ button{
     background:#fff;
     margin-bottom:10px;
 }
-
 .pod-note{
     width:100%;
     min-height:76px;
@@ -448,7 +223,6 @@ button{
     font-family:inherit;
     margin-bottom:10px;
 }
-
 .pod-upload-btn{
     width:100%;
     min-height:46px;
@@ -459,12 +233,7 @@ button{
     font-weight:800;
     cursor:pointer;
 }
-
-.pod-upload-btn:disabled{
-    opacity:.5;
-    cursor:not-allowed;
-}
-
+.pod-upload-btn:disabled{opacity:.5;cursor:not-allowed}
 .pod-file-info{
     margin-top:12px;
     padding:11px;
@@ -473,63 +242,16 @@ button{
     font-size:12px;
     line-height:1.6;
 }
-
-.pod-file-info a{
-    color:#087d45;
-    font-weight:700;
-}
-
-.pod-error{
-    margin-top:10px;
-    color:#a32626;
-    font-size:12px;
-    line-height:1.5;
-}
-/* ================= LOG ================= */
-
-.log-list{
-    margin:0;
-    padding:0;
-    list-style:none;
-}
-
-.log-item{
-    padding:11px 0;
-    border-bottom:1px solid #edf0ee;
-}
-
-.log-item:last-child{
-    border-bottom:0;
-}
-
-.log-time{
-    font-size:11px;
-    color:#7b867f;
-    margin-bottom:4px;
-}
-
-.log-message{
-    font-size:12px;
-    line-height:1.5;
-    font-weight:600;
-}
-
-/* ================= STATE ================= */
-
-.state{
-    text-align:center;
-    padding:45px 20px;
-}
-
-.state-icon{
-    font-size:46px;
-    margin-bottom:12px;
-}
-
-.state h3{
-    margin:0 0 9px;
-}
-
+.pod-file-info a{color:#087d45;font-weight:700}
+.pod-error{margin-top:10px;color:#a32626;font-size:12px;line-height:1.5}
+.log-list{margin:0;padding:0;list-style:none}
+.log-item{padding:11px 0;border-bottom:1px solid #edf0ee}
+.log-item:last-child{border-bottom:0}
+.log-time{font-size:11px;color:#7b867f;margin-bottom:4px}
+.log-message{font-size:12px;line-height:1.5;font-weight:600}
+.state{text-align:center;padding:45px 20px}
+.state-icon{font-size:46px;margin-bottom:12px}
+.state h3{margin:0 0 9px}
 .state p{
     max-width:600px;
     margin:0 auto 18px;
@@ -537,188 +259,85 @@ button{
     color:#68746e;
     line-height:1.7;
 }
-
-/* ================= FOOTER ================= */
-
-.footer{
-    background:#073c27;
-    color:#fff;
-    padding:28px 18px;
-    text-align:center;
-}
-
-.footer strong{
-    display:block;
-    margin-bottom:8px;
-}
-
-.footer p{
-    margin:4px;
-    font-size:12px;
-    opacity:.82;
-}
-
-/* ================= MOBILE ================= */
+.footer{background:#073c27;color:#fff;padding:28px 18px;text-align:center}
+.footer strong{display:block;margin-bottom:8px}
+.footer p{margin:4px;font-size:12px;opacity:.82}
 
 @media(max-width:800px){
-
-    .layout{
-        grid-template-columns:1fr;
-    }
-
-    .header-inner{
-        flex-wrap:wrap;
-    }
-
-    .header-actions{
-        width:100%;
-    }
-
-    .header-btn{
-        flex:1;
-    }
+    .layout{grid-template-columns:1fr}
+    .header-inner{flex-wrap:wrap}
+    .header-actions{width:100%}
+    .header-btn{flex:1}
 }
-
 @media(max-width:550px){
-
-    .hero h1{
-        font-size:22px;
-    }
-
-    .card{
-        padding:16px;
-    }
-
-    .info-grid,
-    .location-grid,
-    .actions{
-        grid-template-columns:1fr;
-    }
-
-    .complete-btn{
-        grid-column:auto;
-    }
-
-    .route{
-        font-size:18px;
-    }
+    .hero h1{font-size:22px}
+    .card{padding:16px}
+    .info-grid,.location-grid,.actions{grid-template-columns:1fr}
+    .complete-btn{grid-column:auto}
+    .route{font-size:18px}
 }
 </style>
 </head>
 
 <body>
-
 <header class="header">
-<div class="header-inner">
-
-    <a href="index.html" class="logo">
-
-        <span class="logo-icon">🚚</span>
-
-        <div>
-            <div class="logo-title">VietTruck</div>
-            <span class="logo-sub">
-                Kết nối hàng hóa Việt Nam
-            </span>
+    <div class="header-inner">
+        <a href="index.html" class="logo">
+            <span class="logo-icon">🚚</span>
+            <div>
+                <div class="logo-title">VietTruck</div>
+                <span class="logo-sub">Kết nối hàng hóa Việt Nam</span>
+            </div>
+        </a>
+        <div class="header-actions">
+            <a href="dashboard.html" class="header-btn btn-outline">Dashboard</a>
+            <a href="tai-khoan.html" class="header-btn btn-green">Tài khoản</a>
         </div>
-
-    </a>
-
-    <div class="header-actions">
-
-        <a href="dashboard.html"
-           class="header-btn btn-outline">
-            Dashboard
-        </a>
-
-        <a href="tai-khoan.html"
-           class="header-btn btn-green">
-            Tài khoản
-        </a>
-
     </div>
-
-</div>
 </header>
 
-
 <section class="hero">
-
-<div class="hero-inner">
-
-    <h1>📍 Theo dõi hành trình</h1>
-
-    <p>
-        Hệ thống GPS thời gian thực dành cho chuyến vận chuyển
-        đang hoạt động trên VietTrucks.
-    </p>
-
-</div>
-
+    <div class="hero-inner">
+        <h1>📍 Theo dõi hành trình</h1>
+        <p>
+            Hệ thống GPS thời gian thực dành cho chuyến vận chuyển
+            đang hoạt động trên VietTrucks.
+        </p>
+    </div>
 </section>
 
-
 <main class="container">
-
-<div id="app">
-
-    <div class="card state">
-
-        <div class="state-icon">⏳</div>
-
-        <h3>Đang tải dữ liệu chuyến...</h3>
-
-        <p>
-            VietTrucks đang xác thực tài khoản và kiểm tra
-            chuyến vận chuyển thực tế của tài xế.
-        </p>
-
+    <div id="app">
+        <div class="card state">
+            <div class="state-icon">⏳</div>
+            <h3>Đang tải dữ liệu chuyến...</h3>
+            <p>
+                VietTrucks đang xác thực tài khoản và kiểm tra
+                chuyến vận chuyển thực tế của tài xế.
+            </p>
+        </div>
     </div>
-
-</div>
-
 </main>
 
-
 <footer class="footer">
-
-<strong>
-    VietTruck – Kết nối hàng hóa Việt Nam
-</strong>
-
-<p>
-    CÔNG TY TNHH ĐẦU TƯ THƯƠNG MẠI DỊCH VỤ TRƯỜNG GIANG
-</p>
-
-<p>
-    Hotline: 0388134999 - 0898877111
-</p>
-
+    <strong>VietTruck – Kết nối hàng hóa Việt Nam</strong>
+    <p>CÔNG TY TNHH ĐẦU TƯ THƯƠNG MẠI DỊCH VỤ TRƯỜNG GIANG</p>
+    <p>Hotline: 0388134999 - 0898877111</p>
 </footer>
-
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
 <script src="auth.js"></script>
 
 <script>
-/* =========================================================
-   VIETTRUCKS - TAI XE HANH TRINH PRODUCTION
-   3 RPC BAO MAT:
-   - start_trip()
-   - update_trip_location()
-   - complete_trip()
-
-   KHONG DU LIEU DEMO
-   KHONG UPDATE TRIPS TRUC TIEP TU FRONTEND
-========================================================= */
-
 const db = window.supabaseClient;
 const app = document.getElementById("app");
 
 let user = null;
 let trip = null;
 let order = null;
+let driverTrips = [];
+let completing = false;
 
 let watchId = null;
 let tracking = false;
@@ -726,25 +345,18 @@ let saving = false;
 let lastSave = 0;
 let latestPosition = null;
 
-/* POD production */
 let pod = null;
 let podUploading = false;
 
 const SAVE_INTERVAL = 10000;
 const POD_BUCKET = "trip-pods";
 const POD_MAX_SIZE = 10 * 1024 * 1024;
-
 const POD_ALLOWED_TYPES = new Set([
     "image/jpeg",
     "image/png",
     "image/webp",
     "application/pdf"
 ]);
-
-
-/* =========================================================
-   UTILITIES
-========================================================= */
 
 function esc(value){
     return String(value ?? "")
@@ -757,28 +369,17 @@ function esc(value){
 
 function money(value){
     const n = Number(value);
-
-    if(!Number.isFinite(n)){
-        return "Chưa xác định";
-    }
-
-    return new Intl.NumberFormat("vi-VN")
-        .format(n) + " đ";
+    if(!Number.isFinite(n)) return "Chưa xác định";
+    return new Intl.NumberFormat("vi-VN").format(n) + " đ";
 }
 
 function dateTime(value){
-    if(!value){
-        return "Chưa có";
-    }
-
+    if(!value) return "Chưa có";
     try{
-        return new Intl.DateTimeFormat(
-            "vi-VN",
-            {
-                dateStyle:"short",
-                timeStyle:"medium"
-            }
-        ).format(new Date(value));
+        return new Intl.DateTimeFormat("vi-VN",{
+            dateStyle:"short",
+            timeStyle:"medium"
+        }).format(new Date(value));
     }catch{
         return "Không xác định";
     }
@@ -786,17 +387,12 @@ function dateTime(value){
 
 function coordinate(value){
     const n = Number(value);
-
-    if(!Number.isFinite(n)){
-        return "Chưa có vị trí";
-    }
-
+    if(!Number.isFinite(n)) return "Chưa có vị trí";
     return n.toFixed(6);
 }
 
 function statusText(value){
     const status = String(value || "").toLowerCase();
-
     const map = {
         pending:"Chờ xử lý",
         accepted:"Đã nhận chuyến",
@@ -805,20 +401,15 @@ function statusText(value){
         started:"Đã bắt đầu",
         moving:"Đang vận chuyển",
         in_progress:"Đang vận chuyển",
+        in_transit:"Đang vận chuyển",
         delivering:"Đang giao hàng",
         delivered:"Đã giao hàng",
         completed:"Hoàn thành",
         cancelled:"Đã hủy",
         canceled:"Đã hủy"
     };
-
     return map[status] || value || "Chưa xác định";
 }
-
-
-/* =========================================================
-   FATAL
-========================================================= */
 
 function fatal(icon,title,message,html=""){
     app.innerHTML = `
@@ -831,59 +422,39 @@ function fatal(icon,title,message,html=""){
     `;
 }
 
-
-/* =========================================================
-   LOAD TRIP THẬT
-========================================================= */
-
 async function loadTrip(){
+    const requestedId = new URLSearchParams(location.search).get("trip_id");
 
     const {data,error} = await db
         .from("trips")
         .select("*")
         .eq("driver_id",user.id)
-        .order("created_at",{ascending:false})
-        .limit(50);
+        .order("created_at",{ascending:false});
 
     if(error){
-        throw new Error(
-            "Không đọc được chuyến vận chuyển: " +
-            error.message
-        );
+        throw new Error("Không đọc được chuyến vận chuyển: " + error.message);
     }
 
-    if(!data || data.length === 0){
-        return null;
+    driverTrips = data || [];
+
+    if(requestedId){
+        const selected = driverTrips.find(item => item.id === requestedId);
+        if(!selected){
+            throw new Error("Không tìm thấy chuyến thuộc tài khoản tài xế này.");
+        }
+        return selected;
     }
 
-    const closedStatuses = [
-        "completed",
-        "delivered",
-        "cancelled",
-        "canceled"
-    ];
-
-    return data.find(item => {
-        const status =
-            String(item.status || "").toLowerCase();
-
-        return !closedStatuses.includes(status);
-    }) || null;
+    return driverTrips.find(item =>
+        !["completed","delivered","cancelled","canceled"].includes(
+            String(item.status || "").toLowerCase()
+        )
+    ) || null;
 }
 
-
-/* =========================================================
-   LOAD ORDER THẬT
-   DÙNG ĐÚNG CỘT DATABASE HIỆN TẠI:
-   delivery_location
-========================================================= */
-
 async function loadRealOrder(orderId){
-
     if(!orderId){
-        throw new Error(
-            "Chuyến vận chuyển không có order_id."
-        );
+        throw new Error("Chuyến vận chuyển không có order_id.");
     }
 
     const {data,error} = await db
@@ -903,463 +474,267 @@ async function loadRealOrder(orderId){
         .maybeSingle();
 
     if(error){
-        throw new Error(
-            "Không đọc được đơn hàng: " +
-            error.message
-        );
+        throw new Error("Không đọc được đơn hàng: " + error.message);
     }
-
     if(!data){
-        throw new Error(
-            "Không tìm thấy đơn hàng tương ứng."
-        );
+        throw new Error("Không tìm thấy đơn hàng tương ứng.");
     }
-
-    if(
-        !data.pickup_location ||
-        !data.delivery_location
-    ){
-        throw new Error(
-            "Đơn hàng chưa có đầy đủ điểm lấy và giao hàng."
-        );
+    if(!data.pickup_location || !data.delivery_location){
+        throw new Error("Đơn hàng chưa có đầy đủ điểm lấy và giao hàng.");
     }
-
     return data;
 }
 
-
-/* =========================================================
-   RENDER
-========================================================= */
-
 function render(){
-
-    const completed = [
-        "completed",
-        "delivered"
-    ].includes(
+    const completed = ["completed","delivered"].includes(
         String(trip.status || "").toLowerCase()
     );
 
     app.innerHTML = `
-    <div class="layout">
+        <div class="card" style="margin-bottom:18px">
+            <label for="tripSelect">
+                <strong>Chọn chuyến để tải chứng từ</strong>
+            </label>
+            <select id="tripSelect" class="pod-file" style="margin-top:10px">
+                ${driverTrips.map(item => `
+                    <option value="${esc(item.id)}"
+                        ${item.id === trip.id ? "selected" : ""}>
+                        ${esc(item.id.slice(0,8))} — ${esc(statusText(item.status))}
+                    </option>
+                `).join("")}
+            </select>
+            <button id="goPodBtn" type="button" class="pod-upload-btn">
+                📎 Đến phần tải chứng từ
+            </button>
+        </div>
 
-        <section>
-
-            <div class="card">
-
-                <div class="card-head">
-                    <h2>🚛 Chuyến vận chuyển</h2>
-
-                    <span
-                        id="tripBadge"
-                        class="badge ${
-                            completed
-                            ? "badge-blue"
-                            : "badge-green"
-                        }">
-                        ${esc(statusText(trip.status))}
-                    </span>
-                </div>
-
-                <div class="route">
-
-                    ${esc(order.pickup_location)}
-
-                    <span class="route-arrow">
-                        →
-                    </span>
-
-                    ${esc(order.delivery_location)}
-
-                </div>
-
-                <div class="info-grid">
-
-                    <div class="info">
-                        <span class="info-label">
-                            Mã chuyến
-                        </span>
-                        <span class="info-value">
-                            ${esc(trip.id)}
+        <div class="layout">
+            <section>
+                <div class="card">
+                    <div class="card-head">
+                        <h2>🚛 Chuyến vận chuyển</h2>
+                        <span id="tripBadge"
+                            class="badge ${completed ? "badge-blue" : "badge-green"}">
+                            ${esc(statusText(trip.status))}
                         </span>
                     </div>
 
-                    <div class="info">
-                        <span class="info-label">
-                            Mã đơn hàng
-                        </span>
-                        <span class="info-value">
-                            ${esc(order.id)}
-                        </span>
+                    <div class="route">
+                        ${esc(order.pickup_location)}
+                        <span class="route-arrow">→</span>
+                        ${esc(order.delivery_location)}
                     </div>
 
-                    <div class="info">
-                        <span class="info-label">
-                            Hàng hóa
-                        </span>
-                        <span class="info-value">
-                            ${
-                                order.cargo_type
-                                ? esc(order.cargo_type)
-                                : "Chưa cập nhật"
-                            }
-                        </span>
-                    </div>
-
-                    <div class="info">
-                        <span class="info-label">
-                            Trọng lượng
-                        </span>
-                        <span class="info-value">
-                            ${
-                                order.weight !== null &&
-                                order.weight !== undefined
-                                ? esc(order.weight)
-                                : "Chưa cập nhật"
-                            }
-                        </span>
-                    </div>
-
-                    <div class="info">
-                        <span class="info-label">
-                            Loại xe
-                        </span>
-                        <span class="info-value">
-                            ${
-                                order.vehicle_type
-                                ? esc(order.vehicle_type)
-                                : "Chưa cập nhật"
-                            }
-                        </span>
-                    </div>
-
-                    <div class="info">
-                        <span class="info-label">
-                            Giá cước chuyến
-                        </span>
-                        <span class="info-value">
-                            ${
-                                trip.agreed_price !== null &&
-                                trip.agreed_price !== undefined
-                                ? esc(money(trip.agreed_price))
-                                :
-                                (
-                                    order.price !== null &&
-                                    order.price !== undefined
-                                    ? esc(money(order.price))
-                                    : "Thỏa thuận"
-                                )
-                            }
-                        </span>
-                    </div>
-
-                    <div class="info">
-                        <span class="info-label">
-                            Ngày lấy hàng
-                        </span>
-                        <span class="info-value">
-                            ${
-                                order.pickup_date
-                                ? esc(
-                                    new Intl.DateTimeFormat(
-                                        "vi-VN"
-                                    ).format(
-                                        new Date(
-                                            order.pickup_date
-                                        )
-                                    )
-                                )
-                                : "Chưa cập nhật"
-                            }
-                        </span>
-                    </div>
-
-                    <div class="info">
-                        <span class="info-label">
-                            Bắt đầu hành trình
-                        </span>
-
-                        <span
-                            id="startedAt"
-                            class="info-value">
-
-                            ${esc(
-                                dateTime(
-                                    trip.started_at
-                                )
-                            )}
-
-                        </span>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="card-head">
-
-                    <h2>
-                        📡 GPS thời gian thực
-                    </h2>
-
-                    <span
-                        id="gpsBadge"
-                        class="badge">
-                        Chưa bật
-                    </span>
-
-                </div>
-
-                <div class="notice notice-info">
-                    Vị trí được lấy trực tiếp từ GPS
-                    của thiết bị tài xế và gửi lên
-                    VietTrucks qua kết nối bảo mật.
-                    Hệ thống không sử dụng tọa độ mô phỏng.
-                </div>
-
-                <div class="gps-status">
-
-                    <div
-                        id="gpsDot"
-                        class="gps-dot">
-                    </div>
-
-                    <div>
-
-                        <strong id="gpsTitle">
-                            GPS chưa hoạt động
-                        </strong>
-
-                        <small id="gpsDescription">
-                            Nhấn Bắt đầu hành trình để chia sẻ vị trí.
-                        </small>
-
-                    </div>
-
-                </div>
-
-                <div class="location-grid">
-
-                    <div class="location">
-                        <small>Vĩ độ</small>
-                        <strong id="lat">
-                            ${esc(
-                                coordinate(
-                                    trip.current_latitude
-                                )
-                            )}
-                        </strong>
-                    </div>
-
-                    <div class="location">
-                        <small>Kinh độ</small>
-                        <strong id="lng">
-                            ${esc(
-                                coordinate(
-                                    trip.current_longitude
-                                )
-                            )}
-                        </strong>
-                    </div>
-
-                    <div class="location">
-                        <small>Độ chính xác</small>
-                        <strong id="accuracy">
-                            Chưa có dữ liệu
-                        </strong>
-                    </div>
-
-                    <div class="location">
-                        <small>
-                            GPS cập nhật gần nhất
-                        </small>
-                        <strong id="lastLocation">
-                            ${esc(
-                                dateTime(
-                                    trip.last_location_at
-                                )
-                            )}
-                        </strong>
-                    </div>
-
-                </div>
-
-                <div class="actions">
-
-                    <button
-                        id="startBtn"
-                        class="action-btn start-btn"
-                        type="button">
-                        ▶ Bắt đầu hành trình
-                    </button>
-
-                    <button
-                        id="stopBtn"
-                        class="action-btn stop-btn"
-                        type="button"
-                        disabled>
-                        ■ Dừng chia sẻ GPS
-                    </button>
-
-                                        <button
-                        id="completeBtn"
-                        class="action-btn complete-btn"
-                        type="button">
-                        ✓ Hoàn thành chuyến
-                    </button>
-
-                </div>
-
-                <div class="pod-box">
-
-                    <h3>
-                        📎 Chứng từ giao nhận (POD)
-                    </h3>
-
-                    <p class="pod-description">
-                        Sau khi giao hàng, tài xế phải tải ảnh
-                        biên bản giao nhận hoặc file PDF lên VietTrucks.
-                        Không có POD hợp lệ thì hệ thống không cho
-                        hoàn thành chuyến.
-                    </p>
-
-                    <div
-                        id="podStatus"
-                        class="pod-status">
-
-                        <strong>
-                            Chưa gửi POD
-                        </strong>
-
-                        <small>
-                            Bắt buộc trước khi hoàn thành
-                        </small>
-
-                    </div>
-
-                    <input
-                        id="podFile"
-                        class="pod-file"
-                        type="file"
-                        accept="image/jpeg,image/png,image/webp,application/pdf">
-
-                    <textarea
-                        id="podNote"
-                        class="pod-note"
-                        maxlength="500"
-                        placeholder="Ghi chú chứng từ giao nhận (không bắt buộc)"></textarea>
-
-                    <button
-                        id="podUploadBtn"
-                        class="pod-upload-btn"
-                        type="button">
-                        📤 Tải POD lên VietTrucks
-                    </button>
-
-                    <div
-                        id="podFileInfo"
-                        class="pod-file-info"
-                        style="display:none">
-                    </div>
-
-                    <div
-                        id="podError"
-                        class="pod-error">
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <aside>
-
-            <div class="card">
-
-                <div class="card-head">
-                    <h2>Nhật ký hành trình</h2>
-                </div>
-
-                <div class="notice notice-warning">
-                    Khi đang vận chuyển, tài xế nên giữ
-                    quyền vị trí của trình duyệt ở trạng thái
-                    cho phép.
-                </div>
-
-                <ul
-                    id="log"
-                    class="log-list">
-
-                    <li class="log-item">
-                        <div class="log-time">
-                            Hệ thống
+                    <div class="info-grid">
+                        <div class="info">
+                            <span class="info-label">Mã chuyến</span>
+                            <span class="info-value">${esc(trip.id)}</span>
                         </div>
-                        <div class="log-message">
-                            Đã tải chuyến thật từ VietTrucks.
+                        <div class="info">
+                            <span class="info-label">Mã đơn hàng</span>
+                            <span class="info-value">${esc(order.id)}</span>
                         </div>
-                    </li>
+                        <div class="info">
+                            <span class="info-label">Hàng hóa</span>
+                            <span class="info-value">
+                                ${order.cargo_type ? esc(order.cargo_type) : "Chưa cập nhật"}
+                            </span>
+                        </div>
+                        <div class="info">
+                            <span class="info-label">Trọng lượng</span>
+                            <span class="info-value">
+                                ${order.weight !== null && order.weight !== undefined
+                                    ? esc(order.weight) : "Chưa cập nhật"}
+                            </span>
+                        </div>
+                        <div class="info">
+                            <span class="info-label">Loại xe</span>
+                            <span class="info-value">
+                                ${order.vehicle_type ? esc(order.vehicle_type) : "Chưa cập nhật"}
+                            </span>
+                        </div>
+                        <div class="info">
+                            <span class="info-label">Giá cước chuyến</span>
+                            <span class="info-value">
+                                ${trip.agreed_price !== null && trip.agreed_price !== undefined
+                                    ? esc(money(trip.agreed_price))
+                                    : (
+                                        order.price !== null && order.price !== undefined
+                                        ? esc(money(order.price))
+                                        : "Thỏa thuận"
+                                    )}
+                            </span>
+                        </div>
+                        <div class="info">
+                            <span class="info-label">Ngày lấy hàng</span>
+                            <span class="info-value">
+                                ${order.pickup_date
+                                    ? esc(new Intl.DateTimeFormat("vi-VN")
+                                        .format(new Date(order.pickup_date)))
+                                    : "Chưa cập nhật"}
+                            </span>
+                        </div>
+                        <div class="info">
+                            <span class="info-label">Bắt đầu hành trình</span>
+                            <span id="startedAt" class="info-value">
+                                ${esc(dateTime(trip.started_at))}
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
-                </ul>
+                <div class="card">
+                    <div class="card-head">
+                        <h2>📡 GPS thời gian thực</h2>
+                        <span id="gpsBadge" class="badge">Chưa bật</span>
+                    </div>
 
-                <button
-                    id="refreshBtn"
-                    type="button"
-                    class="action-btn refresh-btn">
-                    ↻ Tải lại dữ liệu
-                </button>
+                    <div class="notice notice-info">
+                        Vị trí được lấy trực tiếp từ GPS của thiết bị tài xế
+                        và gửi lên VietTrucks qua kết nối bảo mật.
+                        Hệ thống không sử dụng tọa độ mô phỏng.
+                    </div>
 
-            </div>
+                    <div class="gps-status">
+                        <div id="gpsDot" class="gps-dot"></div>
+                        <div>
+                            <strong id="gpsTitle">GPS chưa hoạt động</strong>
+                            <small id="gpsDescription">
+                                Nhấn Bắt đầu hành trình để chia sẻ vị trí.
+                            </small>
+                        </div>
+                    </div>
 
-        </aside>
+                    <div class="location-grid">
+                        <div class="location">
+                            <small>Vĩ độ</small>
+                            <strong id="lat">
+                                ${esc(coordinate(trip.current_latitude))}
+                            </strong>
+                        </div>
+                        <div class="location">
+                            <small>Kinh độ</small>
+                            <strong id="lng">
+                                ${esc(coordinate(trip.current_longitude))}
+                            </strong>
+                        </div>
+                        <div class="location">
+                            <small>Độ chính xác</small>
+                            <strong id="accuracy">Chưa có dữ liệu</strong>
+                        </div>
+                        <div class="location">
+                            <small>GPS cập nhật gần nhất</small>
+                            <strong id="lastLocation">
+                                ${esc(dateTime(trip.last_location_at))}
+                            </strong>
+                        </div>
+                    </div>
 
-    </div>
+                    <div class="actions">
+                        <button id="startBtn" class="action-btn start-btn" type="button">
+                            ▶ Bắt đầu hành trình
+                        </button>
+                        <button id="stopBtn" class="action-btn stop-btn"
+                            type="button" disabled>
+                            ■ Dừng chia sẻ GPS
+                        </button>
+                        <button id="completeBtn" class="action-btn complete-btn"
+                            type="button">
+                            ✓ Hoàn thành chuyến
+                        </button>
+                    </div>
+
+                    <div class="pod-box" id="podSection">
+                        <h3>📎 Chứng từ giao nhận (POD)</h3>
+
+                        <p class="pod-description">
+                            Sau khi giao hàng, tài xế phải tải ảnh biên bản giao nhận
+                            hoặc file PDF lên VietTrucks. Không có POD hợp lệ thì
+                            hệ thống không cho hoàn thành chuyến.
+                        </p>
+
+                        <div id="podStatus" class="pod-status">
+                            <strong>Chưa gửi POD</strong>
+                            <small>Bắt buộc trước khi hoàn thành</small>
+                        </div>
+
+                        <input id="podFile" class="pod-file" type="file"
+                            accept="image/jpeg,image/png,image/webp,application/pdf">
+
+                        <textarea id="podNote" class="pod-note" maxlength="500"
+                            placeholder="Ghi chú chứng từ giao nhận (không bắt buộc)"></textarea>
+
+                        <button id="podUploadBtn" class="pod-upload-btn" type="button">
+                            📤 Tải chứng từ lên VietTrucks
+                        </button>
+
+                        <div id="podFileInfo" class="pod-file-info"
+                            style="display:none"></div>
+
+                        <div id="podError" class="pod-error"></div>
+                    </div>
+                </div>
+            </section>
+
+            <aside>
+                <div class="card">
+                    <div class="card-head">
+                        <h2>Nhật ký hành trình</h2>
+                    </div>
+
+                    <div class="notice notice-warning">
+                        Khi đang vận chuyển, tài xế nên giữ quyền vị trí
+                        của trình duyệt ở trạng thái cho phép.
+                    </div>
+
+                    <ul id="log" class="log-list">
+                        <li class="log-item">
+                            <div class="log-time">Hệ thống</div>
+                            <div class="log-message">
+                                Đã tải chuyến thật từ VietTrucks.
+                            </div>
+                        </li>
+                    </ul>
+
+                    <button id="refreshBtn" type="button"
+                        class="action-btn refresh-btn">
+                        ↻ Tải lại dữ liệu
+                    </button>
+                </div>
+            </aside>
+        </div>
     `;
 
+    document.getElementById("startBtn")
+        .addEventListener("click",startTracking);
 
-    document
-        .getElementById("startBtn")
-        .addEventListener(
-            "click",
-            startTracking
-        );
+    document.getElementById("stopBtn")
+        .addEventListener("click",stopTracking);
 
-    document
-        .getElementById("stopBtn")
-        .addEventListener(
-            "click",
-            stopTracking
-        );
+    document.getElementById("podUploadBtn")
+        .addEventListener("click",uploadPod);
 
-        document
-        .getElementById("podUploadBtn")
-        .addEventListener(
-            "click",
-            uploadPod
-        );
+    document.getElementById("completeBtn")
+        .addEventListener("click",completeTrip);
+
+    document.getElementById("goPodBtn").addEventListener("click",() => {
+        document.getElementById("podSection")
+            .scrollIntoView({behavior:"smooth",block:"start"});
+    });
+
+    document.getElementById("tripSelect").addEventListener("change",event => {
+        const url = new URL(location.href);
+        url.searchParams.set("trip_id",event.target.value);
+        location.assign(url.href);
+    });
 
     updatePodUI();
 
-    document
-        .getElementById("refreshBtn")
-        .addEventListener(
-            "click",
-            () => location.reload()
-        );
+    document.getElementById("refreshBtn")
+        .addEventListener("click",() => location.reload());
 }
 
-
-/* =========================================================
-   POD PRODUCTION
-========================================================= */
-
 async function loadPod(){
-
     if(!trip?.id){
         pod = null;
         return null;
@@ -1386,873 +761,404 @@ async function loadPod(){
         .maybeSingle();
 
     if(error){
-        throw new Error(
-            "Không đọc được POD: " +
-            error.message
-        );
+        throw new Error("Không đọc được POD: " + error.message);
     }
 
     pod = data || null;
-
     return pod;
 }
 
-
 function podStatusText(status){
-
-    const value =
-        String(status || "")
-        .toLowerCase();
-
-    if(value === "pending"){
-        return "Chờ xác nhận";
-    }
-
-    if(value === "approved"){
-        return "Đã xác nhận";
-    }
-
-    if(value === "rejected"){
-        return "Bị từ chối";
-    }
-
+    const value = String(status || "").toLowerCase();
+    if(value === "pending") return "Chờ xác nhận";
+    if(value === "approved") return "Đã xác nhận";
+    if(value === "rejected") return "Bị từ chối";
     return "Chưa gửi POD";
 }
 
-
 function updatePodUI(){
+    const statusBox = document.getElementById("podStatus");
+    const fileInfo = document.getElementById("podFileInfo");
+    const uploadBtn = document.getElementById("podUploadBtn");
+    const completeBtn = document.getElementById("completeBtn");
 
-    const statusBox =
-        document.getElementById(
-            "podStatus"
-        );
+    if(!statusBox) return;
 
-    const fileInfo =
-        document.getElementById(
-            "podFileInfo"
-        );
-
-    const uploadBtn =
-        document.getElementById(
-            "podUploadBtn"
-        );
-
-    const completeBtn =
-        document.getElementById(
-            "completeBtn"
-        );
-
-    if(!statusBox){
-        return;
-    }
-
-    statusBox.className =
-        "pod-status";
-
-    if(!pod){
-
-        statusBox.innerHTML = `
-            <strong>
-                Chưa gửi POD
-            </strong>
-
-            <small>
-                Bắt buộc trước khi hoàn thành
-            </small>
-        `;
-
-        if(fileInfo){
-            fileInfo.style.display =
-                "none";
-        }
-
-        if(completeBtn){
-            completeBtn.disabled =
-                true;
-
-            completeBtn.textContent =
-                "📎 Hãy tải POD trước";
-        }
-
-        return;
-    }
-
-
-    const status =
-        String(
-            pod.status || ""
-        ).toLowerCase();
-
-
-    if(status === "pending"){
-
-        statusBox.classList.add(
-            "pending"
-        );
-
-        statusBox.innerHTML = `
-            <strong>
-                ⏳ Chờ xác nhận
-            </strong>
-
-            <small>
-                POD đã được gửi lên VietTrucks
-            </small>
-        `;
-
-    }else if(status === "approved"){
-
-        statusBox.classList.add(
-            "approved"
-        );
-
-        statusBox.innerHTML = `
-            <strong>
-                ✓ Đã xác nhận
-            </strong>
-
-            <small>
-                Chứng từ giao nhận hợp lệ
-            </small>
-        `;
-
-    }else if(status === "rejected"){
-
-        statusBox.classList.add(
-            "rejected"
-        );
-
-        statusBox.innerHTML = `
-            <strong>
-                ✕ POD bị từ chối
-            </strong>
-
-            <small>
-                ${esc(
-                    pod.review_note ||
-                    "Vui lòng tải lại chứng từ."
-                )}
-            </small>
-        `;
-
-    }else{
-
-        statusBox.innerHTML = `
-            <strong>
-                ${esc(
-                    podStatusText(
-                        pod.status
-                    )
-                )}
-            </strong>
-        `;
-
-    }
-
-
-    if(fileInfo){
-
-        fileInfo.style.display =
-            "block";
-
-        fileInfo.innerHTML = `
-            <strong>
-                File:
-            </strong>
-            ${esc(
-                pod.file_name ||
-                "Chứng từ giao nhận"
-            )}
-            <br>
-
-            <strong>
-                Gửi lúc:
-            </strong>
-            ${esc(
-                dateTime(
-                    pod.submitted_at
-                )
-            )}
-        `;
-
-    }
-
-
-    /*
-     * POD approved:
-     * không cho tài xế thay thế nữa.
-     */
+    const closed = ["completed","delivered","cancelled","canceled"].includes(
+        String(trip?.status || "").toLowerCase()
+    );
 
     if(uploadBtn){
-
-        if(status === "approved"){
-
-            uploadBtn.disabled =
-                true;
-
-            uploadBtn.textContent =
-                "✓ POD đã được xác nhận";
-
-        }else if(status === "rejected"){
-
-            uploadBtn.disabled =
-                false;
-
-            uploadBtn.textContent =
-                "↻ Tải lại POD";
-
-        }else{
-
-            uploadBtn.disabled =
-                false;
-
-            uploadBtn.textContent =
-                "↻ Thay POD";
-
-        }
-
+        uploadBtn.disabled =
+            podUploading || completing || closed || pod?.status === "approved";
+        uploadBtn.textContent = podUploading
+            ? "Đang tải chứng từ..."
+            : pod?.status === "approved"
+                ? "✓ Chứng từ đã xác nhận"
+                : "📤 Tải chứng từ lên VietTrucks";
     }
 
+    for(const id of ["podFile","podNote"]){
+        const input = document.getElementById(id);
+        if(input){
+            input.disabled =
+                podUploading || completing || closed || pod?.status === "approved";
+        }
+    }
 
-    /*
-     * complete_trip() ở database vẫn là lớp
-     * bảo vệ cuối cùng.
-     *
-     * pending hoặc approved:
-     * được phép yêu cầu hoàn thành.
-     *
-     * rejected:
-     * không cho bấm.
-     */
+    const selector = document.getElementById("tripSelect");
+    if(selector) selector.disabled = podUploading || completing;
+
+    for(const id of ["startBtn","stopBtn"]){
+        const button = document.getElementById(id);
+        if(button && closed) button.disabled = true;
+    }
+
+    statusBox.className = "pod-status";
+
+    if(!pod){
+        statusBox.innerHTML = `
+            <strong>Chưa gửi POD</strong>
+            <small>Bắt buộc trước khi hoàn thành</small>
+        `;
+
+        if(fileInfo) fileInfo.style.display = "none";
+
+        if(completeBtn){
+            completeBtn.disabled = true;
+            completeBtn.textContent = "📎 Hãy tải POD trước";
+        }
+        return;
+    }
+
+    const status = String(pod.status || "").toLowerCase();
+
+    if(status === "pending"){
+        statusBox.classList.add("pending");
+        statusBox.innerHTML = `
+            <strong>⏳ Chờ xác nhận</strong>
+            <small>POD đã được gửi lên VietTrucks</small>
+        `;
+    }else if(status === "approved"){
+        statusBox.classList.add("approved");
+        statusBox.innerHTML = `
+            <strong>✓ Đã xác nhận</strong>
+            <small>Chứng từ giao nhận hợp lệ</small>
+        `;
+    }else if(status === "rejected"){
+        statusBox.classList.add("rejected");
+        statusBox.innerHTML = `
+            <strong>✕ POD bị từ chối</strong>
+            <small>${esc(pod.review_note || "Vui lòng tải lại chứng từ.")}</small>
+        `;
+    }else{
+        statusBox.innerHTML = `
+            <strong>${esc(podStatusText(pod.status))}</strong>
+        `;
+    }
+
+    if(fileInfo){
+        fileInfo.style.display = "block";
+        fileInfo.innerHTML = `
+            <strong>File:</strong>
+            ${esc(pod.file_name || "Chứng từ giao nhận")}
+            <br>
+            <strong>Gửi lúc:</strong>
+            ${esc(dateTime(pod.submitted_at))}
+        `;
+    }
+
+    if(uploadBtn){
+        if(status === "approved"){
+            uploadBtn.disabled = true;
+            uploadBtn.textContent = "✓ POD đã được xác nhận";
+        }else if(status === "rejected"){
+            uploadBtn.disabled = podUploading || completing || closed;
+            uploadBtn.textContent = "↻ Tải lại POD";
+        }else{
+            uploadBtn.disabled = podUploading || completing || closed;
+            uploadBtn.textContent = "↻ Thay POD";
+        }
+    }
 
     if(completeBtn){
-
-        if(
-            status === "pending" ||
-            status === "approved"
-        ){
-
-            completeBtn.disabled =
-                false;
-
-            completeBtn.textContent =
-                "✓ Hoàn thành chuyến";
-
-        }else{
-
-            completeBtn.disabled =
-                true;
-
-            completeBtn.textContent =
-                "📎 POD chưa hợp lệ";
-
+        if(closed){
+            completeBtn.disabled = true;
+            completeBtn.textContent = "Chuyến đã kết thúc";
+            return;
         }
 
+        if(status === "pending" || status === "approved"){
+            completeBtn.disabled = podUploading || completing || closed;
+            completeBtn.textContent = "✓ Hoàn thành chuyến";
+        }else{
+            completeBtn.disabled = true;
+            completeBtn.textContent = "📎 POD chưa hợp lệ";
+        }
     }
 }
 
-
 function sanitizeFileName(name){
-
-    const clean =
-        String(name || "pod")
+    const clean = String(name || "pod")
         .normalize("NFD")
-        .replace(
-            /[\u0300-\u036f]/g,
-            ""
-        )
-        .replace(
-            /[^a-zA-Z0-9._-]/g,
-            "-"
-        )
-        .replace(
-            /-+/g,
-            "-"
-        );
-
+        .replace(/[\u0300-\u036f]/g,"")
+        .replace(/[^a-zA-Z0-9._-]/g,"-")
+        .replace(/-+/g,"-");
     return clean || "pod";
 }
 
-
 async function uploadPod(){
+    if(!user || !trip || podUploading) return;
 
-    if(
-        !user ||
-        !trip ||
-        podUploading
-    ){
-        return;
-    }
+    const fileInput = document.getElementById("podFile");
+    const noteInput = document.getElementById("podNote");
+    const button = document.getElementById("podUploadBtn");
+    const errorBox = document.getElementById("podError");
 
+    if(errorBox) errorBox.textContent = "";
 
-    const fileInput =
-        document.getElementById(
-            "podFile"
-        );
-
-    const noteInput =
-        document.getElementById(
-            "podNote"
-        );
-
-    const button =
-        document.getElementById(
-            "podUploadBtn"
-        );
-
-    const errorBox =
-        document.getElementById(
-            "podError"
-        );
-
-
-    if(errorBox){
-        errorBox.textContent = "";
-    }
-
-
-    const file =
-        fileInput?.files?.[0];
-
+    const file = fileInput?.files?.[0];
 
     if(!file){
-
-        alert(
-            "Anh hãy chọn ảnh hoặc PDF chứng từ giao nhận."
-        );
-
+        alert("Anh hãy chọn ảnh hoặc PDF chứng từ giao nhận.");
         return;
     }
 
-
-    if(
-        !POD_ALLOWED_TYPES.has(
-            file.type
-        )
-    ){
-
-        alert(
-            "POD chỉ chấp nhận JPG, PNG, WEBP hoặc PDF."
-        );
-
+    if(!POD_ALLOWED_TYPES.has(file.type)){
+        alert("POD chỉ chấp nhận JPG, PNG, WEBP hoặc PDF.");
         return;
     }
-
 
     if(file.size > POD_MAX_SIZE){
-
-        alert(
-            "File POD không được vượt quá 10 MB."
-        );
-
+        alert("File POD không được vượt quá 10 MB.");
         return;
     }
 
-
-    const currentStatus =
-        String(
-            pod?.status || ""
-        ).toLowerCase();
-
+    const currentStatus = String(pod?.status || "").toLowerCase();
 
     if(currentStatus === "approved"){
-
-        alert(
-            "POD đã được xác nhận nên không thể thay thế."
-        );
-
+        alert("POD đã được xác nhận nên không thể thay thế.");
         return;
     }
 
-
     podUploading = true;
+    updatePodUI();
 
     if(button){
-
         button.disabled = true;
-
-        button.textContent =
-            "Đang tải POD...";
+        button.textContent = "Đang tải POD...";
     }
 
-
     try{
-
-        /*
-         * Storage policy yêu cầu:
-         *
-         * trip-id/user-id/file
-         */
-
-        const safeName =
-            sanitizeFileName(
-                file.name
-            );
-
+        const safeName = sanitizeFileName(file.name);
         const filePath =
             `${trip.id}/${user.id}/${Date.now()}-${safeName}`;
 
-
-        /*
-         * Mỗi lần dùng tên file mới.
-         * Không cần overwrite file cũ.
-         */
-
-        const {
-            error:uploadError
-        } = await db
+        const {error:uploadError} = await db
             .storage
             .from(POD_BUCKET)
-            .upload(
-                filePath,
-                file,
-                {
-                    cacheControl:"3600",
-                    upsert:false,
-                    contentType:file.type
-                }
-            );
-
+            .upload(filePath,file,{
+                cacheControl:"3600",
+                upsert:false,
+                contentType:file.type
+            });
 
         if(uploadError){
-
-            throw new Error(
-                "Không tải được file POD: " +
-                uploadError.message
-            );
-
+            throw new Error("Không tải được file POD: " + uploadError.message);
         }
 
-
-        /*
-         * Sau khi Storage thành công,
-         * ghi metadata bằng RPC bảo mật.
-         */
-
-        const {
-            data:podId,
-            error:rpcError
-        } = await db.rpc(
+        const {data:podId,error:rpcError} = await db.rpc(
             "submit_trip_pod",
             {
-                p_trip_id:
-                    trip.id,
-
-                p_file_path:
-                    filePath,
-
-                p_file_name:
-                    file.name,
-
-                p_file_type:
-                    file.type,
-
-                p_file_size:
-                    file.size,
-
-                p_driver_note:
-                    noteInput?.value?.trim() ||
-                    null
+                p_trip_id:trip.id,
+                p_file_path:filePath,
+                p_file_name:file.name,
+                p_file_type:file.type,
+                p_file_size:file.size,
+                p_driver_note:noteInput?.value?.trim() || null
             }
         );
 
-
         if(rpcError){
-
-            /*
-             * Metadata không ghi được:
-             * không giả vờ thành công.
-             *
-             * Storage không có DELETE policy,
-             * nên file vừa upload có thể còn
-             * trong bucket để Admin xử lý.
-             */
-
             throw new Error(
-                "File đã tải lên nhưng không ghi được POD: " +
-                rpcError.message
+                "File đã tải lên nhưng không ghi được POD: " + rpcError.message
             );
-
         }
-
 
         await loadPod();
-
         updatePodUI();
 
+        if(fileInput) fileInput.value = "";
 
-        if(fileInput){
-            fileInput.value = "";
-        }
-
-
-        addLog(
-            "Đã gửi chứng từ giao nhận POD lên VietTrucks."
-        );
-
+        addLog("Đã gửi chứng từ giao nhận POD lên VietTrucks.");
 
         alert(
             "Đã tải POD thành công.\n\n" +
-            "Trạng thái: " +
-            podStatusText(
-                pod?.status
-            )
+            "Trạng thái: " + podStatusText(pod?.status)
         );
-
-
     }catch(error){
-
-        console.error(
-            "POD:",
-            error
-        );
-
-
-        if(errorBox){
-
-            errorBox.textContent =
-                error.message;
-
-        }
-
-
-        addLog(
-            "Lỗi POD: " +
-            error.message
-        );
-
-
-        alert(
-            error.message
-        );
-
+        console.error("POD:",error);
+        if(errorBox) errorBox.textContent = error.message;
+        addLog("Lỗi POD: " + error.message);
+        alert(error.message);
     }finally{
-
         podUploading = false;
-
         updatePodUI();
-
     }
 }
 
 function addLog(message){
+    const list = document.getElementById("log");
+    if(!list) return;
 
-    const list =
-        document.getElementById("log");
-
-    if(!list){
-        return;
-    }
-
-    const li =
-        document.createElement("li");
-
+    const li = document.createElement("li");
     li.className = "log-item";
 
-    const time =
-        new Intl.DateTimeFormat(
-            "vi-VN",
-            {
-                hour:"2-digit",
-                minute:"2-digit",
-                second:"2-digit"
-            }
-        ).format(new Date());
+    const time = new Intl.DateTimeFormat("vi-VN",{
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit"
+    }).format(new Date());
 
     li.innerHTML = `
-        <div class="log-time">
-            ${esc(time)}
-        </div>
-        <div class="log-message">
-            ${esc(message)}
-        </div>
+        <div class="log-time">${esc(time)}</div>
+        <div class="log-message">${esc(message)}</div>
     `;
 
     list.prepend(li);
 
     while(list.children.length > 10){
-        list.removeChild(
-            list.lastElementChild
-        );
+        list.removeChild(list.lastElementChild);
     }
 }
 
-
-/* =========================================================
-   GPS UI
-========================================================= */
-
 function gpsUI(type,title,description){
-
-    const dot =
-        document.getElementById("gpsDot");
-
-    const badge =
-        document.getElementById("gpsBadge");
+    const dot = document.getElementById("gpsDot");
+    const badge = document.getElementById("gpsBadge");
 
     if(dot){
-
         dot.className = "gps-dot";
-
-        if(type === "live"){
-            dot.classList.add("live");
-        }
-
-        if(type === "error"){
-            dot.classList.add("error");
-        }
+        if(type === "live") dot.classList.add("live");
+        if(type === "error") dot.classList.add("error");
     }
 
     if(badge){
-
         badge.className = "badge";
-
         if(type === "live"){
-
-            badge.classList.add(
-                "badge-green"
-            );
-
-            badge.textContent =
-                "Đang chia sẻ";
-
+            badge.classList.add("badge-green");
+            badge.textContent = "Đang chia sẻ";
         }else if(type === "error"){
-
-            badge.classList.add(
-                "badge-red"
-            );
-
-            badge.textContent =
-                "Lỗi GPS";
-
+            badge.classList.add("badge-red");
+            badge.textContent = "Lỗi GPS";
         }else{
-
-            badge.textContent =
-                "Đã dừng";
+            badge.textContent = "Đã dừng";
         }
     }
 
-    const titleEl =
-        document.getElementById(
-            "gpsTitle"
-        );
+    const titleEl = document.getElementById("gpsTitle");
+    const descEl = document.getElementById("gpsDescription");
 
-    const descEl =
-        document.getElementById(
-            "gpsDescription"
-        );
-
-    if(titleEl){
-        titleEl.textContent = title;
-    }
-
-    if(descEl){
-        descEl.textContent = description;
-    }
+    if(titleEl) titleEl.textContent = title;
+    if(descEl) descEl.textContent = description;
 }
 
-
-/* =========================================================
-   HIỂN THỊ VỊ TRÍ
-========================================================= */
-
 function showPosition(position){
-
     const c = position.coords;
+    const latEl = document.getElementById("lat");
+    const lngEl = document.getElementById("lng");
+    const accuracyEl = document.getElementById("accuracy");
+    const lastEl = document.getElementById("lastLocation");
 
-    const latEl =
-        document.getElementById("lat");
-
-    const lngEl =
-        document.getElementById("lng");
-
-    const accuracyEl =
-        document.getElementById("accuracy");
-
-    const lastEl =
-        document.getElementById("lastLocation");
-
-    if(latEl){
-        latEl.textContent =
-            coordinate(c.latitude);
-    }
-
-    if(lngEl){
-        lngEl.textContent =
-            coordinate(c.longitude);
-    }
+    if(latEl) latEl.textContent = coordinate(c.latitude);
+    if(lngEl) lngEl.textContent = coordinate(c.longitude);
 
     if(accuracyEl){
-
-        accuracyEl.textContent =
-            Number.isFinite(c.accuracy)
+        accuracyEl.textContent = Number.isFinite(c.accuracy)
             ? Math.round(c.accuracy) + " m"
             : "Không xác định";
     }
 
-    if(lastEl){
-        lastEl.textContent =
-            dateTime(new Date());
-    }
+    if(lastEl) lastEl.textContent = dateTime(new Date());
 }
-
-
-/* =========================================================
-   RPC 1:
-   START TRIP
-========================================================= */
 
 async function markStarted(){
+    const {data,error} = await db.rpc("start_trip",{
+        p_trip_id:trip.id
+    });
 
-            /*
-         * complete_trip() production trả về VOID.
-         *
-         * Thành công = không có error.
-         * Database tự kiểm tra:
-         * - đúng tài xế
-         * - trip = in_transit
-         * - có POD
-         * - POD pending/approved
-         * - POD rejected sẽ bị chặn
-         */
-
-        const {error} =
-            await db.rpc(
-                "complete_trip",
-                {
-                    p_trip_id:trip.id
-                }
-            );
-
-        if(error){
-
-            throw new Error(
-                "Không hoàn thành được chuyến: " +
-                error.message
-            );
-        }
-
-    if(!trip.started_at){
-        trip.started_at =
-            new Date().toISOString();
+    if(error){
+        throw new Error("Không bắt đầu được chuyến: " + error.message);
     }
 
-    trip.status = "started";
+    if(data === false || data?.success === false){
+        throw new Error("Hệ thống từ chối bắt đầu chuyến.");
+    }
 
-    const startedAt =
-        document.getElementById(
-            "startedAt"
+    const {data:actual,error:readError} = await db
+        .from("trips")
+        .select("*")
+        .eq("id",trip.id)
+        .eq("driver_id",user.id)
+        .single();
+
+    if(readError){
+        throw new Error(
+            "Đã gửi yêu cầu bắt đầu nhưng chưa đọc được trạng thái: " +
+            readError.message
         );
-
-    if(startedAt){
-        startedAt.textContent =
-            dateTime(trip.started_at);
     }
 
-    const badge =
-        document.getElementById(
-            "tripBadge"
-        );
+    trip = actual;
 
-    if(badge){
-        badge.className =
-            "badge badge-green";
+    document.getElementById("startedAt").textContent =
+        dateTime(trip.started_at);
 
-        badge.textContent =
-            "Đã bắt đầu";
-    }
+    document.getElementById("tripBadge").textContent =
+        statusText(trip.status);
+
+    updatePodUI();
 }
 
-
-/* =========================================================
-   RPC 2:
-   UPDATE GPS
-========================================================= */
-
 async function saveGPS(position){
-
-    if(
-        !user ||
-        !trip ||
-        saving
-    ){
-        return;
-    }
+    if(!user || !trip || saving) return;
 
     const now = Date.now();
-
-    if(
-        now - lastSave <
-        SAVE_INTERVAL
-    ){
-        return;
-    }
+    if(now - lastSave < SAVE_INTERVAL) return;
 
     saving = true;
 
     try{
-
         const c = position.coords;
+        const lat = Number(c.latitude);
+        const lng = Number(c.longitude);
 
-        const lat =
-            Number(c.latitude);
-
-        const lng =
-            Number(c.longitude);
-
-        if(
-            !Number.isFinite(lat) ||
-            !Number.isFinite(lng)
-        ){
-            throw new Error(
-                "Thiết bị trả về tọa độ không hợp lệ."
-            );
+        if(!Number.isFinite(lat) || !Number.isFinite(lng)){
+            throw new Error("Thiết bị trả về tọa độ không hợp lệ.");
         }
 
-        /*
-         * QUAN TRỌNG:
-         * KHÔNG INSERT trip_tracking.
-         * KHÔNG UPDATE trips trực tiếp.
-         *
-         * Chỉ RPC được quyền cập nhật 3 trường GPS.
-         */
-
-        const {data,error} =
-            await db.rpc(
-                "update_trip_location",
-                {
-                    p_trip_id:trip.id,
-                    p_latitude:lat,
-                    p_longitude:lng
-                }
-            );
+        const {data,error} = await db.rpc(
+            "update_trip_location",
+            {
+                p_trip_id:trip.id,
+                p_latitude:lat,
+                p_longitude:lng
+            }
+        );
 
         if(error){
-
-            throw new Error(
-                "Không gửi được GPS: " +
-                error.message
-            );
+            throw new Error("Không gửi được GPS: " + error.message);
         }
 
-        if(
-            data &&
-            data.success === false
-        ){
-            throw new Error(
-                "Hệ thống từ chối cập nhật GPS."
-            );
+        if(data && data.success === false){
+            throw new Error("Hệ thống từ chối cập nhật GPS.");
         }
 
         trip.current_latitude = lat;
         trip.current_longitude = lng;
-
         trip.last_location_at =
-            data?.last_location_at ||
-            new Date().toISOString();
+            data?.last_location_at || new Date().toISOString();
 
         lastSave = Date.now();
-
         showPosition(position);
 
         gpsUI(
@@ -2261,243 +1167,117 @@ async function saveGPS(position){
             "Vị trí thật đã được gửi lên VietTrucks."
         );
 
-        addLog(
-            "Đã gửi vị trí GPS lên hệ thống."
-        );
-
+        addLog("Đã gửi vị trí GPS lên hệ thống.");
     }catch(error){
-
         console.error(error);
-
-        gpsUI(
-            "error",
-            "Không gửi được GPS",
-            error.message
-        );
-
-        addLog(
-            "Lỗi GPS: " +
-            error.message
-        );
-
+        gpsUI("error","Không gửi được GPS",error.message);
+        addLog("Lỗi GPS: " + error.message);
     }finally{
-
         saving = false;
     }
 }
 
-
-/* =========================================================
-   POSITION CALLBACK
-========================================================= */
-
 function positionSuccess(position){
-
     latestPosition = position;
-
     showPosition(position);
-
     saveGPS(position);
 }
 
-
 function positionError(error){
-
-    let message =
-        "Không lấy được vị trí GPS.";
+    let message = "Không lấy được vị trí GPS.";
 
     if(error.code === 1){
-
-        message =
-            "Quyền truy cập vị trí đã bị từ chối.";
-
+        message = "Quyền truy cập vị trí đã bị từ chối.";
     }else if(error.code === 2){
-
-        message =
-            "Thiết bị hiện không xác định được vị trí.";
-
+        message = "Thiết bị hiện không xác định được vị trí.";
     }else if(error.code === 3){
-
-        message =
-            "GPS phản hồi quá thời gian cho phép.";
+        message = "GPS phản hồi quá thời gian cho phép.";
     }
 
-    gpsUI(
-        "error",
-        "GPS không hoạt động",
-        message
-    );
-
+    gpsUI("error","GPS không hoạt động",message);
     addLog(message);
 }
 
-
-/* =========================================================
-   START TRACKING
-========================================================= */
-
 async function startTracking(){
-
-    if(tracking){
-        return;
-    }
+    if(tracking) return;
 
     if(!navigator.geolocation){
-
-        alert(
-            "Thiết bị này không hỗ trợ định vị GPS."
-        );
-
+        alert("Thiết bị này không hỗ trợ định vị GPS.");
         return;
     }
 
-    const startBtn =
-        document.getElementById(
-            "startBtn"
-        );
-
-    const stopBtn =
-        document.getElementById(
-            "stopBtn"
-        );
+    const startBtn = document.getElementById("startBtn");
+    const stopBtn = document.getElementById("stopBtn");
 
     startBtn.disabled = true;
-
-    startBtn.textContent =
-        "Đang bật GPS...";
+    startBtn.textContent = "Đang bật GPS...";
 
     try{
-
-        /*
-         * Đầu tiên database xác nhận
-         * tài xế có quyền bắt đầu chuyến.
-         */
         await markStarted();
 
-        /*
-         * Sau đó mới xin GPS thiết bị.
-         */
-        navigator.geolocation
-            .getCurrentPosition(
+        navigator.geolocation.getCurrentPosition(
+            async position => {
+                latestPosition = position;
+                lastSave = 0;
+                await saveGPS(position);
 
-                async position => {
+                watchId = navigator.geolocation.watchPosition(
+                    positionSuccess,
+                    positionError,
+                    {
+                        enableHighAccuracy:true,
+                        maximumAge:5000,
+                        timeout:20000
+                    }
+                );
 
-                    latestPosition =
-                        position;
+                tracking = true;
 
-                    lastSave = 0;
+                startBtn.disabled = true;
+                startBtn.textContent = "GPS đang hoạt động";
+                stopBtn.disabled = false;
 
-                    await saveGPS(
-                        position
-                    );
+                gpsUI(
+                    "live",
+                    "GPS đang hoạt động",
+                    "VietTrucks đang nhận vị trí thật của xe."
+                );
 
-                    watchId =
-                        navigator.geolocation
-                        .watchPosition(
-
-                            positionSuccess,
-
-                            positionError,
-
-                            {
-                                enableHighAccuracy:true,
-                                maximumAge:5000,
-                                timeout:20000
-                            }
-                        );
-
-                    tracking = true;
-
-                    startBtn.disabled =
-                        true;
-
-                    startBtn.textContent =
-                        "GPS đang hoạt động";
-
-                    stopBtn.disabled =
-                        false;
-
-                    gpsUI(
-                        "live",
-                        "GPS đang hoạt động",
-                        "VietTrucks đang nhận vị trí thật của xe."
-                    );
-
-                    addLog(
-                        "Tài xế bắt đầu chia sẻ GPS."
-                    );
-                },
-
-                error => {
-
-                    startBtn.disabled =
-                        false;
-
-                    startBtn.textContent =
-                        "▶ Bắt đầu hành trình";
-
-                    positionError(error);
-                },
-
-                {
-                    enableHighAccuracy:true,
-                    maximumAge:0,
-                    timeout:20000
-                }
-            );
-
-    }catch(error){
-
-        console.error(error);
-
-        startBtn.disabled = false;
-
-        startBtn.textContent =
-            "▶ Bắt đầu hành trình";
-
-        alert(error.message);
-
-        addLog(
-            "Không thể bắt đầu: " +
-            error.message
+                addLog("Tài xế bắt đầu chia sẻ GPS.");
+            },
+            error => {
+                startBtn.disabled = false;
+                startBtn.textContent = "▶ Bắt đầu hành trình";
+                positionError(error);
+            },
+            {
+                enableHighAccuracy:true,
+                maximumAge:0,
+                timeout:20000
+            }
         );
+    }catch(error){
+        console.error(error);
+        startBtn.disabled = false;
+        startBtn.textContent = "▶ Bắt đầu hành trình";
+        alert(error.message);
+        addLog("Không thể bắt đầu: " + error.message);
     }
 }
 
-
-/* =========================================================
-   STOP GPS
-   CHỈ DỪNG CHIA SẺ GPS TRÊN THIẾT BỊ.
-   KHÔNG KẾT THÚC TRIP.
-========================================================= */
-
 function stopTracking(){
-
     if(watchId !== null){
-
-        navigator.geolocation
-            .clearWatch(watchId);
-
+        navigator.geolocation.clearWatch(watchId);
         watchId = null;
     }
 
     tracking = false;
 
-    const startBtn =
-        document.getElementById(
-            "startBtn"
-        );
-
-    const stopBtn =
-        document.getElementById(
-            "stopBtn"
-        );
+    const startBtn = document.getElementById("startBtn");
+    const stopBtn = document.getElementById("stopBtn");
 
     startBtn.disabled = false;
-
-    startBtn.textContent =
-        "▶ Tiếp tục chia sẻ GPS";
-
+    startBtn.textContent = "▶ Tiếp tục chia sẻ GPS";
     stopBtn.disabled = true;
 
     gpsUI(
@@ -2506,76 +1286,60 @@ function stopTracking(){
         "Chuyến vận chuyển vẫn đang hoạt động."
     );
 
-    addLog(
-        "Tài xế đã dừng chia sẻ GPS."
-    );
+    addLog("Tài xế đã dừng chia sẻ GPS.");
 }
 
-
-/* =========================================================
-   RPC 3:
-   COMPLETE TRIP
-========================================================= */
-
 async function completeTrip(){
+    if(completing || podUploading) return;
 
-    const ok =
-        confirm(
-            "XÁC NHẬN HOÀN THÀNH CHUYẾN\n\n" +
-            "Chỉ xác nhận khi hàng đã được giao thực tế.\n\n" +
-            "Bạn có chắc chắn muốn hoàn thành chuyến này?"
-        );
-
-    if(!ok){
+    try{
+        await loadPod();
+        updatePodUI();
+    }catch(error){
+        alert(error.message);
         return;
     }
 
-    const completeBtn =
-        document.getElementById(
-            "completeBtn"
-        );
+    if(!pod || !["pending","approved"].includes(
+        String(pod.status || "").toLowerCase()
+    )){
+        alert("Hãy tải chứng từ giao nhận hợp lệ trước khi hoàn thành chuyến.");
 
+        document.getElementById("podSection")
+            .scrollIntoView({behavior:"smooth",block:"start"});
+
+        return;
+    }
+
+    const ok = confirm(
+        "XÁC NHẬN HOÀN THÀNH CHUYẾN\n\n" +
+        "Chỉ xác nhận khi hàng đã được giao thực tế.\n\n" +
+        "Bạn có chắc chắn muốn hoàn thành chuyến này?"
+    );
+
+    if(!ok) return;
+
+    const completeBtn = document.getElementById("completeBtn");
+
+    completing = true;
     completeBtn.disabled = true;
-
-    completeBtn.textContent =
-        "Đang xử lý...";
+    completeBtn.textContent = "Đang xử lý...";
 
     try{
-
-        /*
-         * Nếu thiết bị vừa có GPS,
-         * cố gửi điểm cuối trước.
-         */
         if(latestPosition){
-
             lastSave = 0;
-
-            await saveGPS(
-                latestPosition
-            );
+            await saveGPS(latestPosition);
         }
 
-        /*
-         * Không UPDATE trips trực tiếp.
-         */
-        const {data,error} =
-            await db.rpc(
-                "complete_trip",
-                {
-                    p_trip_id:trip.id
-                }
-            );
+        const {data,error} = await db.rpc("complete_trip",{
+            p_trip_id:trip.id
+        });
 
         if(error){
-
-            throw new Error(
-                "Không hoàn thành được chuyến: " +
-                error.message
-            );
+            throw new Error("Không hoàn thành được chuyến: " + error.message);
         }
 
-        if(data !== true){
-
+        if(data === false || data?.success === false){
             throw new Error(
                 "Không thể hoàn thành chuyến. " +
                 "Chuyến có thể đã kết thúc hoặc tài khoản " +
@@ -2583,52 +1347,52 @@ async function completeTrip(){
             );
         }
 
-        trip.status =
-            "completed";
+        const {data:actual,error:readError} = await db
+            .from("trips")
+            .select("*")
+            .eq("id",trip.id)
+            .eq("driver_id",user.id)
+            .single();
 
-        trip.completed_at =
-            new Date().toISOString();
+        if(readError){
+            throw new Error(
+                "Đã gửi yêu cầu hoàn thành nhưng chưa đọc được trạng thái: " +
+                readError.message
+            );
+        }
+
+        if(!["completed","delivered"].includes(
+            String(actual.status || "").toLowerCase()
+        )){
+            throw new Error(
+                "Chuyến chưa được hệ thống ghi nhận hoàn thành. " +
+                "Vui lòng tải lại dữ liệu."
+            );
+        }
+
+        trip = actual;
+        trip.status = "completed";
+        trip.completed_at = new Date().toISOString();
 
         if(watchId !== null){
-
-            navigator.geolocation
-                .clearWatch(watchId);
-
+            navigator.geolocation.clearWatch(watchId);
             watchId = null;
         }
 
         tracking = false;
 
-        const startBtn =
-            document.getElementById(
-                "startBtn"
-            );
-
-        const stopBtn =
-            document.getElementById(
-                "stopBtn"
-            );
+        const startBtn = document.getElementById("startBtn");
+        const stopBtn = document.getElementById("stopBtn");
 
         startBtn.disabled = true;
         stopBtn.disabled = true;
-
         completeBtn.disabled = true;
+        completeBtn.textContent = "✓ Chuyến đã hoàn thành";
 
-        completeBtn.textContent =
-            "✓ Chuyến đã hoàn thành";
-
-        const badge =
-            document.getElementById(
-                "tripBadge"
-            );
-
+        const badge = document.getElementById("tripBadge");
         if(badge){
-
-            badge.className =
-                "badge badge-blue";
-
-            badge.textContent =
-                "Hoàn thành";
+            badge.className = "badge badge-blue";
+            badge.textContent = "Hoàn thành";
         }
 
         gpsUI(
@@ -2637,124 +1401,77 @@ async function completeTrip(){
             "Chuyến vận chuyển đã được hoàn thành."
         );
 
-        addLog(
-            "Chuyến vận chuyển đã hoàn thành."
-        );
-
-        alert(
-            "Đã hoàn thành chuyến vận chuyển."
-        );
-
+        addLog("Chuyến vận chuyển đã hoàn thành.");
+        alert("Đã hoàn thành chuyến vận chuyển.");
     }catch(error){
-
         console.error(error);
-
         completeBtn.disabled = false;
-
-        completeBtn.textContent =
-            "✓ Hoàn thành chuyến";
-
+        completeBtn.textContent = "✓ Hoàn thành chuyến";
         alert(error.message);
-
         addLog(error.message);
+    }finally{
+        completing = false;
+        updatePodUI();
     }
 }
 
-
-/* =========================================================
-   INITIALIZE PRODUCTION
-========================================================= */
-
 async function init(){
-
     if(!db){
-
         fatal(
             "⚠️",
             "Không kết nối được VietTrucks",
             "Không tìm thấy Supabase Client."
         );
-
         return;
     }
 
     try{
-
         const {
             data:{session},
             error
-        } =
-        await db.auth.getSession();
+        } = await db.auth.getSession();
 
         if(error){
-
-            throw new Error(
-                "Không xác thực được tài khoản: " +
-                error.message
-            );
+            throw new Error("Không xác thực được tài khoản: " + error.message);
         }
 
-        if(
-            !session ||
-            !session.user
-        ){
-
+        if(!session || !session.user){
             fatal(
                 "🔒",
                 "Yêu cầu đăng nhập",
                 "Tài xế phải đăng nhập tài khoản VietTrucks trước khi sử dụng theo dõi hành trình.",
                 `
-                <a
-                    href="dang-nhap.html?redirect=tai-xe-hanh-trinh.html"
-                    class="header-btn btn-green">
-                    Đăng nhập VietTrucks
-                </a>
+                    <a href="dang-nhap.html?redirect=tai-xe-hanh-trinh.html"
+                        class="header-btn btn-green">
+                        Đăng nhập VietTrucks
+                    </a>
                 `
             );
-
             return;
         }
 
         user = session.user;
-
-        trip =
-            await loadTrip();
+        trip = await loadTrip();
 
         if(!trip){
-
             fatal(
                 "🚚",
                 "Không có chuyến đang hoạt động",
                 "Tài khoản tài xế này hiện không có chuyến vận chuyển đang hoạt động trên VietTrucks.",
                 `
-                <a
-                    href="tim-hang.html"
-                    class="header-btn btn-green">
-                    Tìm chuyến hàng
-                </a>
+                    <a href="tim-hang.html" class="header-btn btn-green">
+                        Tìm chuyến hàng
+                    </a>
                 `
             );
-
             return;
         }
 
-                order =
-            await loadRealOrder(
-                trip.order_id
-            );
-
-        /*
-         * Đọc POD thật trước khi render.
-         */
-
+        order = await loadRealOrder(trip.order_id);
         await loadPod();
-
         render();
-
         updatePodUI();
-
     }catch(error){
-
         console.error(error);
 
         fatal(
@@ -2762,46 +1479,22 @@ async function init(){
             "Không thể mở hành trình",
             error.message,
             `
-            <button
-                type="button"
-                class="action-btn refresh-btn"
-                onclick="location.reload()">
-                Thử lại
-            </button>
+                <button type="button" class="action-btn refresh-btn"
+                    onclick="location.reload()">
+                    Thử lại
+                </button>
             `
         );
     }
 }
 
-
-/* =========================================================
-   CLEANUP
-========================================================= */
-
-window.addEventListener(
-    "beforeunload",
-    () => {
-
-        if(watchId !== null){
-
-            navigator.geolocation
-                .clearWatch(watchId);
-        }
+window.addEventListener("beforeunload",() => {
+    if(watchId !== null){
+        navigator.geolocation.clearWatch(watchId);
     }
-);
+});
 
-
-/* =========================================================
-   START
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    init
-);
+document.addEventListener("DOMContentLoaded",init);
 </script>
-
-
-
 </body>
 </html>
