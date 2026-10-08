@@ -790,8 +790,25 @@ if (sideUserRole) {
               </div>
 
               <div class="actions">
-                ${actionButton}
-              </div>
+  <a
+    class="action-btn btn-green"
+    href="tai-xe-hanh-trinh.html?trip_id=${encodeURIComponent(trip.id)}"
+    style="
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 16px;
+      border-radius:8px;
+      margin-bottom:10px;
+      text-decoration:none;
+      text-align:center;
+    "
+  >
+    📎 Tải chứng từ / Theo dõi hành trình
+  </a>
+
+  ${actionButton}
+</div>
             </div>
           </div>
         </div>
