@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Thanh toán chuyến | VietTrucks</title>
+
+<style>
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{
+  margin:0;
+  background:#f3f7f5;
+  font-family:Arial,Helvetica,sans-serif;
+  color:#173927;
+}
+main{
+  max-width:650px;
+  margin:30px auto;
+  padding:20px;
+}
+section{
+  margin-top:18px;
+  background:#fff;
+  padding:24px;
+  border:1px solid #dce7e1;
+  border-radius:16px;
+}
+a{color:#087d45}
+h1{font-size:25px}
+p{line-height:1.6}
+.amount{
+  font-size:30px;
+  font-weight:bold;
+  color:#078c4b;
+}
+button,.link{
+  display:block;
+  width:100%;
+  padding:14px;
+  margin:10px 0;
+  border-radius:9px;
+  border:1px solid #087d45;
+  font:700 15px Arial;
+  text-align:center;
+  text-decoration:none;
+}
+button{
+  background:#087d45;
+  color:#fff;
+  cursor:pointer;
+}
+button:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+.link{background:#fff;color:#087d45}
+#message{
+  white-space:pre-line;
+  padding:14px;
+  background:#eff7f2;
+  border-radius:9px;
+}
+#error{
+  color:#b42318;
+  white-space:pre-line;
+}
+#tripLabel{overflow-wrap:anywhere}
+@media(max-width:500px){
+  main{padding:12px;margin:15px auto}
+  section{padding:18px}
+  h1{font-size:22px}
+}
+</style>
+</head>
+
+<body>
+<main>
+  <a href="dashboard.html">← Dashboard VietTrucks</a>
+
+  <section>
+    <h1>Thanh toán trước khi khởi hành</h1>
+
+    <p>
+      Tài xế xác nhận bốc hàng xong.
+      Chủ hàng thanh toán đủ 100% giá cước cho VietTrucks
+      trước khi xe chạy.
+    </p>
+
+    <div id="tripPicker"></div>
+    <p id="tripLabel"></p>
+    <div id="amount" class="amount"></div>
+
+    <p id="message" role="status">
+      Đang kiểm tra chuyến...
+    </p>
+
+    <p id="error" role="alert"></p>
+
+    <button id="loadedBtn" type="button" hidden>
+      ✓ Xác nhận đã bốc hàng xong
+    </button>
+
+    <button id="payBtn" type="button" hidden>
+      Thanh toán đủ giá cước qua SePay
+    </button>
+
+    <button id="refreshBtn" type="button">
+      ↻ Kiểm tra thanh toán
+    </button>
+
+    <a id="journeyLink" class="link" hidden>
+      📎 Chứng từ / Theo dõi hành trình
+    </a>
+
+    <p>
+      Sau khi chuyển khoản, chờ VietTrucks xác nhận
+      đã nhận đủ tiền trước khi khởi hành.
+    </p>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+const db = window.supabaseClient;
+const tripId = new URLSearchParams(location.search).get("trip_id");
+const $ = id => document.getElementById(id);
+
+let busy = false;
+let checking = false;
+let timer = null;
+
+async function refresh(){
+  if(checking || busy) return;
+
+  checking = true;
+
+  try{
+    if(!db){
+      throw new Error("Không kết nối được hệ thống.");
+    }
+
+    const {
+      data:sessionData,
+      error:sessionError
+    } = await db.auth.getSession();
+
+    if(sessionError) throw sessionError;
+
+    if(!sessionData.session){
+      const redirect = "thanh-toan-chuyen.html" +
+        (tripId ? "?trip_id=" + encodeURIComponent(tripId) : "");
+
+      location.href =
+        "dang-nhap.html?redirect=" +
+        encodeURIComponent(redirect);
+
+      return;
+    }
+
+    if(!tripId){
+      const {
+        data:trips,
+        error:listError
+      } = await db
+        .from("trips")
+        .select(`
+          id,
+          status,
+          agreed_price,
+          orders (
+            pickup_location,
+            delivery_location
+          )
+        `)
+        .eq("shipper_id",sessionData.session.user.id)
+        .eq("status","waiting_pickup")
+        .order("created_at",{ascending:false});
+
+      if(listError) throw listError;
+
+      $("error").textContent = "";
+      $("tripPicker").replaceChildren();
+
+      for(const item of trips || []){
+        const order = Array.isArray(item.orders)
+          ? item.orders[0] || {}
+          : item.orders || {};
+
+        const link = document.createElement("a");
+        link.className = "link";
+
+        link.href =
+          "thanh-toan-chuyen.html?trip_id=" +
+          encodeURIComponent(item.id);
+
+        link.textContent =
+          (order.pickup_location || "Điểm lấy") +
+          " → " +
+          (order.delivery_location || "Điểm giao") +
+          " — " +
+          item.id.slice(0,8);
+
+        $("tripPicker").appendChild(link);
+      }
+
+      $("message").textContent = trips?.length
+        ? "Chọn chuyến cần thanh toán."
+        : "Chưa có chuyến chờ thanh toán thuộc tài khoản chủ hàng này.";
+
+      return;
+    }
+
+    const {data,error} = await db.rpc(
+      "vt_get_trip_payment_status",
+      {p_trip_id:tripId}
+    );
+
+    if(error) throw error;
+
+    $("error").textContent = "";
+    $("tripLabel").textContent = "Mã chuyến: " + tripId;
+
+    $("amount").textContent =
+      new Intl.NumberFormat("vi-VN")
+        .format(Number(data.amount)) + " đ";
+
+    const waiting = data.trip_status === "waiting_pickup";
+
+    const messages = {
+      not_loaded:"Chờ tài xế xác nhận bốc hàng xong.",
+      pending:"Đã bốc hàng. Chờ chủ hàng thanh toán đủ giá cước.",
+      paid:"✓ VietTrucks đã xác nhận nhận đủ tiền.",
+      voided:"Giao dịch đã bị hủy. Vui lòng liên hệ VietTrucks để đối soát."
+    };
+
+    const tripStatuses = {
+      waiting_pickup:"Chờ khởi hành",
+      in_transit:"Đang vận chuyển",
+      completed:"Đã hoàn thành",
+      delivered:"Đã giao hàng",
+      cancelled:"Đã hủy",
+      canceled:"Đã hủy"
+    };
+
+    $("message").textContent =
+      messages[data.state] || "Đang kiểm tra thanh toán.";
+
+    if(!waiting){
+      $("message").textContent +=
+        "\nTrạng thái chuyến: " +
+        (tripStatuses[data.trip_status] || data.trip_status);
+    }
+
+    $("loadedBtn").hidden = !(
+      data.is_driver &&
+      waiting &&
+      data.state === "not_loaded"
+    );
+
+    $("payBtn").hidden = !(
+      data.is_shipper &&
+      waiting &&
+      data.state === "pending"
+    );
+
+    $("journeyLink").hidden = !data.is_driver;
+
+    $("journeyLink").href =
+      "tai-xe-hanh-trinh.html?trip_id=" +
+      encodeURIComponent(tripId);
+
+  }catch(error){
+    $("loadedBtn").hidden = true;
+    $("payBtn").hidden = true;
+    $("journeyLink").hidden = true;
+
+    $("message").textContent =
+      "Chưa xác minh được trạng thái chuyến.";
+
+    $("error").textContent =
+      error.message || "Không đọc được thanh toán.";
+
+  }finally{
+    checking = false;
+  }
+}
+
+function lock(value){
+  busy = value;
+
+  for(const id of ["loadedBtn","payBtn","refreshBtn"]){
+    $(id).disabled = value;
+  }
+}
+
+$("loadedBtn").addEventListener("click",async()=>{
+  if(busy) return;
+
+  if(!confirm(
+    "Xác nhận hàng đã bốc xong lên xe và giá cước đã chốt?"
+  )){
+    return;
+  }
+
+  lock(true);
+
+  try{
+    const {error} = await db.rpc(
+      "vt_confirm_loaded",
+      {p_trip_id:tripId}
+    );
+
+    if(error) throw error;
+
+  }catch(error){
+    alert(error.message);
+
+  }finally{
+    lock(false);
+    await refresh();
+  }
+});
+
+$("payBtn").addEventListener("click",async()=>{
+  if(busy) return;
+
+  lock(true);
+  $("error").textContent = "";
+
+  try{
+    const {data,error} = await db.functions.invoke(
+      "sepay-checkout",
+      {body:{trip_id:tripId}}
+    );
+
+    if(error){
+      let message = error.message;
+
+      try{
+        const body = await error.context.json();
+        message = body.error || message;
+      }catch{}
+
+      throw new Error(message);
+    }
+
+    if(
+      !data?.success ||
+      data.action !== "https://pay.sepay.vn/v1/checkout/init"
+    ){
+      throw new Error(
+        data?.error || "Không tạo được thanh toán."
+      );
+    }
+
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = data.action;
+
+    const fieldOrder = [
+      "order_amount",
+      "merchant",
+      "currency",
+      "operation",
+      "order_description",
+      "order_invoice_number",
+      "payment_method",
+      "success_url",
+      "error_url",
+      "cancel_url",
+      "signature"
+    ];
+
+    for(const name of fieldOrder){
+      if(data.fields[name] === undefined) continue;
+
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      input.value = data.fields[name];
+
+      form.appendChild(input);
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+
+  }catch(error){
+    $("error").textContent = error.message;
+    lock(false);
+  }
+});
+
+$("refreshBtn").addEventListener("click",refresh);
+
+refresh();
+
+timer = setInterval(()=>{
+  if(!document.hidden) refresh();
+},10000);
+
+window.addEventListener("beforeunload",()=>{
+  clearInterval(timer);
+});
+</script>
+</body>
+</html>
