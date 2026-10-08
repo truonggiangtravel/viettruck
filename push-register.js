@@ -235,6 +235,10 @@
   async function refreshButton() {
   if (!button || busy) return;
 
+  // Gỡ xử lý cũ trước khi kiểm tra hỗ trợ trên thiết bị.
+  button.removeEventListener("click", togglePush);
+  button.onclick = null;
+
   // =====================================================
   // KIỂM TRA USER HIỆN TẠI
   // =====================================================
