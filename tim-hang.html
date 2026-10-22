@@ -2498,7 +2498,7 @@ async function loadOrders(){
             error
         } =
         await supabaseClient
-    .from("orders_public")
+    .from("orders_marketplace_public")
     .select(`
         id,
         user_id,
@@ -2511,16 +2511,11 @@ async function loadOrders(){
         price,
         pickup_date,
         status,
-        accepted_by,
         created_at
     `)
     .eq(
         "status",
         "pending"
-    )
-    .is(
-        "accepted_by",
-        null
     )
     .order(
         "created_at",
