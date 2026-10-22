@@ -1392,7 +1392,7 @@ async function loadActiveOrdersCount() {
 
   const { count, error } =
     await supabaseClient
-      .from("orders")
+      .from("orders_marketplace_public")
       .select(
         "*",
         {
@@ -2418,7 +2418,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         data: orders,
         error
       } = await client
-        .from("orders")
+        .from("orders_marketplace_public")
         .select(
           "id,pickup_location,delivery_location,cargo_type,weight,vehicle_type,pickup_date,status,created_at"
         )
@@ -3037,7 +3037,7 @@ document.addEventListener("DOMContentLoaded", async function () {
          ========================== */
 
       const ordersPromise = client
-        .from("orders")
+        .from("orders_marketplace_public")
         .select(`
           id,
           pickup_location,
@@ -3622,8 +3622,8 @@ document.addEventListener("DOMContentLoaded", async function () {
           error
         } =
           await window.supabaseClient
-            .from("orders")
-            .select("*")
+            .from("orders_marketplace_public")
+            .select("id,user_id,pickup_location,delivery_location,cargo_type,weight,vehicle_type,price,pickup_date,status,created_at")
             .eq(
               "id",
               id
@@ -3716,14 +3716,6 @@ document.addEventListener("DOMContentLoaded", async function () {
               data.price
             )
           }
-
-          ${
-            row(
-              "Ghi chú",
-              data.note
-            )
-          }
-
 
           <div style="
             margin-top:20px;
@@ -4494,7 +4486,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 <!-- END VIETTRUCKS NOTIFICATIONS -->
 
 <!-- VIETTRUCKS WEB PUSH -->
-<script src="push-register.js?v=20261008-1"></script>
+<script src="push-register.js?v=20261006-2"></script>
 
 </body>
 </html>
