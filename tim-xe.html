@@ -1716,10 +1716,10 @@ async function loadAvailableVehicles(){
         error
     } =
     await supabaseClient
-    .from("vehicles")
+    .from("vehicles_marketplace_public")
     .select(`
         id,
-        plate_number,
+        
         vehicle_type,
         capacity,
         current_location,
@@ -1731,8 +1731,8 @@ async function loadAvailableVehicles(){
         destination_district,
         available_from,
         available_to,
-        driver_name,
-        driver_phone,
+        
+        
         description,
         status,
         created_at
