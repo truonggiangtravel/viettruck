@@ -275,11 +275,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         error: vehicleError
     } =
     await supabaseClient
-        .from("vehicles")
+        .from("vehicles_marketplace_public")
         .select(`
             id,
-            user_id,
-            plate_number,
+            
+            
             vehicle_type,
             capacity,
             current_location,
@@ -291,7 +291,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             destination_district,
             available_from,
             available_to,
-            driver_name,
+            
             description,
             status,
             created_at
